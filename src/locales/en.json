@@ -1,0 +1,589 @@
+{
+  "loading": "Loading...",
+  "unavailable": "Unavailable now",
+
+  "ServicesAccountCard": {
+    "buyNow": "Buy Now",
+    "minutes": "minutes",
+    "instantDelivery": "Instant Delivery"
+  },
+
+  "MainPagination": {
+    "previous": "Previous page",
+    "next": "Next page",
+    "page": "Page"
+  },
+
+  "EmptyDataSection": {
+    "defaultMessage": "No data to display at the moment."
+  },
+
+  "PaymentModal": {
+    "title": "Account Information",
+    "loginData": "Login Data",
+    "password": "Password",
+    "giftCode": "Gift Code",
+    "save": "Save",
+    "cancel": "Cancel",
+
+    "validation": {
+      "loginDataShort": "Login data is too short",
+      "passwordShort": "Password is too short"
+    }
+  },
+
+  "PurchaseSteps": {
+    "sectionTitle": "Easy Purchase in 3 Steps"
+  },
+
+  "ServicesPaymentCards": {
+    "items": {
+      "support": {
+        "title": "24/7 Support",
+        "desc": "Always available"
+      },
+      "security": {
+        "title": "Guaranteed security",
+        "desc": "Full privacy"
+      },
+      "fastPayment": {
+        "title": "Fast payment",
+        "desc": "Secure payment"
+      },
+      "refund": {
+        "title": "Money back",
+        "desc": "Full guarantee"
+      }
+    }
+  },
+
+  "ImageInput": {
+    "placeholder": "Drag and drop image here or click to select an image",
+    "previewAlt": "Image preview"
+  },
+
+  "ContactUsModal": {
+    "title": "Get in touch",
+
+    "fields": {
+      "name": {
+        "label": "Name",
+        "placeholder": "Enter your name"
+      },
+      "email": {
+        "label": "Email",
+        "placeholder": "example@email.com"
+      },
+      "phone": {
+        "label": "Phone number"
+      },
+      "message": {
+        "label": "Message"
+      }
+    },
+
+    "submit": "Send",
+    "sending": "Sending...",
+
+    "success": "Message sent successfully",
+    "error": "Something went wrong, please try again",
+
+    "validation": {
+      "nameMin": "Name must be at least 2 characters",
+      "emailInvalid": "Invalid email address",
+      "phoneRequired": "Phone number is required",
+      "phoneInvalid": "Invalid phone number",
+      "messageMin": "Message must be at least 5 characters"
+    }
+  },
+
+  "footer": {
+    "joinPartner": "Join as a Partner",
+    "refundPolicy": "Refund Policy",
+    "contactUs": "Contact Us"
+  },
+
+  "profileSide": {
+    "profile": "Profile",
+    "orders": "Orders",
+    "logout": "Logout",
+    "login": "Login"
+  },
+
+  "notificationsPopUp": {
+    "noNotifications": "No notifications",
+    "moreNotifications": "More notifications"
+  },
+
+  "headerSearch": {
+    "placeholder": "Search ...",
+    "searching": "Searching...",
+    "noResults": "No results found"
+  },
+
+  "logOutModal": {
+    "logoutConfirm": "Are you sure you want to logout?",
+    "cancel": "Cancel",
+    "login": "Login",
+    "logout": "Logout"
+  },
+
+  "requiredLoginModal": {
+    "title": "Login Required",
+    "description": "You must login to continue",
+    "login": "Login",
+    "createAccount": "Create Account"
+  },
+
+  "requiredVerifyEmailModal": {
+    "title": "Your email is not verified!",
+    "description": "You must verify your email to access this page",
+    "goToVerify": "Verify Email",
+    "cancel": "Cancel"
+  },
+
+  "chatHeader": {
+    "admin": "Admin",
+    "support": "Support"
+  },
+
+  "chatMsgs": {
+    "noMessages": "No messages yet.",
+    "noMoreMessages": "No older messages",
+    "orderCode": "Order Code",
+    "price": "Price",
+    "sending": "Sending",
+    "sendFailed": "Failed to send",
+    "retry": "Retry"
+  },
+
+  "checkEmail": {
+    "title": "Forgot Password",
+    "description": "Enter your email to reset your password",
+    "emailLabel": "Email",
+    "emailPlaceholder": "example@email.com",
+    "sending": "Sending...",
+    "sendResetLink": "Send Reset Link",
+    "rememberPassword": "Remembered your password?",
+    "login": "Login",
+    "invalidEmail": "Invalid email address",
+    "genericError": "Something went wrong, please try again"
+  },
+
+  "otp": {
+    "title": "OTP Verification",
+    "description": "We sent a recovery code to your WhatsApp number. Please check your messages and enter the code sent to {{email}}",
+    "otpRequired": "Enter a 6-digit code",
+    "verifying": "Verifying...",
+    "confirm": "Confirm Code",
+    "notReceived": "Didn't receive the code?",
+    "resendIn": "Resend in {{countdown}}s",
+    "resend": "Resend",
+    "backToLogin": "Back to Login",
+    "wrongOtp": "Invalid code"
+  },
+
+  "resetPassword": {
+    "title": "Reset Password",
+    "description": "Enter a new password for your account",
+    "newPassword": "New Password",
+    "confirmPassword": "Confirm Password",
+    "strength": "Password strength:",
+    "resetting": "Resetting...",
+    "save": "Save New Password",
+    "error": "Something went wrong, please try again",
+    "passwordShort": "Password is too short",
+    "confirmRequired": "Password confirmation is required",
+    "notMatched": "Passwords do not match"
+  },
+
+  "Games": {
+    "searchPlaceholder": "Search ...",
+    "noGames": "No games to display.",
+    "list": {
+      "accounts": "Accounts",
+      "subscriptions": "Subscriptions",
+      "topUp": "Top Up",
+      "giftCards": "Gift Cards",
+      "addGameToAccount": "Add Game to Account"
+    }
+  },
+
+  "OffersFilter": {
+    "priceRange": "Price Range",
+    "from": "From",
+    "to": "To",
+    "fromTime": "From Time",
+    "toTime": "To Time",
+    "country": "Country",
+    "platform": "Platform",
+    "reset": "Reset Filters",
+    "apply": "Apply",
+    "all": "All"
+  },
+
+  "paymentCard": {
+    "region": "Region",
+    "platform": "Platform",
+    "orderSummary": "Order Summary",
+    "deliveryTime": "Delivery Time",
+    "totalPrice": "Total Price",
+    "buyNow": "Buy Now",
+    "notSpecified": "Not Specified",
+    "minutes": "mins",
+    "serviceFee": "Service Fee",
+    "finalPrice": "Final Price"
+  },
+
+  "discoverByPlatform": {
+    "title": "Discover By Platform"
+  },
+
+  "orderMethod": {
+    "title": "Order Methods"
+  },
+
+  "servicesSection": {
+    "seeMore": "See More",
+    "accounts": "Accounts",
+    "subscriptions": "Subscriptions",
+    "topUp": "Top Up",
+    "giftCards": "Gift Cards",
+    "addGameToAccount": "Add Game To Account",
+    "noGames": "No games to display."
+  },
+
+  "testimonials": {
+    "title": "Customer Reviews"
+  },
+
+  "auth": {
+    "login": {
+      "title": "Login",
+      "description": "Log in to your account",
+      "emailLabel": "Email",
+      "emailPlaceholder": "example@email.com",
+      "passwordLabel": "Password",
+      "forgotPassword": "Forgot Password?",
+      "submit": "Login",
+      "subText": "Don’t have an account?",
+      "register": "Create a new account",
+      "loading": "Logging in...",
+      "error": "Invalid credentials",
+      "invalidEmail": "Invalid email",
+      "shortPassword": "Password is too short"
+    }
+  },
+
+  "notFound": {
+    "title": "404",
+    "subtitle": "Page Not Found",
+    "goHome": "Go Home"
+  },
+
+  "PaymentList": {
+    "choosePaymentMethod": "Choose a payment method",
+    "noPaymentMethods": "There are no payment methods to display right now."
+  },
+
+  "BinancePayForm": {
+    "transferNumber": "Transfer Number",
+    "binanceId": "Binance ID",
+    "imageRequired": "Image is required",
+    "noteLabel": "Note",
+    "notePlaceholder": "Write a note",
+    "confirmPayment": "Confirm Payment",
+    "confirming": "Confirming...",
+    "cancel": "Cancel",
+    "paymentConfirmed": "Payment confirmed",
+    "orderConfirmed": "Order confirmed",
+    "genericError": "Something went wrong"
+  },
+
+  "InstaPayForm": {
+    "transferNumber": "Transfer Number",
+    "username": "Username",
+    "senderNumberLabel": "InstaPay Number",
+    "senderNumberPlaceholder": "Enter InstaPay number",
+    "senderNumberRequired": "Number is required",
+    "imageRequired": "Image is required",
+    "noteLabel": "Note",
+    "notePlaceholder": "Write a note",
+    "confirmPayment": "Confirm Payment",
+    "confirming": "Confirming...",
+    "cancel": "Cancel",
+    "paymentConfirmed": "Payment confirmed",
+    "orderConfirmed": "Order confirmed",
+    "genericError": "Something went wrong"
+  },
+
+  "PaypalForm": {
+    "transferNumber": "Transfer Number",
+    "paypalLink": "PayPal Link",
+    "usernameLabel": "Username",
+    "usernamePlaceholder": "Enter username",
+    "usernameRequired": "Username is required",
+    "imageRequired": "Image is required",
+    "noteLabel": "Note",
+    "notePlaceholder": "Write a note",
+    "confirmPayment": "Confirm Payment",
+    "confirming": "Confirming...",
+    "cancel": "Cancel",
+    "paymentConfirmed": "Payment confirmed",
+    "orderConfirmed": "Order confirmed",
+    "genericError": "Something went wrong"
+  },
+
+  "VodafoneCashForm": {
+    "transferNumber": "Transfer Number",
+    "senderNumberLabel": "Sender Number",
+    "senderNumberPlaceholder": "Enter sender number",
+    "senderNumberRequired": "Sender number is required",
+    "imageRequired": "Image is required",
+    "noteLabel": "Note",
+    "notePlaceholder": "Write a note",
+    "confirmPayment": "Confirm Payment",
+    "confirming": "Confirming...",
+    "cancel": "Cancel",
+    "paymentConfirmed": "Payment confirmed",
+    "orderConfirmed": "Order confirmed",
+    "genericError": "Something went wrong"
+  },
+
+  "ProfileSideBar": {
+    "profile": "Profile",
+    "orders": "Orders",
+    "notifications": "Notifications",
+    "logout": "Logout",
+    "logoutConfirmTitle": "Are you sure you want to log out?",
+    "cancel": "Cancel",
+    "menu": "Menu",
+    "sheetDescription": "User account links"
+  },
+
+  "account": {
+    "chat": "Chat",
+    "personalInfo": "Personal Information",
+
+    "form": {
+      "name": {
+        "label": "Name",
+        "placeholder": "Enter name",
+        "validation": {
+          "min": "Name must be at least 2 characters"
+        }
+      },
+      "email": {
+        "label": "Email",
+        "placeholder": "example@email.com",
+        "validation": {
+          "invalid": "Invalid email address"
+        }
+      },
+      "phone": {
+        "label": "Phone number",
+        "validation": {
+          "invalid": "Invalid phone number"
+        }
+      }
+    },
+
+    "buttons": {
+      "save": "Save changes",
+      "saving": "Saving...",
+      "changePassword": "Change password"
+    },
+
+    "messages": {
+      "success": "Profile updated successfully"
+    }
+  },
+
+  "changePassword": {
+    "title": "Change Password",
+
+    "form": {
+      "currentPassword": {
+        "label": "Current password",
+        "validation": {
+          "min": "Password is too short"
+        }
+      },
+      "newPassword": {
+        "label": "New password",
+        "validation": {
+          "min": "New password is too short"
+        }
+      },
+      "confirmPassword": {
+        "label": "Confirm new password",
+        "validation": {
+          "min": "Password is too short",
+          "match": "Passwords do not match"
+        }
+      }
+    },
+
+    "buttons": {
+      "submit": "Change password",
+      "submitting": "Changing...",
+      "cancel": "Cancel"
+    },
+
+    "messages": {
+      "success": "Password changed successfully"
+    }
+  },
+
+  "notifications": {
+    "title": "Notifications",
+    "subtitle": "Check your notifications",
+
+    "empty": "There are no notifications at the moment.",
+    "markAllRead": "Read all",
+    "loading": "Loading..."
+  },
+
+  "orders": {
+    "title": "My Orders",
+    "subtitle": "Track your orders and purchase details",
+
+    "filter": {
+      "label": "Filter by:",
+      "placeholder": "Select status",
+      "all": "All statuses",
+      "pending": "Pending",
+      "processing": "Processing",
+      "completed": "Completed",
+      "cancelled": "Cancelled"
+    },
+
+    "stats": {
+      "total": "Total orders:",
+      "pending": "Pending:",
+      "processing": "Processing:",
+      "completed": "Completed:",
+      "cancelled": "Cancelled:"
+    },
+
+    "empty": "No orders found"
+  },
+
+  "detailsModal": {
+    "title": "Order Details",
+    "noDetails": "No details available",
+
+    "services": {
+      "accounts": {
+        "accountName": "Account Name:",
+        "platform": "Platform:",
+        "country": "Country:",
+        "accountEmail": "Account Email:",
+        "accountPassword": "Account Password:",
+        "email": "Email:",
+        "password": "Password:",
+        "note": "Note:"
+      },
+
+      "subscriptions": {
+        "subscriptionName": "Subscription Name:",
+        "loginData": "Login Data:",
+        "password": "Password:",
+        "note": "Note:"
+      },
+
+      "top_up": {
+        "coinsCount": "Coins Count:",
+        "loginData": "Login Data:",
+        "password": "Password:",
+        "note": "Note:"
+      },
+
+      "gift_cards": {
+        "cardValue": "Card Value:",
+        "code": "Code:",
+        "note": "Note:"
+      },
+
+      "add_game_to_account": {
+        "gameName": "Game Name:",
+        "loginData": "Login Data:",
+        "password": "Password:",
+        "note": "Note:"
+      }
+    }
+  },
+
+  "myOrdersCard": {
+    "messageDialog": {
+      "title": "Chat about the order",
+      "description": "Send your message to support about this order",
+      "orderCode": "Order Code:",
+      "price": "Price:",
+      "status": "Status:",
+      "platforms": "Platforms:",
+      "yourMessage": "Your Message",
+      "messagePlaceholder": "Write your message here...",
+      "cancel": "Cancel",
+      "send": "Send",
+      "sending": "Sending..."
+    },
+    "buttons": {
+      "chat": "Chat",
+      "details": "Order Details"
+    },
+    "status": {
+      "pending": "Pending",
+      "completed": "Completed"
+    }
+  },
+
+  "register": {
+    "title": "Create Account",
+    "description": "Create a new account now",
+    "name": "Name",
+    "namePlaceholder": "Enter your name",
+    "email": "Email",
+    "emailPlaceholder": "example@email.com",
+    "password": "Password",
+    "passwordConfirmation": "Confirm Password",
+    "submit": "Create Account",
+    "submitting": "Creating account...",
+    "haveAccount": "Already have an account?",
+    "login": "Login",
+    "errors": {
+      "nameShort": "Name is too short",
+      "emailInvalid": "Email is not valid",
+      "passwordShort": "Password is too short",
+      "passwordConfirmationRequired": "Password confirmation is required",
+      "passwordMismatch": "Passwords do not match",
+      "generic": "Something went wrong"
+    }
+  },
+
+  "verifyEmail": {
+    "title": "Verify Email",
+    "description": "We sent a verification code to your email {{email}}",
+    "submit": "Verify Account",
+    "submitting": "Verifying...",
+    "otpError": "Enter a 6-digit code",
+    "resend": "Resend",
+    "resendIn": "Resend in {{seconds}}s",
+    "notReceived": "Didn't receive the code?",
+    "back": "Back to Login",
+    "invalidCode": "Invalid code"
+  },
+
+  "ErrorPage": {
+    "title": "An unexpected error occurred",
+    "description": "There was a problem loading the page. Please try again later.",
+    "reload": "Reload page",
+    "goHome": "Go to Home"
+  },
+
+  "checkVerifiedEmailGuard": {
+    "title": "Your email is not verified!",
+    "description": "You need to verify your email to access this page.",
+    "button": "Verify your email"
+  }
+}
