@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { getProfile, logoutUser } from "../../services/authServices";
+import { getProfile, logoutUser } from "../../api/authServices";
 
 export const getProfileAct = createAsyncThunk(
   "profile/getProfileAct",

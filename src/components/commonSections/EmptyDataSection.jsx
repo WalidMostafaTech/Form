@@ -1,9 +1,6 @@
 import emptyIcon from "@/assets/icons/Empty-img.png";
-import { useTranslation } from "react-i18next";
 
 const EmptyDataSection = ({ msg }) => {
-  const { t } = useTranslation();
-
   return (
     <div className="flex flex-col items-center justify-center gap-4 px-4 py-12">
       <img
@@ -14,7 +11,7 @@ const EmptyDataSection = ({ msg }) => {
       />
 
       <p className="text-center font-semibold text-lg">
-        {msg || t("EmptyDataSection.defaultMessage")}
+        {msg || "no data found"}
       </p>
     </div>
   );
