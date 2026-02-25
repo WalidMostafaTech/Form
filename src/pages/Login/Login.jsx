@@ -12,7 +12,7 @@ import { useMutation } from "@tanstack/react-query";
 import { HiOutlineMail, HiOutlineLockClosed } from "react-icons/hi";
 import { Link, useNavigate } from "react-router";
 import { z } from "zod";
-import { loginUser } from "@/services/authServices";
+import { loginUser } from "@/api/authServices";
 import { useDispatch } from "react-redux";
 import { addProfile } from "@/store/profile/profileSlice";
 import { useTranslation } from "react-i18next";

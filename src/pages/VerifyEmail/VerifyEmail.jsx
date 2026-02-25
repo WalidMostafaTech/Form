@@ -18,10 +18,7 @@ import { useNavigate } from "react-router";
 import { z } from "zod";
 
 import FormError from "@/components/form/FormError";
-import {
-  sendOtpVerifyEmail,
-  verifyEmail,
-} from "@/services/verifyEmailServices";
+import { sendOtpVerifyEmail, verifyEmail } from "@/api/verifyEmailServices";
 import { useDispatch, useSelector } from "react-redux";
 import {
   addProfile,

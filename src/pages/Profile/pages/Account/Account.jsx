@@ -17,7 +17,7 @@ import { isValidPhoneNumber } from "react-phone-number-input";
 import ChangePasswordModal from "./sections/ChangePasswordModal";
 
 import { useMutation } from "@tanstack/react-query";
-import { updateProfile } from "@/services/authServices";
+import { updateProfile } from "@/api/authServices";
 
 import { useDispatch, useSelector } from "react-redux";
 import { useRef, useState } from "react";

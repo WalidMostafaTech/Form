@@ -13,7 +13,7 @@ import { FaUser, FaEnvelope, FaLock } from "react-icons/fa";
 import { z } from "zod";
 import { Link, useNavigate } from "react-router";
 
-import { registerUser } from "@/services/authServices";
+import { registerUser } from "@/api/authServices";
 import { useDispatch } from "react-redux";
 import { getProfileAct } from "@/store/profile/profileSlice";
 
