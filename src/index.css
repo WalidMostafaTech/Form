@@ -70,9 +70,10 @@ input::-webkit-inner-spin-button {
   --card-foreground: oklch(0.145 0 0);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
+  --primary: #1f3d2b;
+  /* --primary-foreground: oklch(0.985 0 0); */
+  --primary-foreground: #F3F7F5;
+  --secondary: #d8c3a5;
   --secondary-foreground: oklch(0.205 0 0);
   --muted: oklch(0.97 0 0);
   --muted-foreground: oklch(0.556 0 0);
@@ -133,10 +134,14 @@ input::-webkit-inner-spin-button {
 
 @layer base {
   * {
-    @apply border-border outline-ring/50;
+    @apply outline-ring/50 font-[inter];
   }
 
   body {
     @apply bg-background text-foreground;
+  }
+
+  .sectionPadding {
+    @apply py-8 md:py-14;
   }
 }
