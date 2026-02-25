@@ -1,15 +1,9 @@
-import SectionTitle from "@/components/common/SectionTitle";
 import image from "@/assets/images/product-img.png";
 import ProductCard from "@/components/cards/ProductCard";
+import SectionTitle from "@/components/common/SectionTitle";
+import PageBanner from "@/components/commonSections/PageBanner";
 
-// Swiper
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation } from "swiper/modules";
-
-import "swiper/css";
-import "swiper/css/navigation";
-
-const BestSellers = () => {
+const Products = () => {
   const products = [
     {
       id: 1,
@@ -62,40 +56,25 @@ const BestSellers = () => {
       image: image,
     },
   ];
-
   return (
-    <section className="sectionPadding">
-      <div className="container">
-        <SectionTitle title="best" spanTitle="sellers" link={"/"} linkText={"view all products"} />
+    <main>
+      <PageBanner
+        image={image}
+        title="Shop"
+        description="Explore our wide range of products and find the perfect items for your needs."
+      />
 
-        <Swiper
-          modules={[Navigation]}
-          spaceBetween={24}
-          navigation
-          breakpoints={{
-            0: {
-              slidesPerView: 2,
-            },
-            560: {
-              slidesPerView: 2.8,
-            },
-            640: {
-              slidesPerView: 3.3,
-            },
-            1024: {
-              slidesPerView: 4.2,
-            },
-          }}
-          className="categorySwiper"
-        >
+      <section className="container pagePadding">
+        <SectionTitle title="Coffee Beans" />
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {products.map((product) => (
-            <SwiperSlide key={product.id}>
-              <ProductCard product={product} />
-            </SwiperSlide>
+            <ProductCard key={product.id} product={product} />
           ))}
-        </Swiper>
       </div>
-    </section>
+      </section>
+    </main>
   );
 };
-export default BestSellers;
+
+export default Products;

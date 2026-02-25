@@ -144,4 +144,8 @@ input::-webkit-inner-spin-button {
   .sectionPadding {
     @apply py-8 md:py-14;
   }
+
+  .pagePadding {
+    @apply py-6 md:py-10;
+  }
 }

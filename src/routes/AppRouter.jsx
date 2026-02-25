@@ -8,6 +8,10 @@ import VerifyEmailGuard from "@/components/protectRoutes/VerifyEmailGuard";
 import CheckVerifiedEmailGuard from "@/components/protectRoutes/CheckVerifiedEmailGuard";
 
 const Home = React.lazy(() => import("../pages/Home/Home"));
+const About = React.lazy(() => import("../pages/About/About"));
+const Shop = React.lazy(() => import("../pages/Shop/Shop"));
+const Products = React.lazy(() => import("../pages/Products/Products"));
+const Product = React.lazy(() => import("../pages/Product/Product"));
 
 const NotFound = React.lazy(() => import("../pages/NotFound/NotFound"));
 const ErrorPage = React.lazy(() => import("../pages/ErrorPage/ErrorPage"));
@@ -19,6 +23,10 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       { index: true, element: <Home /> },
+      { path: "/about", element: <About /> },
+      { path: "/shop", element: <Shop /> },
+      { path: "/products/:id", element: <Products /> },
+      { path: "/product/:id", element: <Product /> },
 
       // {
       //   element: <ProtectedRoute />,

@@ -32,7 +32,8 @@ const Header = () => {
     <header
       className={`fixed top-0 left-0 right-0 py-4 z-50 transition-all duration-500 ${
         scrolled
-          ? "bg-linear-to-b from-primary via-primary/60 to-primary/30 backdrop-blur-sm shadow-lg"
+          ? // ? "bg-linear-to-b from-primary via-primary/60 to-primary/10"
+            "bg-primary/80 backdrop-blur-sm shadow-lg"
           : "bg-transparent"
       }`}
     >
@@ -56,7 +57,8 @@ const Header = () => {
         <div className="flex items-center gap-2 md:gap-4">
           <Link
             to="/login"
-            className="bg-white px-4 py-1 rounded-md text-primary hover:text-white hover:bg-primary transition-all duration-300"
+            className="bg-white px-4 py-1 rounded-md text-primary 
+            hover:text-white hover:bg-primary transition-all duration-300"
           >
             Login
           </Link>
