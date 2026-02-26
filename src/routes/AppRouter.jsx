@@ -20,6 +20,8 @@ const RegisterCompany = React.lazy(() => import("../pages/Register/RegisterCompa
 const RegisterCustomer = React.lazy(() =>
   import("../pages/Register/RegisterCustomer/RegisterCustomer")
 );
+const VerifyEmail = React.lazy(() => import("../pages/VerifyEmail/VerifyEmail"));
+const ForgotPassword = React.lazy(() => import("../pages/ForgotPassword/ForgotPassword"));
 
 const NotFound = React.lazy(() => import("../pages/NotFound/NotFound"));
 const ErrorPage = React.lazy(() => import("../pages/ErrorPage/ErrorPage"));
@@ -41,6 +43,8 @@ const router = createBrowserRouter([
       { path: "/register", element: <Register /> },
       { path: "/register/company", element: <RegisterCompany /> },
       { path: "/register/customer", element: <RegisterCustomer /> },
+      { path: "/verify-email", element: <VerifyEmail /> },
+      { path: "/forgot-password", element: <ForgotPassword /> },
 
       // {
       //   element: <ProtectedRoute />,

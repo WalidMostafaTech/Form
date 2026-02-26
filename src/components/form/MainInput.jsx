@@ -69,7 +69,9 @@ const MainInput = ({
           id={name}
           type="file"
           disabled={disabled}
-          onChange={(e) => onChange(e.target.files?.[0])}
+          className={"bg-muted"}
+          // onChange={(e) => onChange(e.target.files?.[0])}
+          onChange={(e) => onChange(e.target.files)}
         />
       )}
 

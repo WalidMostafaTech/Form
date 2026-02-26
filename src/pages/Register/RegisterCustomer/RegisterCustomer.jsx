@@ -8,24 +8,25 @@ import { FiUser, FiMail, FiPhone, FiLock, FiMapPin } from "react-icons/fi";
 import { z } from "zod";
 import { isValidPhoneNumber } from "react-phone-number-input";
 import { Checkbox } from "@/components/ui/checkbox";
+import { useNavigate } from "react-router";
 
 const registerSchema = z
   .object({
-    username: z.string().min(3, "Username is too short"),
+    name: z.string().min(3, "Name is too short"),
     email: z.string().email("Invalid email address"),
     phone: z.string().refine((value) => isValidPhoneNumber(value || ""), {
       message: "Invalid phone number",
     }),
     emirate: z.string().min(1, "Please select your emirate"),
     password: z.string().min(6, "Password must be at least 6 characters"),
-    confirmPassword: z.string().min(6, "Confirm your password"),
+    password_confirmation: z.string().min(6, "Confirm your password"),
     terms: z.boolean().refine((val) => val === true, {
       message: "You must accept terms",
     }),
   })
-  .refine((data) => data.password === data.confirmPassword, {
+  .refine((data) => data.password === data.password_confirmation, {
     message: "Passwords do not match",
-    path: ["confirmPassword"],
+    path: ["password_confirmation"],
   });
 
 const emirates = [
@@ -39,6 +40,8 @@ const emirates = [
 ];
 
 const RegisterCustomer = () => {
+  const navigate = useNavigate();
+
   const {
     handleSubmit,
     control,
@@ -46,12 +49,12 @@ const RegisterCustomer = () => {
   } = useForm({
     resolver: zodResolver(registerSchema),
     defaultValues: {
-      username: "",
+      name: "",
       email: "",
       phone: "",
       emirate: "",
       password: "",
-      confirmPassword: "",
+      password_confirmation: "",
       terms: false,
     },
   });
@@ -59,6 +62,7 @@ const RegisterCustomer = () => {
   const onSubmit = (data) => {
     const { terms, ...payload } = data;
     console.log(payload);
+    navigate("/verify-email");
   };
 
   return (
@@ -67,17 +71,17 @@ const RegisterCustomer = () => {
       description="Please enter your details to access your account"
     >
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
-        {/* Username */}
+        {/* Name */}
         <Controller
-          name="username"
+          name="name"
           control={control}
           render={({ field }) => (
             <MainInput
               {...field}
-              label="Username"
-              placeholder="example@example.com"
+              label="Full Name"
+              placeholder="Enter your full name"
               icon={<FiUser size={18} />}
-              error={errors.username?.message}
+              error={errors.name?.message}
             />
           )}
         />
@@ -148,7 +152,7 @@ const RegisterCustomer = () => {
 
         {/* Confirm Password */}
         <Controller
-          name="confirmPassword"
+          name="password_confirmation"
           control={control}
           render={({ field }) => (
             <MainInput
@@ -157,7 +161,7 @@ const RegisterCustomer = () => {
               label="Confirm Password"
               placeholder="************"
               icon={<FiLock size={18} />}
-              error={errors.confirmPassword?.message}
+              error={errors.password_confirmation?.message}
             />
           )}
         />
@@ -175,7 +179,10 @@ const RegisterCustomer = () => {
                   onCheckedChange={field.onChange}
                 />
 
-                <label htmlFor="terms" className="text-sm font-medium leading-none">
+                <label
+                  htmlFor="terms"
+                  className="text-sm font-medium leading-none"
+                >
                   I agree to the{" "}
                   <span
                     className="text-primary cursor-pointer hover:underline"
