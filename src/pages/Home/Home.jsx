@@ -1,9 +1,9 @@
 import Hero from "./sections/Hero";
-import OurStory from "./sections/OurStory";
+import OurStory from "../../components/commonSections/OurStory";
 import CategorySection from "./sections/CategorySection";
 import BestSellers from "../../components/commonSections/BestSellers";
 import WhyChooseForm from "./sections/WhyChooseForm";
-import WhatTheySay from "./sections/WhatTheySay";
+import WhatTheySay from "../../components/commonSections/WhatTheySay";
 
 const Home = () => {
   return (

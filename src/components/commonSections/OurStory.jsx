@@ -70,7 +70,7 @@ const OurStory = () => {
             />
           </div>
 
-          <div className="absolute -bottom-4 -end-2 bg-primary p-4 rounded-lg shadow-lg">
+          <div className="absolute -bottom-4 -inset-e-2 bg-primary p-4 rounded-lg shadow-lg">
             <p className="text-white text-sm font-bold">Est. 2018</p>
           </div>
         </div>
