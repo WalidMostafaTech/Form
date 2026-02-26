@@ -2,11 +2,10 @@ import AuthContainer from "@/components/form/AuthContainer";
 import MainInput from "@/components/form/MainInput";
 import FormError from "@/components/form/FormError";
 
-import { Form } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 
@@ -17,25 +16,26 @@ import { getPasswordStrength, strengthLabel } from "@/utils/PasswordStrength";
 import { z } from "zod";
 import { useNavigate } from "react-router";
 import { resetPassword } from "@/api/forgotPasswordServices";
-import { useTranslation } from "react-i18next";
+
+const resetPasswordSchema = z
+  .object({
+    password: z.string().min(6, "Password must be at least 6 characters"),
+    password_confirmation: z.string().min(6, "Please confirm your password"),
+  })
+  .refine((data) => data.password === data.password_confirmation, {
+    message: "Passwords do not match",
+    path: ["password_confirmation"],
+  });
 
 const ResetPasswordPage = ({ parentData }) => {
-  const { t } = useTranslation();
   const navigate = useNavigate();
 
-  const resetPasswordSchema = z
-    .object({
-      password: z.string().min(6, t("resetPassword.passwordShort")),
-      password_confirmation: z
-        .string()
-        .min(6, t("resetPassword.confirmRequired")),
-    })
-    .refine((data) => data.password === data.password_confirmation, {
-      message: t("resetPassword.notMatched"),
-      path: ["password_confirmation"],
-    });
-
-  const form = useForm({
+  const {
+    handleSubmit,
+    control,
+    watch,
+    formState: { errors },
+  } = useForm({
     resolver: zodResolver(resetPasswordSchema),
     defaultValues: {
       password: "",
@@ -43,10 +43,9 @@ const ResetPasswordPage = ({ parentData }) => {
     },
   });
 
-  const password = form.watch("password");
+  const password = watch("password");
   const strength = useMemo(() => getPasswordStrength(password), [password]);
 
-  // useMutation لإرسال طلب إعادة التعيين
   const {
     mutate: resetPasswordMutation,
     isPending,
@@ -54,12 +53,11 @@ const ResetPasswordPage = ({ parentData }) => {
   } = useMutation({
     mutationFn: (payload) => resetPassword(payload),
     onSuccess: () => {
-      navigate("/login"); // بعد النجاح نرجع لتسجيل الدخول
+      navigate("/login");
     },
   });
 
   const onSubmit = (data) => {
-    // نرسل جميع البيانات المطلوبة
     resetPasswordMutation({
       reset_token: parentData.reset_token,
       code: parentData.otp,
@@ -79,66 +77,68 @@ const ResetPasswordPage = ({ parentData }) => {
           : "#22c55e";
 
   return (
-    <AuthContainer
-      title={t("resetPassword.title")}
-      description={t("resetPassword.description")}
-    >
-      <Form {...form}>
-        <form
-          onSubmit={form.handleSubmit(onSubmit)}
-          className="space-y-4 w-full"
-        >
-          {error && (
-            <FormError
-              errorMsg={
-                error.response?.data?.message || t("resetPassword.error")
-              }
-            />
-          )}
+    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
+      {error && (
+        <FormError
+          errorMsg={error.response?.data?.message || "Something went wrong"}
+        />
+      )}
 
+      <Controller
+        name="password"
+        control={control}
+        render={({ field }) => (
           <MainInput
-            control={form.control}
-            name="password"
-            label={t("resetPassword.newPassword")}
+            {...field}
             type="password"
+            label="New Password"
+            placeholder="************"
             icon={<FaLock size={18} />}
+            error={errors.password?.message}
           />
+        )}
+      />
 
+      <Controller
+        name="password_confirmation"
+        control={control}
+        render={({ field }) => (
           <MainInput
-            control={form.control}
-            name="password_confirmation"
-            label={t("resetPassword.confirmPassword")}
+            {...field}
             type="password"
+            label="Confirm Password"
+            placeholder="************"
             icon={<FaLock size={18} />}
+            error={errors.password_confirmation?.message}
           />
+        )}
+      />
 
-          {/* Password Strength */}
-          <div className="space-y-1">
-            <Progress
-              value={(strength / 4) * 100}
-              indicatorColor={progressColor}
-              className="bg-accent"
-            />
+      {/* Password Strength */}
+      <div className="space-y-1">
+        <Progress
+          value={(strength / 4) * 100}
+          indicatorColor={progressColor}
+          className="bg-accent"
+        />
 
-            {strength > 0 && (
-              <p className="text-sm text-muted-foreground">
-                {t("resetPassword.strength")}
-                <span
-                  className="font-semibold ms-1"
-                  style={{ color: progressColor }}
-                >
-                  {strengthLabel(strength)}
-                </span>
-              </p>
-            )}
-          </div>
+        {strength > 0 && (
+          <p className="text-sm text-muted-foreground">
+            Password strength:
+            <span
+              className="font-semibold ms-1"
+              style={{ color: progressColor }}
+            >
+              {strengthLabel(strength)}
+            </span>
+          </p>
+        )}
+      </div>
 
-          <Button type="submit" className="w-full" disabled={isPending}>
-            {isPending ? t("resetPassword.resetting") : t("resetPassword.save")}
-          </Button>
-        </form>
-      </Form>
-    </AuthContainer>
+      <Button type="submit" className="w-full" disabled={isPending}>
+        {isPending ? "Resetting..." : "Save New Password"}
+      </Button>
+    </form>
   );
 };
 

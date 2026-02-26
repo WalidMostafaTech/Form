@@ -1,11 +1,8 @@
-import AuthContainer from "@/components/form/AuthContainer";
 import MainInput from "@/components/form/MainInput";
 import FormError from "@/components/form/FormError";
-
-import { Form } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 
@@ -22,14 +19,17 @@ const CheckEmail = ({ goNext, setParentData }) => {
     email: z.string().email(t("checkEmail.invalidEmail")),
   });
 
-  const form = useForm({
+  const {
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm({
     resolver: zodResolver(forgotPasswordSchema),
     defaultValues: {
       email: "",
     },
   });
 
-  // useMutation
   const {
     mutate: sendOtpMutation,
     isPending,
@@ -47,50 +47,45 @@ const CheckEmail = ({ goNext, setParentData }) => {
   };
 
   return (
-    <AuthContainer
-      title={t("checkEmail.title")}
-      description={t("checkEmail.description")}
-    >
-      <Form {...form}>
-        <form
-          onSubmit={form.handleSubmit(onSubmit)}
-          className="space-y-4 w-full"
-        >
+    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
+      <Controller
+        name="email"
+        control={control}
+        render={({ field }) => (
           <MainInput
-            control={form.control}
-            name="email"
+            {...field}
+            type="email"
             label={t("checkEmail.emailLabel")}
             placeholder={t("checkEmail.emailPlaceholder")}
             icon={<FaEnvelope size={18} />}
+            error={errors.email?.message}
           />
+        )}
+      />
 
-          <Button type="submit" className="w-full" disabled={isPending}>
-            {isPending
-              ? t("checkEmail.sending")
-              : t("checkEmail.sendResetLink")}
-          </Button>
+      <Button type="submit" className="w-full" disabled={isPending}>
+        {isPending ? t("checkEmail.sending") : t("checkEmail.sendResetLink")}
+      </Button>
 
-          <p className="text-sm text-center">
-            {t("checkEmail.rememberPassword")}
-            <Link
-              to="/login"
-              className="text-purple-500 cursor-pointer hover:underline"
-            >
-              {" "}
-              {t("checkEmail.login")}
-            </Link>
-          </p>
+      <p className="text-sm text-center">
+        {t("checkEmail.rememberPassword")}
+        <Link
+          to="/login"
+          className="text-primary cursor-pointer hover:underline"
+        >
+          {" "}
+          {t("checkEmail.login")}
+        </Link>
+      </p>
 
-          {error && (
-            <FormError
-              errorMsg={
-                error.response?.data?.message || t("checkEmail.genericError")
-              }
-            />
-          )}
-        </form>
-      </Form>
-    </AuthContainer>
+      {error && (
+        <FormError
+          errorMsg={
+            error.response?.data?.message || t("checkEmail.genericError")
+          }
+        />
+      )}
+    </form>
   );
 };
 
