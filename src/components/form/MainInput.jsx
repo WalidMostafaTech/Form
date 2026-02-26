@@ -1,14 +1,5 @@
 import { useState } from "react";
 import { FiEye, FiEyeOff } from "react-icons/fi";
-
-import {
-  FormField,
-  FormItem,
-  FormLabel,
-  FormControl,
-  FormMessage,
-} from "@/components/ui/form";
-
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import {
@@ -20,116 +11,104 @@ import {
 } from "@/components/ui/select";
 
 const MainInput = ({
-  control,
   name,
   label,
   type = "text",
   placeholder,
   disabled = false,
+  value,
+  onChange,
   options = [],
   icon = null,
+  error,
 }) => {
   const [showPassword, setShowPassword] = useState(false);
   const isPassword = type === "password";
 
   return (
-    <div>
-      <FormField
-        control={control}
-        name={name}
-        id={name}
-        render={({ field }) => (
-          <FormItem>
-            {label && <FormLabel htmlFor={name}>{label}</FormLabel>}
+    <div className="space-y-1">
+      {label && (
+        <label htmlFor={name} className="text-sm font-medium">
+          {label}
+        </label>
+      )}
 
-            <FormControl>
-              <div>
-                {type === "textarea" && (
-                  <Textarea
-                    {...field}
-                    placeholder={placeholder}
-                    disabled={disabled}
-                  />
-                )}
+      {/* TEXTAREA */}
+      {type === "textarea" && (
+        <Textarea
+          id={name}
+          name={name}
+          value={value}
+          onChange={onChange}
+          placeholder={placeholder}
+          disabled={disabled}
+          className="resize-none bg-muted min-h-20"
+        />
+      )}
 
-                {type === "select" && (
-                  <Select
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                    disabled={disabled}
-                  >
-                    <SelectTrigger>
-                      <SelectValue placeholder={placeholder} />
-                    </SelectTrigger>
+      {/* SELECT */}
+      {type === "select" && (
+        <Select value={value} onValueChange={onChange} disabled={disabled}>
+          <SelectTrigger className={"w-full bg-muted"}>
+            <SelectValue placeholder={placeholder} />
+          </SelectTrigger>
 
-                    <SelectContent>
-                      {options.map((option) => (
-                        <SelectItem key={option.value} value={option.value}>
-                          {option.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                )}
+          <SelectContent>
+            {options.map((option) => (
+              <SelectItem key={option.value} value={option.value}>
+                {option.label}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      )}
 
-                {type === "file" && (
-                  <Input
-                    id={name}
-                    type="file"
-                    disabled={disabled}
-                    onChange={(e) => field.onChange(e.target.files?.[0])}
-                  />
-                )}
+      {/* FILE */}
+      {type === "file" && (
+        <Input
+          id={name}
+          type="file"
+          disabled={disabled}
+          onChange={(e) => onChange(e.target.files?.[0])}
+        />
+      )}
 
-                {type !== "textarea" &&
-                  type !== "select" &&
-                  type !== "file" && (
-                    <div className="relative">
-                      {icon && (
-                        <span className="absolute start-3 top-1/2 -translate-y-1/2 text-muted-foreground pointer-events-none">
-                          {icon}
-                        </span>
-                      )}
+      {/* NORMAL INPUT */}
+      {type !== "textarea" && type !== "select" && type !== "file" && (
+        <div className="relative">
+          {icon && (
+            <span className="absolute start-3 top-1/2 -translate-y-1/2 text-muted-foreground pointer-events-none">
+              {icon}
+            </span>
+          )}
 
-                      <Input
-                        id={name}
-                        {...field}
-                        type={
-                          isPassword
-                            ? showPassword
-                              ? "text"
-                              : "password"
-                            : type
-                        }
-                        placeholder={placeholder}
-                        disabled={disabled}
-                        className={`bg-muted rounded-full
-                        ${icon ? "ps-10" : ""} ${isPassword ? "pe-10" : ""}`}
-                      />
+          <Input
+            id={name}
+            name={name}
+            value={value}
+            onChange={onChange}
+            type={isPassword ? (showPassword ? "text" : "password") : type}
+            placeholder={placeholder}
+            disabled={disabled}
+            className={`bg-muted
+                ${icon ? "ps-10" : ""}
+                ${isPassword ? "pe-10" : ""}`}
+          />
 
-                      {isPassword && (
-                        <button
-                          type="button"
-                          onClick={() => setShowPassword((prev) => !prev)}
-                          className="absolute end-3 top-1/2 -translate-y-1/2 text-muted-foreground cursor-pointer"
-                          disabled={disabled}
-                        >
-                          {showPassword ? (
-                            <FiEyeOff size={18} />
-                          ) : (
-                            <FiEye size={18} />
-                          )}
-                        </button>
-                      )}
-                    </div>
-                  )}
-              </div>
-            </FormControl>
+          {isPassword && (
+            <button
+              type="button"
+              onClick={() => setShowPassword((prev) => !prev)}
+              className="absolute end-3 top-1/2 -translate-y-1/2 text-muted-foreground"
+              disabled={disabled}
+            >
+              {showPassword ? <FiEyeOff size={18} /> : <FiEye size={18} />}
+            </button>
+          )}
+        </div>
+      )}
 
-            <FormMessage className="text-red-400" />
-          </FormItem>
-        )}
-      />
+      {error && <p className="text-sm text-red-600">{error}</p>}
     </div>
   );
 };

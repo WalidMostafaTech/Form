@@ -12,6 +12,14 @@ const About = React.lazy(() => import("../pages/About/About"));
 const Shop = React.lazy(() => import("../pages/Shop/Shop"));
 const Products = React.lazy(() => import("../pages/Products/Products"));
 const Product = React.lazy(() => import("../pages/Product/Product"));
+const ContactUS = React.lazy(() => import("../pages/ContactUS/ContactUS"));
+
+const Login = React.lazy(() => import("../pages/Login/Login"));
+const Register = React.lazy(() => import("../pages/Register/Register"));
+const RegisterCompany = React.lazy(() => import("../pages/Register/RegisterCompany/RegisterCompany"));
+const RegisterCustomer = React.lazy(() =>
+  import("../pages/Register/RegisterCustomer/RegisterCustomer")
+);
 
 const NotFound = React.lazy(() => import("../pages/NotFound/NotFound"));
 const ErrorPage = React.lazy(() => import("../pages/ErrorPage/ErrorPage"));
@@ -27,6 +35,12 @@ const router = createBrowserRouter([
       { path: "/shop", element: <Shop /> },
       { path: "/products/:id", element: <Products /> },
       { path: "/product/:id", element: <Product /> },
+      { path: "/contact", element: <ContactUS /> },
+
+      { path: "/login", element: <Login /> },
+      { path: "/register", element: <Register /> },
+      { path: "/register/company", element: <RegisterCompany /> },
+      { path: "/register/customer", element: <RegisterCustomer /> },
 
       // {
       //   element: <ProtectedRoute />,

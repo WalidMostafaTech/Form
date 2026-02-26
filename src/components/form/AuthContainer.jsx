@@ -1,29 +1,35 @@
-import bgImage from "@/assets/images/auth-bg.jpg";
+import bgImage from "@/assets/images/auth-bg.png";
 import logo from "@/assets/images/logo.png";
-import { useSelector } from "react-redux";
+import { GiCoffeeBeans } from "react-icons/gi";
 
-const AuthContainer = ({ children, title, description }) => {
-  const { setting } = useSelector((state) => state.setting);
+const AuthContainer = ({
+  children,
+  title,
+  description,
+  coffeeIcon = false,
+}) => {
   return (
-    <article
-      style={{ backgroundImage: `url(${bgImage})` }}
-      className="bg-cover bg-center p-4 flex items-center justify-center lg:p-0 lg:justify-start"
-    >
-      <section className="min-h-[calc(90vh-1rem)] overflow-y-auto w-full max-w-125 rounded-2xl lg:rounded-none flex flex-col items-center justify-center gap-4 bg-card p-6">
-        <div className="w-26 aspect-video overflow-hidden">
-          <img
-            loading="lazy"
-            src={setting?.header_logo || logo}
-            alt="logo"
-            className="w-full h-full object-contain"
-          />
-        </div>
-        <h3 className="text-2xl font-bold">{title}</h3>
-        <p className="text-sm">{description}</p>
+    <main className="grid grid-cols-1 md:grid-cols-2 h-dvh">
+      <article
+        style={{ backgroundImage: `url(${bgImage})` }}
+        className="bg-cover bg-center p-4 hidden md:flex flex-col justify-between items-center"
+      ></article>
 
-        {children}
+      <section className="flex flex-col justify-center items-center p-8 pt-16 overflow-auto">
+        <hgroup className="text-center space-y-2 mb-6 w-full max-w-sm">
+          {coffeeIcon && (
+            <div className="text-4xl text-primary bg-primary-foreground w-16 h-16 
+            flex items-center justify-center rounded-full mx-auto">
+              <GiCoffeeBeans />
+            </div>
+          )}
+          <h3 className="text-2xl font-bold text-primary">{title}</h3>
+          <p className="text-xs text-muted-foreground">{description}</p>
+        </hgroup>
+
+        <div className="w-full max-w-sm flex flex-col gap-4">{children}</div>
       </section>
-    </article>
+    </main>
   );
 };
 

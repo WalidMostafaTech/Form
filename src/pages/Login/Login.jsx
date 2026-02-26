@@ -1,110 +1,165 @@
+import { useState } from "react";
 import AuthContainer from "@/components/form/AuthContainer";
-import MainInput from "@/components/form/MainInput";
-import FormError from "@/components/form/FormError";
-
-import { Form } from "@/components/ui/form";
-import { Button } from "@/components/ui/button";
-
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation } from "@tanstack/react-query";
-
-import { HiOutlineMail, HiOutlineLockClosed } from "react-icons/hi";
-import { Link, useNavigate } from "react-router";
 import { z } from "zod";
-import { loginUser } from "@/api/authServices";
-import { useDispatch } from "react-redux";
-import { addProfile } from "@/store/profile/profileSlice";
-import { useTranslation } from "react-i18next";
+import MainInput from "@/components/form/MainInput";
+import { Button } from "@/components/ui/button";
+import { FiMail, FiPhone, FiLock } from "react-icons/fi";
+import { Link, useNavigate } from "react-router";
+import PhoneInputField from "@/components/form/PhoneInputField";
+import { isValidPhoneNumber } from "react-phone-number-input";
+
+// Dynamic Schema
+const loginSchema = (type) => {
+  return z.object({
+    email:
+      type === "email"
+        ? z.string().email("Invalid email address")
+        : z.string().optional(),
+
+    phone:
+      type === "phone"
+        ? z
+            .string()
+            .refine((value) => isValidPhoneNumber(value || ""), {
+              message: "Invalid phone number",
+            })
+        : z.string().optional(),
+
+    password: z.string().min(6, "Password must be at least 6 characters"),
+  });
+};
 
 const Login = () => {
+  const [loginType, setLoginType] = useState("email");
+
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const { t } = useTranslation();
 
-  const loginSchema = z.object({
-    email: z.string().email(t("auth.login.invalidEmail")),
-    password: z.string().min(6, t("auth.login.shortPassword")),
-  });
-
-  const form = useForm({
-    resolver: zodResolver(loginSchema),
+  const {
+    handleSubmit,
+    control,
+    formState: { errors },
+    reset,
+  } = useForm({
+    resolver: zodResolver(loginSchema(loginType)),
     defaultValues: {
       email: "",
+      phone: "",
       password: "",
     },
   });
 
-  const {
-    mutate: login,
-    isPending,
-    error,
-  } = useMutation({
-    mutationFn: loginUser,
-    onSuccess: (data) => {
-      navigate("/");
-      dispatch(addProfile({ ...data?.user, image: data?.user?.image_url }));
-    },
-  });
-
   const onSubmit = (data) => {
-    login(data);
+    console.log(data);
+  };
+
+  const handleTabChange = (type) => {
+    setLoginType(type);
+    reset(); // يمسح القيم لما يغير التاب
   };
 
   return (
     <AuthContainer
-      title={t("auth.login.title")}
-      description={t("auth.login.description")}
+      title="Welcome Back"
+      description="Please enter your details to access your account"
     >
-      <Form {...form}>
-        <form
-          onSubmit={form.handleSubmit(onSubmit)}
-          className="space-y-4 w-full"
+      {/* Tabs */}
+      <div className="flex items-center gap-1 bg-muted p-1 rounded-lg">
+        <button
+          type="button"
+          onClick={() => handleTabChange("email")}
+          className={`flex-1 p-2 rounded-md transition cursor-pointer text-sm
+            ${loginType === "email" ? "bg-primary text-white" : "hover:bg-primary/10"}`}
         >
-          <MainInput
-            control={form.control}
+          Email Address
+        </button>
+
+        <button
+          type="button"
+          onClick={() => handleTabChange("phone")}
+          className={`flex-1 p-2 rounded-md transition cursor-pointer text-sm
+            ${loginType === "phone" ? "bg-primary text-white" : "hover:bg-primary/10"}`}
+        >
+          Phone Number
+        </button>
+      </div>
+
+      {/* Form */}
+      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
+        {/* Email / Phone */}
+        {loginType === "email" ? (
+          <Controller
             name="email"
-            label={t("auth.login.emailLabel")}
-            placeholder={t("auth.login.emailPlaceholder")}
-            icon={<HiOutlineMail size={18} />}
+            control={control}
+            render={({ field }) => (
+              <MainInput
+                {...field}
+                type="email"
+                label="Email Address"
+                placeholder="example@example.com"
+                icon={<FiMail size={18} />}
+                error={errors.email?.message}
+              />
+            )}
           />
-
-          <MainInput
-            control={form.control}
-            name="password"
-            label={t("auth.login.passwordLabel")}
-            type="password"
-            icon={<HiOutlineLockClosed size={18} />}
+        ) : (
+          <Controller
+            name="phone"
+            control={control}
+            render={({ field }) => (
+              <PhoneInputField
+                {...field}
+                label="Phone Number"
+                placeholder="Enter your phone number"
+                icon={<FiPhone size={18} />}
+                error={errors.phone?.message}
+              />
+            )}
           />
+        )}
 
-          <Link
-            to="/forgot-password"
-            className="text-sm hover:underline block w-fit ms-auto"
-          >
-            {t("auth.login.forgotPassword")}
-          </Link>
-
-          <Button type="submit" className="w-full" disabled={isPending}>
-            {isPending ? t("auth.login.loading") : t("auth.login.submit")}
-          </Button>
-
-          <p className="text-sm text-center">
-            {t("auth.login.subText")}{" "}
-            <Link
-              to="/register"
-              className="text-purple-500 cursor-pointer hover:underline"
-            >
-              {t("auth.login.register")}
-            </Link>
-          </p>
-
-          {error && (
-            <FormError
-              errorMsg={error.response?.data?.message || t("auth.login.error")}
+        {/* Password */}
+        <Controller
+          name="password"
+          control={control}
+          render={({ field }) => (
+            <MainInput
+              {...field}
+              type="password"
+              label="Password"
+              placeholder="************"
+              icon={<FiLock size={18} />}
+              error={errors.password?.message}
             />
           )}
-        </form>
-      </Form>
+        />
+
+        <Link
+          to={"/forgot-password"}
+          className="inline-block ms-auto text-xs text-primary cursor-pointer hover:underline"
+        >
+          Forget Password?
+        </Link>
+
+        <Button type="submit" className="w-full">
+          Login Your Account
+        </Button>
+      </form>
+
+      <hr className="border-border" />
+
+      <div className="text-center text-xs text-muted-foreground">
+        Dont have an account?
+      </div>
+
+      <Button
+        variant="outline"
+        className="w-full"
+        onClick={() => navigate("/register")}
+      >
+        Create an Account
+      </Button>
     </AuthContainer>
   );
 };

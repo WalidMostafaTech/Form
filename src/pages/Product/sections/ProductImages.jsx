@@ -20,7 +20,7 @@ const ProductImages = ({ images }) => {
             <img
               src={img}
               alt="product"
-              className="w-full h-[500px] object-cover rounded-2xl"
+              className="w-full h-125 object-cover rounded-2xl"
             />
           </SwiperSlide>
         ))}
