@@ -79,7 +79,7 @@ const MainInput = ({
       {type !== "textarea" && type !== "select" && type !== "file" && (
         <div className="relative">
           {icon && (
-            <span className="absolute start-3 top-1/2 -translate-y-1/2 text-muted-foreground pointer-events-none">
+            <span className="absolute inset-s-3 top-1/2 -translate-y-1/2 text-muted-foreground pointer-events-none">
               {icon}
             </span>
           )}
@@ -101,7 +101,7 @@ const MainInput = ({
             <button
               type="button"
               onClick={() => setShowPassword((prev) => !prev)}
-              className="absolute end-3 top-1/2 -translate-y-1/2 text-muted-foreground"
+              className="absolute inset-e-3 top-1/2 -translate-y-1/2 text-muted-foreground"
               disabled={disabled}
             >
               {showPassword ? <FiEyeOff size={18} /> : <FiEye size={18} />}

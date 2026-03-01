@@ -28,6 +28,106 @@
     "button": "Verify your email"
   },
 
+  "ProfileSideBar": {
+    "profile": "Profile",
+    "orders": "Orders",
+    "notifications": "Notifications",
+    "logout": "Logout",
+    "logoutConfirmTitle": "Are you sure you want to log out?",
+    "cancel": "Cancel",
+    "menu": "Menu",
+    "sheetDescription": "User account links"
+  },
+
+  "account": {
+    "chat": "Chat",
+    "personalInfo": "Personal Information",
+
+    "form": {
+      "name": {
+        "label": "Name",
+        "placeholder": "Enter name",
+        "validation": {
+          "min": "Name must be at least 2 characters"
+        }
+      },
+      "email": {
+        "label": "Email",
+        "placeholder": "example@email.com",
+        "validation": {
+          "invalid": "Invalid email address"
+        }
+      },
+      "phone": {
+        "label": "Phone number",
+        "validation": {
+          "invalid": "Invalid phone number"
+        }
+      }
+    },
+
+    "buttons": {
+      "save": "Save changes",
+      "saving": "Saving...",
+      "changePassword": "Change password"
+    },
+
+    "messages": {
+      "success": "Profile updated successfully"
+    }
+  },
+
+  "changePassword": {
+    "title": "Change Password",
+
+    "form": {
+      "currentPassword": {
+        "label": "Current password",
+        "validation": {
+          "min": "Password is too short"
+        }
+      },
+      "newPassword": {
+        "label": "New password",
+        "validation": {
+          "min": "New password is too short"
+        }
+      },
+      "confirmPassword": {
+        "label": "Confirm new password",
+        "validation": {
+          "min": "Password is too short",
+          "match": "Passwords do not match"
+        }
+      }
+    },
+
+    "buttons": {
+      "submit": "Change password",
+      "submitting": "Changing...",
+      "cancel": "Cancel"
+    },
+
+    "messages": {
+      "success": "Password changed successfully"
+    }
+  },
+
+  "notifications": {
+    "title": "Notifications",
+    "subtitle": "Check your notifications",
+
+    "empty": "There are no notifications at the moment.",
+    "markAllRead": "Read all",
+    "loading": "Loading..."
+  },
+
+  "orders": {
+    "title": "Orders",
+    "empty": "No orders found"
+  },
+
+
   "ErrorPage": {
     "title": "An unexpected error occurred",
     "description": "There was a problem loading the page. Please try again later.",

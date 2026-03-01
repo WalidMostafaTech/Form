@@ -3,7 +3,7 @@ import ProfileSideBar from "./ProfileSideBar";
 
 const Profile = () => {
   return (
-    <article className="flex flex-col lg:flex-row">
+    <article className="flex flex-col lg:flex-row pt-16">
       <ProfileSideBar />
 
       <section className="flex-1 min-h-[90vh] p-4 lg:p-6">

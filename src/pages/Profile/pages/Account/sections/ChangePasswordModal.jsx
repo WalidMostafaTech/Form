@@ -8,11 +8,10 @@ import {
   DialogFooter,
 } from "@/components/ui/dialog";
 
-import { Form } from "@/components/ui/form";
 import MainInput from "@/components/form/MainInput";
 import FormError from "@/components/form/FormError";
 
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 
@@ -46,7 +45,12 @@ const ChangePasswordModal = ({ open, onClose }) => {
     });
 
   /* ---------------- form ---------------- */
-  const form = useForm({
+  const {
+    handleSubmit,
+    control,
+    formState: { errors },
+    reset,
+  } = useForm({
     resolver: zodResolver(changePasswordSchema),
     defaultValues: {
       current_password: "",
@@ -60,7 +64,7 @@ const ChangePasswordModal = ({ open, onClose }) => {
     mutationFn: updateProfile,
     onSuccess: () => {
       toast.success(t("changePassword.messages.success"));
-      form.reset();
+      reset();
       onClose();
       setErrorMsg("");
     },
@@ -93,59 +97,78 @@ const ChangePasswordModal = ({ open, onClose }) => {
           </DialogTitle>
         </DialogHeader>
 
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-            <MainInput
-              control={form.control}
-              name="current_password"
-              label={t("changePassword.form.currentPassword.label")}
-              type="password"
-              icon={<FaLock size={18} />}
-            />
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+          {/* Current Password */}
+          <Controller
+            name="current_password"
+            control={control}
+            render={({ field }) => (
+              <MainInput
+                {...field}
+                label={t("changePassword.form.currentPassword.label")}
+                type="password"
+                icon={<FaLock size={18} />}
+                error={errors.current_password?.message}
+              />
+            )}
+          />
 
-            <MainInput
-              control={form.control}
-              name="password"
-              label={t("changePassword.form.newPassword.label")}
-              type="password"
-              icon={<FaLock size={18} />}
-            />
+          {/* New Password */}
+          <Controller
+            name="password"
+            control={control}
+            render={({ field }) => (
+              <MainInput
+                {...field}
+                label={t("changePassword.form.newPassword.label")}
+                type="password"
+                icon={<FaLock size={18} />}
+                error={errors.password?.message}
+              />
+            )}
+          />
 
-            <MainInput
-              control={form.control}
-              name="password_confirmation"
-              label={t("changePassword.form.confirmPassword.label")}
-              type="password"
-              icon={<FaLock size={18} />}
-            />
+          {/* Confirm Password */}
+          <Controller
+            name="password_confirmation"
+            control={control}
+            render={({ field }) => (
+              <MainInput
+                {...field}
+                label={t("changePassword.form.confirmPassword.label")}
+                type="password"
+                icon={<FaLock size={18} />}
+                error={errors.password_confirmation?.message}
+              />
+            )}
+          />
 
-            <DialogFooter className="flex gap-3 pt-2">
-              <Button
-                type="submit"
-                className="flex-1"
-                disabled={changePasswordMutation.isPending}
-              >
-                {changePasswordMutation.isPending
-                  ? t("changePassword.buttons.submitting")
-                  : t("changePassword.buttons.submit")}
-              </Button>
+          <DialogFooter className="flex gap-3 pt-2">
+            <Button
+              type="submit"
+              className="flex-1"
+              disabled={changePasswordMutation.isPending}
+            >
+              {changePasswordMutation.isPending
+                ? t("changePassword.buttons.submitting")
+                : t("changePassword.buttons.submit")}
+            </Button>
 
-              <Button
-                type="button"
-                variant="outline"
-                className="flex-1 rounded-full"
-                onClick={() => {
-                  form.reset();
-                  onClose();
-                }}
-              >
-                {t("changePassword.buttons.cancel")}
-              </Button>
-            </DialogFooter>
+            <Button
+              type="button"
+              variant="outline"
+              className="flex-1"
+              onClick={() => {
+                reset();
+                onClose();
+              }}
+            >
+              {t("changePassword.buttons.cancel")}
+            </Button>
+          </DialogFooter>
 
-            {errorMsg && <FormError errorMsg={errorMsg} />}
-          </form>
-        </Form>
+          {errorMsg && <FormError errorMsg={errorMsg} />}
+        </form>
       </DialogContent>
     </Dialog>
   );

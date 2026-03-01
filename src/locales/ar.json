@@ -28,6 +28,105 @@
     "button": "تفعيل البريد الإلكتروني"
   },
 
+  "ProfileSideBar": {
+    "profile": "الملف الشخصى",
+    "orders": "الطلبات",
+    "notifications": "الاشعارات",
+    "logout": "تسجيل الخروج",
+    "logoutConfirmTitle": "هل أنت متأكد أنك تريد تسجيل الخروج؟",
+    "cancel": "تراجع",
+    "menu": "القائمة",
+    "sheetDescription": "روابط حساب المستخدم"
+  },
+
+  "account": {
+    "chat": "مراسلة",
+    "personalInfo": "البيانات الشخصية",
+
+    "form": {
+      "name": {
+        "label": "الاسم",
+        "placeholder": "أدخل الاسم",
+        "validation": {
+          "min": "الاسم يجب أن يكون حرفين على الأقل"
+        }
+      },
+      "email": {
+        "label": "البريد الإلكتروني",
+        "placeholder": "example@email.com",
+        "validation": {
+          "invalid": "البريد الإلكتروني غير صالح"
+        }
+      },
+      "phone": {
+        "label": "رقم الهاتف",
+        "validation": {
+          "invalid": "رقم الهاتف غير صالح"
+        }
+      }
+    },
+
+    "buttons": {
+      "save": "حفظ التغييرات",
+      "saving": "جاري الحفظ...",
+      "changePassword": "تغيير كلمة المرور"
+    },
+
+    "messages": {
+      "success": "تم تحديث البيانات بنجاح"
+    }
+  },
+
+  "changePassword": {
+    "title": "تغيير كلمة المرور",
+
+    "form": {
+      "currentPassword": {
+        "label": "كلمة المرور الحالية",
+        "validation": {
+          "min": "كلمة المرور قصيرة"
+        }
+      },
+      "newPassword": {
+        "label": "كلمة المرور الجديدة",
+        "validation": {
+          "min": "كلمة المرور الجديدة قصيرة"
+        }
+      },
+      "confirmPassword": {
+        "label": "تأكيد كلمة المرور الجديدة",
+        "validation": {
+          "min": "كلمة المرور قصيرة",
+          "match": "كلمتا المرور غير متطابقتين"
+        }
+      }
+    },
+
+    "buttons": {
+      "submit": "تغيير كلمة المرور",
+      "submitting": "جاري التغيير...",
+      "cancel": "تراجع"
+    },
+
+    "messages": {
+      "success": "تم تغيير كلمة المرور بنجاح"
+    }
+  },
+
+  "notifications": {
+    "title": "الإشعارات",
+    "subtitle": "اطلع على الإشعارات الخاصة بك",
+
+    "empty": "لا توجد إشعارات حالياً.",
+    "markAllRead": "قراءة الكل",
+    "loading": "جاري القراءة..."
+  },
+
+  "orders": {
+    "title": "طلباتى",
+    "empty": "لا يوجد طلبات"
+  },
+
   "notFound": {
     "title": "404",
     "subtitle": "الصفحة غير موجودة",

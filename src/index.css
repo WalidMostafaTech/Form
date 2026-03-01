@@ -79,7 +79,7 @@ input::-webkit-inner-spin-button {
   --muted-foreground: oklch(0.556 0 0);
   --accent: oklch(0.97 0 0);
   --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
+  --destructive: oklch(40.009% 0.16073 27.58);
   --border: oklch(0.922 0 0);
   --input: oklch(0.922 0 0);
   --ring: oklch(0.708 0 0);
@@ -153,6 +153,26 @@ input::-webkit-inner-spin-button {
     @apply w-8 h-8 rounded-full cursor-pointer
     flex items-center justify-center
     bg-primary-foreground text-primary;
+  }
+
+  .sideBarLink {
+    @apply flex items-center gap-2 py-1 px-4 rounded-md cursor-pointer transition-all duration-300;
+
+    &.danger {
+      @apply bg-red-100 text-destructive;
+    }
+
+    &:hover {
+      @apply bg-primary-foreground;
+
+      &.danger {
+        @apply bg-destructive text-white;
+      }
+    }
+
+    &.active {
+      @apply bg-primary text-white;
+    }
   }
 }
 

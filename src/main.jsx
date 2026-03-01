@@ -11,10 +11,12 @@ const queryClient = new QueryClient({
   defaultOptions: { queries: { refetchOnWindowFocus: false } },
 });
 
+const lang = localStorage.getItem("lang") || "en";
+
 createRoot(document.getElementById("root")).render(
   <QueryClientProvider client={queryClient}>
     <Provider store={store}>
-      <DirectionProvider direction="ltr">
+      <DirectionProvider direction={lang === "ar" ? "rtl" : "ltr"}>
         <AppRouter />
       </DirectionProvider>
     </Provider>

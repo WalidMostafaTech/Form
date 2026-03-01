@@ -1,45 +1,67 @@
 import NotificationCard from "@/components/cards/NotificationCard";
+import SectionTitle from "@/components/common/SectionTitle";
 import EmptyDataSection from "@/components/commonSections/EmptyDataSection";
 import NotificationsSkeleton from "@/components/Loading/SkeletonLoading/NotificationsSkeleton";
 import { Button } from "@/components/ui/button";
 
-import {
-  getNotifications,
-  readAllNotifications,
-} from "@/api/notificationsServices";
+// import {
+//   getNotifications,
+//   readAllNotifications,
+// } from "@/api/notificationsServices";
 
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
 
 const Notifications = () => {
   const { t } = useTranslation();
-  const queryClient = useQueryClient();
+  // const queryClient = useQueryClient();
 
-  const { data: notifications, isLoading } = useQuery({
-    queryKey: ["notifications"],
-    queryFn: getNotifications,
-  });
+  // const { data: notifications, isLoading } = useQuery({
+  //   queryKey: ["notifications"],
+  //   queryFn: getNotifications,
+  // });
 
-  const { mutate: markAllAsRead, isPending } = useMutation({
-    mutationFn: readAllNotifications,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["notifications"] });
-      queryClient.invalidateQueries({ queryKey: ["unread-count"] });
-    },
-  });
+  // const { mutate: markAllAsRead, isPending } = useMutation({
+  //   mutationFn: readAllNotifications,
+  //   onSuccess: () => {
+  //     queryClient.invalidateQueries({ queryKey: ["notifications"] });
+  //     queryClient.invalidateQueries({ queryKey: ["unread-count"] });
+  //   },
+  // });
+
+  const notifications = {
+    items: [
+      {
+        id: 1,
+        title: "Order Placed",
+        message: "Your order has been placed successfully.",
+        read_at: null,
+      },
+      {
+        id: 2,
+        title: "Order Shipped",
+        message: "Your order has been shipped.",
+        read_at: null,
+      },
+      {
+        id: 3,
+        title: "Order Delivered",
+        message: "Your order has been delivered.",
+        read_at: "2024-06-01T12:00:00Z",
+      },
+    ],
+  };
+
+  const isLoading = false;
+  const isPending = false;
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h2 className="text-2xl font-bold">{t("notifications.title")}</h2>
-          <p className="text-muted-foreground text-sm">
-            {t("notifications.subtitle")}
-          </p>
-        </div>
+    <div>
+      <div className="flex items-start justify-between">
+        <SectionTitle title={t("notifications.title")} />
 
         {notifications?.items?.length > 0 && (
-          <Button onClick={() => markAllAsRead()} disabled={isPending}>
+          <Button disabled={isPending}>
             {isPending
               ? t("notifications.loading")
               : t("notifications.markAllRead")}
@@ -52,7 +74,7 @@ const Notifications = () => {
       ) : notifications?.items?.length === 0 ? (
         <EmptyDataSection msg={t("notifications.empty")} />
       ) : (
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-2">
           {notifications?.items?.map((notification) => (
             <NotificationCard
               key={notification.id}

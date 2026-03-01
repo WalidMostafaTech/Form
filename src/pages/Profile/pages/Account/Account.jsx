@@ -1,11 +1,10 @@
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslation } from "react-i18next";
 
 import UserAvatar from "@/components/common/UserAvatar";
 import { Button } from "@/components/ui/button";
-import { Form } from "@/components/ui/form";
 import MainInput from "@/components/form/MainInput";
 import PhoneInputField from "@/components/form/PhoneInputField";
 import FormError from "@/components/form/FormError";
@@ -28,7 +27,6 @@ import { toast } from "sonner";
 const Account = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-
   const { profile } = useSelector((state) => state.profile);
 
   const [openChangePassword, setOpenChangePassword] = useState(false);
@@ -51,7 +49,11 @@ const Account = () => {
   });
 
   /* ---------------- form ---------------- */
-  const form = useForm({
+  const {
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm({
     resolver: zodResolver(accountSchema),
     defaultValues: {
       name: profile?.name || "",
@@ -90,24 +92,8 @@ const Account = () => {
 
   return (
     <div className="space-y-6">
-      {/* ===== Header Card ===== */}
-      <div className="card flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-        <div className="flex items-center gap-2">
-          <UserAvatar name={profile?.name} image={profile?.image} size={80} />
-          <h2 className="text-2xl font-bold capitalize">{profile?.name}</h2>
-        </div>
-
-        <Link to="/chat" className="sm:w-[200px]">
-          <Button className="w-full">
-            {t("account.chat")}
-            <BsChatLeftText />
-          </Button>
-        </Link>
-      </div>
-
       {/* ===== Form Card ===== */}
       <div
-        className="card"
         style={{
           pointerEvents: updateProfileMutation.isPending ? "none" : "auto",
         }}
@@ -118,7 +104,7 @@ const Account = () => {
               className="absolute bottom-0 start-0 w-8 h-8 bg-primary rounded-full z-10 cursor-pointer flex items-center justify-center"
               onClick={() => fileInputRef.current?.click()}
             >
-              <FaPen size={16} />
+              <FaPen size={16} className="text-white" />
             </div>
 
             <UserAvatar name={profile?.name} image={avatar} size={100} />
@@ -142,53 +128,79 @@ const Account = () => {
           <h3 className="text-2xl font-bold">{t("account.personalInfo")}</h3>
         </div>
 
-        <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(onSubmit)}
-            className="space-y-4 w-full"
-          >
-            <MainInput
-              control={form.control}
-              name="name"
-              label={t("account.form.name.label")}
-              placeholder={t("account.form.name.placeholder")}
-              icon={<FaUser size={18} />}
-            />
+        {/* ===== Form ===== */}
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="space-y-4 w-full max-w-md mx-auto"
+        >
+          {/* Name */}
+          <Controller
+            name="name"
+            control={control}
+            render={({ field }) => (
+              <MainInput
+                {...field}
+                label={t("account.form.name.label")}
+                placeholder={t("account.form.name.placeholder")}
+                icon={<FaUser size={18} />}
+                error={errors.name?.message}
+              />
+            )}
+          />
 
-            <MainInput
-              control={form.control}
-              name="email"
-              label={t("account.form.email.label")}
-              placeholder={t("account.form.email.placeholder")}
-              icon={<FaEnvelope size={18} />}
-            />
+          {/* Email */}
+          <Controller
+            name="email"
+            control={control}
+            render={({ field }) => (
+              <MainInput
+                {...field}
+                type="email"
+                label={t("account.form.email.label")}
+                placeholder={t("account.form.email.placeholder")}
+                icon={<FaEnvelope size={18} />}
+                error={errors.email?.message}
+              />
+            )}
+          />
 
-            <PhoneInputField
-              control={form.control}
-              name="phone"
-              label={t("account.form.phone.label")}
-            />
+          {/* Phone */}
+          <Controller
+            name="phone"
+            control={control}
+            render={({ field }) => (
+              <PhoneInputField
+                {...field}
+                label={t("account.form.phone.label")}
+                error={errors.phone?.message}
+              />
+            )}
+          />
 
-            <div className="flex flex-col sm:flex-row gap-2">
-              <Button type="submit" disabled={updateProfileMutation.isPending}>
-                {updateProfileMutation.isPending
-                  ? t("account.buttons.saving")
-                  : t("account.buttons.save")}
-              </Button>
+          {/* Buttons */}
+          <div className="flex items-center flex-wrap gap-2">
+            <Button
+              type="submit"
+              className={`flex-1`}
+              disabled={updateProfileMutation.isPending}
+            >
+              {updateProfileMutation.isPending
+                ? t("account.buttons.saving")
+                : t("account.buttons.save")}
+            </Button>
 
-              <Button
-                type="button"
-                variant="outline"
-                className="rounded-full"
-                onClick={() => setOpenChangePassword(true)}
-              >
-                {t("account.buttons.changePassword")}
-              </Button>
-            </div>
+            <Button
+              className={`flex-1`}
+              type="button"
+              variant="outline"
+              onClick={() => setOpenChangePassword(true)}
+            >
+              {t("account.buttons.changePassword")}
+            </Button>
+          </div>
 
-            {errorMsg && <FormError errorMsg={errorMsg} />}
-          </form>
-        </Form>
+          {errorMsg && <FormError errorMsg={errorMsg} />}
+        </form>
       </div>
 
       <ChangePasswordModal

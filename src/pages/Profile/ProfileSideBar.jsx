@@ -8,7 +8,6 @@ import {
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { NavLink } from "react-router";
 import { FaRegBell, FaRegUser } from "react-icons/fa6";
-import { FiShoppingCart } from "react-icons/fi";
 import { IoIosLogOut } from "react-icons/io";
 import { HiOutlineBars3 } from "react-icons/hi2";
 import { Button } from "@/components/ui/button";
@@ -18,12 +17,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { openModal } from "@/store/modals/modalsSlice";
+import { SlHandbag } from "react-icons/sl";
 
 const ProfileSideBar = () => {
   const { t } = useTranslation();
   const [openSideBar, setOpenSideBar] = useState(false);
   const { lang } = useSelector((state) => state.language);
-  const { setting } = useSelector((state) => state.setting);
+  const { settings } = useSelector((state) => state.settings);
 
   const dispatch = useDispatch();
 
@@ -45,7 +45,7 @@ const ProfileSideBar = () => {
         className="sideBarLink"
         onClick={() => setOpenSideBar(false)}
       >
-        <FiShoppingCart />
+        <SlHandbag />
         {t("ProfileSideBar.orders")}
       </NavLink>
 
@@ -59,9 +59,11 @@ const ProfileSideBar = () => {
         {t("ProfileSideBar.notifications")}
       </NavLink>
 
+      <hr className="border-border"/>
+
       <button
         onClick={() => dispatch(openModal("logoutModal"))}
-        className="rounded-full sideBarLink"
+        className="sideBarLink danger"
       >
         <IoIosLogOut />
         {t("ProfileSideBar.logout")}
@@ -71,8 +73,8 @@ const ProfileSideBar = () => {
 
   return (
     <>
-      <aside className="hidden lg:block bg-card w-xs p-6 border-e">
-        <div className="sticky top-28">{sideContent}</div>
+      <aside className="hidden lg:block bg-card w-64 p-6 border-e border-border">
+        <div className="sticky top-20">{sideContent}</div>
       </aside>
 
       <Sheet open={openSideBar} onOpenChange={setOpenSideBar}>
@@ -83,14 +85,14 @@ const ProfileSideBar = () => {
           </Button>
         </SheetTrigger>
 
-        <SheetContent side={lang === "ar" ? "right" : "left"}>
+        <SheetContent side={lang === "ar" ? "right" : "left"} className="w-64">
           <SheetTitle className="flex items-center justify-center">
             <div className="w-20 h-12 overflow-hidden mt-4">
               <img
                 loading="lazy"
-                src={setting?.header_logo || logo}
+                src={settings?.header_logo || logo}
                 alt="logo"
-                className="w-full h-full object-contain"
+                className="w-full h-full object-contain invert"
               />
             </div>
           </SheetTitle>
