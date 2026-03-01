@@ -1,12 +1,7 @@
 import SectionTitle from "@/components/common/SectionTitle";
 import image from "@/assets/images/product-img.png";
 import TestimonialCard from "@/components/cards/TestimonialCard";
-
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation } from "swiper/modules";
-
-import "swiper/css";
-import "swiper/css/navigation";
+import MainSlider from "./MainSlider";
 
 const WhatTheySay = () => {
   const testimonials = [
@@ -64,32 +59,12 @@ const WhatTheySay = () => {
           its origin and the
         </p>
 
-        <Swiper
-          modules={[Navigation]}
-          spaceBetween={24}
-          navigation
-          breakpoints={{
-            0: {
-              slidesPerView: 1.2,
-            },
-            560: {
-              slidesPerView: 1.8,
-            },
-            640: {
-              slidesPerView: 2.3,
-            },
-            1024: {
-              slidesPerView: 3.2,
-            },
-          }}
-          className="categorySwiper"
-        >
-          {testimonials.map((testimonial) => (
-            <SwiperSlide key={testimonial.id}>
-              <TestimonialCard testimonial={testimonial} />
-            </SwiperSlide>
-          ))}
-        </Swiper>
+        <MainSlider
+          data={testimonials}
+          renderItem={(testimonial) => (
+            <TestimonialCard testimonial={testimonial} />
+          )}
+        />
       </div>
     </section>
   );

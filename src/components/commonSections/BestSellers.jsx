@@ -1,13 +1,7 @@
 import SectionTitle from "@/components/common/SectionTitle";
 import image from "@/assets/images/product-img.png";
 import ProductCard from "@/components/cards/ProductCard";
-
-// Swiper
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation } from "swiper/modules";
-
-import "swiper/css";
-import "swiper/css/navigation";
+import MainSlider from "./MainSlider";
 
 const BestSellers = () => {
   const products = [
@@ -73,32 +67,16 @@ const BestSellers = () => {
           linkText={"view all products"}
         />
 
-        <Swiper
-          modules={[Navigation]}
-          spaceBetween={24}
-          navigation
+        <MainSlider
+          data={products}
           breakpoints={{
-            0: {
-              slidesPerView: 2,
-            },
-            560: {
-              slidesPerView: 2.8,
-            },
-            640: {
-              slidesPerView: 3.3,
-            },
-            1024: {
-              slidesPerView: 4.2,
-            },
+            0: { slidesPerView: 2 },
+            560: { slidesPerView: 2.8 },
+            640: { slidesPerView: 3.3 },
+            1024: { slidesPerView: 4.2 },
           }}
-          className="categorySwiper"
-        >
-          {products.map((product) => (
-            <SwiperSlide key={product.id}>
-              <ProductCard product={product} />
-            </SwiperSlide>
-          ))}
-        </Swiper>
+          renderItem={(product) => <ProductCard product={product} />}
+        />
       </div>
     </section>
   );

@@ -1,13 +1,7 @@
 import SectionTitle from "@/components/common/SectionTitle";
 import image from "@/assets/images/product-img.png";
 import CategoryCard from "@/components/cards/CategoryCard";
-
-// Swiper
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation } from "swiper/modules";
-
-import "swiper/css";
-import "swiper/css/navigation";
+import MainSlider from "@/components/commonSections/MainSlider";
 
 const CategorySection = () => {
   const categories = [
@@ -50,32 +44,10 @@ const CategorySection = () => {
       <div className="container">
         <SectionTitle title="shop by" spanTitle="category" />
 
-        <Swiper
-          modules={[Navigation]}
-          spaceBetween={24}
-          navigation
-          breakpoints={{
-            0: {
-              slidesPerView: 1.2,
-            },
-            560: {
-              slidesPerView: 1.8,
-            },
-            640: {
-              slidesPerView: 2.3,
-            },
-            1024: {
-              slidesPerView: 3.2,
-            },
-          }}
-          className="categorySwiper"
-        >
-          {categories.map((category) => (
-            <SwiperSlide key={category.id}>
-              <CategoryCard category={category} />
-            </SwiperSlide>
-          ))}
-        </Swiper>
+        <MainSlider
+          data={categories}
+          renderItem={(category) => <CategoryCard category={category} />}
+        />
       </div>
     </section>
   );

@@ -148,6 +148,12 @@ input::-webkit-inner-spin-button {
   .pagePadding {
     @apply py-6 md:py-10;
   }
+
+  .main_slider_btn {
+    @apply w-8 h-8 rounded-full cursor-pointer
+    flex items-center justify-center
+    bg-primary-foreground text-primary;
+  }
 }
 
 .phone-input-wrapper .PhoneInputInput {

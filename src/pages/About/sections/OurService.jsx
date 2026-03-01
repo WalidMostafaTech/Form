@@ -1,13 +1,7 @@
 import SectionTitle from "@/components/common/SectionTitle";
 import image from "@/assets/images/product-img.png";
 import ServiceCard from "@/components/cards/ServiceCard";
-
-// Swiper
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation } from "swiper/modules";
-
-import "swiper/css";
-import "swiper/css/navigation";
+import MainSlider from "@/components/commonSections/MainSlider";
 
 const OurService = () => {
   const services = [
@@ -46,32 +40,10 @@ const OurService = () => {
       <div className="container">
         <SectionTitle title="Our" spanTitle="Services" />
 
-        <Swiper
-          modules={[Navigation]}
-          spaceBetween={24}
-          navigation
-          breakpoints={{
-            0: {
-              slidesPerView: 1.2,
-            },
-            560: {
-              slidesPerView: 1.8,
-            },
-            640: {
-              slidesPerView: 2.3,
-            },
-            1024: {
-              slidesPerView: 3.2,
-            },
-          }}
-          className="categorySwiper"
-        >
-          {services.map((service) => (
-            <SwiperSlide key={service.id}>
-              <ServiceCard service={service} />
-            </SwiperSlide>
-          ))}
-        </Swiper>
+        <MainSlider
+          data={services}
+          renderItem={(service) => <ServiceCard service={service} />}
+        />
       </div>
     </section>
   );

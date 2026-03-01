@@ -8,7 +8,7 @@ const PageBanner = ({ image, title, description }) => {
 
       <div className="relative z-10 container h-full pt-20 pb-10 flex flex-col items-start justify-end gap-2">
         {title && (
-          <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white">
+          <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white capitalize">
             {title}
           </h1>
         )}

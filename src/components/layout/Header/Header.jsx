@@ -65,9 +65,12 @@ const Header = () => {
 
           <LanguageSwitcher />
 
-          <button className="text-white text-xl hover:text-secondary transition-colors duration-300 cursor-pointer">
+          <Link
+            to="/cart"
+            className="text-white text-xl hover:text-secondary transition-colors duration-300 cursor-pointer"
+          >
             <SlHandbag />
-          </button>
+          </Link>
         </div>
       </div>
     </header>

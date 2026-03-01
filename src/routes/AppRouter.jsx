@@ -15,14 +15,31 @@ const Products = React.lazy(() => import("../pages/Products/Products"));
 const Product = React.lazy(() => import("../pages/Product/Product"));
 const ContactUS = React.lazy(() => import("../pages/ContactUS/ContactUS"));
 
+const Cart = React.lazy(() => import("../pages/Cart/Cart"));
+
+const Profile = React.lazy(() => import("../pages/Profile/Profile"));
+const Account = React.lazy(
+  () => import("../pages/Profile/pages/Account/Account"),
+);
+const Orders = React.lazy(() => import("../pages/Profile/pages/Orders/Orders"));
+const Notifications = React.lazy(
+  () => import("../pages/Profile/pages/Notifications/Notifications"),
+);
+
 const Login = React.lazy(() => import("../pages/Login/Login"));
 const Register = React.lazy(() => import("../pages/Register/Register"));
-const RegisterCompany = React.lazy(() => import("../pages/Register/RegisterCompany/RegisterCompany"));
-const RegisterCustomer = React.lazy(() =>
-  import("../pages/Register/RegisterCustomer/RegisterCustomer")
+const RegisterCompany = React.lazy(
+  () => import("../pages/Register/RegisterCompany/RegisterCompany"),
 );
-const VerifyEmail = React.lazy(() => import("../pages/VerifyEmail/VerifyEmail"));
-const ForgotPassword = React.lazy(() => import("../pages/ForgotPassword/ForgotPassword"));
+const RegisterCustomer = React.lazy(
+  () => import("../pages/Register/RegisterCustomer/RegisterCustomer"),
+);
+const VerifyEmail = React.lazy(
+  () => import("../pages/VerifyEmail/VerifyEmail"),
+);
+const ForgotPassword = React.lazy(
+  () => import("../pages/ForgotPassword/ForgotPassword"),
+);
 
 const NotFound = React.lazy(() => import("../pages/NotFound/NotFound"));
 const ErrorPage = React.lazy(() => import("../pages/ErrorPage/ErrorPage"));
@@ -40,6 +57,18 @@ const router = createBrowserRouter([
       { path: "/products/:id", element: <Products /> },
       { path: "/product/:id", element: <Product /> },
       { path: "/contact", element: <ContactUS /> },
+
+      { path: "/cart", element: <Cart /> },
+
+      {
+        path: "/profile",
+        element: <Profile />,
+        children: [
+          { index: true, element: <Account /> },
+          { path: "orders", element: <Orders /> },
+          { path: "notifications", element: <Notifications /> },
+        ],
+      },
 
       { path: "/login", element: <Login /> },
       { path: "/register", element: <Register /> },
