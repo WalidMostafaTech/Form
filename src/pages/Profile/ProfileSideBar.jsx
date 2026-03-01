@@ -59,7 +59,7 @@ const ProfileSideBar = () => {
         {t("ProfileSideBar.notifications")}
       </NavLink>
 
-      <hr className="border-border"/>
+      <hr className="border-border" />
 
       <button
         onClick={() => dispatch(openModal("logoutModal"))}
@@ -79,7 +79,7 @@ const ProfileSideBar = () => {
 
       <Sheet open={openSideBar} onOpenChange={setOpenSideBar}>
         <SheetTrigger asChild className="lg:hidden w-fit mt-4 ms-4">
-          <Button>
+          <Button variant="outline">
             <HiOutlineBars3 />
             {t("ProfileSideBar.menu")}
           </Button>

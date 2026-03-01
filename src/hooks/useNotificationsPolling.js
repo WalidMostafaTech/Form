@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { getNewNotifications } from "@/api/notificationsServices";
 
-const useNotificationsPolling = ({ lastId, profile }) => {
+const useNotificationsPolling = ({ lastId, user }) => {
   const queryClient = useQueryClient();
   const initializedRef = useRef(false);
 
@@ -16,7 +16,7 @@ const useNotificationsPolling = ({ lastId, profile }) => {
   const { data: newNotifications } = useQuery({
     queryKey: ["new-notifications", lastId],
     queryFn: () => getNewNotifications(lastId),
-    enabled: !!profile && !!lastId,
+    enabled: !!user && !!lastId,
     refetchInterval: 20000,
     refetchOnWindowFocus: false,
   });

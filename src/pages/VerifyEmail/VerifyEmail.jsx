@@ -19,17 +19,17 @@ import FormError from "@/components/form/FormError";
 import { sendOtpVerifyEmail, verifyEmail } from "@/api/verifyEmailServices";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  addProfile,
+  addUser,
   clearProfile,
-  logoutAct,
-} from "@/store/profile/profileSlice";
+  logoutAction,
+} from "@/store/user/userActions";
 
 const otpSchema = z.object({
   otp: z.string().length(6, "OTP must be 6 digits"),
 });
 
 const VerifyEmail = () => {
-  const { profile } = useSelector((state) => state.profile);
+  const { user } = useSelector((state) => state.user);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -58,10 +58,10 @@ const VerifyEmail = () => {
   });
 
   useEffect(() => {
-    if (profile?.email && !otpSent) {
-      sendOtpMutation(profile.email);
+    if (user?.email && !otpSent) {
+      sendOtpMutation(user.email);
     }
-  }, [profile?.email, otpSent]);
+  }, [user?.email, otpSent]);
 
   /* ================== Verify ================== */
   const {
@@ -71,7 +71,7 @@ const VerifyEmail = () => {
   } = useMutation({
     mutationFn: ({ email, code }) => verifyEmail({ email, code }),
     onSuccess: (data) => {
-      dispatch(addProfile(data?.user));
+      dispatch(addUser(data?.user));
       navigate("/", { replace: true });
     },
   });
@@ -90,17 +90,17 @@ const VerifyEmail = () => {
   /* ================== Handlers ================== */
   const onSubmit = (data) => {
     verifyEmailMutation({
-      email: profile?.email,
+      email: user?.email,
       code: data.otp,
     });
   };
 
   const handleResend = () => {
-    sendOtpMutation(profile?.email);
+    sendOtpMutation(user?.email);
   };
 
   const handleBackToRegister = () => {
-    dispatch(logoutAct());
+    dispatch(logoutAction());
     dispatch(clearProfile());
     navigate(`/register`, { replace: true });
   };

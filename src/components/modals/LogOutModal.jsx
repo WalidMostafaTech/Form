@@ -1,5 +1,5 @@
 import logoutIcon from "@/assets/icons/logout-icon.png";
-import { logoutAct } from "@/store/profile/profileSlice";
+import { logoutAction } from "@/store/user/userActions";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { Button } from "@/components/ui/button";
@@ -25,7 +25,7 @@ const LogOutModal = () => {
   };
 
   const handleLogout = () => {
-    dispatch(logoutAct())
+    dispatch(logoutAction())
       .unwrap()
       .then(() => onClose());
   };

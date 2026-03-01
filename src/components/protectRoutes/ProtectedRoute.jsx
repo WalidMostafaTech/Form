@@ -3,12 +3,12 @@ import { useSelector } from "react-redux";
 import LoadingPage from "../Loading/LoadingPage";
 
 const ProtectedRoute = () => {
-  const { profile, loading } = useSelector((state) => state.profile);
+  const { user, loading } = useSelector((state) => state.user);
 
   if (loading) return <LoadingPage />;
 
   // لو مفيش user → رجّعه لصفحة login
-  if (!profile) {
+  if (!user) {
     return <Navigate to="/login" replace />;
   }
 

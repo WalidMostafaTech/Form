@@ -19,19 +19,19 @@ import useNotificationsPolling from "@/hooks/useNotificationsPolling";
 
 const NotificationsPopUp = () => {
   const [openNotifications, setOpenNotifications] = useState(false);
-  const { profile } = useSelector((state) => state.profile);
+  const { user } = useSelector((state) => state.user);
   const { t } = useTranslation();
 
   const { data: notifications, isLoading } = useQuery({
     queryKey: ["notifications"],
     queryFn: getNotifications,
-    enabled: !!profile,
+    enabled: !!user,
   });
 
   const { data: unreadNotifications = 0 } = useQuery({
     queryKey: ["unread-count", "notification"],
     queryFn: () => getUnreadCount("notification"),
-    enabled: !!profile,
+    enabled: !!user,
   });
 
   // استخراج اخر id
@@ -41,7 +41,7 @@ const NotificationsPopUp = () => {
       : null;
 
   // تشغيل polling
-  useNotificationsPolling({ lastId, profile });
+  useNotificationsPolling({ lastId, user });
 
   return (
     <Popover open={openNotifications} onOpenChange={setOpenNotifications}>

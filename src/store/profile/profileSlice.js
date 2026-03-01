@@ -16,8 +16,8 @@ export const getProfileAct = createAsyncThunk(
   },
 );
 
-export const logoutAct = createAsyncThunk(
-  "profile/logoutAct",
+export const logoutAction = createAsyncThunk(
+  "profile/logoutAction",
   async (_, { rejectWithValue }) => {
     try {
       const data = await logoutUser();
@@ -65,15 +65,15 @@ const profileSlice = createSlice({
       })
 
       // log out
-      .addCase(logoutAct.pending, (state) => {
+      .addCase(logoutAction.pending, (state) => {
         state.logOutLoading = true;
         state.error = null;
       })
-      .addCase(logoutAct.fulfilled, (state) => {
+      .addCase(logoutAction.fulfilled, (state) => {
         state.logOutLoading = false;
         state.profile = null;
       })
-      .addCase(logoutAct.rejected, (state, action) => {
+      .addCase(logoutAction.rejected, (state, action) => {
         state.logOutLoading = false;
         state.error = action.payload;
       });

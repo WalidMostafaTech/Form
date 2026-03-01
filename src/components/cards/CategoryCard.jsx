@@ -4,7 +4,7 @@ const CategoryCard = ({ category }) => {
   return (
     <div
       key={category.id}
-      className="relative h-[400px] rounded-xl overflow-hidden group cursor-pointer bg-cover bg-center"
+      className="relative h-100 rounded-xl overflow-hidden group cursor-pointer bg-cover bg-center"
       style={{ backgroundImage: `url(${category.image})` }}
     >
       {/* Overlay */}

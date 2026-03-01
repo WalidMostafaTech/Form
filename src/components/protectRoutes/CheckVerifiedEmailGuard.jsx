@@ -7,11 +7,11 @@ import { useTranslation } from "react-i18next";
 
 const CheckVerifiedEmailGuard = ({ children }) => {
   const { t } = useTranslation();
-  const { profile, loading } = useSelector((state) => state.profile);
+  const { user, loading } = useSelector((state) => state.user);
 
   if (loading) return <LoadingPage />;
 
-  if (!profile?.is_verified) {
+  if (!user?.is_verified) {
     return (
       <section className="h-[90vh] flex flex-col items-center justify-center gap-4 text-center">
         <CiWarning className="text-[120px] text-primary" />

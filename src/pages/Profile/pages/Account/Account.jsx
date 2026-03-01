@@ -9,7 +9,6 @@ import MainInput from "@/components/form/MainInput";
 import PhoneInputField from "@/components/form/PhoneInputField";
 import FormError from "@/components/form/FormError";
 
-import { BsChatLeftText } from "react-icons/bs";
 import { FaUser, FaEnvelope, FaPen } from "react-icons/fa";
 import { isValidPhoneNumber } from "react-phone-number-input";
 
@@ -20,18 +19,17 @@ import { updateProfile } from "@/api/authServices";
 
 import { useDispatch, useSelector } from "react-redux";
 import { useRef, useState } from "react";
-import { addProfile } from "@/store/profile/profileSlice";
-import { Link } from "react-router";
+import { addUser } from "@/store/user/userSlice";
 import { toast } from "sonner";
 
 const Account = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const { profile } = useSelector((state) => state.profile);
+  const { user } = useSelector((state) => state.user);
 
   const [openChangePassword, setOpenChangePassword] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
-  const [avatar, setAvatar] = useState(profile?.image || null);
+  const [avatar, setAvatar] = useState(user?.image || null);
 
   const fileInputRef = useRef(null);
 
@@ -56,9 +54,9 @@ const Account = () => {
   } = useForm({
     resolver: zodResolver(accountSchema),
     defaultValues: {
-      name: profile?.name || "",
-      email: profile?.email || "",
-      phone: profile?.phone || "",
+      name: user?.name || "",
+      email: user?.email || "",
+      phone: user?.phone || "",
     },
     mode: "onChange",
   });
@@ -67,7 +65,7 @@ const Account = () => {
   const updateProfileMutation = useMutation({
     mutationFn: updateProfile,
     onSuccess: (data) => {
-      dispatch(addProfile(data));
+      dispatch(addUser(data));
       setErrorMsg("");
       toast.success(t("account.messages.success"));
     },
@@ -101,13 +99,13 @@ const Account = () => {
         <div className="flex flex-col items-center gap-2">
           <div className="relative">
             <div
-              className="absolute bottom-0 start-0 w-8 h-8 bg-primary rounded-full z-10 cursor-pointer flex items-center justify-center"
+              className="absolute bottom-0 inset-s-0 w-8 h-8 bg-primary rounded-full z-10 cursor-pointer flex items-center justify-center"
               onClick={() => fileInputRef.current?.click()}
             >
               <FaPen size={16} className="text-white" />
             </div>
 
-            <UserAvatar name={profile?.name} image={avatar} size={100} />
+            <UserAvatar name={user?.name} image={avatar} size={100} />
 
             <input
               type="file"

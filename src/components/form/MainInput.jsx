@@ -53,7 +53,7 @@ const MainInput = ({
             <SelectValue placeholder={placeholder} />
           </SelectTrigger>
 
-          <SelectContent>
+          <SelectContent className={"border-border"}>
             {options.map((option) => (
               <SelectItem key={option.value} value={option.value}>
                 {option.label}

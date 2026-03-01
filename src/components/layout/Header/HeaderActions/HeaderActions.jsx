@@ -15,12 +15,12 @@ const HeaderActions = () => {
   const navigate = useNavigate();
   const requireAuth = useRequireAuth();
 
-  const { profile } = useSelector((state) => state.profile);
+  const { user } = useSelector((state) => state.user);
 
   const { data: unreadChats = 0 } = useQuery({
     queryKey: ["unread-count", "chat"],
     queryFn: () => getUnreadCount("chat"),
-    enabled: !!profile,
+    enabled: !!user,
     refetchInterval: 20000,
     refetchIntervalInBackground: true,
   });
@@ -35,7 +35,7 @@ const HeaderActions = () => {
     <div className="flex items-center justify-end gap-2 flex-1">
       <HeaderSearch />
 
-      {profile && (
+      {user && (
         <>
           <Button
             variant="outline"

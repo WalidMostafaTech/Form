@@ -1,6 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
-import settingsReducer from "./settings/settings";
+import settingsReducer from "./settings/settingsSlice";
 import profileReducer from "./profile/profileSlice";
+import userReducer from "./user/userSlice";
 import languageReducer from "./languageSlice/languageSlice";
 import modalsReducer from "./modals/modalsSlice";
 
@@ -8,6 +9,7 @@ export const store = configureStore({
   reducer: {
     settings: settingsReducer,
     profile: profileReducer,
+    user: userReducer,
     language: languageReducer,
     modals: modalsReducer,
   },

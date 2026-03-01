@@ -1,5 +1,5 @@
 import logo from "@/assets/images/logo.png";
-import { Link } from "react-router";
+import { Link, NavLink, useLocation } from "react-router";
 import { SlHandbag } from "react-icons/sl";
 import LanguageSwitcher from "./LanguageSwitcher";
 import { useEffect, useState } from "react";
@@ -9,12 +9,26 @@ const Header = () => {
     { name: "Home", href: "/" },
     { name: "About", href: "/about" },
     { name: "Shope", href: "/shop" },
-    { name: "Wholesale", href: "/wholesale" },
+    { name: "Wholesale", href: "/" },
     { name: "Location", href: "/location" },
     { name: "Contact Us", href: "/contact" },
   ];
 
   const [scrolled, setScrolled] = useState(false);
+  const location = useLocation();
+
+  const coloredPages = [
+    "/login",
+    "/register",
+    "/register/company",
+    "/register/customer",
+    "/verify-email",
+    "/forgot-password",
+    "/profile",
+    "/profile/orders",
+    "/profile/notifications",
+  ];
+  const isColoredPage = coloredPages.includes(location.pathname);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -31,9 +45,8 @@ const Header = () => {
   return (
     <header
       className={`fixed top-0 left-0 right-0 py-4 z-50 transition-all duration-500 ${
-        scrolled
-          ? // ? "bg-linear-to-b from-primary via-primary/60 to-primary/10"
-            "bg-primary/80 backdrop-blur-sm shadow-lg"
+        scrolled || isColoredPage
+          ? "bg-primary/90 backdrop-blur-sm shadow-lg"
           : "bg-transparent"
       }`}
     >
@@ -44,13 +57,9 @@ const Header = () => {
 
         <nav className="hidden lg:flex items-center gap-6">
           {links.map((link) => (
-            <Link
-              key={link.name}
-              to={link.href}
-              className="text-sm text-white hover:text-secondary transition-colors duration-300"
-            >
+            <NavLink key={link.name} to={link.href} className="nav_link">
               {link.name}
-            </Link>
+            </NavLink>
           ))}
         </nav>
 

@@ -1,21 +1,7 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { getSettings } from "../../api/mainServices";
+import { createSlice } from "@reduxjs/toolkit";
+import { fetchSettings } from "./settingsActions";
 
-export const fetchSettings = createAsyncThunk(
-  "settings/fetchSettings",
-  async (_, { rejectWithValue }) => {
-    try {
-      const data = await getSettings();
-      return data;
-    } catch (error) {
-      return rejectWithValue(
-        error.response?.data.error_msg || "Failed to load settingss",
-      );
-    }
-  },
-);
-
-const appSettings = createSlice({
+const settingsSlice = createSlice({
   name: "settings",
   initialState: {
     settings: {},
@@ -40,4 +26,4 @@ const appSettings = createSlice({
   },
 });
 
-export default appSettings.reducer;
+export default settingsSlice.reducer;

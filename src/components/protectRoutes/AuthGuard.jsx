@@ -3,12 +3,12 @@ import { useSelector } from "react-redux";
 import LoadingPage from "../Loading/LoadingPage";
 
 const AuthGuard = () => {
-  const { profile, loading } = useSelector((state) => state.profile);
+  const { user, loading } = useSelector((state) => state.user);
 
   if (loading) return <LoadingPage />;
 
   // لو user موجود → رجّعه للهوم
-  if (profile) {
+  if (user) {
     return <Navigate to="/" replace />;
   }
 

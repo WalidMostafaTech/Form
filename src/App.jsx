@@ -3,8 +3,8 @@ import Header from "@/components/layout/Header/Header";
 import Footer from "@/components/layout/Footer/Footer";
 import { useEffect } from "react";
 // import { useDispatch } from "react-redux";
-// import { getProfileAct } from "@/store/profile/profileSlice";
-// import { fetchSettings } from "@/store/settings/settings";
+// import { getUser } from "@/store/user/userActions.js";
+// import { fetchSettings } from "@/store/settings/settingsActions.js";
 import { Toaster } from "@/components/ui/sonner";
 import LogOutModal from "@/components/modals/LogOutModal";
 import RequiredLoginModal from "@/components/modals/RequiredLoginModal";
@@ -15,7 +15,7 @@ function App() {
   // const dispatch = useDispatch();
 
   // useEffect(() => {
-  //   dispatch(getProfileAct());
+  //   dispatch(getUser());
   //   dispatch(fetchSettings());
   // }, [dispatch]);
 

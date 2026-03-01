@@ -23,18 +23,18 @@ const ProfileSide = () => {
   const navigate = useNavigate();
 
   const { lang } = useSelector((state) => state.language);
-  const { profile, loading } = useSelector((state) => state.profile);
+  const { user, loading } = useSelector((state) => state.user);
 
   return (
     <>
       {loading ? (
         <Skeleton className="h-9 w-9 rounded-full" />
-      ) : profile ? (
+      ) : user ? (
         <DropdownMenu>
           <DropdownMenuTrigger>
             <UserAvatar
-              name={profile?.name}
-              image={profile?.image}
+              name={user?.name}
+              image={user?.image}
               className="cursor-pointer"
             />
           </DropdownMenuTrigger>
@@ -45,8 +45,8 @@ const ProfileSide = () => {
             className={`w-52`}
           >
             <DropdownMenuLabel className="flex items-center gap-2">
-              <UserAvatar name={profile?.name} image={profile?.image} />
-              <h3 className="font-semibold">{profile?.name}</h3>
+              <UserAvatar name={user?.name} image={user?.image} />
+              <h3 className="font-semibold">{user?.name}</h3>
             </DropdownMenuLabel>
 
             <DropdownMenuSeparator />
