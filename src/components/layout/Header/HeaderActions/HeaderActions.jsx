@@ -1,59 +1,34 @@
-import { useNavigate } from "react-router";
-import { Button } from "@/components/ui/button";
 import LanguageSwitcher from "./LanguageSwitcher";
 import { useSelector } from "react-redux";
-import { useQuery } from "@tanstack/react-query";
-import { getUnreadCount } from "@/services/mainServices";
-import NotificationsPopUp from "./NotificationsPopUp";
-import NotificationsBadge from "@/components/common/NotificationsBadge";
 import ProfileSide from "./ProfileSide";
-import HeaderSearch from "./HeaderSearch";
-import useRequireAuth from "@/hooks/useRequireAuth";
-import { BsChatLeftText } from "react-icons/bs";
+import { Link } from "react-router";
+import { SlHandbag } from "react-icons/sl";
+import { FaRegBell } from "react-icons/fa";
 
 const HeaderActions = () => {
-  const navigate = useNavigate();
-  const requireAuth = useRequireAuth();
-
   const { user } = useSelector((state) => state.user);
 
-  const { data: unreadChats = 0 } = useQuery({
-    queryKey: ["unread-count", "chat"],
-    queryFn: () => getUnreadCount("chat"),
-    enabled: !!user,
-    refetchInterval: 20000,
-    refetchIntervalInBackground: true,
-  });
-
-  const handleGoToChat = () => {
-    requireAuth(() => {
-      navigate("/chat");
-    });
-  };
-
   return (
-    <div className="flex items-center justify-end gap-2 flex-1">
-      <HeaderSearch />
-
-      {user && (
-        <>
-          <Button
-            variant="outline"
-            size="icon"
-            className="rounded-full relative"
-            onClick={handleGoToChat}
-          >
-            <BsChatLeftText />
-
-            <NotificationsBadge count={unreadChats} />
-          </Button>
-
-          <NotificationsPopUp />
-        </>
-      )}
+    <div className="flex items-center gap-2 md:gap-4">
+      <Link
+        to="/login"
+        className="bg-white px-4 py-1 rounded-md text-primary 
+            hover:text-white hover:bg-primary transition-all duration-300"
+      >
+        Login
+      </Link>
 
       <LanguageSwitcher />
+
       <ProfileSide />
+
+      <Link to="/cart">
+        <SlHandbag className="text-white text-xl hover:text-secondary transition-colors duration-300 cursor-pointer" />
+      </Link>
+
+      <div>
+        <FaRegBell className="text-white text-xl hover:text-secondary transition-colors duration-300 cursor-pointer" />
+      </div>
     </div>
   );
 };

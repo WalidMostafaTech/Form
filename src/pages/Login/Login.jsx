@@ -9,6 +9,9 @@ import { FiMail, FiPhone, FiLock } from "react-icons/fi";
 import { Link, useNavigate } from "react-router";
 import PhoneInputField from "@/components/form/PhoneInputField";
 import { isValidPhoneNumber } from "react-phone-number-input";
+import FormError from "@/components/form/FormError";
+import { useMutation } from "@tanstack/react-query";
+import { loginUser } from "@/api/authServices";
 
 // Dynamic Schema
 const loginSchema = (type) => {
@@ -20,11 +23,9 @@ const loginSchema = (type) => {
 
     phone:
       type === "phone"
-        ? z
-            .string()
-            .refine((value) => isValidPhoneNumber(value || ""), {
-              message: "Invalid phone number",
-            })
+        ? z.string().refine((value) => isValidPhoneNumber(value || ""), {
+            message: "Invalid phone number",
+          })
         : z.string().optional(),
 
     password: z.string().min(6, "Password must be at least 6 characters"),
@@ -50,8 +51,25 @@ const Login = () => {
     },
   });
 
+  const {
+    mutate: loginMutate,
+    isPending,
+    error,
+  } = useMutation({
+    mutationFn: loginUser,
+    onSuccess: (data) => {
+      console.log("Login Success:", data);
+      navigate("/"); // روح للهوم بعد النجاح
+    },
+    onError: (err) => {
+      console.log("Login Error:", err);
+    },
+  });
+
   const onSubmit = (data) => {
-    console.log(data);
+    console.log("form login:", data);
+
+    loginMutate(data);
   };
 
   const handleTabChange = (type) => {
@@ -142,12 +160,18 @@ const Login = () => {
           Forget Password?
         </Link>
 
-        <Button type="submit" className="w-full">
-          Login Your Account
+        <Button type="submit" className="w-full" disabled={isPending}>
+          {isPending ? "Logging in..." : "Login Your Account"}
         </Button>
       </form>
 
-      <hr className="border-border" />
+      {error && (
+        <FormError
+          errorMsg={error?.response?.data?.message || "Something went wrong"}
+        />
+      )}
+
+      <hr className="" />
 
       <div className="text-center text-xs text-muted-foreground">
         Dont have an account?

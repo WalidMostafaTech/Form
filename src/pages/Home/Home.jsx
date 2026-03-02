@@ -4,8 +4,17 @@ import CategorySection from "./sections/CategorySection";
 import BestSellers from "../../components/commonSections/BestSellers";
 import WhyChooseForm from "./sections/WhyChooseForm";
 import WhatTheySay from "../../components/commonSections/WhatTheySay";
+import { useQuery } from "@tanstack/react-query";
+import { getHome } from "@/api/homeServices";
 
 const Home = () => {
+  const { data: homeData, isLoading } = useQuery({
+    queryKey: ["home"],
+    queryFn: getHome,
+  });
+
+  // if (isLoading) return <div>Loading...</div>;
+
   return (
     <main>
       <Hero />

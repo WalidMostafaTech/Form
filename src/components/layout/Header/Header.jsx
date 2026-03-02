@@ -1,34 +1,37 @@
 import logo from "@/assets/images/logo.png";
-import { Link, NavLink, useLocation } from "react-router";
-import { SlHandbag } from "react-icons/sl";
-import LanguageSwitcher from "./LanguageSwitcher";
+import { Link, useLocation } from "react-router";
 import { useEffect, useState } from "react";
+import NavBar from "./NavBar";
+import HeaderActions from "./HeaderActions/HeaderActions";
 
 const Header = () => {
   const links = [
-    { name: "Home", href: "/" },
-    { name: "About", href: "/about" },
-    { name: "Shope", href: "/shop" },
-    { name: "Wholesale", href: "/" },
-    { name: "Location", href: "/location" },
-    { name: "Contact Us", href: "/contact" },
+    { name: "Home", href: "/", items: [] },
+    { name: "About", href: "/about", items: [] },
+    {
+      name: "Shope",
+      href: "/shop",
+      items: [
+        { name: "All", href: "/shop" },
+        { name: "Coffee Menu", href: "/shop?category=coffee-menu" },
+        { name: "Coffee Beans", href: "/shop?category=coffee-beans" },
+        { name: "Accessories", href: "/shop?category=accessories" },
+      ],
+    },
+    { name: "Wholesale", href: "/", items: [] },
+    { name: "Location", href: "/location", items: [] },
+    { name: "Contact Us", href: "/contact", items: [] },
   ];
 
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
 
-  const coloredPages = [
-    "/login",
-    "/register",
-    "/register/company",
-    "/register/customer",
-    "/verify-email",
-    "/forgot-password",
-    "/profile",
-    "/profile/orders",
-    "/profile/notifications",
-  ];
-  const isColoredPage = coloredPages.includes(location.pathname);
+  const coloredPages = ["/login", "/verify-email", "/forgot-password"];
+  const isProfilePage = location.pathname.startsWith("/profile");
+  const isRegisterPage = location.pathname.startsWith("/register");
+
+  const isColoredPage =
+    coloredPages.includes(location.pathname) || isProfilePage || isRegisterPage;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -55,32 +58,9 @@ const Header = () => {
           <img src={logo} alt="Company Logo" className="w-full" />
         </Link>
 
-        <nav className="hidden lg:flex items-center gap-6">
-          {links.map((link) => (
-            <NavLink key={link.name} to={link.href} className="nav_link">
-              {link.name}
-            </NavLink>
-          ))}
-        </nav>
+        <NavBar links={links} />
 
-        <div className="flex items-center gap-2 md:gap-4">
-          <Link
-            to="/login"
-            className="bg-white px-4 py-1 rounded-md text-primary 
-            hover:text-white hover:bg-primary transition-all duration-300"
-          >
-            Login
-          </Link>
-
-          <LanguageSwitcher />
-
-          <Link
-            to="/cart"
-            className="text-white text-xl hover:text-secondary transition-colors duration-300 cursor-pointer"
-          >
-            <SlHandbag />
-          </Link>
-        </div>
+        <HeaderActions />
       </div>
     </header>
   );

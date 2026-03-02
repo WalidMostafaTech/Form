@@ -2,15 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { changeLanguage } from "@/store/languageSlice/languageSlice";
 import LoadingModal from "@/components/Loading/LoadingModal";
-import { FaGlobe } from "react-icons/fa";
-
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { AiOutlineGlobal } from "react-icons/ai";
 
 const LanguageSwitcher = () => {
   const dispatch = useDispatch();
@@ -22,33 +14,23 @@ const LanguageSwitcher = () => {
     document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
   }, [lang]);
 
-  const handleChangeLanguage = (value) => {
-    if (value !== lang) {
-      dispatch(changeLanguage(value));
-      setOpenLoading(true);
-    }
+  const handleToggle = () => {
+    dispatch(changeLanguage(lang === "ar" ? "en" : "ar"));
+    setOpenLoading(true);
   };
 
   return (
     <>
-      <Select value={lang} onValueChange={handleChangeLanguage}>
-        <SelectTrigger className="min-w-fit rounded-full cursor-pointer border-border flex items-center gap-2">
-          <FaGlobe className="w-4 h-4" />
-          <div className="hidden sm:block">
-            <SelectValue />
-          </div>
-        </SelectTrigger>
-
-        <SelectContent>
-          <SelectItem value="ar" className="flex gap-2">
-            العربية
-          </SelectItem>
-
-          <SelectItem value="en" className="flex gap-2">
-            English
-          </SelectItem>
-        </SelectContent>
-      </Select>
+      <button
+        onClick={handleToggle}
+        className="flex items-center gap-1 text-white border px-4 py-1 rounded-md cursor-pointer 
+        hover:text-secondary transition-colors duration-300"
+      >
+        <span className="font-semibold text-sm">
+          {lang === "en" ? "العربية" : "English"}
+        </span>
+        <AiOutlineGlobal />
+      </button>
 
       {openLoading && <LoadingModal />}
     </>

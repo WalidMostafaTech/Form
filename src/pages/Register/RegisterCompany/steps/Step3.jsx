@@ -6,6 +6,8 @@ import { z } from "zod";
 import { MdFormatListNumbered } from "react-icons/md";
 import { BsBuildings } from "react-icons/bs";
 import { useNavigate } from "react-router";
+import { useMutation } from "@tanstack/react-query";
+import { registerUser } from "@/api/authServices";
 
 const schema = z.object({
   trade_license_name: z.string().min(3, "Trade license name is too short"),
@@ -20,7 +22,7 @@ const schema = z.object({
 });
 
 const Step3 = ({ setParentData, parentData }) => {
-const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const {
     handleSubmit,
@@ -37,10 +39,33 @@ const navigate = useNavigate();
     },
   });
 
+  const { mutate, isPending, error } = useMutation({
+    mutationFn: registerUser,
+    onSuccess: () => {
+      navigate("/verify-email");
+    },
+  });
+
   const onSubmit = (data) => {
-    setParentData({ ...parentData, ...data });
-    console.log(parentData);
-    navigate("/verify-email");
+    const finalData = { ...parentData, ...data };
+
+    const formData = new FormData();
+
+    Object.keys(finalData).forEach((key) => {
+      if (key === "trade_license_file" || key === "trn_certificate_file") {
+        if (finalData[key] && finalData[key][0]) {
+          formData.append(key, finalData[key][0]);
+        }
+      } else if (key === "image") {
+        if (finalData.image) {
+          formData.append("image", finalData.image);
+        }
+      } else {
+        formData.append(key, finalData[key]);
+      }
+    });
+
+    mutate(formData);
   };
 
   return (
@@ -118,8 +143,8 @@ const navigate = useNavigate();
         )}
       />
 
-      <Button type="submit" className="w-full">
-        Complete Registration
+      <Button type="submit" className="w-full" disabled={isPending}>
+        {isPending ? "Creating..." : "Complete Registration"}
       </Button>
     </form>
   );

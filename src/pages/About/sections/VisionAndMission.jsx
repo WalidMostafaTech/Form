@@ -27,8 +27,11 @@ const VisionAndMission = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-8 mt-8">
           {list.map((item) => (
-            <div key={item.id} className="p-4 rounded-xl border border-border 
-            flex flex-col items-center text-center md:text-start md:items-start gap-4">
+            <div
+              key={item.id}
+              className="p-4 rounded-xl border  
+            flex flex-col items-center text-center md:text-start md:items-start gap-4"
+            >
               <div
                 className="text-3xl text-primary bg-primary-foreground w-14 h-14 
               flex items-center justify-center rounded-full"

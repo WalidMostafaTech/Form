@@ -2,7 +2,7 @@ const OrderCard = ({ item }) => {
   return (
     <div
       key={item.id}
-      className="p-3 border border-border rounded-lg flex items-start gap-4"
+      className="p-3 border rounded-lg flex items-start gap-4"
     >
       <div className="w-24 h-24 md:w-32 md:h-32 overflow-hidden rounded-lg">
         <img

@@ -11,7 +11,6 @@ const Home = React.lazy(() => import("../pages/Home/Home"));
 const About = React.lazy(() => import("../pages/About/About"));
 const Location = React.lazy(() => import("../pages/Location/Location"));
 const Shop = React.lazy(() => import("../pages/Shop/Shop"));
-const Products = React.lazy(() => import("../pages/Products/Products"));
 const Product = React.lazy(() => import("../pages/Product/Product"));
 const ContactUS = React.lazy(() => import("../pages/ContactUS/ContactUS"));
 
@@ -54,7 +53,6 @@ const router = createBrowserRouter([
       { path: "/about", element: <About /> },
       { path: "/location", element: <Location /> },
       { path: "/shop", element: <Shop /> },
-      { path: "/products/:id", element: <Products /> },
       { path: "/product/:id", element: <Product /> },
       { path: "/contact", element: <ContactUS /> },
 

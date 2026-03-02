@@ -1,6 +1,8 @@
-import { Link } from "react-router";
+import { useNavigate } from "react-router";
+import { Button } from "../ui/button";
 
 const ProductCard = ({ product }) => {
+  const navigate = useNavigate();
   return (
     <div className="flex flex-col gap-2">
       <div className="w-full aspect-square overflow-hidden rounded-lg">
@@ -26,9 +28,9 @@ const ProductCard = ({ product }) => {
         {product.description}
       </p>
 
-      <Link to={`/product/${product.id}`} className="bg-primary text-primary-foreground text-center text-sm font-bold py-2 rounded-md w-full cursor-pointer">
+      <Button onClick={() => navigate(`/product/${product.id}`)}>
         Add to Cart
-      </Link>
+      </Button>
     </div>
   );
 };

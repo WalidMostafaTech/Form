@@ -1,4 +1,6 @@
+import { Button } from "@/components/ui/button";
 import { useState } from "react";
+import { FiMinus, FiPlus } from "react-icons/fi";
 
 const ProductDetails = ({ product }) => {
   const [selectedWeight, setSelectedWeight] = useState(product.weights[0]);
@@ -9,42 +11,44 @@ const ProductDetails = ({ product }) => {
       {/* Title + Price */}
       <div className="flex justify-between items-center">
         <h2 className="text-3xl font-bold">{product.title}</h2>
-        <span className="text-xl font-semibold text-green-700">
+        <span className="text-xl font-semibold text-primary">
           {product.currency} {product.price.toFixed(2)}
         </span>
       </div>
 
       {/* Weights */}
-      <div className="flex gap-3">
+      <ul className="flex items-center flex-wrap gap-2">
         {product.weights.map((weight, index) => (
-          <button
+          <li
             key={index}
-            onClick={() => setSelectedWeight(weight)}
-            className={`px-4 py-2 rounded-lg border transition ${
+            className={`text-sm px-4 py-2 cursor-pointer rounded-md border ${
               selectedWeight === weight
-                ? "bg-green-800 text-white"
-                : "bg-gray-100"
+                ? "bg-primary text-white"
+                : "bg-muted hover:bg-gray-200"
             }`}
+            onClick={() => setSelectedWeight(weight)}
           >
             {weight}
-          </button>
+          </li>
         ))}
-      </div>
+      </ul>
 
       {/* Quantity */}
-      <div className="flex items-center border rounded-lg w-fit">
+      <div className="flex items-center gap-2 border rounded w-fit">
         <button
           onClick={() => setQuantity((prev) => Math.max(1, prev - 1))}
-          className="px-4 py-2"
+          className="w-8 h-8 flex items-center justify-center
+        hover:bg-gray-100 transition cursor-pointer"
         >
-          -
+          <FiMinus />
         </button>
-        <span className="px-6">{quantity}</span>
+        <span className="min-w-8 text-center">{quantity}</span>
         <button
           onClick={() => setQuantity((prev) => prev + 1)}
-          className="px-4 py-2"
+          className="w-8 h-8 flex items-center justify-center
+        hover:bg-gray-100 transition cursor-pointer"
         >
-          +
+          <FiPlus />
         </button>
       </div>
 
@@ -81,12 +85,10 @@ const ProductDetails = ({ product }) => {
 
       {/* Buttons */}
       <div className="flex gap-4">
-        <button className="flex-1 bg-green-800 text-white py-3 rounded-lg font-semibold">
-          BUY NOW
-        </button>
-        <button className="flex-1 border border-green-800 text-green-800 py-3 rounded-lg font-semibold">
+        <Button className="flex-1">BUY NOW</Button>
+        <Button className="flex-1" variant="outline">
           ADD TO CART
-        </button>
+        </Button>
       </div>
 
       {/* Accordion Placeholder */}

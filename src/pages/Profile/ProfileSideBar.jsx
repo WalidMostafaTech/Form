@@ -59,7 +59,7 @@ const ProfileSideBar = () => {
         {t("ProfileSideBar.notifications")}
       </NavLink>
 
-      <hr className="border-border" />
+      <hr className="" />
 
       <button
         onClick={() => dispatch(openModal("logoutModal"))}
@@ -73,7 +73,7 @@ const ProfileSideBar = () => {
 
   return (
     <>
-      <aside className="hidden lg:block bg-card w-64 p-6 border-e border-border">
+      <aside className="hidden lg:block bg-card w-64 p-6 border-e ">
         <div className="sticky top-20">{sideContent}</div>
       </aside>
 

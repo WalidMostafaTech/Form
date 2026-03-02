@@ -7,6 +7,8 @@ import { FiUser, FiMail, FiPhone, FiLock, FiMapPin } from "react-icons/fi";
 import { z } from "zod";
 import { isValidPhoneNumber } from "react-phone-number-input";
 import { Checkbox } from "@/components/ui/checkbox";
+import { useRef, useState } from "react";
+import { IoImageOutline } from "react-icons/io5";
 
 const schema = z
   .object({
@@ -38,6 +40,10 @@ const emirates = [
 ];
 
 const Step1 = ({ setParentData, parentData, goNext }) => {
+  const [imagePreview, setImagePreview] = useState(null);
+  const [imageFile, setImageFile] = useState(null);
+  const fileInputRef = useRef(null);
+
   const {
     handleSubmit,
     control,
@@ -57,12 +63,52 @@ const Step1 = ({ setParentData, parentData, goNext }) => {
 
   const onSubmit = (data) => {
     console.log(data);
-    setParentData({ ...parentData, ...data });
+    setParentData({ ...parentData, ...data, image: imageFile });
     goNext();
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
+      <div className="flex flex-col items-center justify-center">
+        <input
+          type="file"
+          accept="image/*"
+          ref={fileInputRef}
+          className="hidden"
+          id="image"
+          onChange={(e) => {
+            const file = e.target.files[0];
+            if (file) {
+              setImageFile(file);
+              setImagePreview(URL.createObjectURL(file));
+            }
+          }}
+        />
+
+        <div
+          onClick={() => fileInputRef.current.click()}
+          className="w-20 aspect-square bg-muted rounded-full cursor-pointer 
+                  flex items-center justify-center border-2 border-primary overflow-hidden"
+        >
+          {imagePreview ? (
+            <img
+              src={imagePreview}
+              alt="preview"
+              className="w-full h-full object-cover"
+            />
+          ) : (
+            <IoImageOutline className="text-muted-foreground text-4xl" />
+          )}
+        </div>
+
+        <label
+          htmlFor="image"
+          className="font-semibold text-sm mt-1 cursor-pointer"
+        >
+          Upload your image
+        </label>
+      </div>
+
       {/* Name */}
       <Controller
         name="name"

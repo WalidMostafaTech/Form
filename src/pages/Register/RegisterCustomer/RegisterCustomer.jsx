@@ -9,6 +9,11 @@ import { z } from "zod";
 import { isValidPhoneNumber } from "react-phone-number-input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useNavigate } from "react-router";
+import { IoImageOutline } from "react-icons/io5";
+import { useRef, useState } from "react";
+import { useMutation } from "@tanstack/react-query";
+import { registerUser } from "@/api/authServices";
+import FormError from "@/components/form/FormError";
 
 const registerSchema = z
   .object({
@@ -40,6 +45,10 @@ const emirates = [
 ];
 
 const RegisterCustomer = () => {
+  const [imagePreview, setImagePreview] = useState(null);
+  const [imageFile, setImageFile] = useState(null);
+  const fileInputRef = useRef(null);
+
   const navigate = useNavigate();
 
   const {
@@ -59,10 +68,31 @@ const RegisterCustomer = () => {
     },
   });
 
+  const {
+    mutate: registerMutate,
+    isPending,
+    error,
+  } = useMutation({
+    mutationFn: registerUser,
+    onSuccess: () => {
+      navigate("/verify-email");
+    },
+  });
+
   const onSubmit = (data) => {
     const { terms, ...payload } = data;
-    console.log(payload);
-    navigate("/verify-email");
+
+    const formData = new FormData();
+
+    Object.keys(payload).forEach((key) => {
+      formData.append(key, payload[key]);
+    });
+
+    if (imageFile) {
+      formData.append("image", imageFile);
+    }
+
+    registerMutate(formData);
   };
 
   return (
@@ -71,6 +101,46 @@ const RegisterCustomer = () => {
       description="Please enter your details to access your account"
     >
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
+        <div className="flex flex-col items-center justify-center">
+          <input
+            type="file"
+            accept="image/*"
+            ref={fileInputRef}
+            className="hidden"
+            id="image"
+            onChange={(e) => {
+              const file = e.target.files[0];
+              if (file) {
+                setImageFile(file);
+                setImagePreview(URL.createObjectURL(file));
+              }
+            }}
+          />
+
+          <div
+            onClick={() => fileInputRef.current.click()}
+            className="w-20 aspect-square bg-muted rounded-full cursor-pointer 
+            flex items-center justify-center border-2 border-primary overflow-hidden"
+          >
+            {imagePreview ? (
+              <img
+                src={imagePreview}
+                alt="preview"
+                className="w-full h-full object-cover"
+              />
+            ) : (
+              <IoImageOutline className="text-muted-foreground text-4xl" />
+            )}
+          </div>
+
+          <label
+            htmlFor="image"
+            className="font-semibold text-sm mt-1 cursor-pointer"
+          >
+            Upload your image
+          </label>
+        </div>
+
         {/* Name */}
         <Controller
           name="name"
@@ -202,9 +272,15 @@ const RegisterCustomer = () => {
           )}
         </div>
 
-        <Button type="submit" className="w-full">
-          Create Account
+        <Button type="submit" className="w-full" disabled={isPending}>
+          {isPending ? "Creating..." : "Create Account"}
         </Button>
+
+        {error && (
+          <FormError
+            errorMsg={error?.response?.data?.message || "Something went wrong"}
+          />
+        )}
       </form>
     </AuthContainer>
   );

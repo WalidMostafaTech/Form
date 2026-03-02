@@ -5,7 +5,7 @@ const CartCard = ({ item }) => {
   return (
     <div
       key={item.id}
-      className="p-3 border border-border rounded-lg flex items-start gap-4"
+      className="p-3 border rounded-lg flex items-start gap-4"
     >
       <div className="w-24 h-24 md:w-32 md:h-32 overflow-hidden rounded-lg">
         <img
@@ -40,7 +40,7 @@ const CartCard = ({ item }) => {
         <p className="font-bold text-primary">{item.price} AED</p>
 
         <div className="flex items-center flex-wrap justify-between gap-2">
-          <div className="flex items-center gap-2 border border-border rounded">
+          <div className="flex items-center gap-2 border rounded">
             <button
               className="w-8 h-8 flex items-center justify-center
                         hover:bg-gray-100 transition cursor-pointer"

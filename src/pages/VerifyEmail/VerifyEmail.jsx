@@ -18,11 +18,8 @@ import { z } from "zod";
 import FormError from "@/components/form/FormError";
 import { sendOtpVerifyEmail, verifyEmail } from "@/api/verifyEmailServices";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  addUser,
-  clearProfile,
-  logoutAction,
-} from "@/store/user/userActions";
+import { addUser, clearUser } from "@/store/user/userSlice";
+import { logoutAction } from "@/store/user/userActions";
 
 const otpSchema = z.object({
   otp: z.string().length(6, "OTP must be 6 digits"),
@@ -101,7 +98,7 @@ const VerifyEmail = () => {
 
   const handleBackToRegister = () => {
     dispatch(logoutAction());
-    dispatch(clearProfile());
+    dispatch(clearUser());
     navigate(`/register`, { replace: true });
   };
 

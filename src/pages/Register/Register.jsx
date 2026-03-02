@@ -13,7 +13,7 @@ const Register = () => {
       <div className="grid grid-cols-2 gap-4">
         <Link
           to="/register/customer"
-          className="flex flex-col items-center gap-2 border border-border p-4 rounded-lg hover:bg-primary/10 transition"
+          className="flex flex-col items-center gap-2 border  p-4 rounded-lg hover:bg-primary/10 transition"
         >
           <div
             className="text-2xl text-primary bg-primary-foreground w-16 h-16 
@@ -26,7 +26,7 @@ const Register = () => {
 
         <Link
           to="/register/company"
-          className="flex flex-col items-center gap-2 border border-border p-4 rounded-lg hover:bg-primary/10 transition"
+          className="flex flex-col items-center gap-2 border  p-4 rounded-lg hover:bg-primary/10 transition"
         >
           <div
             className="text-2xl text-primary bg-primary-foreground w-16 h-16 
@@ -38,7 +38,7 @@ const Register = () => {
         </Link>
       </div>
 
-      <hr className="border-border" />
+      <hr className="" />
 
       <div className="text-center text-xs text-muted-foreground">
         Already have an account?

@@ -18,7 +18,7 @@ const LogOutModal = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const { logoutModal } = useSelector((state) => state.modals);
-  const { logOutLoading } = useSelector((state) => state.profile);
+  const { logOutLoading } = useSelector((state) => state.user);
 
   const onClose = () => {
     dispatch(closeModal("logoutModal"));

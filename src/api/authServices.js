@@ -5,25 +5,21 @@ export const loginUser = async (formData) => {
   const { data } = await api.post("/auth/login", formData);
 
   if (data?.data?.token) {
-    Cookies.set("token", data?.data?.token, {
-      expires: 7,
-      secure: true,
-      sameSite: "strict",
-    });
+    Cookies.set("token", data?.data?.token);
   }
 
   return data?.data;
 };
 
 export const registerUser = async (formData) => {
-  const { data } = await api.post("/auth/register", formData);
+  const { data } = await api.post("/auth/register", formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
 
   if (data?.data?.token) {
-    Cookies.set("token", data?.data?.token, {
-      expires: 7,
-      secure: true,
-      sameSite: "strict",
-    });
+    Cookies.set("token", data?.data?.token);
   }
 
   return data?.data;
@@ -39,11 +35,7 @@ export const getProfile = async () => {
   const { data } = await api.get("/profile");
 
   if (data?.data?.token) {
-    Cookies.set("token", data?.data?.token, {
-      expires: 7,
-      secure: true,
-      sameSite: "strict",
-    });
+    Cookies.set("token", data?.data?.token);
   }
 
   return data?.data || null;
@@ -57,11 +49,7 @@ export const updateProfile = async (formData) => {
   });
 
   if (data?.data?.token) {
-    Cookies.set("token", data?.data?.token, {
-      expires: 7,
-      secure: true,
-      sameSite: "strict",
-    });
+    Cookies.set("token", data?.data?.token);
   }
 
   return data?.data;

@@ -134,7 +134,7 @@ input::-webkit-inner-spin-button {
 
 @layer base {
   * {
-    @apply outline-ring/50 font-[inter];
+    @apply outline-ring/50 border-border font-[inter];
   }
 
   body {
