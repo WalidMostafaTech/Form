@@ -23,7 +23,7 @@ const ForgotPassword = () => {
     },
   ];
 
-  const [step, setStep] = useState(3);
+  const [step, setStep] = useState(1);
 
   const goNext = () => {
     if (step >= steps.length) return;

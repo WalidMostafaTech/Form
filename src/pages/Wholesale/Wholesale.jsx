@@ -4,7 +4,7 @@ import SectionTitle from "@/components/common/SectionTitle";
 import PageBanner from "@/components/commonSections/PageBanner";
 import { useSearchParams } from "react-router";
 
-const Shop = () => {
+const Wholesale = () => {
   const products = [
     {
       id: 1,
@@ -114,4 +114,4 @@ const Shop = () => {
   );
 };
 
-export default Shop;
+export default Wholesale;

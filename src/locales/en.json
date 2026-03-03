@@ -113,6 +113,46 @@
     }
   },
 
+  "checkEmail": {
+    "title": "Forgot Password",
+    "description": "Enter your email to reset your password",
+    "emailLabel": "Email",
+    "emailPlaceholder": "example@email.com",
+    "sending": "Sending...",
+    "sendResetLink": "Send Reset Link",
+    "rememberPassword": "Remembered your password?",
+    "login": "Login",
+    "invalidEmail": "Invalid email address",
+    "genericError": "Something went wrong, please try again"
+  },
+
+  "otp": {
+    "title": "OTP Verification",
+    "description": "We sent a recovery code to your WhatsApp number. Please check your messages and enter the code sent to {{email}}",
+    "otpRequired": "Enter a 6-digit code",
+    "verifying": "Verifying...",
+    "confirm": "Confirm Code",
+    "notReceived": "Didn't receive the code?",
+    "resendIn": "Resend in {{countdown}}s",
+    "resend": "Resend",
+    "backToLogin": "Back to Login",
+    "wrongOtp": "Invalid code"
+  },
+
+  "resetPassword": {
+    "title": "Reset Password",
+    "description": "Enter a new password for your account",
+    "newPassword": "New Password",
+    "confirmPassword": "Confirm Password",
+    "strength": "Password strength:",
+    "resetting": "Resetting...",
+    "save": "Save New Password",
+    "error": "Something went wrong, please try again",
+    "passwordShort": "Password is too short",
+    "confirmRequired": "Password confirmation is required",
+    "notMatched": "Passwords do not match"
+  },
+
   "notifications": {
     "title": "Notifications",
     "subtitle": "Check your notifications",
@@ -126,7 +166,6 @@
     "title": "Orders",
     "empty": "No orders found"
   },
-
 
   "ErrorPage": {
     "title": "An unexpected error occurred",

@@ -5,8 +5,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 
 const schema = z.object({
-  volumes: z.string().min(10, "Please provide more details"),
-  use_case: z.string().min(10, "Please provide more details"),
+  coffee_volumes: z.string().min(10, "Please provide more details"),
+  coffee_usage: z.string().min(10, "Please provide more details"),
 });
 
 const Step2 = ({ setParentData, parentData, goNext }) => {
@@ -17,8 +17,8 @@ const Step2 = ({ setParentData, parentData, goNext }) => {
   } = useForm({
     resolver: zodResolver(schema),
     defaultValues: {
-      volumes: parentData.volumes || "",
-      use_case: parentData.use_case || "",
+      coffee_volumes: parentData.coffee_volumes || "",
+      coffee_usage: parentData.coffee_usage || "",
     },
   });
 
@@ -32,7 +32,7 @@ const Step2 = ({ setParentData, parentData, goNext }) => {
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
       {/* Volumes */}
       <Controller
-        name="volumes"
+        name="coffee_volumes"
         control={control}
         render={({ field }) => (
           <MainInput
@@ -40,14 +40,14 @@ const Step2 = ({ setParentData, parentData, goNext }) => {
             type="textarea"
             label="What volumes of coffee are you interested in ordering?"
             placeholder="text area to answer"
-            error={errors.volumes?.message}
+            error={errors.coffee_volumes?.message}
           />
         )}
       />
 
       {/* use_case */}
       <Controller
-        name="use_case"
+        name="coffee_usage"
         control={control}
         render={({ field }) => (
           <MainInput
@@ -55,7 +55,7 @@ const Step2 = ({ setParentData, parentData, goNext }) => {
             type="textarea"
             label="What would you like to use our coffees for?"
             placeholder="text area to answer"
-            error={errors.use_case?.message}
+            error={errors.coffee_usage?.message}
           />
         )}
       />

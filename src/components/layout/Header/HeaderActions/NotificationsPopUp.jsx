@@ -52,11 +52,11 @@ const NotificationsPopUp = () => {
         </Button>
       </PopoverTrigger>
 
-      <PopoverContent align="end" className="md:w-[500px]">
+      <PopoverContent align="end" className="md:w-125">
         {isLoading ? (
           <NotificationsSkeleton />
         ) : notifications?.items?.length ? (
-          <div className="flex flex-col gap-2 max-h-[400px] overflow-y-auto custom_scrollbar">
+          <div className="flex flex-col gap-2 max-h-100 overflow-y-auto custom_scrollbar">
             {notifications.items.slice(0, 5).map((notification) => (
               <NotificationCard
                 key={notification.id}

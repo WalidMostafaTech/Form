@@ -133,12 +133,17 @@ input::-webkit-inner-spin-button {
 }
 
 @layer base {
-  * {
+  /* * {
     @apply outline-ring/50 border-border font-[inter];
+  } */
+
+  * {
+    @apply outline-ring/50 border-border font-[Open_Sans];
   }
 
   body {
     @apply bg-background text-foreground;
+    font-family: "Open Sans", sans-serif;
   }
 
   .sectionPadding {
@@ -165,6 +170,14 @@ input::-webkit-inner-spin-button {
       &::after {
         @apply scale-x-100;
       }
+    }
+  }
+
+  .header_icon {
+    @apply text-white text-2xl transition-colors duration-300 cursor-pointer;
+
+    &:hover {
+      @apply text-secondary;
     }
   }
 
@@ -209,4 +222,18 @@ input::-webkit-inner-spin-button {
 
 .phone-input-wrapper {
   @apply flex! items-center! bg-muted! rounded-md!;
+}
+
+/* swiper */
+.location-swiper .swiper-pagination-bullet {
+  background: white;
+  opacity: 1;
+  width: 10px;
+  height: 10px;
+}
+
+.location-swiper .swiper-pagination-bullet-active {
+  background: var(--primary-foreground);
+  width: 30px;
+  border-radius: 5px;
 }

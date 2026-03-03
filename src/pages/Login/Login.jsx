@@ -5,13 +5,15 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import MainInput from "@/components/form/MainInput";
 import { Button } from "@/components/ui/button";
-import { FiMail, FiPhone, FiLock } from "react-icons/fi";
+import { FiMail, FiLock } from "react-icons/fi";
 import { Link, useNavigate } from "react-router";
 import PhoneInputField from "@/components/form/PhoneInputField";
 import { isValidPhoneNumber } from "react-phone-number-input";
 import FormError from "@/components/form/FormError";
 import { useMutation } from "@tanstack/react-query";
 import { loginUser } from "@/api/authServices";
+import { useDispatch } from "react-redux";
+import { addUser } from "@/store/user/userSlice";
 
 // Dynamic Schema
 const loginSchema = (type) => {
@@ -51,6 +53,8 @@ const Login = () => {
     },
   });
 
+  const dispatch = useDispatch();
+
   const {
     mutate: loginMutate,
     isPending,
@@ -58,8 +62,8 @@ const Login = () => {
   } = useMutation({
     mutationFn: loginUser,
     onSuccess: (data) => {
-      console.log("Login Success:", data);
-      navigate("/"); // روح للهوم بعد النجاح
+      navigate("/");
+      dispatch(addUser({ ...data?.user, image: data?.user?.image_url }));
     },
     onError: (err) => {
       console.log("Login Error:", err);
@@ -130,7 +134,6 @@ const Login = () => {
                 {...field}
                 label="Phone Number"
                 placeholder="Enter your phone number"
-                icon={<FiPhone size={18} />}
                 error={errors.phone?.message}
               />
             )}
@@ -171,10 +174,10 @@ const Login = () => {
         />
       )}
 
-      <hr className="" />
+      <hr />
 
       <div className="text-center text-xs text-muted-foreground">
-        Dont have an account?
+        Don't have an account?
       </div>
 
       <Button

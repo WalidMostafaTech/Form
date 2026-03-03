@@ -13,24 +13,18 @@ import UserAvatar from "@/components/common/UserAvatar";
 import { Link, useNavigate } from "react-router";
 import { Skeleton } from "@/components/ui/skeleton";
 import { openModal } from "@/store/modals/modalsSlice";
-import { useTranslation } from "react-i18next";
-import { useDispatch, useSelector } from "react-redux";
-import { Button } from "@/components/ui/button";
+import { useDispatch } from "react-redux";
 
-const ProfileSide = () => {
-  const { t } = useTranslation();
+const ProfileSide = ({ user, loading }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  const { lang } = useSelector((state) => state.language);
-  const { user, loading } = useSelector((state) => state.user);
 
   return (
     <>
       {loading ? (
         <Skeleton className="h-9 w-9 rounded-full" />
       ) : user ? (
-        <DropdownMenu>
+        <DropdownMenu modal={false}>
           <DropdownMenuTrigger>
             <UserAvatar
               name={user?.name}
@@ -39,11 +33,7 @@ const ProfileSide = () => {
             />
           </DropdownMenuTrigger>
 
-          <DropdownMenuContent
-            align="end"
-            dir={lang === "ar" ? "rtl" : "ltr"}
-            className={`w-52`}
-          >
+          <DropdownMenuContent align="end" className={`w-52`}>
             <DropdownMenuLabel className="flex items-center gap-2">
               <UserAvatar name={user?.name} image={user?.image} />
               <h3 className="font-semibold">{user?.name}</h3>
@@ -51,35 +41,36 @@ const ProfileSide = () => {
 
             <DropdownMenuSeparator />
 
-            <DropdownMenuItem
-              onClick={() => navigate("/profile")}
-              className="justify-start"
-            >
+            <DropdownMenuItem onClick={() => navigate("/profile")}>
               <FaRegUser />
-              {t("profileSide.profile")}
+              Profile
             </DropdownMenuItem>
 
             <DropdownMenuItem onClick={() => navigate("/profile/orders")}>
               <FiShoppingCart />
-              {t("profileSide.orders")}
+              Orders
             </DropdownMenuItem>
 
             <DropdownMenuSeparator />
 
             <DropdownMenuItem
+              variant="destructive"
               onClick={() => {
                 dispatch(openModal("logoutModal"));
               }}
-              className="bg-red-800/50 hover:bg-red-800/30!"
             >
               <IoIosLogOut />
-              {t("profileSide.logout")}
+              Logout
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       ) : (
-        <Link to="/login">
-          <Button>{t("profileSide.login")}</Button>
+        <Link
+          to="/login"
+          className="bg-white px-4 py-1 rounded-md text-primary 
+            hover:text-white hover:bg-primary transition-all duration-300"
+        >
+          Login
         </Link>
       )}
     </>

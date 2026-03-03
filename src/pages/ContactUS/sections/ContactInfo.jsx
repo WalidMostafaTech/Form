@@ -1,26 +1,24 @@
-const ContactInfo = () => {
-  const contactDetails = [
+const ContactInfo = ({ contactDetails }) => {
+  const contactDetailsList = [
     {
       id: 1,
       label: "location",
-      value:
-        "Zayed Bin Sultan St., 452 Central District, Second Floor, Office 202Abu Dhabi Emirate, Al Ain UAE",
+      value: contactDetails?.address || "-",
     },
     {
       id: 2,
       label: "phone",
-      value: "+971 50 124 5557",
+      value: contactDetails?.phone || "-",
     },
     {
       id: 3,
       label: "email",
-      value: "info@info.com",
+      value: contactDetails?.email || "-",
     },
     {
       id: 4,
       label: "office hours",
-      value:
-        "Sunday – Friday: 8:00AM to 1:00PM, 5:00PM to 9:00PM Saturday: Closed",
+      value: contactDetails?.working_hours || "-",
     },
   ];
 
@@ -31,7 +29,7 @@ const ContactInfo = () => {
       </h3>
 
       <ul className="space-y-4">
-        {contactDetails.map((detail) => (
+        {contactDetailsList.map((detail) => (
           <li key={detail.id} className="space-y-1">
             <p className="font-semibold uppercase">{detail.label}</p>
             <span className="text-muted-foreground text-sm">

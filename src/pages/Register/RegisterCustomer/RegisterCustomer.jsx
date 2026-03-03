@@ -14,6 +14,8 @@ import { useRef, useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { registerUser } from "@/api/authServices";
 import FormError from "@/components/form/FormError";
+import { useDispatch } from "react-redux";
+import { getUser } from "@/store/user/userActions";
 
 const registerSchema = z
   .object({
@@ -22,10 +24,10 @@ const registerSchema = z
     phone: z.string().refine((value) => isValidPhoneNumber(value || ""), {
       message: "Invalid phone number",
     }),
-    emirate: z.string().min(1, "Please select your emirate"),
+    emirate_id: z.string().min(1, "Please select your emirate"),
     password: z.string().min(6, "Password must be at least 6 characters"),
     password_confirmation: z.string().min(6, "Confirm your password"),
-    terms: z.boolean().refine((val) => val === true, {
+    terms_accepted: z.boolean().refine((val) => val === true, {
       message: "You must accept terms",
     }),
   })
@@ -35,13 +37,13 @@ const registerSchema = z
   });
 
 const emirates = [
-  { label: "Abu Dhabi", value: "abu_dhabi" },
-  { label: "Dubai", value: "dubai" },
-  { label: "Sharjah", value: "sharjah" },
-  { label: "Ajman", value: "ajman" },
-  { label: "Umm Al Quwain", value: "uaq" },
-  { label: "Ras Al Khaimah", value: "rak" },
-  { label: "Fujairah", value: "fujairah" },
+  { label: "Abu Dhabi", value: 1 },
+  { label: "Dubai", value: 2 },
+  { label: "Sharjah", value: 3 },
+  { label: "Ajman", value: 4 },
+  { label: "Umm Al Quwain", value: 5 },
+  { label: "Ras Al Khaimah", value: 6 },
+  { label: "Fujairah", value: 7 },
 ];
 
 const RegisterCustomer = () => {
@@ -61,12 +63,13 @@ const RegisterCustomer = () => {
       name: "",
       email: "",
       phone: "",
-      emirate: "",
+      emirate_id: "",
       password: "",
       password_confirmation: "",
-      terms: false,
+      terms_accepted: false,
     },
   });
+  const dispatch = useDispatch();
 
   const {
     mutate: registerMutate,
@@ -75,18 +78,31 @@ const RegisterCustomer = () => {
   } = useMutation({
     mutationFn: registerUser,
     onSuccess: () => {
-      navigate("/verify-email");
+      dispatch(getUser())
+        .unwrap()
+        .then(() => {
+          navigate("/verify-email", { replace: true });
+        });
     },
   });
 
   const onSubmit = (data) => {
-    const { terms, ...payload } = data;
+    // eslint-disable-next-line no-unused-vars
+    const { terms_accepted, ...payload } = data;
 
     const formData = new FormData();
 
     Object.keys(payload).forEach((key) => {
       formData.append(key, payload[key]);
     });
+
+    // ابعت 1 بدل true
+    formData.append("terms_accepted", 1);
+
+    // ابعت نوع المستخدم
+    formData.append("type", "user");
+
+    formData.append("source", "web");
 
     if (imageFile) {
       formData.append("image", imageFile);
@@ -189,7 +205,7 @@ const RegisterCustomer = () => {
 
         {/* Emirate Select */}
         <Controller
-          name="emirate"
+          name="emirate_id"
           control={control}
           render={({ field }) => (
             <MainInput
@@ -199,7 +215,7 @@ const RegisterCustomer = () => {
               placeholder="Select your emirate"
               icon={<FiMapPin size={18} />}
               options={emirates}
-              error={errors.emirate?.message}
+              error={errors.emirate_id?.message}
             />
           )}
         />
@@ -239,7 +255,7 @@ const RegisterCustomer = () => {
         {/* Terms */}
         <div>
           <Controller
-            name="terms"
+            name="terms_accepted"
             control={control}
             render={({ field }) => (
               <div className="flex items-center space-x-2">
@@ -248,7 +264,6 @@ const RegisterCustomer = () => {
                   checked={field.value}
                   onCheckedChange={field.onChange}
                 />
-
                 <label
                   htmlFor="terms"
                   className="text-sm font-medium leading-none"
@@ -267,8 +282,11 @@ const RegisterCustomer = () => {
               </div>
             )}
           />
-          {errors.terms && (
-            <p className="text-sm text-red-600 mt-1">{errors.terms.message}</p>
+
+          {errors.terms_accepted && (
+            <p className="text-sm text-red-600 mt-1">
+              {errors.terms_accepted.message}
+            </p>
           )}
         </div>
 

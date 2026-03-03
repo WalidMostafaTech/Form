@@ -1,11 +1,20 @@
-import bgImg from "@/assets/images/bg-img.jpg";
+const Hero = ({ video, loading }) => {
+  if (loading) return <div>Loading...</div>;
 
-const Hero = () => {
+  if (!video) return null;
+
   return (
-    <section
-      className="h-[90dvh] bg-cover bg-center"
-      style={{ backgroundImage: `url(${bgImg})` }}
-    ></section>
+    <section className="relative h-screen w-full">
+      <div className="absolute inset-0 z-10 bg-primary/40" />
+
+      <video
+        className="absolute top-0 left-0 w-full h-full object-cover"
+        src={video}
+        autoPlay
+        loop
+        muted
+      />
+    </section>
   );
 };
 

@@ -8,6 +8,9 @@ import { BsBuildings } from "react-icons/bs";
 import { useNavigate } from "react-router";
 import { useMutation } from "@tanstack/react-query";
 import { registerUser } from "@/api/authServices";
+import { useDispatch } from "react-redux";
+import FormError from "@/components/form/FormError";
+import { getUser } from "@/store/user/userActions";
 
 const schema = z.object({
   trade_license_name: z.string().min(3, "Trade license name is too short"),
@@ -39,15 +42,23 @@ const Step3 = ({ setParentData, parentData }) => {
     },
   });
 
+  const dispatch = useDispatch();
+
   const { mutate, isPending, error } = useMutation({
     mutationFn: registerUser,
     onSuccess: () => {
-      navigate("/verify-email");
+      dispatch(getUser())
+        .unwrap()
+        .then(() => {
+          navigate("/verify-email", { replace: true });
+        });
     },
   });
 
   const onSubmit = (data) => {
     const finalData = { ...parentData, ...data };
+
+    setParentData(finalData);
 
     const formData = new FormData();
 
@@ -64,6 +75,14 @@ const Step3 = ({ setParentData, parentData }) => {
         formData.append(key, finalData[key]);
       }
     });
+
+    // ابعت 1 بدل true
+    formData.append("terms_accepted", 1);
+
+    // ابعت نوع المستخدم
+    formData.append("type", "company");
+
+    formData.append("source", "web");
 
     mutate(formData);
   };
@@ -146,6 +165,12 @@ const Step3 = ({ setParentData, parentData }) => {
       <Button type="submit" className="w-full" disabled={isPending}>
         {isPending ? "Creating..." : "Complete Registration"}
       </Button>
+
+      {error && (
+        <FormError
+          errorMsg={error?.response?.data?.message || "Something went wrong"}
+        />
+      )}
     </form>
   );
 };

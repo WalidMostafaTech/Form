@@ -3,13 +3,35 @@ import { Link, useLocation } from "react-router";
 import { useEffect, useState } from "react";
 import NavBar from "./NavBar";
 import HeaderActions from "./HeaderActions/HeaderActions";
+import MobileNav from "./MobileNav";
+import { useSelector } from "react-redux";
 
 const Header = () => {
+  const [mobileNavOpen, setMobileNavOpen] = useState(false);
+
+  const { user } = useSelector((state) => state.user);
+
+  let wholesaleLink = null;
+
+  if (!user) {
+    wholesaleLink = {
+      name: "Wholesale",
+      href: "/register/company",
+      items: [],
+    };
+  } else if (user.user_type === "company") {
+    wholesaleLink = {
+      name: "Wholesale",
+      href: "/wholesale",
+      items: [],
+    };
+  }
+
   const links = [
     { name: "Home", href: "/", items: [] },
     { name: "About", href: "/about", items: [] },
     {
-      name: "Shope",
+      name: "Shop",
       href: "/shop",
       items: [
         { name: "All", href: "/shop" },
@@ -18,7 +40,9 @@ const Header = () => {
         { name: "Accessories", href: "/shop?category=accessories" },
       ],
     },
-    { name: "Wholesale", href: "/", items: [] },
+
+    ...(wholesaleLink ? [wholesaleLink] : []),
+
     { name: "Location", href: "/location", items: [] },
     { name: "Contact Us", href: "/contact", items: [] },
   ];
@@ -59,8 +83,13 @@ const Header = () => {
         </Link>
 
         <NavBar links={links} />
+        <MobileNav
+          links={links}
+          open={mobileNavOpen}
+          setOpen={setMobileNavOpen}
+        />
 
-        <HeaderActions />
+        <HeaderActions setMobileNavOpen={setMobileNavOpen} />
       </div>
     </header>
   );

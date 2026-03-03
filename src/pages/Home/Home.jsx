@@ -6,6 +6,7 @@ import WhyChooseForm from "./sections/WhyChooseForm";
 import WhatTheySay from "../../components/commonSections/WhatTheySay";
 import { useQuery } from "@tanstack/react-query";
 import { getHome } from "@/api/homeServices";
+import OurService from "@/components/commonSections/OurService";
 
 const Home = () => {
   const { data: homeData, isLoading } = useQuery({
@@ -13,15 +14,16 @@ const Home = () => {
     queryFn: getHome,
   });
 
-  // if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <div>Loading...</div>;
 
   return (
     <main>
-      <Hero />
+      <Hero video={homeData?.introduction_video} loading={isLoading} />
       <OurStory />
       <CategorySection />
       <BestSellers />
-      <WhyChooseForm />
+      <WhyChooseForm data={homeData?.why_choose_us} loading={isLoading} />
+      <OurService />
       <WhatTheySay />
     </main>
   );

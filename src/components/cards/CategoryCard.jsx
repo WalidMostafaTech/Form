@@ -31,7 +31,7 @@ const CategoryCard = ({ category }) => {
         </p>
 
         <Link
-          to={`/products/${category.id}`}
+          to={`/shop`}
           className="inline-block w-max border-b-2 border-secondary text-sm tracking-wide hover:opacity-80 transition-all duration-500
                     group-hover:bg-white group-hover:text-primary group-hover:border-transparent group-hover:px-2 group-hover:py-1 group-hover:rounded"
         >

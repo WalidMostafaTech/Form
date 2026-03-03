@@ -1,8 +1,10 @@
 import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay } from "swiper/modules";
 import "swiper/css";
 
 import { useRef, useState } from "react";
 import { FaArrowLeftLong, FaArrowRightLong } from "react-icons/fa6";
+import { useSelector } from "react-redux";
 
 const MainSlider = ({
   data = [],
@@ -34,6 +36,8 @@ const MainSlider = ({
     setIsEnd(swiper.isEnd);
   };
 
+  const { lang } = useSelector((state) => state.language);
+
   return (
     <div className="flex items-center gap-2">
       {/* Prev */}
@@ -48,13 +52,20 @@ const MainSlider = ({
       </button>
 
       <Swiper
+        dir={lang === "ar" ? "rtl" : "ltr"}
+        modules={[Autoplay]}
         onSwiper={(swiper) => (swiperRef.current = swiper)}
         onSlideChange={handleSlideChange}
         spaceBetween={spaceBetween}
         breakpoints={breakpoints}
+        autoplay={{
+          delay: 3000,
+          disableOnInteraction: false,
+          pauseOnMouseEnter: true,
+        }}
         className={`${className} flex-1`}
       >
-        {data.map((item, index) => (
+        {data?.map((item, index) => (
           <SwiperSlide key={item?.id || index}>{renderItem(item)}</SwiperSlide>
         ))}
       </Swiper>

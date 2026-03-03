@@ -3,27 +3,62 @@ import bgImage from "@/assets/images/bg-img.jpg";
 import logo from "@/assets/images/logo.png";
 import {
   FaFacebookF,
-  FaTwitter,
-  FaInstagram,
   FaLinkedinIn,
+  FaYoutube,
+  FaTiktok,
+  FaTelegramPlane,
 } from "react-icons/fa";
+import { FaXTwitter } from "react-icons/fa6";
 import { Link } from "react-router";
+import { useQuery } from "@tanstack/react-query";
+import { getFooter } from "@/api/mainServices";
+import { RiInstagramFill } from "react-icons/ri";
+import { IoLogoWhatsapp } from "react-icons/io5";
 
 const Footer = () => {
+  const { data: footerData, isLoading } = useQuery({
+    queryKey: ["footer"],
+    queryFn: getFooter,
+  });
+
   const links = [
     { name: "Home", href: "/" },
     { name: "About", href: "/about" },
-    { name: "Shope", href: "/shop" },
+    { name: "Shop", href: "/shop" },
     { name: "Wholesale", href: "/wholesale" },
     { name: "Location", href: "/location" },
     { name: "Contact Us", href: "/contact" },
   ];
 
   const socialLinks = [
-    { name: "Facebook", icon: <FaFacebookF />, url: "/" },
-    { name: "Twitter", icon: <FaTwitter />, url: "/" },
-    { name: "Instagram", icon: <FaInstagram />, url: "/" },
-    { name: "LinkedIn", icon: <FaLinkedinIn />, url: "/" },
+    {
+      name: "Facebook",
+      icon: <FaFacebookF />,
+      url: footerData?.facebook || "/",
+    },
+    {
+      name: "LinkedIn",
+      icon: <FaLinkedinIn />,
+      url: footerData?.linkedin || "/",
+    },
+    { name: "Twitter", icon: <FaXTwitter />, url: footerData?.x || "/" },
+    { name: "Youtube", icon: <FaYoutube />, url: footerData?.youtube || "/" },
+    {
+      name: "Instagram",
+      icon: <RiInstagramFill />,
+      url: footerData?.instagram || "/",
+    },
+    { name: "Tiktok", icon: <FaTiktok />, url: footerData?.tiktok || "/" },
+    {
+      name: "Telegram",
+      icon: <FaTelegramPlane />,
+      url: footerData?.telegram || "/",
+    },
+    {
+      name: "Whatsapp",
+      icon: <IoLogoWhatsapp />,
+      url: footerData?.whatsapp || "/",
+    },
   ];
 
   return (
@@ -35,12 +70,12 @@ const Footer = () => {
 
       <div className="container relative z-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 text-white">
         <div className="flex flex-col items-center gap-4 text-center">
-          <img src={logo} alt="Company Logo" className="w-32" />
-          <p className="text-xs">
-            We are a leading company in providing top-notch services to our
-            clients. Our mission is to deliver excellence and exceed
-            expectations.
-          </p>
+          <img
+            src={footerData?.footer_logo || logo}
+            alt="Company Logo"
+            className="w-32"
+          />
+          <p className="text-xs">{footerData?.footer_text}</p>
         </div>
 
         <div className="flex flex-col items-center gap-4 text-center">

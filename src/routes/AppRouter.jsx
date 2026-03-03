@@ -11,6 +11,7 @@ const Home = React.lazy(() => import("../pages/Home/Home"));
 const About = React.lazy(() => import("../pages/About/About"));
 const Location = React.lazy(() => import("../pages/Location/Location"));
 const Shop = React.lazy(() => import("../pages/Shop/Shop"));
+const Wholesale = React.lazy(() => import("../pages/Wholesale/Wholesale"));
 const Product = React.lazy(() => import("../pages/Product/Product"));
 const ContactUS = React.lazy(() => import("../pages/ContactUS/ContactUS"));
 
@@ -53,60 +54,53 @@ const router = createBrowserRouter([
       { path: "/about", element: <About /> },
       { path: "/location", element: <Location /> },
       { path: "/shop", element: <Shop /> },
+      { path: "/wholesale", element: <Wholesale /> },
       { path: "/product/:id", element: <Product /> },
       { path: "/contact", element: <ContactUS /> },
 
-      { path: "/cart", element: <Cart /> },
-
       {
-        path: "/profile",
-        element: <Profile />,
+        element: <ProtectedRoute />,
         children: [
-          { index: true, element: <Account /> },
-          { path: "orders", element: <Orders /> },
-          { path: "notifications", element: <Notifications /> },
+          {
+            path: "/profile",
+            element: <Profile />,
+            children: [
+              { index: true, element: <Account /> },
+              { path: "orders", element: <Orders /> },
+              { path: "notifications", element: <Notifications /> },
+            ],
+          },
+          {
+            path: "/cart",
+            element: (
+              <CheckVerifiedEmailGuard>
+                {" "}
+                <Cart />{" "}
+              </CheckVerifiedEmailGuard>
+            ),
+          },
         ],
       },
 
-      { path: "/login", element: <Login /> },
-      { path: "/register", element: <Register /> },
-      { path: "/register/company", element: <RegisterCompany /> },
-      { path: "/register/customer", element: <RegisterCustomer /> },
-      { path: "/verify-email", element: <VerifyEmail /> },
-      { path: "/forgot-password", element: <ForgotPassword /> },
+      {
+        element: <AuthGuard />,
+        children: [
+          { path: "/login", element: <Login /> },
+          { path: "/register", element: <Register /> },
+          { path: "/register/company", element: <RegisterCompany /> },
+          { path: "/register/customer", element: <RegisterCustomer /> },
+          { path: "/forgot-password", element: <ForgotPassword /> },
+        ],
+      },
 
-      // {
-      //   element: <ProtectedRoute />,
-      //   children: [
-      //     {
-      //       path: "/profile",
-      //       element: <Profile />,
-      //       children: [
-      //         { index: true, element: <Account /> },
-      //         { path: "orders", element: <Orders /> },
-      //         { path: "notifications", element: <Notifications /> },
-      //       ],
-      //     },
-      //   ],
-      // },
-
-      // {
-      //   element: <AuthGuard />,
-      //   children: [
-      //     { path: "/login", element: <Login /> },
-      //     { path: "/register", element: <Register /> },
-      //     { path: "/forgot-password", element: <ForgotPassword /> },
-      //   ],
-      // },
-
-      // {
-      //   path: "/verify-email",
-      //   element: (
-      //     <VerifyEmailGuard>
-      //       <VerifyEmail />
-      //     </VerifyEmailGuard>
-      //   ),
-      // },
+      {
+        path: "/verify-email",
+        element: (
+          <VerifyEmailGuard>
+            <VerifyEmail />
+          </VerifyEmailGuard>
+        ),
+      },
 
       { path: "*", element: <NotFound /> },
     ],

@@ -23,10 +23,13 @@ const LanguageSwitcher = () => {
     <>
       <button
         onClick={handleToggle}
-        className="flex items-center gap-1 text-white border px-4 py-1 rounded-md cursor-pointer 
-        hover:text-secondary transition-colors duration-300"
+        className="flex items-center gap-1 text-white border-2 px-2 py-1 rounded-md cursor-pointer 
+        hover:text-secondary hover:border-secondary transition-colors duration-300"
       >
-        <span className="font-semibold text-sm">
+        <span className="font-semibold text-sm sm:hidden">
+          {lang === "en" ? "AR" : "EN"}
+        </span>
+        <span className="font-semibold text-sm hidden sm:inline">
           {lang === "en" ? "العربية" : "English"}
         </span>
         <AiOutlineGlobal />

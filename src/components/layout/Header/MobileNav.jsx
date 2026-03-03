@@ -1,0 +1,99 @@
+import { createPortal } from "react-dom";
+import { IoClose } from "react-icons/io5";
+import { NavLink } from "react-router";
+import { useState } from "react";
+import { IoChevronDown } from "react-icons/io5";
+import { Button } from "@/components/ui/button";
+
+const MobileNav = ({ links, open, setOpen }) => {
+  const [openItem, setOpenItem] = useState(null);
+
+  // if (!open) return null;
+
+  const toggleItem = (name) => {
+    setOpenItem((prev) => (prev === name ? null : name));
+  };
+
+  const closeOnLinkClick = () => {
+    setOpen(false);
+    setOpenItem(null);
+  };
+
+  return createPortal(
+    // <div className="lg:hidden fixed inset-0 z-50 bg-primary overflow-y-auto">
+    <div
+      className={`lg:hidden fixed inset-0 z-50 bg-primary overflow-y-auto
+    transition-all duration-300 ease-in-out
+    ${open ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-5 pointer-events-none"}`}
+    >
+      <Button
+        size="icon"
+        variant="outline"
+        onClick={closeOnLinkClick}
+        className="absolute w-8 h-8 top-4 right-4"
+      >
+        <IoClose />
+      </Button>
+
+      <nav className="h-full flex flex-col justify-center items-center gap-6 px-6">
+        {links.map((link) => {
+          const hasItems = link.items && link.items.length > 0;
+          const isOpen = openItem === link.name;
+
+          return (
+            <div key={link.name} className="w-full text-center">
+              {/* Main Link */}
+              {hasItems ? (
+                <button
+                  onClick={() => toggleItem(link.name)}
+                  className="nav_link w-fit mx-auto flex items-center justify-center gap-2"
+                >
+                  {link.name}
+                  <IoChevronDown
+                    className={`transition-transform duration-300 ${
+                      isOpen ? "rotate-180" : ""
+                    }`}
+                  />
+                </button>
+              ) : (
+                <NavLink
+                  to={link.href}
+                  onClick={closeOnLinkClick}
+                  className="nav_link w-fit mx-auto block"
+                >
+                  {link.name}
+                </NavLink>
+              )}
+
+              {/* Accordion Items */}
+              {hasItems && (
+                <div
+                  className={`overflow-hidden transition-all duration-500 
+                  bg-secondary rounded-lg max-w-xs mx-auto ${
+                    isOpen ? "max-h-96 mt-3 py-2" : "max-h-0"
+                  }`}
+                >
+                  <div className="flex flex-col gap-3">
+                    {link.items.map((sub) => (
+                      <NavLink
+                        key={sub.name}
+                        to={sub.href}
+                        onClick={closeOnLinkClick}
+                        className="text-primary font-semibold hover:text-white transition"
+                      >
+                        {sub.name}
+                      </NavLink>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </nav>
+    </div>,
+    document.body,
+  );
+};
+
+export default MobileNav;

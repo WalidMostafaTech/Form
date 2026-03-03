@@ -1,27 +1,33 @@
 import PageBanner from "@/components/commonSections/PageBanner";
-import image from "@/assets/images/bg-img.jpg";
 import ContactForm from "./sections/ContactForm";
 import ContactInfo from "./sections/ContactInfo";
 import ContactMap from "./sections/ContactMap";
+import { getContactInformation } from "@/api/mainServices";
+import { useQuery } from "@tanstack/react-query";
 
 const ContactUS = () => {
+  const { data: contactInfo, isLoading } = useQuery({
+    queryKey: ["contactInformation"],
+    queryFn: getContactInformation,
+  });
+
+  if (isLoading) return <div>Loading...</div>;
+
   return (
     <main>
       <PageBanner
-        image={image}
+        image={contactInfo?.contact_us_image}
         title={"contact us"}
-        description={
-          "We are here to help and answer any question you might have. We look forward to hearing from you."
-        }
+        description={contactInfo?.contact_us_description}
       />
 
       <section className="container pagePadding">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
           <ContactForm />
-          <ContactInfo />
+          <ContactInfo contactDetails={contactInfo} />
         </div>
 
-        <ContactMap />
+        <ContactMap map={contactInfo?.map_embed_code} />
       </section>
     </main>
   );

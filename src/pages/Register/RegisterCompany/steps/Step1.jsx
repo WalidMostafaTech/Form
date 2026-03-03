@@ -17,10 +17,10 @@ const schema = z
     phone: z.string().refine((value) => isValidPhoneNumber(value || ""), {
       message: "Invalid phone number",
     }),
-    emirate: z.string().min(1, "Please select your emirate"),
+    emirate_id: z.string().min(1, "Please select your emirate"),
     password: z.string().min(6, "Password must be at least 6 characters"),
     password_confirmation: z.string().min(6, "Confirm your password"),
-    terms: z.boolean().refine((val) => val === true, {
+    terms_accepted: z.boolean().refine((val) => val === true, {
       message: "You must accept terms",
     }),
   })
@@ -30,13 +30,13 @@ const schema = z
   });
 
 const emirates = [
-  { label: "Abu Dhabi", value: "abu_dhabi" },
-  { label: "Dubai", value: "dubai" },
-  { label: "Sharjah", value: "sharjah" },
-  { label: "Ajman", value: "ajman" },
-  { label: "Umm Al Quwain", value: "uaq" },
-  { label: "Ras Al Khaimah", value: "rak" },
-  { label: "Fujairah", value: "fujairah" },
+  { label: "Abu Dhabi", value: 1 },
+  { label: "Dubai", value: 2 },
+  { label: "Sharjah", value: 3 },
+  { label: "Ajman", value: 4 },
+  { label: "Umm Al Quwain", value: 5 },
+  { label: "Ras Al Khaimah", value: 6 },
+  { label: "Fujairah", value: 7 },
 ];
 
 const Step1 = ({ setParentData, parentData, goNext }) => {
@@ -54,16 +54,24 @@ const Step1 = ({ setParentData, parentData, goNext }) => {
       name: parentData.name || "",
       email: parentData.email || "",
       phone: parentData.phone || "",
-      emirate: parentData.emirate || "",
+      emirate_id: parentData.emirate_id || "",
       password: parentData.password || "",
       password_confirmation: parentData.password_confirmation || "",
-      terms: parentData.terms || false,
+      terms_accepted: parentData.terms_accepted || false,
     },
   });
 
   const onSubmit = (data) => {
-    console.log(data);
-    setParentData({ ...parentData, ...data, image: imageFile });
+    const { terms_accepted, ...rest } = data;
+
+    setParentData({
+      ...parentData,
+      ...rest,
+      terms_accepted: 1,
+      type: "company",
+      image: imageFile,
+    });
+
     goNext();
   };
 
@@ -157,7 +165,7 @@ const Step1 = ({ setParentData, parentData, goNext }) => {
 
       {/* Emirate Select */}
       <Controller
-        name="emirate"
+        name="emirate_id"
         control={control}
         render={({ field }) => (
           <MainInput
@@ -167,7 +175,7 @@ const Step1 = ({ setParentData, parentData, goNext }) => {
             placeholder="Select your emirate"
             icon={<FiMapPin size={18} />}
             options={emirates}
-            error={errors.emirate?.message}
+            error={errors.emirate_id?.message}
           />
         )}
       />
@@ -207,7 +215,7 @@ const Step1 = ({ setParentData, parentData, goNext }) => {
       {/* Terms */}
       <div>
         <Controller
-          name="terms"
+          name="terms_accepted"
           control={control}
           render={({ field }) => (
             <div className="flex items-center space-x-2">
@@ -235,8 +243,11 @@ const Step1 = ({ setParentData, parentData, goNext }) => {
             </div>
           )}
         />
-        {errors.terms && (
-          <p className="text-sm text-red-600 mt-1">{errors.terms.message}</p>
+
+        {errors.terms_accepted && (
+          <p className="text-sm text-red-600 mt-1">
+            {errors.terms_accepted.message}
+          </p>
         )}
       </div>
 

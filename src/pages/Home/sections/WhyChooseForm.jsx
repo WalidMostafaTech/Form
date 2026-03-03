@@ -1,37 +1,9 @@
 import bgImage from "@/assets/images/bg-img.jpg";
-import { BiSupport } from "react-icons/bi";
 
-const WhyChooseForm = () => {
-  const list = [
-    {
-      id: 1,
-      title: "Expert Support",
-      description:
-        "Professional baristas ready to help you choose the right blend.",
-      icon: <BiSupport />,
-    },
-    {
-      id: 2,
-      title: "Expert Support",
-      description:
-        "Professional baristas ready to help you choose the right blend.",
-      icon: <BiSupport />,
-    },
-    {
-      id: 3,
-      title: "Expert Support",
-      description:
-        "Professional baristas ready to help you choose the right blend.",
-      icon: <BiSupport />,
-    },
-    {
-      id: 4,
-      title: "Expert Support",
-      description:
-        "Professional baristas ready to help you choose the right blend.",
-      icon: <BiSupport />,
-    },
-  ];
+const WhyChooseForm = ({ data, loading }) => {
+  if (loading) return <div>Loading...</div>;
+  if (!data || !data?.items.length) return null;
+
   return (
     <section
       className="sectionPadding bg-center bg-cover relative"
@@ -45,13 +17,11 @@ const WhyChooseForm = () => {
             Why Choose <span className="text-secondary">Form</span>?
           </h2>
 
-          <p className="text-muted/80 text-sm">
-            Excellence in every single detail.
-          </p>
+          <p className="text-muted/80 text-sm">{data?.title}</p>
         </hgroup>
 
         <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
-          {list.map((item) => (
+          {data?.items.map((item) => (
             <li
               key={item.id}
               className="flex flex-col items-center text-center"

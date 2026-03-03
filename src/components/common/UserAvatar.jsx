@@ -3,7 +3,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 const UserAvatar = ({
   name,
   image,
-  size = 40, // default size
+  size = 35, // default size
   className = "",
 }) => {
   const getInitials = (fullName) => {
@@ -15,11 +15,10 @@ const UserAvatar = ({
 
   return (
     <Avatar
-      className={className}
+      className={`${className}`}
       style={{
         width: size,
         height: size,
-        fontSize: size / 2.5,
       }}
     >
       {image && (
@@ -29,7 +28,9 @@ const UserAvatar = ({
           className={`object-cover cursor-pointer`}
         />
       )}
-      <AvatarFallback>{getInitials(name)}</AvatarFallback>
+      <AvatarFallback className="text-primary">
+        {getInitials(name)}
+      </AvatarFallback>
     </Avatar>
   );
 };

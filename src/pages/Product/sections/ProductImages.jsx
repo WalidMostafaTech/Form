@@ -3,14 +3,18 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Thumbs } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/thumbs";
+import { useSelector } from "react-redux";
 
 const ProductImages = ({ images }) => {
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
+
+  const { lang } = useSelector((state) => state.language);
 
   return (
     <section>
       {/* Main Image */}
       <Swiper
+        dir={lang === "ar" ? "rtl" : "ltr"}
         modules={[Thumbs]}
         thumbs={{ swiper: thumbsSwiper }}
         className="rounded-2xl overflow-hidden"
@@ -28,6 +32,7 @@ const ProductImages = ({ images }) => {
 
       {/* Thumbnails */}
       <Swiper
+        dir={lang === "ar" ? "rtl" : "ltr"}
         onSwiper={setThumbsSwiper}
         spaceBetween={12}
         slidesPerView={4}
