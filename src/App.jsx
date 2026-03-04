@@ -9,6 +9,9 @@ import { Toaster } from "@/components/ui/sonner";
 import LogOutModal from "@/components/modals/LogOutModal";
 import RequiredLoginModal from "@/components/modals/RequiredLoginModal";
 import RequiredVerifyEmailModal from "@/components/modals/RequiredVerifyEmailModal";
+import { fetchCategories } from "./store/categories/categoriesActions";
+import { fetchEmirates } from "./store/emirates/emiratesActions";
+import ScrollToTopBtn from "./components/behaviors/ScrollToTopBtn";
 
 function App() {
   const { pathname } = useLocation();
@@ -17,6 +20,8 @@ function App() {
   useEffect(() => {
     dispatch(getUser());
     dispatch(fetchSettings());
+    dispatch(fetchCategories());
+    dispatch(fetchEmirates());
   }, [dispatch]);
 
   useEffect(() => {
@@ -34,6 +39,8 @@ function App() {
       <Footer />
 
       <Toaster position="top-center" />
+
+      <ScrollToTopBtn />
 
       {/* modals */}
       <LogOutModal />

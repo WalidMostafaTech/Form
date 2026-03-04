@@ -9,6 +9,7 @@ import { isValidPhoneNumber } from "react-phone-number-input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useRef, useState } from "react";
 import { IoImageOutline } from "react-icons/io5";
+import { useSelector } from "react-redux";
 
 const schema = z
   .object({
@@ -29,16 +30,6 @@ const schema = z
     path: ["password_confirmation"],
   });
 
-const emirates = [
-  { label: "Abu Dhabi", value: 1 },
-  { label: "Dubai", value: 2 },
-  { label: "Sharjah", value: 3 },
-  { label: "Ajman", value: 4 },
-  { label: "Umm Al Quwain", value: 5 },
-  { label: "Ras Al Khaimah", value: 6 },
-  { label: "Fujairah", value: 7 },
-];
-
 const Step1 = ({ setParentData, parentData, goNext }) => {
   const [imagePreview, setImagePreview] = useState(null);
   const [imageFile, setImageFile] = useState(null);
@@ -57,11 +48,12 @@ const Step1 = ({ setParentData, parentData, goNext }) => {
       emirate_id: parentData.emirate_id || "",
       password: parentData.password || "",
       password_confirmation: parentData.password_confirmation || "",
-      terms_accepted: parentData.terms_accepted || false,
+      terms_accepted: parentData.terms_accepted ? true : false,
     },
   });
 
   const onSubmit = (data) => {
+    // eslint-disable-next-line no-unused-vars
     const { terms_accepted, ...rest } = data;
 
     setParentData({
@@ -74,6 +66,8 @@ const Step1 = ({ setParentData, parentData, goNext }) => {
 
     goNext();
   };
+
+  const { emirates } = useSelector((state) => state.emirates);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
@@ -157,7 +151,6 @@ const Step1 = ({ setParentData, parentData, goNext }) => {
             {...field}
             label="Phone"
             placeholder="Enter phone number"
-            icon={<FiPhone size={18} />}
             error={errors.phone?.message}
           />
         )}
@@ -170,11 +163,13 @@ const Step1 = ({ setParentData, parentData, goNext }) => {
         render={({ field }) => (
           <MainInput
             {...field}
+            options={emirates.map((item) => ({
+              value: String(item.id),
+              label: item.name,
+            }))}
             type="select"
             label="Your Emirate"
             placeholder="Select your emirate"
-            icon={<FiMapPin size={18} />}
-            options={emirates}
             error={errors.emirate_id?.message}
           />
         )}

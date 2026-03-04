@@ -19,3 +19,8 @@ export const getOurServices = async () => {
   const { data } = await api.get("/our-services");
   return data?.data || {};
 };
+
+export const getCategories = async () => {
+  const { data } = await api.get("/categories");
+  return data?.data || [];
+};

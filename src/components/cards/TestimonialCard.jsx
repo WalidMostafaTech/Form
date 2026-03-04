@@ -16,7 +16,7 @@ const TestimonialCard = ({ testimonial }) => {
         </div>
       </div>
 
-      <p className="text-xs">{testimonial.feedback}</p>
+      <p className="text-xs">{testimonial.content}</p>
     </div>
   );
 };

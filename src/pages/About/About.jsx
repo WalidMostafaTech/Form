@@ -5,20 +5,25 @@ import KnowMore from "./sections/KnowMore";
 import OurService from "../../components/commonSections/OurService";
 import OurStory from "@/components/commonSections/OurStory";
 import WhatTheySay from "@/components/commonSections/WhatTheySay";
+import { useQuery } from "@tanstack/react-query";
+import { getAboutPage } from "@/api/mainServices";
 
 const About = () => {
+  const { data: aboutPage, isLoading } = useQuery({
+    queryKey: ["aboutPage"],
+    queryFn: getAboutPage,
+  });
+
   return (
     <main>
       <PageBanner
-        image={image}
+        image={aboutPage?.image}
         title={"about us"}
-        description={
-          "Learn more about our company and our mission to provide the best products and services."
-        }
+        description={aboutPage?.description}
       />
 
       <OurStory />
-      <VisionAndMission />
+      <VisionAndMission data={aboutPage} />
       <KnowMore />
       <OurService />
       <WhatTheySay />

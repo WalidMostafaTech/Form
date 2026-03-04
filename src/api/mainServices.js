@@ -1,12 +1,22 @@
 import api from "./api";
 
+export const getAboutPage = async () => {
+  const { data } = await api.get("/about-us");
+  return data?.data || [];
+};
+
 export const getSettings = async () => {
   const { data } = await api.get("/settings");
   return data?.data || [];
 };
 
-export const getCategories = async () => {
-  const { data } = await api.get("/categories");
+export const getSimpleCategories = async () => {
+  const { data } = await api.get("/simple-categories");
+  return data?.data || [];
+};
+
+export const getEmirates = async () => {
+  const { data } = await api.get("/emirates");
   return data?.data || [];
 };
 

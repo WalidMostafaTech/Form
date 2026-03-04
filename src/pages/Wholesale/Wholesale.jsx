@@ -1,101 +1,59 @@
-import image from "@/assets/images/product-img.png";
+import { getCategoriesHero, getProducts } from "@/api/productsServices";
 import ProductCard from "@/components/cards/ProductCard";
 import SectionTitle from "@/components/common/SectionTitle";
 import PageBanner from "@/components/commonSections/PageBanner";
+import { useQuery } from "@tanstack/react-query";
+import { useSelector } from "react-redux";
 import { useSearchParams } from "react-router";
 
 const Wholesale = () => {
-  const products = [
-    {
-      id: 1,
-      title: "Copper Brew Kit",
-      description:
-        "Sourced from carefully selected farms and roasted with precision, every cup",
-      price: 29.99,
-      min_weight: "250",
-      max_weight: "500",
-      image: image,
-    },
-    {
-      id: 2,
-      title: "Copper Brew Kit",
-      description:
-        "Sourced from carefully selected farms and roasted with precision, every cup",
-      price: 29.99,
-      min_weight: "250",
-      max_weight: "500",
-      image: image,
-    },
-    {
-      id: 3,
-      title: "Copper Brew Kit",
-      description:
-        "Sourced from carefully selected farms and roasted with precision, every cup",
-      price: 29.99,
-      min_weight: "250",
-      max_weight: "500",
-      image: image,
-    },
-    {
-      id: 4,
-      title: "Copper Brew Kit",
-      description:
-        "Sourced from carefully selected farms and roasted with precision, every cup",
-      price: 29.99,
-      min_weight: "250",
-      max_weight: "500",
-      image: image,
-    },
-    {
-      id: 5,
-      title: "Copper Brew Kit",
-      description:
-        "Sourced from carefully selected farms and roasted with precision, every cup",
-      price: 29.99,
-      min_weight: "250",
-      max_weight: "500",
-      image: image,
-    },
-  ];
-
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const selectedCategory = searchParams.get("category") || "all";
+  const selectedCategory = Number(searchParams.get("category")) || 0;
 
-  const categories = [
-    { id: 1, name: "All", value: "all" },
-    { id: 2, name: "Coffee Menu", value: "coffee-menu" },
-    { id: 3, name: "Coffee Beans", value: "coffee-beans" },
-    { id: 4, name: "Accessories", value: "accessories" },
-  ];
+  const { data: products, isLoading } = useQuery({
+    queryKey: ["products", selectedCategory],
+    queryFn: () =>
+      getProducts({ category_id: selectedCategory, sale_type: "retail" }),
+  });
+
+  const { data: categoryHero, isLoading: isLoadingHero } = useQuery({
+    queryKey: ["categoryHero"],
+    queryFn: getCategoriesHero,
+  });
+
+  const { categories } = useSelector((state) => state.categories);
 
   return (
     <main>
       <PageBanner
-        image={image}
+        image={categoryHero?.image}
         title="Shop"
-        description="Explore our wide range of products and find the perfect items for your needs."
+        description={categoryHero?.description}
+        html={true}
       />
 
       <section className="container pagePadding">
         <SectionTitle
-          title={selectedCategory === "all" ? "Shop" : selectedCategory}
+          title={
+            categories?.find((c) => c.id === selectedCategory)?.name || "All"
+          }
         />
 
         <ul className="flex items-center flex-wrap gap-2 mb-8">
-          {categories.map((category) => (
+          {categories?.map((category) => (
             <li
               key={category.id}
-              className={`text-sm px-4 py-2 cursor-pointer rounded-md border ${
-                selectedCategory === category.value
+              className={`text-sm px-4 py-2 cursor-pointer rounded-md border transition ${
+                selectedCategory === category.id
                   ? "bg-primary text-white"
-                  : "bg-muted hover:bg-gray-300"
+                  : "bg-primary-foreground hover:bg-primary/10"
               }`}
               onClick={() => {
-                if (category.value === "all") {
+                if (category.id === "0") {
                   setSearchParams({});
                 } else {
-                  setSearchParams({ category: category.value });
+                  setSearchParams({ category: category.id });
                 }
               }}
             >
@@ -104,9 +62,13 @@ const Wholesale = () => {
           ))}
         </ul>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {products.map((product) => (
-            <ProductCard key={product.id} product={product} />
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6">
+          {products?.items?.map((product) => (
+            <ProductCard
+              key={product.id}
+              product={product}
+              sale_type="retail"
+            />
           ))}
         </div>
       </section>

@@ -3,7 +3,7 @@ import image from "@/assets/images/product-img.png";
 import CategoryCard from "@/components/cards/CategoryCard";
 import MainSlider from "@/components/commonSections/MainSlider";
 import { useQuery } from "@tanstack/react-query";
-import { getCategories } from "@/api/mainServices";
+import { getCategories } from "@/api/homeServices";
 
 const CategorySection = () => {
   const { data: categoriesData, isLoading } = useQuery({

@@ -7,12 +7,11 @@ import { FaBell } from "react-icons/fa";
 import NotificationsSkeleton from "@/components/Loading/SkeletonLoading/NotificationsSkeleton";
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { getNotifications } from "@/services/notificationsServices";
-import { getUnreadCount } from "@/services/mainServices";
+import { getNotifications } from "@/api/notificationsServices";
+import { getUnreadCount } from "@/api/mainServices";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import { Button } from "@/components/ui/button";
-import NotificationsBadge from "@/components/common/NotificationsBadge";
 import { Link } from "react-router";
 import NotificationCard from "@/components/cards/NotificationCard";
 import useNotificationsPolling from "@/hooks/useNotificationsPolling";
@@ -48,7 +47,12 @@ const NotificationsPopUp = () => {
       <PopoverTrigger asChild>
         <Button variant="outline" size="icon" className="rounded-full relative">
           <FaBell className="w-4 h-4" />
-          <NotificationsBadge count={unreadNotifications} />
+          <span
+            className="absolute -top-2 -right-2 bg-primary text-white rounded-full w-4 h-4 
+            flex items-center justify-center"
+          >
+            {unreadNotifications}
+          </span>
         </Button>
       </PopoverTrigger>
 

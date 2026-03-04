@@ -4,56 +4,30 @@ import EmptyDataSection from "@/components/commonSections/EmptyDataSection";
 import NotificationsSkeleton from "@/components/Loading/SkeletonLoading/NotificationsSkeleton";
 import { Button } from "@/components/ui/button";
 
-// import {
-//   getNotifications,
-//   readAllNotifications,
-// } from "@/api/notificationsServices";
+import {
+  getNotifications,
+  readAllNotifications,
+} from "@/api/notificationsServices";
 
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
 
 const Notifications = () => {
   const { t } = useTranslation();
-  // const queryClient = useQueryClient();
+  const queryClient = useQueryClient();
 
-  // const { data: notifications, isLoading } = useQuery({
-  //   queryKey: ["notifications"],
-  //   queryFn: getNotifications,
-  // });
+  const { data: notifications, isLoading } = useQuery({
+    queryKey: ["notifications"],
+    queryFn: getNotifications,
+  });
 
-  // const { mutate: markAllAsRead, isPending } = useMutation({
-  //   mutationFn: readAllNotifications,
-  //   onSuccess: () => {
-  //     queryClient.invalidateQueries({ queryKey: ["notifications"] });
-  //     queryClient.invalidateQueries({ queryKey: ["unread-count"] });
-  //   },
-  // });
-
-  const notifications = {
-    items: [
-      {
-        id: 1,
-        title: "Order Placed",
-        message: "Your order has been placed successfully.",
-        read_at: null,
-      },
-      {
-        id: 2,
-        title: "Order Shipped",
-        message: "Your order has been shipped.",
-        read_at: null,
-      },
-      {
-        id: 3,
-        title: "Order Delivered",
-        message: "Your order has been delivered.",
-        read_at: "2024-06-01T12:00:00Z",
-      },
-    ],
-  };
-
-  const isLoading = false;
-  const isPending = false;
+  const { mutate: markAllAsRead, isPending } = useMutation({
+    mutationFn: readAllNotifications,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["notifications"] });
+      queryClient.invalidateQueries({ queryKey: ["unread-count"] });
+    },
+  });
 
   return (
     <div>
@@ -61,7 +35,7 @@ const Notifications = () => {
         <SectionTitle title={t("notifications.title")} />
 
         {notifications?.items?.length > 0 && (
-          <Button disabled={isPending}>
+          <Button disabled={isPending} onClick={() => markAllAsRead()}>
             {isPending
               ? t("notifications.loading")
               : t("notifications.markAllRead")}

@@ -14,6 +14,7 @@ import { Link, useNavigate } from "react-router";
 import { Skeleton } from "@/components/ui/skeleton";
 import { openModal } from "@/store/modals/modalsSlice";
 import { useDispatch } from "react-redux";
+import { FaRegHeart } from "react-icons/fa";
 
 const ProfileSide = ({ user, loading }) => {
   const dispatch = useDispatch();
@@ -49,6 +50,11 @@ const ProfileSide = ({ user, loading }) => {
             <DropdownMenuItem onClick={() => navigate("/profile/orders")}>
               <FiShoppingCart />
               Orders
+            </DropdownMenuItem>
+
+            <DropdownMenuItem onClick={() => navigate("/profile/favourites")}>
+              <FaRegHeart />
+              Favourites
             </DropdownMenuItem>
 
             <DropdownMenuSeparator />

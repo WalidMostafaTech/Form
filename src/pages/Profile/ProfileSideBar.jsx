@@ -18,6 +18,7 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { openModal } from "@/store/modals/modalsSlice";
 import { SlHandbag } from "react-icons/sl";
+import { FaRegHeart } from "react-icons/fa";
 
 const ProfileSideBar = () => {
   const { t } = useTranslation();
@@ -47,6 +48,16 @@ const ProfileSideBar = () => {
       >
         <SlHandbag />
         {t("ProfileSideBar.orders")}
+      </NavLink>
+
+      <NavLink
+        to={"/profile/favourites"}
+        end
+        className="sideBarLink"
+        onClick={() => setOpenSideBar(false)}
+      >
+        <FaRegHeart />
+        {t("ProfileSideBar.favourites")}
       </NavLink>
 
       <NavLink

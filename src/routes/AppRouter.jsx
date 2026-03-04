@@ -22,6 +22,7 @@ const Account = React.lazy(
   () => import("../pages/Profile/pages/Account/Account"),
 );
 const Orders = React.lazy(() => import("../pages/Profile/pages/Orders/Orders"));
+const Favourites = React.lazy(() => import("../pages/Profile/pages/Favourites/Favourites"));
 const Notifications = React.lazy(
   () => import("../pages/Profile/pages/Notifications/Notifications"),
 );
@@ -55,7 +56,7 @@ const router = createBrowserRouter([
       { path: "/location", element: <Location /> },
       { path: "/shop", element: <Shop /> },
       { path: "/wholesale", element: <Wholesale /> },
-      { path: "/product/:id", element: <Product /> },
+      { path: "/product/:slug", element: <Product /> },
       { path: "/contact", element: <ContactUS /> },
 
       {
@@ -67,6 +68,7 @@ const router = createBrowserRouter([
             children: [
               { index: true, element: <Account /> },
               { path: "orders", element: <Orders /> },
+              { path: "favourites", element: <Favourites /> },
               { path: "notifications", element: <Notifications /> },
             ],
           },

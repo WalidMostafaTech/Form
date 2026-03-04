@@ -13,26 +13,25 @@ const CategoryCard = ({ category }) => {
                 transition-all duration-500 group-hover:translate-y-[-50%]"
       />
 
-      {/* Content */}
       <div
         className="absolute inset-0 z-10 h-full flex flex-col justify-end p-6 text-white
-                transition-all duration-500 group-hover:-translate-y-6"
+        transition-all duration-500 group-hover:-translate-y-6"
       >
-        <h3 className="text-2xl font-bold mb-2">{category.title}</h3>
+        <h3 className="text-2xl font-bold mb-2">{category.name}</h3>
 
-        {/* Short Description */}
-        <p className="text-sm opacity-90 max-h-10 transition-all duration-500 group-hover:opacity-0 group-hover:max-h-0">
-          {category.short_description}
+        <p className="text-sm opacity-90 max-h-30 transition-all duration-500 
+        group-hover:opacity-0 group-hover:max-h-0 mb-2 group-hover:mb-0">
+          {category.first_description}
         </p>
 
-        {/* Long Description */}
-        <p className="text-sm opacity-0 max-h-0 overflow-hidden transition-all duration-500 group-hover:opacity-100 group-hover:max-h-40 my-2">
-          {category.long_description}
+        <p className="text-sm opacity-0 max-h-0 overflow-hidden transition-all duration-500 
+        group-hover:opacity-100 group-hover:max-h-40 group-hover:mb-2">
+          {category.second_description}
         </p>
 
         <Link
-          to={`/shop`}
-          className="inline-block w-max border-b-2 border-secondary text-sm tracking-wide hover:opacity-80 transition-all duration-500
+          to={`/shop?category=${category.id}`}
+          className="inline-block w-max border-b-2 border-secondary text-sm tracking-wide line-clamp-10 hover:opacity-80 transition-all duration-500
                     group-hover:bg-white group-hover:text-primary group-hover:border-transparent group-hover:px-2 group-hover:py-1 group-hover:rounded"
         >
           Explore Collection

@@ -3,7 +3,7 @@ import React from "react";
 const ServiceCard = ({ service }) => {
   return (
     <div className="flex flex-col gap-2">
-      <div className="w-full aspect-square overflow-hidden rounded-lg mb-2">
+      <div className="w-full aspect-square overflow-hidden rounded-lg">
         <img
           src={service.image}
           alt={service.title}

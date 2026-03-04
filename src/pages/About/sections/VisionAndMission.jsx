@@ -1,22 +1,22 @@
 import SectionTitle from "@/components/common/SectionTitle";
-import { FiEye } from "react-icons/fi";
-import { GiCoffeeBeans } from "react-icons/gi";
+// import { FiEye } from "react-icons/fi";
+// import { GiCoffeeBeans } from "react-icons/gi";
 
-const VisionAndMission = () => {
+const VisionAndMission = ({ data }) => {
+  if (!data) return null;
+
   const list = [
     {
       id: 1,
-      title: "Vision",
-      description:
-        "To redefine the everyday coffee ritual by creating refined, natural, and memorable experiences in every cup.At FORM, we envision a world where coffee is not rushed, but appreciated — where every brew reflects craftsmanship, balance, and quiet luxury.",
-      icon: <FiEye />,
+      title: data?.vision?.title,
+      description: data?.vision?.description,
+      icon: data?.vision?.icon,
     },
     {
       id: 2,
-      title: "Mission",
-      description:
-        "To source exceptional beans, roast with precision, and deliver a seamless coffee experience that blends tradition with modern refinement.We are committed to quality, sustainability, and thoughtful design — ensuring that every detail, from origin to packaging.",
-      icon: <GiCoffeeBeans />,
+      title: data?.mission?.title,
+      description: data?.mission?.description,
+      icon: data?.mission?.icon,
     },
   ];
 
@@ -33,10 +33,14 @@ const VisionAndMission = () => {
             flex flex-col items-center text-center md:text-start md:items-start gap-4"
             >
               <div
-                className="text-3xl text-primary bg-primary-foreground w-14 h-14 
+                className="text-3xl text-primary bg-primary-foreground w-14 h-14  p-2
               flex items-center justify-center rounded-full"
               >
-                {item.icon}
+                <img
+                  src={item.icon}
+                  alt={item.title}
+                  className="w-full object-contain"
+                />
               </div>
 
               <h3 className="text-xl font-semibold">{item.title}</h3>

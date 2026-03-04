@@ -1,4 +1,4 @@
-const PageBanner = ({ image, title, description }) => {
+const PageBanner = ({ image, title, description, html }) => {
   return (
     <article
       className="w-full h-72 bg-cover bg-center bg-primary relative"
@@ -13,11 +13,17 @@ const PageBanner = ({ image, title, description }) => {
           </h1>
         )}
 
-        {description && (
-          <p className="text-sm md:text-base text-white/80 max-w-2xl">
-            {description}
-          </p>
-        )}
+        {description &&
+          (html ? (
+            <div
+              className="text-sm md:text-base text-white/80 max-w-2xl"
+              dangerouslySetInnerHTML={{ __html: description }}
+            />
+          ) : (
+            <p className="text-sm md:text-base text-white/80 max-w-2xl">
+              {description}
+            </p>
+          ))}
       </div>
     </article>
   );

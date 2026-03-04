@@ -27,18 +27,18 @@ const Header = () => {
     };
   }
 
+  const { categories } = useSelector((state) => state.categories);
+
   const links = [
     { name: "Home", href: "/", items: [] },
     { name: "About", href: "/about", items: [] },
     {
       name: "Shop",
       href: "/shop",
-      items: [
-        { name: "All", href: "/shop" },
-        { name: "Coffee Menu", href: "/shop?category=coffee-menu" },
-        { name: "Coffee Beans", href: "/shop?category=coffee-beans" },
-        { name: "Accessories", href: "/shop?category=accessories" },
-      ],
+      items: categories?.map((c) => ({
+        name: c.name,
+        href: `/shop?category=${c.id}`,
+      })),
     },
 
     ...(wholesaleLink ? [wholesaleLink] : []),

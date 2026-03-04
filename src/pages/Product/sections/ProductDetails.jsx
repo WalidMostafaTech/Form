@@ -1,37 +1,49 @@
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { FiMinus, FiPlus } from "react-icons/fi";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 
 const ProductDetails = ({ product }) => {
-  const [selectedWeight, setSelectedWeight] = useState(product.weights[0]);
   const [quantity, setQuantity] = useState(1);
+  const [selectedSizeId, setSelectedSizeId] = useState(null);
+
+  const items = product?.items ?? [];
+
+  const selectedSize =
+    items.find((item) => item.id === selectedSizeId) ?? items[0];
 
   return (
-    <section className="space-y-6">
-      {/* Title + Price */}
-      <div className="flex justify-between items-center">
-        <h2 className="text-3xl font-bold">{product.title}</h2>
-        <span className="text-xl font-semibold text-primary">
-          {product.currency} {product.price.toFixed(2)}
-        </span>
-      </div>
+    <section className="space-y-6 xl:col-span-2">
+      {/* Title */}
+      <h2 className="text-3xl font-bold">{product?.name}</h2>
 
       {/* Weights */}
-      <ul className="flex items-center flex-wrap gap-2">
-        {product.weights.map((weight, index) => (
-          <li
-            key={index}
-            className={`text-sm px-4 py-2 cursor-pointer rounded-md border ${
-              selectedWeight === weight
-                ? "bg-primary text-white"
-                : "bg-muted hover:bg-gray-200"
-            }`}
-            onClick={() => setSelectedWeight(weight)}
-          >
-            {weight}
-          </li>
-        ))}
-      </ul>
+      <div className="flex items-center justify-between flex-wrap gap-2">
+        <ul className="flex items-center flex-wrap gap-2">
+          {product?.items?.map((size, index) => (
+            <li
+              key={index}
+              className={`text-sm px-4 py-2 cursor-pointer rounded-md border transition ${
+                selectedSize?.id === size.id
+                  ? "bg-primary text-white"
+                  : "bg-primary-foreground hover:bg-primary/10"
+              }`}
+              onClick={() => setSelectedSizeId(size.id)}
+            >
+              {size.weight} {size.weight_unit}
+            </li>
+          ))}
+        </ul>
+
+        <span className="text-2xl font-bold text-primary bg-primary-foreground rounded-md px-2 py-1">
+          {selectedSize?.price} AED
+        </span>
+      </div>
 
       {/* Quantity */}
       <div className="flex items-center gap-2 border rounded w-fit">
@@ -55,32 +67,8 @@ const ProductDetails = ({ product }) => {
       {/* Description */}
       <div>
         <h3 className="font-semibold mb-2">Description</h3>
-        <ul className="space-y-1 text-gray-600">
-          <li>
-            <strong>Region:</strong> {product.description.region}
-          </li>
-          <li>
-            <strong>Producer:</strong> {product.description.producer}
-          </li>
-          <li>
-            <strong>Variety:</strong> {product.description.variety}
-          </li>
-          <li>
-            <strong>Altitude:</strong> {product.description.altitude}
-          </li>
-          <li>
-            <strong>Processing:</strong> {product.description.processing}
-          </li>
-          <li>
-            <strong>Roast Level:</strong> {product.description.roastLevel}
-          </li>
-          <li>
-            <strong>Availability:</strong> {product.description.availability}
-          </li>
-          <li>
-            <strong>Special Offers:</strong> {product.description.offers}
-          </li>
-        </ul>
+
+        <div className="text-muted-foreground" dangerouslySetInnerHTML={{ __html: product?.description }} />
       </div>
 
       {/* Buttons */}
@@ -91,33 +79,50 @@ const ProductDetails = ({ product }) => {
         </Button>
       </div>
 
-      {/* Accordion Placeholder */}
-      <div className="border-t pt-4 space-y-3">
-        <details className="border-b pb-2">
-          <summary className="cursor-pointer font-medium">
+      {/* Accordion */}
+      <Accordion type="multiple" collapsible className="border-y">
+        <AccordionItem value="shipping">
+          <AccordionTrigger className={`cursor-pointer`}>
             Shipping and dispatch information
-          </summary>
-          <p className="text-sm text-gray-600 mt-2">
-            Shipping within 3-5 business days.
-          </p>
-        </details>
+          </AccordionTrigger>
+          <AccordionContent>
+            <div
+              className="text-sm text-muted-foreground"
+              dangerouslySetInnerHTML={{
+                __html: product?.shipping_and_dispatch_information,
+              }}
+            />
+          </AccordionContent>
+        </AccordionItem>
 
-        <details className="border-b pb-2">
-          <summary className="cursor-pointer font-medium">More details</summary>
-          <p className="text-sm text-gray-600 mt-2">
-            Additional product details here.
-          </p>
-        </details>
+        <AccordionItem value="details">
+          <AccordionTrigger className={`cursor-pointer`}>
+            More details
+          </AccordionTrigger>
+          <AccordionContent>
+            <div
+              className="text-sm text-muted-foreground"
+              dangerouslySetInnerHTML={{
+                __html: product?.more_details,
+              }}
+            />
+          </AccordionContent>
+        </AccordionItem>
 
-        <details>
-          <summary className="cursor-pointer font-medium">
+        <AccordionItem value="notes">
+          <AccordionTrigger className={`cursor-pointer`}>
             Additional notes
-          </summary>
-          <p className="text-sm text-gray-600 mt-2">
-            Extra notes about the product.
-          </p>
-        </details>
-      </div>
+          </AccordionTrigger>
+          <AccordionContent>
+            <div
+              className="text-sm text-muted-foreground"
+              dangerouslySetInnerHTML={{
+                __html: product?.additional_notes,
+              }}
+            />
+          </AccordionContent>
+        </AccordionItem>
+      </Accordion>
     </section>
   );
 };

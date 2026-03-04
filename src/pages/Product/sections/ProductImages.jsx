@@ -19,12 +19,12 @@ const ProductImages = ({ images }) => {
         thumbs={{ swiper: thumbsSwiper }}
         className="rounded-2xl overflow-hidden"
       >
-        {images.map((img, index) => (
+        {images?.map((img, index) => (
           <SwiperSlide key={index}>
             <img
               src={img}
               alt="product"
-              className="w-full h-125 object-cover rounded-2xl"
+              className="w-full aspect-square object-cover rounded-2xl"
             />
           </SwiperSlide>
         ))}
@@ -38,12 +38,12 @@ const ProductImages = ({ images }) => {
         slidesPerView={4}
         className="mt-4"
       >
-        {images.map((img, index) => (
+        {images?.map((img, index) => (
           <SwiperSlide key={index}>
             <img
               src={img}
               alt="thumb"
-              className="w-full h-24 object-cover rounded-xl cursor-pointer border"
+              className="w-full aspect-square object-cover rounded-xl cursor-pointer border"
             />
           </SwiperSlide>
         ))}

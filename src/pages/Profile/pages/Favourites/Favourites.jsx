@@ -1,9 +1,8 @@
 import SectionTitle from "@/components/common/SectionTitle";
 import image from "@/assets/images/product-img.png";
 import ProductCard from "@/components/cards/ProductCard";
-import MainSlider from "./MainSlider";
 
-const BestSellers = () => {
+const Favourites = () => {
   const products = [
     {
       id: 1,
@@ -63,27 +62,16 @@ const BestSellers = () => {
   ];
 
   return (
-    <section className="sectionPadding">
-      <div className="container">
-        <SectionTitle
-          title="best"
-          spanTitle="sellers"
-          link={"/shop"}
-          linkText={"view all products"}
-        />
+    <div className="space-y-6">
+      <SectionTitle title="Favourites" />
 
-        <MainSlider
-          data={products}
-          breakpoints={{
-            0: { slidesPerView: 2 },
-            560: { slidesPerView: 2.8 },
-            640: { slidesPerView: 3.3 },
-            1024: { slidesPerView: 4.2 },
-          }}
-          renderItem={(product) => <ProductCard product={product} />}
-        />
+      <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4">
+        {products?.map((product) => (
+          <ProductCard key={product.id} product={product} />
+        ))}
       </div>
-    </section>
+    </div>
   );
 };
-export default BestSellers;
+
+export default Favourites;

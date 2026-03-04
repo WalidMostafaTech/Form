@@ -14,7 +14,7 @@ import { useRef, useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { registerUser } from "@/api/authServices";
 import FormError from "@/components/form/FormError";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getUser } from "@/store/user/userActions";
 
 const registerSchema = z
@@ -35,16 +35,6 @@ const registerSchema = z
     message: "Passwords do not match",
     path: ["password_confirmation"],
   });
-
-const emirates = [
-  { label: "Abu Dhabi", value: 1 },
-  { label: "Dubai", value: 2 },
-  { label: "Sharjah", value: 3 },
-  { label: "Ajman", value: 4 },
-  { label: "Umm Al Quwain", value: 5 },
-  { label: "Ras Al Khaimah", value: 6 },
-  { label: "Fujairah", value: 7 },
-];
 
 const RegisterCustomer = () => {
   const [imagePreview, setImagePreview] = useState(null);
@@ -110,6 +100,8 @@ const RegisterCustomer = () => {
 
     registerMutate(formData);
   };
+
+  const { emirates } = useSelector((state) => state.emirates);
 
   return (
     <AuthContainer
@@ -197,7 +189,6 @@ const RegisterCustomer = () => {
               {...field}
               label="Phone"
               placeholder="Enter phone number"
-              icon={<FiPhone size={18} />}
               error={errors.phone?.message}
             />
           )}
@@ -210,11 +201,13 @@ const RegisterCustomer = () => {
           render={({ field }) => (
             <MainInput
               {...field}
+              options={emirates.map((item) => ({
+                value: String(item.id),
+                label: item.name,
+              }))}
               type="select"
               label="Your Emirate"
               placeholder="Select your emirate"
-              icon={<FiMapPin size={18} />}
-              options={emirates}
               error={errors.emirate_id?.message}
             />
           )}

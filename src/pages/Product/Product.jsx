@@ -1,39 +1,39 @@
-import image from "@/assets/images/product-img.png";
 import ProductDetails from "./sections/ProductDetails";
 import ProductImages from "./sections/ProductImages";
 import PageBanner from "@/components/commonSections/PageBanner";
 import BestSellers from "@/components/commonSections/BestSellers";
+import { useQuery } from "@tanstack/react-query";
+import { useParams, useSearchParams } from "react-router";
+import { getProduct, getProductsHero } from "@/api/productsServices";
 
 const Product = () => {
-  const product = {
-    id: 1,
-    title: "BRAZIL, SAN ANTONIO",
-    price: 240,
-    currency: "AED",
-    weights: ["250 GM", "1000 GM", "1500 GM"],
-    description: {
-      region: "Bensa, Sidama, Ethiopia",
-      producer: "San Coffee",
-      variety: "Catuai, Red Bourbon, Mundo Novo",
-      altitude: "1993 – 2150 m.a.s.l.",
-      processing: "Natural",
-      roastLevel: "Light, Medium, Dark",
-      availability: "In stock, Pre-order",
-      offers: "Optional",
-    },
-    images: [image, image, image, image],
-  };
+  const { slug } = useParams();
+
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const sale_type = searchParams.get("sale_type") || "retail";
+
+  const { data: product, isLoading } = useQuery({
+    queryKey: ["product"],
+    queryFn: () => getProduct({ slug, sale_type }),
+  });
+
+  const { data: productHero, isLoading: isLoadingHero } = useQuery({
+    queryKey: ["productHero"],
+    queryFn: getProductsHero,
+  });
 
   return (
     <main>
       <PageBanner
-        image={image}
+        image={productHero?.image}
         title="Shop"
-        description="Explore our wide range of products and find the perfect items for your needs."
+        description={productHero?.description}
+        html={true}
       />
 
-      <section className="container pagePadding grid grid-cols-1 lg:grid-cols-2 gap-10">
-        <ProductImages images={product.images} />
+      <section className="container pagePadding grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-10">
+        <ProductImages images={product?.images} />
         <ProductDetails product={product} />
       </section>
 

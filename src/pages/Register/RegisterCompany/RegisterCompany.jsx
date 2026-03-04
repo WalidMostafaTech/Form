@@ -13,6 +13,7 @@ const RegisterCompany = () => {
   const goNext = () => {
     if (step >= steps.length) return;
     setStep((prev) => prev + 1);
+    window.scrollTo(0, 0);
   };
 
   const [parentData, setParentData] = useState({});

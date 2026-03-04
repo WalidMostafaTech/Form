@@ -5,14 +5,10 @@ import { Link } from "react-router";
 import { SlHandbag } from "react-icons/sl";
 import { FaRegBell } from "react-icons/fa";
 import { HiMenuAlt3 } from "react-icons/hi";
+// import NotificationsPopUp from "./NotificationsPopUp";
 
 const HeaderActions = ({ setMobileNavOpen }) => {
-  const { user ,loading } = useSelector((state) => state.user);
-  // const user = {
-  //   name: "John Doe",
-  //   image: "https://randomuser.me/api/portraits/men/75.jpg",
-  // };
-  // const loading = false;
+  const { user, loading } = useSelector((state) => state.user);
 
   return (
     <div className="flex items-center gap-2 md:gap-4">
@@ -25,6 +21,8 @@ const HeaderActions = ({ setMobileNavOpen }) => {
           <div>
             <FaRegBell className="header_icon" />
           </div>
+
+          {/* <NotificationsPopUp /> */}
         </>
       )}
 

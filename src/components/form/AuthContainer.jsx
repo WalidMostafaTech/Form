@@ -1,6 +1,6 @@
-import bgImage from "@/assets/images/auth-bg.png";
 import logo from "@/assets/images/logo.png";
 import { GiCoffeeBeans } from "react-icons/gi";
+import { useSelector } from "react-redux";
 
 const AuthContainer = ({
   children,
@@ -8,12 +8,34 @@ const AuthContainer = ({
   description,
   coffeeIcon = false,
 }) => {
+  const { settings } = useSelector((state) => state.settings);
+
   return (
     <main className="grid grid-cols-1 md:grid-cols-2">
       <article
-        style={{ backgroundImage: `url(${bgImage})` }}
-        className="hidden md:flex sticky top-0 h-dvh bg-cover bg-center p-4 flex-col justify-between items-center"
-      ></article>
+        style={{
+          backgroundImage: `url(${settings?.registration_form?.image})`,
+        }}
+        className="hidden md:flex sticky top-0 h-dvh bg-cover bg-center"
+      >
+        <div className="absolute inset-0 bg-primary/40" />
+
+        <div className="h-full flex flex-col justify-between gap-2 p-4 pt-16 relative z-10">
+          <div className="flex-1 flex items-center justify-center">
+            <img src={logo} alt="Logo" className="w-[60%] object-contain" />
+          </div>
+
+          <h1 className="text-2xl font-bold text-white">
+            {settings?.registration_form?.title}
+          </h1>
+          <p className="text-sm text-white/80">
+            {settings?.registration_form?.description}
+          </p>
+          <p className="text-sm text-primary-foreground pt-2 border-t">
+            {settings?.registration_form?.second_description}
+          </p>
+        </div>
+      </article>
 
       <section className="flex items-center justify-center p-8">
         <div className="w-full max-w-sm pt-16">
