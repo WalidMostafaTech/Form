@@ -1,7 +1,8 @@
 import bgImage from "@/assets/images/bg-img.jpg";
+import WhyChooseFormSkeleton from "@/components/Loading/SkeletonLoading/WhyChooseFormSkeleton";
 
 const WhyChooseForm = ({ data, loading }) => {
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <WhyChooseFormSkeleton />;
   if (!data || !data?.items.length) return null;
 
   return (

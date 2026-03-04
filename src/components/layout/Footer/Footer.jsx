@@ -14,12 +14,15 @@ import { useQuery } from "@tanstack/react-query";
 import { getFooter } from "@/api/mainServices";
 import { RiInstagramFill } from "react-icons/ri";
 import { IoLogoWhatsapp } from "react-icons/io5";
+import FooterSkeleton from "@/components/Loading/SkeletonLoading/FooterSkeleton";
 
 const Footer = () => {
   const { data: footerData, isLoading } = useQuery({
     queryKey: ["footer"],
     queryFn: getFooter,
   });
+
+  if (isLoading) return <FooterSkeleton />;
 
   const links = [
     { name: "Home", href: "/" },
@@ -70,11 +73,13 @@ const Footer = () => {
 
       <div className="container relative z-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 text-white">
         <div className="flex flex-col items-center gap-4 text-center">
-          <img
-            src={footerData?.footer_logo || logo}
-            alt="Company Logo"
-            className="w-32"
-          />
+          <div className="w-32 overflow-hidden">
+            <img
+              src={footerData?.footer_logo || logo}
+              alt="Company Logo"
+              className="w-full h-full object-contain"
+            />
+          </div>
           <p className="text-xs">{footerData?.footer_text}</p>
         </div>
 

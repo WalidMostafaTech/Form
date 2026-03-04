@@ -1,6 +1,7 @@
 import { getOurStory } from "@/api/homeServices";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router";
+import OurStorySkeleton from "../Loading/SkeletonLoading/OurStorySkeleton";
 
 const OurStory = () => {
   const { data: ourStory, isLoading } = useQuery({
@@ -8,22 +9,9 @@ const OurStory = () => {
     queryFn: getOurStory,
   });
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <OurStorySkeleton />;
 
   if (!ourStory || !ourStory?.our_story) return null;
-
-  // const list = [
-  //   {
-  //     id: 1,
-  //     value: "+12",
-  //     label: "Origins",
-  //   },
-  //   {
-  //     id: 2,
-  //     value: "50k",
-  //     label: "Happy Cups",
-  //   },
-  // ];
 
   return (
     <section className="container sectionPadding">
@@ -41,7 +29,7 @@ const OurStory = () => {
             {ourStory?.description}
           </p>
 
-          {/* <ul className="flex gap-8">
+          <ul className="flex gap-8">
             {ourStory?.statistics?.map((item) => (
               <li
                 key={item.label}
@@ -55,7 +43,7 @@ const OurStory = () => {
                 </p>
               </li>
             ))}
-          </ul> */}
+          </ul>
 
           {ourStory?.button.url && (
             <Link

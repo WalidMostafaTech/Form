@@ -2,6 +2,7 @@ import { getCategoriesHero, getProducts } from "@/api/productsServices";
 import ProductCard from "@/components/cards/ProductCard";
 import SectionTitle from "@/components/common/SectionTitle";
 import PageBanner from "@/components/commonSections/PageBanner";
+import ProductsSkeleton from "@/components/Loading/SkeletonLoading/ProductsSkeleton";
 import { useQuery } from "@tanstack/react-query";
 import { useSelector } from "react-redux";
 import { useSearchParams } from "react-router";
@@ -14,7 +15,7 @@ const Wholesale = () => {
   const { data: products, isLoading } = useQuery({
     queryKey: ["products", selectedCategory],
     queryFn: () =>
-      getProducts({ category_id: selectedCategory, sale_type: "retail" }),
+      getProducts({ category_id: selectedCategory, sale_type: "wholesale" }),
   });
 
   const { data: categoryHero, isLoading: isLoadingHero } = useQuery({
@@ -31,6 +32,7 @@ const Wholesale = () => {
         title="Shop"
         description={categoryHero?.description}
         html={true}
+        loading={isLoadingHero}
       />
 
       <section className="container pagePadding">
@@ -62,15 +64,19 @@ const Wholesale = () => {
           ))}
         </ul>
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6">
-          {products?.items?.map((product) => (
-            <ProductCard
-              key={product.id}
-              product={product}
-              sale_type="retail"
-            />
-          ))}
-        </div>
+        {isLoading ? (
+          <ProductsSkeleton />
+        ) : (
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6">
+            {products?.items?.map((product) => (
+              <ProductCard
+                key={product.id}
+                product={product}
+                sale_type="wholesale"
+              />
+            ))}
+          </div>
+        )}
       </section>
     </main>
   );

@@ -1,21 +1,78 @@
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { FiMinus, FiPlus } from "react-icons/fi";
+import { GoHeartFill, GoHeart } from "react-icons/go";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { getFavorites, toggleFavorite } from "@/api/favoritesServices";
+import { useSearchParams } from "react-router";
 
 const ProductDetails = ({ product }) => {
   const [quantity, setQuantity] = useState(1);
   const [selectedSizeId, setSelectedSizeId] = useState(null);
 
   const items = product?.items ?? [];
-
   const selectedSize =
     items.find((item) => item.id === selectedSizeId) ?? items[0];
+
+  const queryClient = useQueryClient();
+  const [searchParams] = useSearchParams();
+  const sale_type = searchParams.get("sale_type") || "retail";
+
+  // جلب الـ favorites
+  const { data: favorites = [] } = useQuery({
+    queryKey: ["favorites"],
+    queryFn: getFavorites,
+  });
+
+  // تحقق إذا المنتج ده في الـ favorites مع الـ sale_type
+  const isFavorited = favorites?.items?.some(
+    (fav) => fav.id === product.id && fav.sale_type === sale_type,
+  );
+
+  // mutation للـ toggle
+  const { mutate: handleToggle, isPending } = useMutation({
+    mutationFn: toggleFavorite,
+    onMutate: async ({ id, sale_type }) => {
+      await queryClient.cancelQueries({ queryKey: ["favorites"] });
+
+      const previousFavorites = queryClient.getQueryData(["favorites"]);
+
+      queryClient.setQueryData(["favorites"], (oldData) => {
+        if (!oldData) return oldData;
+
+        const alreadyFavorited = oldData.items?.some(
+          (fav) => fav.id === id && fav.sale_type === sale_type,
+        );
+
+        let newItems;
+        if (alreadyFavorited) {
+          newItems = oldData.items.filter(
+            (fav) => !(fav.id === id && fav.sale_type === sale_type),
+          );
+        } else {
+          newItems = [...oldData.items, { id, sale_type }];
+        }
+
+        return { ...oldData, items: newItems };
+      });
+
+      return { previousFavorites };
+    },
+    onError: (err, variables, context) => {
+      if (context?.previousFavorites) {
+        queryClient.setQueryData(["favorites"], context.previousFavorites);
+      }
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ["favorites"] });
+    },
+  });
 
   return (
     <section className="space-y-6 xl:col-span-2">
@@ -49,16 +106,14 @@ const ProductDetails = ({ product }) => {
       <div className="flex items-center gap-2 border rounded w-fit">
         <button
           onClick={() => setQuantity((prev) => Math.max(1, prev - 1))}
-          className="w-8 h-8 flex items-center justify-center
-        hover:bg-gray-100 transition cursor-pointer"
+          className="w-8 h-8 flex items-center justify-center hover:bg-gray-100 transition cursor-pointer"
         >
           <FiMinus />
         </button>
         <span className="min-w-8 text-center">{quantity}</span>
         <button
           onClick={() => setQuantity((prev) => prev + 1)}
-          className="w-8 h-8 flex items-center justify-center
-        hover:bg-gray-100 transition cursor-pointer"
+          className="w-8 h-8 flex items-center justify-center hover:bg-gray-100 transition cursor-pointer"
         >
           <FiPlus />
         </button>
@@ -67,16 +122,28 @@ const ProductDetails = ({ product }) => {
       {/* Description */}
       <div>
         <h3 className="font-semibold mb-2">Description</h3>
-
-        <div className="text-muted-foreground" dangerouslySetInnerHTML={{ __html: product?.description }} />
+        <div
+          className="text-muted-foreground"
+          dangerouslySetInnerHTML={{ __html: product?.description }}
+        />
       </div>
 
       {/* Buttons */}
-      <div className="flex gap-4">
+      <div className="flex flex-wrap gap-2">
+        <div className="flex-1 flex items-center gap-2">
+          <Button
+            variant="outline"
+            onClick={() => handleToggle({ id: product.id, sale_type })}
+            disabled={isPending}
+          >
+            {isFavorited ? <GoHeartFill /> : <GoHeart />}
+          </Button>
+          <Button className="flex-1" variant="outline">
+            ADD TO CART
+          </Button>
+        </div>
+
         <Button className="flex-1">BUY NOW</Button>
-        <Button className="flex-1" variant="outline">
-          ADD TO CART
-        </Button>
       </div>
 
       {/* Accordion */}

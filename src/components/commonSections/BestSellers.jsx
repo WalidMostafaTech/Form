@@ -1,66 +1,17 @@
 import SectionTitle from "@/components/common/SectionTitle";
-import image from "@/assets/images/product-img.png";
 import ProductCard from "@/components/cards/ProductCard";
 import MainSlider from "./MainSlider";
+import BestSellersSkeleton from "../Loading/SkeletonLoading/BestSellersSkeleton";
+import { useQuery } from "@tanstack/react-query";
+import { getProducts } from "@/api/productsServices";
 
 const BestSellers = () => {
-  const products = [
-    {
-      id: 1,
-      title: "Copper Brew Kit",
-      slug: "copper-brew-kit",
-      description:
-        "Sourced from carefully selected farms and roasted with precision, every cup",
-      price: 29.99,
-      min_weight: "250",
-      max_weight: "500",
-      image: image,
-    },
-    {
-      id: 2,
-      title: "Copper Brew Kit",
-      slug: "copper-brew-kit",
-      description:
-        "Sourced from carefully selected farms and roasted with precision, every cup",
-      price: 29.99,
-      min_weight: "250",
-      max_weight: "500",
-      image: image,
-    },
-    {
-      id: 3,
-      title: "Copper Brew Kit",
-      slug: "copper-brew-kit",
-      description:
-        "Sourced from carefully selected farms and roasted with precision, every cup",
-      price: 29.99,
-      min_weight: "250",
-      max_weight: "500",
-      image: image,
-    },
-    {
-      id: 4,
-      title: "Copper Brew Kit",
-      slug: "copper-brew-kit",
-      description:
-        "Sourced from carefully selected farms and roasted with precision, every cup",
-      price: 29.99,
-      min_weight: "250",
-      max_weight: "500",
-      image: image,
-    },
-    {
-      id: 5,
-      title: "Copper Brew Kit",
-      slug: "copper-brew-kit",
-      description:
-        "Sourced from carefully selected farms and roasted with precision, every cup",
-      price: 29.99,
-      min_weight: "250",
-      max_weight: "500",
-      image: image,
-    },
-  ];
+  const { data: products, isLoading } = useQuery({
+    queryKey: ["products", 0],
+    queryFn: () => getProducts({ category_id: 0, sale_type: "retail" }),
+  });
+
+  if (isLoading) return <BestSellersSkeleton />;
 
   return (
     <section className="sectionPadding">
@@ -73,7 +24,7 @@ const BestSellers = () => {
         />
 
         <MainSlider
-          data={products}
+          data={products?.items || []}
           breakpoints={{
             0: { slidesPerView: 2 },
             560: { slidesPerView: 2.8 },

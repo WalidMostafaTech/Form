@@ -1,7 +1,9 @@
 import { getCategoriesHero, getProducts } from "@/api/productsServices";
 import ProductCard from "@/components/cards/ProductCard";
 import SectionTitle from "@/components/common/SectionTitle";
+import EmptyDataSection from "@/components/commonSections/EmptyDataSection";
 import PageBanner from "@/components/commonSections/PageBanner";
+import ProductsSkeleton from "@/components/Loading/SkeletonLoading/ProductsSkeleton";
 import { useQuery } from "@tanstack/react-query";
 import { useSelector } from "react-redux";
 import { useSearchParams } from "react-router";
@@ -31,6 +33,7 @@ const Shop = () => {
         title="Shop"
         description={categoryHero?.description}
         html={true}
+        loading={isLoadingHero}
       />
 
       <section className="container pagePadding">
@@ -62,15 +65,21 @@ const Shop = () => {
           ))}
         </ul>
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6">
-          {products?.items?.map((product) => (
-            <ProductCard
-              key={product.id}
-              product={product}
-              sale_type="retail"
-            />
-          ))}
-        </div>
+        {isLoading ? (
+          <ProductsSkeleton />
+        ) : products?.items?.length === 0 ? (
+          <EmptyDataSection msg={"Products not found"} />
+        ) : (
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6">
+            {products?.items?.map((product) => (
+              <ProductCard
+                key={product.id}
+                product={product}
+                sale_type="retail"
+              />
+            ))}
+          </div>
+        )}
       </section>
     </main>
   );

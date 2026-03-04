@@ -30,22 +30,22 @@ const VisionAndMission = ({ data }) => {
             <div
               key={item.id}
               className="p-4 rounded-xl border  
-            flex flex-col items-center text-center md:text-start md:items-start gap-4"
+            flex flex-col items-center text-center md:text-start md:items-start gap-2"
             >
               <div
-                className="text-3xl text-primary bg-primary-foreground w-14 h-14  p-2
+                className="text-3xl text-primary bg-primary-foreground w-14 h-14 p-2
               flex items-center justify-center rounded-full"
               >
                 <img
                   src={item.icon}
                   alt={item.title}
-                  className="w-full object-contain"
+                  className="w-full h-full object-contain"
                 />
               </div>
 
               <h3 className="text-xl font-semibold">{item.title}</h3>
 
-              <p className="text-muted-foreground">{item.description}</p>
+              <p className="text-sm text-muted-foreground">{item.description}</p>
             </div>
           ))}
         </div>

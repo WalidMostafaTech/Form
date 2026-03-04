@@ -5,6 +5,7 @@ import BestSellers from "@/components/commonSections/BestSellers";
 import { useQuery } from "@tanstack/react-query";
 import { useParams, useSearchParams } from "react-router";
 import { getProduct, getProductsHero } from "@/api/productsServices";
+import ProductDetailsSkeleton from "@/components/Loading/SkeletonLoading/ProductDetailsSkeleton";
 
 const Product = () => {
   const { slug } = useParams();
@@ -30,12 +31,17 @@ const Product = () => {
         title="Shop"
         description={productHero?.description}
         html={true}
+        loading={isLoadingHero}
       />
 
-      <section className="container pagePadding grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-10">
-        <ProductImages images={product?.images} />
-        <ProductDetails product={product} />
-      </section>
+      {isLoading ? (
+        <ProductDetailsSkeleton />
+      ) : (
+        <section className="container pagePadding grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-10">
+          <ProductImages images={product?.images} />
+          <ProductDetails product={product} />
+        </section>
+      )}
 
       <BestSellers />
     </main>

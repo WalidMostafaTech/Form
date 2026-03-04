@@ -3,6 +3,7 @@ import TestimonialCard from "@/components/cards/TestimonialCard";
 import MainSlider from "./MainSlider";
 import { useQuery } from "@tanstack/react-query";
 import { getTestimonials } from "@/api/homeServices";
+import WhatTheySaySkeleton from "../Loading/SkeletonLoading/WhatTheySaySkeleton";
 
 const WhatTheySay = () => {
   const { data: testimonials, isLoading } = useQuery({
@@ -10,7 +11,7 @@ const WhatTheySay = () => {
     queryFn: getTestimonials,
   });
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <WhatTheySaySkeleton />;
 
   if (!testimonials || testimonials?.items?.length === 0) return null;
 

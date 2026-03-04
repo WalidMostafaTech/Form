@@ -14,8 +14,6 @@ const Home = () => {
     queryFn: getHome,
   });
 
-  if (isLoading) return <div>Loading...</div>;
-
   return (
     <main>
       <Hero video={homeData?.introduction_video} loading={isLoading} />

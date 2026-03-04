@@ -1,5 +1,7 @@
+import HeroSkeleton from "@/components/Loading/SkeletonLoading/HeroSkeleton";
+
 const Hero = ({ video, loading }) => {
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <HeroSkeleton />;
 
   if (!video) return null;
 

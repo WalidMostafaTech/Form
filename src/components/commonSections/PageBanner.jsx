@@ -1,4 +1,7 @@
-const PageBanner = ({ image, title, description, html }) => {
+import PageBannerSkeleton from "../Loading/SkeletonLoading/PageBannerSkeleton";
+
+const PageBanner = ({ image, title, description, html, loading }) => {
+  if (loading) return <PageBannerSkeleton />;
   return (
     <article
       className="w-full h-72 bg-cover bg-center bg-primary relative"

@@ -28,7 +28,7 @@ const UserAvatar = ({
           className={`object-cover cursor-pointer`}
         />
       )}
-      <AvatarFallback className="text-primary">
+      <AvatarFallback className="text-primary" style={{ fontSize: size / 2 }}>
         {getInitials(name)}
       </AvatarFallback>
     </Avatar>

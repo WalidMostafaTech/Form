@@ -3,6 +3,7 @@ import ServiceCard from "@/components/cards/ServiceCard";
 import MainSlider from "@/components/commonSections/MainSlider";
 import { useQuery } from "@tanstack/react-query";
 import { getOurServices } from "@/api/homeServices";
+import OurServiceSkeleton from "../Loading/SkeletonLoading/OurServiceSkeleton";
 
 const OurService = () => {
   const { data: ourServices, isLoading } = useQuery({
@@ -10,7 +11,7 @@ const OurService = () => {
     queryFn: getOurServices,
   });
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <OurServiceSkeleton />;
 
   if (!ourServices || ourServices.length === 0) return null;
 
