@@ -11,14 +11,14 @@ const ContactUS = () => {
     queryFn: getContactInformation,
   });
 
-  if (isLoading) return <div>Loading...</div>;
-
   return (
     <main>
       <PageBanner
         image={contactInfo?.contact_us_image}
         title={"contact us"}
         description={contactInfo?.contact_us_description}
+        html={true}
+        loading={isLoading}
       />
 
       <section className="container pagePadding">

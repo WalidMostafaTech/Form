@@ -1,8 +1,8 @@
 import SectionTitle from "@/components/common/SectionTitle";
-// import { FiEye } from "react-icons/fi";
-// import { GiCoffeeBeans } from "react-icons/gi";
+import VisionAndMissionSkeleton from "@/components/Loading/SkeletonLoading/VisionAndMissionSkeleton";
 
-const VisionAndMission = ({ data }) => {
+const VisionAndMission = ({ data, loading }) => {
+  if (loading) return <VisionAndMissionSkeleton />;
   if (!data) return null;
 
   const list = [
@@ -45,7 +45,9 @@ const VisionAndMission = ({ data }) => {
 
               <h3 className="text-xl font-semibold">{item.title}</h3>
 
-              <p className="text-sm text-muted-foreground">{item.description}</p>
+              <p className="text-sm text-muted-foreground">
+                {item.description}
+              </p>
             </div>
           ))}
         </div>

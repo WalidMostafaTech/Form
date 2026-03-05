@@ -1,5 +1,4 @@
 import PageBanner from "@/components/commonSections/PageBanner";
-import image from "@/assets/images/bg-img.jpg";
 import VisionAndMission from "./sections/VisionAndMission";
 import KnowMore from "./sections/KnowMore";
 import OurService from "../../components/commonSections/OurService";
@@ -20,10 +19,12 @@ const About = () => {
         image={aboutPage?.image}
         title={"about us"}
         description={aboutPage?.description}
+        html={true}
+        loading={isLoading}
       />
 
       <OurStory />
-      <VisionAndMission data={aboutPage} />
+      <VisionAndMission data={aboutPage} loading={isLoading} />
       <KnowMore />
       <OurService />
       <WhatTheySay />

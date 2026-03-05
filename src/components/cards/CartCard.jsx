@@ -3,10 +3,7 @@ import { FiMinus, FiPlus } from "react-icons/fi";
 
 const CartCard = ({ item }) => {
   return (
-    <div
-      key={item.id}
-      className="p-3 border rounded-lg flex items-start gap-4"
-    >
+    <div key={item.id} className="p-3 border rounded-lg flex items-start gap-4">
       <div className="w-24 h-24 md:w-32 md:h-32 overflow-hidden rounded-lg">
         <img
           src={item.image}
@@ -35,11 +32,23 @@ const CartCard = ({ item }) => {
           </div>
         </div>
 
-        <p>{item.weight}</p>
+        <p>
+          {item.weight} {item.weight_unit}
+        </p>
 
         <p className="font-bold text-primary">{item.price} AED</p>
 
         <div className="flex items-center flex-wrap justify-between gap-2">
+          <span className="p-1 min-w-16 text-lg text-center font-semibold text-primary bg-primary-foreground rounded-md">
+            {item.quantity}
+          </span>
+
+          <p className="text-lg font-bold text-primary">
+            {item.price * item.quantity} AED
+          </p>
+        </div>
+
+        {/* <div className="flex items-center flex-wrap justify-between gap-2">
           <div className="flex items-center gap-2 border rounded">
             <button
               className="w-8 h-8 flex items-center justify-center
@@ -59,7 +68,7 @@ const CartCard = ({ item }) => {
           <p className="text-lg font-bold text-primary">
             {item.price * item.quantity} AED
           </p>
-        </div>
+        </div> */}
       </div>
     </div>
   );

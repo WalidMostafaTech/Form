@@ -230,6 +230,7 @@ input::-webkit-inner-spin-button {
   opacity: 1;
   width: 10px;
   height: 10px;
+  transition: all 0.3s ease;
 }
 
 .location-swiper .swiper-pagination-bullet-active {

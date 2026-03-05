@@ -10,8 +10,7 @@ import ProductDetailsSkeleton from "@/components/Loading/SkeletonLoading/Product
 const Product = () => {
   const { slug } = useParams();
 
-  const [searchParams, setSearchParams] = useSearchParams();
-
+  const [searchParams] = useSearchParams();
   const sale_type = searchParams.get("sale_type") || "retail";
 
   const { data: product, isLoading } = useQuery({

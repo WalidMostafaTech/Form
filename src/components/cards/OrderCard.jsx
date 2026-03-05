@@ -20,7 +20,7 @@ const OrderCard = ({ item }) => {
         <p className="font-bold text-primary">{item.price} AED</p>
 
         <div className="flex items-center flex-wrap justify-between gap-2">
-          <span className="p-1 min-w-16 text-lg text-center text-primary bg-primary-foreground rounded-md">
+          <span className="p-1 min-w-16 text-lg text-center font-semibold text-primary bg-primary-foreground rounded-md">
             {item.quantity}
           </span>
 

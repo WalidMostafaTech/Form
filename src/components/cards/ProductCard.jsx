@@ -3,9 +3,15 @@ import { Button } from "../ui/button";
 import { GoHeartFill, GoHeart } from "react-icons/go";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { getFavorites, toggleFavorite } from "@/api/favoritesServices";
+import { useSelector } from "react-redux";
+import useRequireAuth from "@/hooks/useRequireAuth";
 
 const ProductCard = ({ product, sale_type = "retail" }) => {
+  const { user } = useSelector((state) => state.user);
+
   const navigate = useNavigate();
+
+  const requireAuth = useRequireAuth();
 
   const queryClient = useQueryClient();
 
@@ -13,20 +19,13 @@ const ProductCard = ({ product, sale_type = "retail" }) => {
   const { data: favorites = [] } = useQuery({
     queryKey: ["favorites"],
     queryFn: getFavorites,
+    enabled: !!user,
   });
 
   // تحقق إذا المنتج ده في الـ favorites
   const isFavorited = favorites?.items?.some(
     (fav) => fav.id === product.id && fav.sale_type === sale_type,
   );
-
-  // الـ mutation للـ toggle
-  // const { mutate: handleToggle, isPending } = useMutation({
-  //   mutationFn: toggleFavorite,
-  //   onSuccess: () => {
-  //     queryClient.invalidateQueries({ queryKey: ["favorites"] });
-  //   },
-  // });
 
   const { mutate: handleToggle, isPending } = useMutation({
     mutationFn: toggleFavorite,
@@ -71,6 +70,12 @@ const ProductCard = ({ product, sale_type = "retail" }) => {
     },
   });
 
+  const handleToggleFavorite = () => {
+    requireAuth(() => {
+      handleToggle({ id: product.id, sale_type });
+    });
+  };
+
   return (
     <div className="flex flex-col gap-1">
       <div className="w-full aspect-square overflow-hidden rounded-lg relative">
@@ -81,7 +86,7 @@ const ProductCard = ({ product, sale_type = "retail" }) => {
         />
 
         <button
-          onClick={() => handleToggle({ id: product.id, sale_type })}
+          onClick={handleToggleFavorite}
           disabled={isPending}
           className="absolute top-2 right-2 z-10 w-8 h-8 
           flex items-center justify-center bg-white text-primary text-xl 

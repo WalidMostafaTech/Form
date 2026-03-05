@@ -3,33 +3,39 @@ import image from "@/assets/images/product-img.png";
 import CartCard from "@/components/cards/CartCard";
 import OrderSummaryCard from "@/components/cards/OrderSummaryCard";
 import { Textarea } from "@/components/ui/textarea";
-import { getCartHero } from "@/api/cartServices";
-import { useQuery } from "@tanstack/react-query";
+import { confirmOrder, getCart, getCartHero } from "@/api/cartServices";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useRef } from "react";
+import EmptyDataSection from "@/components/commonSections/EmptyDataSection";
+import { toast } from "sonner";
+import CartPageSkeleton from "@/components/Loading/SkeletonLoading/CartSkeletonPage";
 
 const Cart = () => {
-  const cartItems = [
-    {
-      id: 1,
-      name: "Copper Brew Kit",
-      price: 200,
-      weight: "250 GM - 1000 GM",
-      image: image,
-      quantity: 6,
-    },
-    {
-      id: 2,
-      name: "Copper Brew Kit",
-      price: 200,
-      weight: "250 GM - 1000 GM",
-      image: image,
-      quantity: 4,
-    },
-  ];
+  const textareaRef = useRef(null);
 
   const { data: cartHero, isLoading: isLoadingHero } = useQuery({
     queryKey: ["cartHero"],
     queryFn: getCartHero,
   });
+
+  const { data: cart, isLoading } = useQuery({
+    queryKey: ["cart"],
+    queryFn: getCart,
+  });
+
+  const queryClient = useQueryClient();
+
+  const { mutate: createOrder, isPending } = useMutation({
+    mutationFn: confirmOrder,
+    onSuccess: () => {
+      toast.success("Order confirmed successfully!");
+      queryClient.invalidateQueries({ queryKey: ["cart"] });
+      textareaRef.current.value = "";
+    },
+    onError: () => {},
+  });
+
+  const isCartEmpty = !cart?.cart_items?.length;
 
   return (
     <main>
@@ -37,34 +43,49 @@ const Cart = () => {
         image={cartHero?.image}
         title={"cart"}
         description={cartHero?.description}
+        loading={isLoadingHero}
       />
 
-      <section className="container pagePadding">
-        <div className="flex flex-col md:flex-row gap-4 lg:gap-8">
-          <div className="space-y-4 flex-1">
-            {cartItems.map((item) => (
-              <CartCard key={item.id} item={item} />
-            ))}
+      {isLoading ? (
+        <CartPageSkeleton />
+      ) : isCartEmpty ? (
+        <EmptyDataSection msg={"Cart is empty"} />
+      ) : (
+        <section className="container pagePadding">
+          <div className="flex flex-col md:flex-row gap-4 lg:gap-8">
+            <div className="space-y-4 flex-1">
+              {cart?.cart_items?.map((item) => (
+                <CartCard key={item.id} item={item} />
+              ))}
+            </div>
+
+            <OrderSummaryCard
+              cart={cart}
+              onConfirm={() =>
+                createOrder({ comment: textareaRef.current?.value.trim() })
+              }
+              loading={isPending}
+            />
           </div>
 
-          <OrderSummaryCard />
-        </div>
+          <div className="mt-4">
+            <label
+              htmlFor="comment"
+              className="inline-block mb-1 text-sm font-medium text-gray-900"
+            >
+              Comment
+            </label>
 
-        <div className="mt-4">
-          <label
-            htmlFor="comment"
-            className="inline-block mb-1 text-sm font-medium text-gray-900"
-          >
-            Comment
-          </label>
-
-          <Textarea
-            id="comment"
-            placeholder={`add comment`}
-            className={`bg-muted`}
-          />
-        </div>
-      </section>
+            <Textarea
+              ref={textareaRef}
+              name="comment"
+              id="comment"
+              placeholder={`add comment`}
+              className={`bg-muted`}
+            />
+          </div>
+        </section>
+      )}
     </main>
   );
 };

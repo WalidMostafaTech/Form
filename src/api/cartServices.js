@@ -5,3 +5,39 @@ export const getCartHero = async () => {
 
   return data?.data || [];
 };
+
+export const getCart = async () => {
+  const { data } = await api.get(`/orders/my-carts`);
+
+  return data?.data || [];
+};
+
+export const addToCart = async (formData) => {
+  const { data } = await api.post(`/orders/add-to-cart`, formData);
+
+  return data?.data || null;
+};
+
+export const removeFromCart = async (id) => {
+  const { data } = await api.delete(`/orders/cart-items/${id}`);
+
+  return data?.data || null;
+};
+
+export const updateCart = async ({ id, quantity }) => {
+  const { data } = await api.post(`/orders/cart-items/${id}`, { quantity });
+
+  return data?.data || null;
+};
+
+export const confirmOrder = async (formData) => {
+  const { data } = await api.post(`/orders/confirm`, formData);
+
+  return data?.data || null;
+};
+
+export const getOrders = async () => {
+  const { data } = await api.get(`/orders/my-orders`);
+
+  return data?.data || [];
+};

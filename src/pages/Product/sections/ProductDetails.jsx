@@ -10,9 +10,19 @@ import {
 } from "@/components/ui/accordion";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { getFavorites, toggleFavorite } from "@/api/favoritesServices";
-import { useSearchParams } from "react-router";
+import { useNavigate, useSearchParams } from "react-router";
+import { useSelector } from "react-redux";
+import useRequireAuth from "@/hooks/useRequireAuth";
+import { addToCart } from "@/api/cartServices";
+import { toast } from "sonner";
 
 const ProductDetails = ({ product }) => {
+  const { user } = useSelector((state) => state.user);
+
+  const navigate = useNavigate();
+
+  const requireAuth = useRequireAuth();
+
   const [quantity, setQuantity] = useState(1);
   const [selectedSizeId, setSelectedSizeId] = useState(null);
 
@@ -28,6 +38,7 @@ const ProductDetails = ({ product }) => {
   const { data: favorites = [] } = useQuery({
     queryKey: ["favorites"],
     queryFn: getFavorites,
+    enabled: !!user,
   });
 
   // تحقق إذا المنتج ده في الـ favorites مع الـ sale_type
@@ -73,6 +84,55 @@ const ProductDetails = ({ product }) => {
       queryClient.invalidateQueries({ queryKey: ["favorites"] });
     },
   });
+
+  const [actionType, setActionType] = useState(null);
+
+  const { mutate: addProductToCart, isPending: isPendingCart } = useMutation({
+    mutationFn: addToCart,
+    onSuccess: () => {
+      toast.success("Product added to cart successfully!");
+
+      if (actionType === "buy") {
+        navigate(`/cart?sale_type=${sale_type}`);
+      }
+    },
+    onError: () => {
+      toast.error("Failed to add product to cart!");
+    },
+    onSettled: () => {
+      setActionType(null);
+    },
+  });
+
+  const handleToggleFavorite = () => {
+    requireAuth(() => {
+      handleToggle({ id: product.id, sale_type });
+    });
+  };
+
+  const handleAddToCart = () => {
+    requireAuth(() => {
+      setActionType("cart");
+
+      addProductToCart({
+        product_item_id: selectedSize.id,
+        quantity,
+        sale_type,
+      });
+    });
+  };
+
+  const handleBuyNow = () => {
+    requireAuth(() => {
+      setActionType("buy");
+
+      addProductToCart({
+        product_item_id: selectedSize.id,
+        quantity,
+        sale_type,
+      });
+    });
+  };
 
   return (
     <section className="space-y-6 xl:col-span-2">
@@ -133,17 +193,30 @@ const ProductDetails = ({ product }) => {
         <div className="flex-1 flex items-center gap-2">
           <Button
             variant="outline"
-            onClick={() => handleToggle({ id: product.id, sale_type })}
+            onClick={handleToggleFavorite}
             disabled={isPending}
           >
             {isFavorited ? <GoHeartFill /> : <GoHeart />}
           </Button>
-          <Button className="flex-1" variant="outline">
-            ADD TO CART
+          <Button
+            onClick={handleAddToCart}
+            className="flex-1"
+            variant="outline"
+            disabled={isPendingCart}
+          >
+            {actionType === "cart" && isPendingCart
+              ? "Adding..."
+              : "ADD TO CART"}
           </Button>
         </div>
 
-        <Button className="flex-1">BUY NOW</Button>
+        <Button
+          onClick={handleBuyNow}
+          className="flex-1"
+          disabled={isPendingCart}
+        >
+          {actionType === "buy" && isPendingCart ? "Processing..." : "BUY NOW"}
+        </Button>
       </div>
 
       {/* Accordion */}

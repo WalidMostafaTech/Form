@@ -1,7 +1,9 @@
 import { Button } from "@/components/ui/button";
 import bgImage from "@/assets/images/bg-img.jpg";
+import { useNavigate } from "react-router";
 
 const KnowMore = () => {
+  const navigate = useNavigate();
   return (
     <section
       className="sectionPadding bg-center bg-cover relative"
@@ -21,7 +23,11 @@ const KnowMore = () => {
           the quiet luxury of a perfectly brewed cup.
         </p>
 
-        <Button variant="outline" className={"rounded-full font-bold"}>
+        <Button
+          onClick={() => navigate("/contact")}
+          variant="outline"
+          className={"rounded-full font-bold min-w-38"}
+        >
           Call Us
         </Button>
       </div>

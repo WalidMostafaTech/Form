@@ -7,6 +7,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
+import LocationSkeleton from "@/components/Loading/SkeletonLoading/LocationSkeleton";
 
 const Location = () => {
   const { data: locationSliders = [], isLoading } = useQuery({
@@ -14,7 +15,7 @@ const Location = () => {
     queryFn: getLocationSliders,
   });
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <LocationSkeleton />;
 
   return (
     <main>
