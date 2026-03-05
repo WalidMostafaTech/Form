@@ -25,7 +25,7 @@ const UserAvatar = ({
         <AvatarImage
           src={image}
           alt={name}
-          className={`object-cover cursor-pointer`}
+          className={`object-cover`}
         />
       )}
       <AvatarFallback className="text-primary" style={{ fontSize: size / 2 }}>

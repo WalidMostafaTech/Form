@@ -96,16 +96,19 @@ const ProductCard = ({ product, sale_type = "retail" }) => {
         </button>
       </div>
 
-      <h3 className="text-lg font-bold line-clamp-1">{product.name}</h3>
+      <h3 className="sm:text-lg font-bold line-clamp-1">{product.name}</h3>
 
       <div className="flex items-center flex-wrap justify-between gap-2">
-        <span className="text-sm font-semibold">
-          <span>{product.min_weight}</span> - <span>{product.max_weight}</span>
+        <span className="text-xs sm:text-sm font-semibold flex gap-1 items-center flex-wrap">
+          <span>{product.min_weight}</span>
+          <strong>-</strong>
+          <span>{product.max_weight}</span>
         </span>
 
-        <span className="text-primary font-bold">
-          <span>{product.min_price}</span> AED -{" "}
-          <span>{product.max_price}</span> AED
+        <span className="text-sm sm:text-base text-primary font-bold flex gap-1 items-center flex-wrap">
+          <span>{product.min_price} AED</span>
+          <strong>-</strong>
+          <span>{product.max_price} AED</span>
         </span>
       </div>
 

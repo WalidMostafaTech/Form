@@ -3,13 +3,11 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { FaBell } from "react-icons/fa";
+import { FaRegBell } from "react-icons/fa";
 import NotificationsSkeleton from "@/components/Loading/SkeletonLoading/NotificationsSkeleton";
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { getNotifications } from "@/api/notificationsServices";
-import { getUnreadCount } from "@/api/mainServices";
-import { useTranslation } from "react-i18next";
+import { getNotifications, getUnreadCount } from "@/api/notificationsServices";
 import { useSelector } from "react-redux";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router";
@@ -19,7 +17,6 @@ import useNotificationsPolling from "@/hooks/useNotificationsPolling";
 const NotificationsPopUp = () => {
   const [openNotifications, setOpenNotifications] = useState(false);
   const { user } = useSelector((state) => state.user);
-  const { t } = useTranslation();
 
   const { data: notifications, isLoading } = useQuery({
     queryKey: ["notifications"],
@@ -28,8 +25,8 @@ const NotificationsPopUp = () => {
   });
 
   const { data: unreadNotifications = 0 } = useQuery({
-    queryKey: ["unread-count", "notification"],
-    queryFn: () => getUnreadCount("notification"),
+    queryKey: ["unread-count"],
+    queryFn: getUnreadCount,
     enabled: !!user,
   });
 
@@ -45,18 +42,20 @@ const NotificationsPopUp = () => {
   return (
     <Popover open={openNotifications} onOpenChange={setOpenNotifications}>
       <PopoverTrigger asChild>
-        <Button variant="outline" size="icon" className="rounded-full relative">
-          <FaBell className="w-4 h-4" />
-          <span
-            className="absolute -top-2 -right-2 bg-primary text-white rounded-full w-4 h-4 
+        <div className="relative">
+          <FaRegBell className="header_icon" />
+          {unreadNotifications > 0 && (
+            <span
+              className="absolute -top-2 -inset-e-1 bg-secondary text-primary text-sm rounded-full w-4 h-4 
             flex items-center justify-center"
-          >
-            {unreadNotifications}
-          </span>
-        </Button>
+            >
+              {unreadNotifications > 9 ? "9+" : unreadNotifications}
+            </span>
+          )}
+        </div>
       </PopoverTrigger>
 
-      <PopoverContent align="end" className="md:w-125">
+      <PopoverContent align="end" className="md:w-96">
         {isLoading ? (
           <NotificationsSkeleton />
         ) : notifications?.items?.length ? (
@@ -71,20 +70,19 @@ const NotificationsPopUp = () => {
           </div>
         ) : (
           <p className="text-center text-sm text-muted-foreground py-6">
-            {t("notificationsPopUp.noNotifications")}
+            Notifications not found
           </p>
         )}
 
-        <div className="block mt-4">
+        {notifications?.items?.length > 0 && (
           <Link
+            className="block mt-4"
             to="/profile/notifications"
             onClick={() => setOpenNotifications(false)}
           >
-            <Button className="w-full">
-              {t("notificationsPopUp.moreNotifications")}
-            </Button>
+            <Button className="w-full">see all notifications</Button>
           </Link>
-        </div>
+        )}
       </PopoverContent>
     </Popover>
   );

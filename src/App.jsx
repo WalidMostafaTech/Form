@@ -12,6 +12,7 @@ import RequiredVerifyEmailModal from "@/components/modals/RequiredVerifyEmailMod
 import { fetchCategories } from "./store/categories/categoriesActions";
 import { fetchEmirates } from "./store/emirates/emiratesActions";
 import ScrollToTopBtn from "./components/behaviors/ScrollToTopBtn";
+import TermsModal from "./components/modals/TermsModal";
 
 function App() {
   const { pathname } = useLocation();
@@ -46,6 +47,7 @@ function App() {
       <LogOutModal />
       <RequiredLoginModal />
       <RequiredVerifyEmailModal />
+      <TermsModal />
     </main>
   );
 }

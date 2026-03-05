@@ -4,7 +4,7 @@ const PageBanner = ({ image, title, description, html, loading }) => {
   if (loading) return <PageBannerSkeleton />;
   return (
     <article
-      className="w-full h-72 bg-cover bg-center bg-primary relative"
+      className="w-full min-h-72 bg-cover bg-center bg-primary relative content-end"
       style={{ backgroundImage: `url(${image})` }}
     >
       <div className="absolute inset-0 bg-primary/50" />

@@ -3,15 +3,17 @@ import ProductCard from "@/components/cards/ProductCard";
 import MainSlider from "./MainSlider";
 import BestSellersSkeleton from "../Loading/SkeletonLoading/BestSellersSkeleton";
 import { useQuery } from "@tanstack/react-query";
-import { getProducts } from "@/api/productsServices";
+import { getBestSelling } from "@/api/mainServices";
 
 const BestSellers = () => {
-  const { data: products, isLoading } = useQuery({
-    queryKey: ["products", 0],
-    queryFn: () => getProducts({ category_id: 0, sale_type: "retail" }),
+  const { data: bestSellers, isLoading } = useQuery({
+    queryKey: ["bestSellers"],
+    queryFn: getBestSelling,
   });
 
   if (isLoading) return <BestSellersSkeleton />;
+
+  if (!bestSellers || bestSellers?.length === 0) return null;
 
   return (
     <section className="sectionPadding">
@@ -24,12 +26,13 @@ const BestSellers = () => {
         />
 
         <MainSlider
-          data={products?.items || []}
+          data={bestSellers || []}
           breakpoints={{
-            0: { slidesPerView: 2 },
-            560: { slidesPerView: 2.8 },
+            0: { slidesPerView: 1.8 },
+            560: { slidesPerView: 2.2 },
             640: { slidesPerView: 3.3 },
             1024: { slidesPerView: 4.2 },
+            1280: { slidesPerView: 5.2 },
           }}
           renderItem={(product) => <ProductCard product={product} />}
         />

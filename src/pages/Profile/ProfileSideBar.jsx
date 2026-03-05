@@ -103,7 +103,7 @@ const ProfileSideBar = () => {
                 loading="lazy"
                 src={settings?.header_logo || logo}
                 alt="logo"
-                className="w-full h-full object-contain invert"
+                className="w-full h-full object-contain invert-1"
               />
             </div>
           </SheetTitle>

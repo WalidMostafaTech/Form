@@ -10,6 +10,7 @@ const Header = () => {
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
 
   const { user } = useSelector((state) => state.user);
+  const { settings } = useSelector((state) => state.settings);
 
   let wholesaleLink = null;
 
@@ -19,7 +20,7 @@ const Header = () => {
       href: "/register/company",
       items: [],
     };
-  } else if (user.user_type === "company") {
+  } else if (user.type === "company") {
     wholesaleLink = {
       name: "Wholesale",
       href: "/wholesale",
@@ -75,11 +76,17 @@ const Header = () => {
         scrolled || isColoredPage
           ? "bg-primary/90 backdrop-blur-sm shadow-lg"
           : "bg-transparent"
-      }`}
+      }
+        hover:bg-primary/90 hover:backdrop-blur-sm hover:shadow-lg
+      `}
     >
       <div className="container mx-auto flex justify-between items-center">
-        <Link to="/" className="w-22">
-          <img src={logo} alt="Company Logo" className="w-full" />
+        <Link to="/" className="w-28">
+          <img
+            src={settings?.header_logo || logo}
+            alt="Company Logo"
+            className="w-full h-full object-contain"
+          />
         </Link>
 
         <NavBar links={links} />

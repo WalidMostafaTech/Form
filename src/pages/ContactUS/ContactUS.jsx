@@ -21,7 +21,7 @@ const ContactUS = () => {
         loading={isLoading}
       />
 
-      <section className="container pagePadding">
+      <section className="container lg:max-w-5xl pagePadding">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
           <ContactForm />
           <ContactInfo contactDetails={contactInfo} />

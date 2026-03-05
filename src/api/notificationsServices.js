@@ -26,3 +26,9 @@ export const deleteNotification = async (id) => {
   const { data } = await api.delete(`/custom-notifications/${id}`);
   return data?.data || null;
 };
+
+export const getUnreadCount = async () => {
+  const { data } = await api.get(`/custom-notifications/unread-count`);
+
+  return data?.data || [];
+};

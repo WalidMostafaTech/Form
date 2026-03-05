@@ -16,6 +16,7 @@ import { registerUser } from "@/api/authServices";
 import FormError from "@/components/form/FormError";
 import { useDispatch, useSelector } from "react-redux";
 import { getUser } from "@/store/user/userActions";
+import { openModal } from "@/store/modals/modalsSlice";
 
 const registerSchema = z
   .object({
@@ -266,7 +267,7 @@ const RegisterCustomer = () => {
                     className="text-primary cursor-pointer hover:underline"
                     onClick={(e) => {
                       e.preventDefault();
-                      alert("Terms and Conditions");
+                      dispatch(openModal("termsModal"));
                     }}
                   >
                     Terms and Conditions

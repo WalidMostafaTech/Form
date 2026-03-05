@@ -16,13 +16,17 @@ const AuthContainer = ({
         style={{
           backgroundImage: `url(${settings?.registration_form?.image})`,
         }}
-        className="hidden md:flex sticky top-0 h-dvh bg-cover bg-center"
+        className="hidden md:flex sticky top-0 h-dvh bg-cover bg-center bg-primary"
       >
         <div className="absolute inset-0 bg-primary/40" />
 
         <div className="h-full flex flex-col justify-between gap-2 p-4 pt-16 relative z-10">
           <div className="flex-1 flex items-center justify-center">
-            <img src={logo} alt="Logo" className="w-[60%] object-contain" />
+            <img
+              src={settings?.header_logo || logo}
+              alt="Logo"
+              className="w-[60%] object-contain"
+            />
           </div>
 
           <h1 className="text-2xl font-bold text-white">

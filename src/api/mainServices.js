@@ -39,3 +39,8 @@ export const getLocationSliders = async () => {
   const { data } = await api.get(`/sliders`);
   return data?.data || [];
 };
+
+export const getBestSelling = async () => {
+  const { data } = await api.get(`/products/best-selling`);
+  return data?.data || [];
+};

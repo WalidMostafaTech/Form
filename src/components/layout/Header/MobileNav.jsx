@@ -30,9 +30,9 @@ const MobileNav = ({ links, open, setOpen }) => {
         size="icon"
         variant="outline"
         onClick={closeOnLinkClick}
-        className="absolute w-8 h-8 top-4 right-4"
+        className="absolute top-4 inset-e-4"
       >
-        <IoClose />
+        <IoClose className="text-xl!"/>
       </Button>
 
       <nav className="h-full flex flex-col justify-center items-center gap-6 px-6">
@@ -46,7 +46,7 @@ const MobileNav = ({ links, open, setOpen }) => {
               {hasItems ? (
                 <button
                   onClick={() => toggleItem(link.name)}
-                  className="nav_link w-fit mx-auto flex items-center justify-center gap-2"
+                  className="nav_link text-lg! w-fit mx-auto flex items-center justify-center gap-2"
                 >
                   {link.name}
                   <IoChevronDown
@@ -59,7 +59,7 @@ const MobileNav = ({ links, open, setOpen }) => {
                 <NavLink
                   to={link.href}
                   onClick={closeOnLinkClick}
-                  className="nav_link w-fit mx-auto block"
+                  className="nav_link text-lg! w-fit mx-auto block"
                 >
                   {link.name}
                 </NavLink>

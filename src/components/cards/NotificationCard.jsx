@@ -1,21 +1,21 @@
-// import { readNotification } from "@/services/notificationsServices";
+import { readNotification } from "@/api/notificationsServices";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { FaRegBell } from "react-icons/fa";
 
 const NotificationCard = ({ notification }) => {
   const queryClient = useQueryClient();
 
-  // const { mutate: markAsRead } = useMutation({
-  //   mutationFn: readNotification,
-  //   onSuccess: () => {
-  //     queryClient.invalidateQueries(["notifications"]);
-  //   },
-  // });
+  const { mutate: markAsRead, isPending } = useMutation({
+    mutationFn: readNotification,
+    onSuccess: () => {
+      queryClient.invalidateQueries(["notifications"]);
+    },
+  });
 
   const handleRead = (notification) => {
-    // if (!notification.read_at) {
-    //   markAsRead(notification.id);
-    // }
+    if (!notification.read_at) {
+      markAsRead(notification.id);
+    }
   };
 
   const formatDate = (dateString) => {
@@ -35,6 +35,11 @@ const NotificationCard = ({ notification }) => {
                 notification.read_at
                   ? "bg-muted border"
                   : "bg-primary text-white"
+              }
+              ${
+                isPending
+                  ? "animate-pulse"
+                  : "hover:brightness-90 active:brightness-90"
               }
             `}
     >

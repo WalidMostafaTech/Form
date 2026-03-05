@@ -5,7 +5,7 @@ import { Link } from "react-router";
 import { SlHandbag } from "react-icons/sl";
 import { FaRegBell } from "react-icons/fa";
 import { HiMenuAlt3 } from "react-icons/hi";
-// import NotificationsPopUp from "./NotificationsPopUp";
+import NotificationsPopUp from "./NotificationsPopUp";
 
 const HeaderActions = ({ setMobileNavOpen }) => {
   const { user, loading } = useSelector((state) => state.user);
@@ -14,15 +14,11 @@ const HeaderActions = ({ setMobileNavOpen }) => {
     <div className="flex items-center gap-2 md:gap-4">
       {user && (
         <>
+          <NotificationsPopUp />
+
           <Link to="/cart">
             <SlHandbag className="header_icon" />
           </Link>
-
-          <div>
-            <FaRegBell className="header_icon" />
-          </div>
-
-          {/* <NotificationsPopUp /> */}
         </>
       )}
 
@@ -31,7 +27,7 @@ const HeaderActions = ({ setMobileNavOpen }) => {
       <ProfileSide user={user} loading={loading} />
 
       <HiMenuAlt3
-        className="header_icon lg:hidden"
+        className="header_icon lg:hidden text-3xl!"
         onClick={() => setMobileNavOpen(true)}
       />
     </div>

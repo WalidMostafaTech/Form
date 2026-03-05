@@ -43,7 +43,7 @@ const useNotificationsPolling = ({ lastId, user }) => {
 
       // تحديث unread count لو حابب تزوده مباشرة
       queryClient.invalidateQueries({
-        queryKey: ["unread-count", "notification"],
+        queryKey: ["unread-count"],
       });
     }
   }, [newNotifications, queryClient]);

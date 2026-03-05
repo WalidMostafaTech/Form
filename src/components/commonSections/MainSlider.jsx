@@ -16,11 +16,14 @@ const MainSlider = ({
     560: {
       slidesPerView: 1.8,
     },
-    640: {
+    720: {
       slidesPerView: 2.3,
     },
     1024: {
       slidesPerView: 3.2,
+    },
+    1280: {
+      slidesPerView: 4.2,
     },
   },
   spaceBetween = 24,
@@ -44,7 +47,7 @@ const MainSlider = ({
       <button
         onClick={() => swiperRef.current?.slidePrev()}
         disabled={isBeginning}
-        className={`main_slider_btn transition ${
+        className={`main_slider_btn ${
           isBeginning ? "opacity-40 cursor-not-allowed" : ""
         }`}
       >
@@ -74,7 +77,7 @@ const MainSlider = ({
       <button
         onClick={() => swiperRef.current?.slideNext()}
         disabled={isEnd}
-        className={`main_slider_btn transition ${
+        className={`main_slider_btn ${
           isEnd ? "opacity-40 cursor-not-allowed" : ""
         }`}
       >
