@@ -42,7 +42,7 @@ const Location = () => {
                   {item.title}
                 </p>
 
-                <img src={logo} alt="logo" />
+                <img loading="lazy" src={logo} alt="logo" />
 
                 <p>{item.description}</p>
 

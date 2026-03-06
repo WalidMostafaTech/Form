@@ -15,6 +15,7 @@ import { useSelector } from "react-redux";
 import useRequireAuth from "@/hooks/useRequireAuth";
 import { addToCart } from "@/api/cartServices";
 import { toast } from "sonner";
+import OptionSelector from "@/components/common/OptionSelector";
 
 const ProductDetails = ({ product }) => {
   const { user } = useSelector((state) => state.user);
@@ -141,7 +142,7 @@ const ProductDetails = ({ product }) => {
 
       {/* Weights */}
       <div className="flex items-center justify-between flex-wrap gap-2">
-        <ul className="flex items-center flex-wrap gap-2">
+        {/* <ul className="flex items-center flex-wrap gap-2">
           {product?.items?.map((size, index) => (
             <li
               key={index}
@@ -155,7 +156,14 @@ const ProductDetails = ({ product }) => {
               {size.weight} {size.weight_unit}
             </li>
           ))}
-        </ul>
+        </ul> */}
+
+        <OptionSelector
+          options={product?.items}
+          selected={selectedSize?.id}
+          onSelect={(size) => setSelectedSizeId(size.id)}
+          getLabel={(size) => `${size.weight} ${size.weight_unit}`}
+        />
 
         <span className="text-2xl font-bold text-primary bg-primary-foreground rounded-md px-2 py-1">
           {selectedSize?.price} AED

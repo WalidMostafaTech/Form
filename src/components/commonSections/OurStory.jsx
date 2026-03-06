@@ -59,6 +59,7 @@ const OurStory = () => {
         <div className="hidden md:block w-full h-full min-h-100 relative">
           <div className="w-full h-full overflow-hidden rounded-lg shadow-lg">
             <img
+              loading="lazy"
               src={ourStory?.image}
               alt="Our Story"
               className="w-full h-full object-cover"

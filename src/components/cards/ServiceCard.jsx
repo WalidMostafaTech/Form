@@ -5,6 +5,7 @@ const ServiceCard = ({ service }) => {
     <div className="flex flex-col gap-2">
       <div className="w-full aspect-square overflow-hidden rounded-lg">
         <img
+          loading="lazy"
           src={service.image}
           alt={service.title}
           className="w-full h-full object-cover"

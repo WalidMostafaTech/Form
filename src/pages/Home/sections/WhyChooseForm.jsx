@@ -34,6 +34,7 @@ const WhyChooseForm = ({ data, loading }) => {
               flex items-center justify-center mb-4 text-secondary text-3xl"
               >
                 <img
+                  loading="lazy"
                   src={item.icon}
                   alt={item.title}
                   className="w-full h-full object-contain"

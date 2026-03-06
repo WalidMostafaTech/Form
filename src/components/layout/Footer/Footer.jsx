@@ -15,6 +15,7 @@ import { getFooter } from "@/api/mainServices";
 import { RiInstagramFill } from "react-icons/ri";
 import { IoLogoWhatsapp } from "react-icons/io5";
 import FooterSkeleton from "@/components/Loading/SkeletonLoading/FooterSkeleton";
+import useNavigationLinks from "@/hooks/useNavigationLinks";
 
 const Footer = () => {
   const { data: footerData, isLoading } = useQuery({
@@ -22,16 +23,9 @@ const Footer = () => {
     queryFn: getFooter,
   });
 
-  if (isLoading) return <FooterSkeleton />;
+  const links = useNavigationLinks();
 
-  const links = [
-    { name: "Home", href: "/" },
-    { name: "About", href: "/about" },
-    { name: "Shop", href: "/shop" },
-    { name: "Wholesale", href: "/wholesale" },
-    { name: "Location", href: "/location" },
-    { name: "Contact Us", href: "/contact" },
-  ];
+  if (isLoading) return <FooterSkeleton />;
 
   const socialLinks = [
     {
@@ -75,6 +69,7 @@ const Footer = () => {
         <div className="flex flex-col items-center gap-4 text-center">
           <div className="w-36 overflow-hidden">
             <img
+              loading="lazy"
               src={footerData?.footer_logo || logo}
               alt="Company Logo"
               className="w-full h-full object-contain"

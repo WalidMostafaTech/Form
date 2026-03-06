@@ -80,6 +80,7 @@ const ProductCard = ({ product, sale_type = "retail" }) => {
     <div className="flex flex-col gap-1">
       <div className="w-full aspect-square overflow-hidden rounded-lg relative">
         <img
+          loading="lazy"
           src={product.main_image}
           alt={product.title}
           className="w-full h-full object-cover"

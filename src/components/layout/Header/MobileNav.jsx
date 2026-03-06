@@ -3,12 +3,12 @@ import { IoClose } from "react-icons/io5";
 import { NavLink } from "react-router";
 import { useState } from "react";
 import { IoChevronDown } from "react-icons/io5";
-import { Button } from "@/components/ui/button";
+import useNavigationLinks from "@/hooks/useNavigationLinks";
 
-const MobileNav = ({ links, open, setOpen }) => {
+const MobileNav = ({ open, setOpen }) => {
   const [openItem, setOpenItem] = useState(null);
 
-  // if (!open) return null;
+  const links = useNavigationLinks();
 
   const toggleItem = (name) => {
     setOpenItem((prev) => (prev === name ? null : name));
@@ -20,20 +20,18 @@ const MobileNav = ({ links, open, setOpen }) => {
   };
 
   return createPortal(
-    // <div className="lg:hidden fixed inset-0 z-50 bg-primary overflow-y-auto">
     <div
       className={`lg:hidden fixed inset-0 z-50 bg-primary overflow-y-auto
-    transition-all duration-300 ease-in-out
-    ${open ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-5 pointer-events-none"}`}
+      transition-all duration-400 ease-in-out
+      ${open ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-10 pointer-events-none"}`}
     >
-      <Button
-        size="icon"
-        variant="outline"
+      <button
         onClick={closeOnLinkClick}
-        className="absolute top-4 inset-e-4"
+        className="absolute top-4 inset-e-4 text-primary bg-white
+        w-8 h-8 rounded-full flex items-center justify-center text-xl cursor-pointer"
       >
-        <IoClose className="text-xl!"/>
-      </Button>
+        <IoClose />
+      </button>
 
       <nav className="h-full flex flex-col justify-center items-center gap-6 px-6">
         {links.map((link) => {

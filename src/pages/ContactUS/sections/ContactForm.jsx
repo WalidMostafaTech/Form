@@ -66,7 +66,7 @@ const ContactForm = () => {
             <MainInput
               {...field}
               label="Name"
-              placeholder="Hassan"
+              placeholder="first name"
               error={errors.first_name?.message}
             />
           )}
@@ -80,7 +80,7 @@ const ContactForm = () => {
             <MainInput
               {...field}
               label="Last Name"
-              placeholder="Hassan"
+              placeholder="last name"
               error={errors.last_name?.message}
             />
           )}

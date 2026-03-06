@@ -47,9 +47,7 @@ const MainSlider = ({
       <button
         onClick={() => swiperRef.current?.slidePrev()}
         disabled={isBeginning}
-        className={`main_slider_btn ${
-          isBeginning ? "opacity-40 cursor-not-allowed" : ""
-        }`}
+        className={`main_slider_btn ${isBeginning ? "disabled" : ""}`}
       >
         <FaArrowLeftLong className="rtl:rotate-180" />
       </button>
@@ -77,9 +75,7 @@ const MainSlider = ({
       <button
         onClick={() => swiperRef.current?.slideNext()}
         disabled={isEnd}
-        className={`main_slider_btn ${
-          isEnd ? "opacity-40 cursor-not-allowed" : ""
-        }`}
+        className={`main_slider_btn ${isEnd ? "disabled" : ""}`}
       >
         <FaArrowRightLong className="rtl:rotate-180" />
       </button>

@@ -1,5 +1,6 @@
 import { getCategoriesHero, getProducts } from "@/api/productsServices";
 import ProductCard from "@/components/cards/ProductCard";
+import OptionSelector from "@/components/common/OptionSelector";
 import SectionTitle from "@/components/common/SectionTitle";
 import PageBanner from "@/components/commonSections/PageBanner";
 import ProductsSkeleton from "@/components/Loading/SkeletonLoading/ProductsSkeleton";
@@ -42,7 +43,7 @@ const Wholesale = () => {
           }
         />
 
-        <ul className="flex items-center flex-wrap gap-2 mb-8">
+        {/* <ul className="flex items-center flex-wrap gap-2 mb-8">
           {categories?.map((category) => (
             <li
               key={category.id}
@@ -62,7 +63,20 @@ const Wholesale = () => {
               {category.name}
             </li>
           ))}
-        </ul>
+        </ul> */}
+
+        <OptionSelector
+          options={categories}
+          selected={selectedCategory}
+          className="mb-8"
+          onSelect={(category) => {
+            if (category.id === "0") {
+              setSearchParams({});
+            } else {
+              setSearchParams({ category: category.id });
+            }
+          }}
+        />
 
         {isLoading ? (
           <ProductsSkeleton />

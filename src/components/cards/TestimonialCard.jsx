@@ -4,6 +4,7 @@ const TestimonialCard = ({ testimonial }) => {
       <div className="flex items-center gap-2 mb-4">
         <div className="bg-white rounded-md p-1 w-10 aspect-square">
           <img
+            loading="lazy"
             src={testimonial.image}
             alt={testimonial.name}
             className="w-full h-full object-contain rounded"

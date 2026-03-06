@@ -6,7 +6,8 @@ const Hero = ({ video, loading }) => {
   if (!video) return null;
 
   return (
-    <section className="relative h-screen w-full">
+    <section className="w-full h-screen relative">
+    {/* <section className="w-full aspect-video relative"> */}
       <div className="absolute inset-0 z-10 bg-primary/40" />
 
       <video

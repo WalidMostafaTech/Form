@@ -37,6 +37,7 @@ const VisionAndMission = ({ data, loading }) => {
               flex items-center justify-center rounded-full"
               >
                 <img
+                  loading="lazy"
                   src={item.icon}
                   alt={item.title}
                   className="w-full h-full object-contain"

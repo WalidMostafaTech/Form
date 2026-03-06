@@ -133,6 +133,7 @@ const RegisterCustomer = () => {
           >
             {imagePreview ? (
               <img
+                loading="lazy"
                 src={imagePreview}
                 alt="preview"
                 className="w-full h-full object-cover"
@@ -260,7 +261,7 @@ const RegisterCustomer = () => {
                 />
                 <label
                   htmlFor="terms"
-                  className="text-sm font-medium leading-none"
+                  className="text-sm font-medium leading-none flex items-center gap-1"
                 >
                   I agree to the{" "}
                   <span

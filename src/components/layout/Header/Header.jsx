@@ -9,44 +9,7 @@ import { useSelector } from "react-redux";
 const Header = () => {
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
 
-  const { user } = useSelector((state) => state.user);
   const { settings } = useSelector((state) => state.settings);
-
-  let wholesaleLink = null;
-
-  if (!user) {
-    wholesaleLink = {
-      name: "Wholesale",
-      href: "/register/company",
-      items: [],
-    };
-  } else if (user.type === "company") {
-    wholesaleLink = {
-      name: "Wholesale",
-      href: "/wholesale",
-      items: [],
-    };
-  }
-
-  const { categories } = useSelector((state) => state.categories);
-
-  const links = [
-    { name: "Home", href: "/", items: [] },
-    { name: "About", href: "/about", items: [] },
-    {
-      name: "Shop",
-      href: "/shop",
-      items: categories?.map((c) => ({
-        name: c.name,
-        href: `/shop?category=${c.id}`,
-      })),
-    },
-
-    ...(wholesaleLink ? [wholesaleLink] : []),
-
-    { name: "Location", href: "/location", items: [] },
-    { name: "Contact Us", href: "/contact", items: [] },
-  ];
 
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
@@ -83,18 +46,15 @@ const Header = () => {
       <div className="container mx-auto flex justify-between items-center">
         <Link to="/" className="w-28">
           <img
+            loading="lazy"
             src={settings?.header_logo || logo}
             alt="Company Logo"
             className="w-full h-full object-contain"
           />
         </Link>
 
-        <NavBar links={links} />
-        <MobileNav
-          links={links}
-          open={mobileNavOpen}
-          setOpen={setMobileNavOpen}
-        />
+        <NavBar />
+        <MobileNav open={mobileNavOpen} setOpen={setMobileNavOpen} />
 
         <HeaderActions setMobileNavOpen={setMobileNavOpen} />
       </div>

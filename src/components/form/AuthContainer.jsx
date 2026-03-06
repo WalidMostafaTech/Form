@@ -23,6 +23,7 @@ const AuthContainer = ({
         <div className="h-full flex flex-col justify-between gap-2 p-4 pt-16 relative z-10">
           <div className="flex-1 flex items-center justify-center">
             <img
+              loading="lazy"
               src={settings?.header_logo || logo}
               alt="Logo"
               className="w-[60%] object-contain"
@@ -45,7 +46,8 @@ const AuthContainer = ({
         <div className="w-full max-w-sm pt-16">
           <hgroup className="text-center space-y-2 mb-6">
             {coffeeIcon && (
-              <div className="text-4xl text-primary bg-primary-foreground w-16 h-16 flex items-center justify-center rounded-full mx-auto">
+              <div className="text-4xl text-primary bg-primary-foreground w-16 h-16 
+              flex items-center justify-center rounded-full mx-auto">
                 <GiCoffeeBeans />
               </div>
             )}

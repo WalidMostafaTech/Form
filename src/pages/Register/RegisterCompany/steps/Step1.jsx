@@ -97,6 +97,7 @@ const Step1 = ({ setParentData, parentData, goNext }) => {
         >
           {imagePreview ? (
             <img
+              loading="lazy"
               src={imagePreview}
               alt="preview"
               className="w-full h-full object-cover"
@@ -225,7 +226,7 @@ const Step1 = ({ setParentData, parentData, goNext }) => {
 
               <label
                 htmlFor="terms"
-                className="text-sm font-medium leading-none"
+                className="text-sm font-medium leading-none flex items-center gap-1"
               >
                 I agree to the{" "}
                 <span

@@ -22,6 +22,7 @@ const ProductImages = ({ images }) => {
         {images?.map((img, index) => (
           <SwiperSlide key={index}>
             <img
+              loading="lazy"
               src={img}
               alt="product"
               className="w-full aspect-square object-cover rounded-2xl"
@@ -41,6 +42,7 @@ const ProductImages = ({ images }) => {
         {images?.map((img, index) => (
           <SwiperSlide key={index}>
             <img
+              loading="lazy"
               src={img}
               alt="thumb"
               className="w-full aspect-square object-cover rounded-xl cursor-pointer border"

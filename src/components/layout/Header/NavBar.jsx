@@ -6,8 +6,11 @@ import {
   DropdownMenuItem,
 } from "@/components/ui/dropdown-menu";
 import { ChevronDown } from "lucide-react";
+import useNavigationLinks from "@/hooks/useNavigationLinks";
 
-const NavBar = ({ links }) => {
+const NavBar = () => {
+  const links = useNavigationLinks();
+
   return (
     <nav className="hidden lg:flex items-center gap-6">
       {links.map((link) => {

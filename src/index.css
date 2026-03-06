@@ -185,6 +185,10 @@ input::-webkit-inner-spin-button {
     @apply w-8 h-8 rounded-full cursor-pointer
     flex items-center justify-center
     bg-primary/10 text-primary transition;
+
+    &.disabled {
+      @apply opacity-40 cursor-not-allowed;
+    }
   }
 
   .sideBarLink {
@@ -208,23 +212,28 @@ input::-webkit-inner-spin-button {
   }
 }
 
-.phone-input-wrapper .PhoneInputInput {
-  @apply file:text-foreground placeholder:text-muted-foreground
-  selection:bg-primary selection:text-primary-foreground
-  border-input h-9 w-full min-w-0 rounded-md border
-  bg-transparent px-1 py-1 text-base shadow-xs
-  transition-[color,box-shadow] outline-none md:text-sm;
+/* phone input */
+/* wrapper */
+.phone-input-wrapper {
+  @apply flex items-center border border-input rounded-md bg-muted
+  px-2 h-9 transition-[color,box-shadow];
 }
 
-.phone-input-wrapper .PhoneInputInput:focus {
+.phone-input-wrapper:focus-within {
   @apply border-ring ring-ring/50 ring-[3px];
 }
 
-.phone-input-wrapper {
-  @apply flex! items-center! bg-muted! rounded-md!;
+/* input */
+.phone-input-wrapper .PhoneInputInput {
+  @apply bg-transparent outline-none border-none w-full text-sm;
 }
 
-/* swiper */
+/* country select */
+.phone-input-wrapper .PhoneInputCountry {
+  @apply mr-2 flex items-center;
+}
+
+/* location swiper */
 .location-swiper .swiper-pagination-bullet {
   background: white;
   opacity: 1;
