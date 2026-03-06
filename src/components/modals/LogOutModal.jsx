@@ -32,7 +32,7 @@ const LogOutModal = () => {
 
   return (
     <Dialog open={logoutModal} onOpenChange={onClose}>
-      <DialogContent showCloseButton={false} className="sm:max-w-md">
+      <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <DialogDescription>
             <img

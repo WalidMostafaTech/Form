@@ -54,7 +54,7 @@ const CartCard = ({ item }) => {
 
   return (
     <div className="p-3 border rounded-lg flex items-start gap-4">
-      <div className="w-24 h-24 md:w-32 md:h-32 overflow-hidden rounded-lg">
+      <div className="w-24 md:w-32 aspect-square overflow-hidden rounded-lg">
         <img
           loading="lazy"
           src={item.image}

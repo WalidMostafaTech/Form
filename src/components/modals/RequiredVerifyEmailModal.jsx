@@ -34,7 +34,7 @@ const RequiredVerifyEmailModal = () => {
 
   return (
     <Dialog open={requiredVerifyEmailModal} onOpenChange={onClose}>
-      <DialogContent showCloseButton={false} className="sm:max-w-md">
+      <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <img
             loading="lazy"

@@ -14,7 +14,7 @@ const OrderCard = ({ item }) => {
 
   return (
     <div key={item.id} className="p-3 border rounded-lg flex items-start gap-4">
-      <div className="w-24 h-24 md:w-32 md:h-32 overflow-hidden rounded-lg">
+      <div className="w-24 md:w-32 aspect-square overflow-hidden rounded-lg">
         <img
           loading="lazy"
           src={item.image}
@@ -25,7 +25,6 @@ const OrderCard = ({ item }) => {
 
       <div className="flex-1 space-y-2 text-sm">
         <h3 className="text-lg font-semibold line-clamp-2">{item.name}</h3>
-
         <p>{item.weight}</p>
 
         {!showDetails && (
@@ -45,14 +44,14 @@ const OrderCard = ({ item }) => {
 
         {showDetails && (
           <>
-            <div className="flex items-center justify-between flex-wrap gap-2 font-bold">
-              <p className="text-primary text-lg">
-                {item?.order_items[0]?.price} AED
-              </p>
-
+            <div className="flex items-center justify-between flex-wrap gap-2 font-semibold">
               <p>
                 {item?.order_items[0]?.weight}{" "}
                 {item?.order_items[0]?.weight_unit}
+              </p>
+
+              <p className="text-primary text-lg">
+                {item?.order_items[0]?.price} AED
               </p>
             </div>
 
@@ -66,23 +65,26 @@ const OrderCard = ({ item }) => {
         )}
 
         <div className="flex items-center flex-wrap justify-between gap-2">
-          {showDetails ? (
-            <span className="p-1 min-w-16 text-lg text-center font-semibold text-primary bg-primary-foreground rounded-md">
-              {item.order_items_count}
-            </span>
-          ) : (
-            <button
-              onClick={() => setShowDetails(true)}
-              className="py-1 px-2 rounded-md border border-primary text-primary
-            bg-white cursor-pointer hover:brightness-90 transition"
-            >
-              View Details
-            </button>
-          )}
-
           <p className="text-lg font-bold text-primary">
             {item.final_total} AED
           </p>
+
+          {showDetails && (
+            <p
+              className="text-primary bg-primary-foreground py-1 px-2 rounded-md 
+            min-w-10 text-center font-semibold border"
+            >
+              {item.order_items_count}
+            </p>
+          )}
+
+          <button
+            onClick={() => setShowDetails(!showDetails)}
+            className="py-1 px-2 rounded-md border border-primary text-primary
+                      bg-white cursor-pointer hover:brightness-90 transition"
+          >
+            {showDetails ? "Hide Details" : "View Details"}
+          </button>
         </div>
       </div>
     </div>
