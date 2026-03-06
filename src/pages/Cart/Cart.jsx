@@ -1,5 +1,4 @@
 import PageBanner from "@/components/commonSections/PageBanner";
-import image from "@/assets/images/product-img.png";
 import CartCard from "@/components/cards/CartCard";
 import OrderSummaryCard from "@/components/cards/OrderSummaryCard";
 import { Textarea } from "@/components/ui/textarea";
