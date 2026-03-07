@@ -73,7 +73,7 @@ const ProfileSideBar = () => {
       <hr className="" />
 
       <button
-        onClick={() => dispatch(openModal("logoutModal"))}
+        onClick={() => dispatch(openModal({ modalName: "logOutModal" }))}
         className="sideBarLink danger"
       >
         <IoIosLogOut />

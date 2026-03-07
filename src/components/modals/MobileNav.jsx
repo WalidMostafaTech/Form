@@ -4,8 +4,16 @@ import { NavLink } from "react-router";
 import { useState } from "react";
 import { IoChevronDown } from "react-icons/io5";
 import useNavigationLinks from "@/hooks/useNavigationLinks";
+import { useDispatch, useSelector } from "react-redux";
+import { closeModal } from "@/store/modals/modalsSlice";
 
-const MobileNav = ({ open, setOpen }) => {
+const MobileNav = () => {
+  const { modalName } = useSelector((state) => state.modals);
+
+  const open = modalName === "mobileNav";
+
+  const dispatch = useDispatch();
+
   const [openItem, setOpenItem] = useState(null);
 
   const links = useNavigationLinks();
@@ -15,7 +23,7 @@ const MobileNav = ({ open, setOpen }) => {
   };
 
   const closeOnLinkClick = () => {
-    setOpen(false);
+    dispatch(closeModal());
     setOpenItem(null);
   };
 

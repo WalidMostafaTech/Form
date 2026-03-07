@@ -210,6 +210,21 @@ input::-webkit-inner-spin-button {
       @apply bg-primary text-white;
     }
   }
+
+  .modal_icon {
+    @apply mx-auto text-primary bg-primary-foreground w-26 aspect-square
+          flex items-center justify-center rounded-full text-8xl relative;
+
+    &::after {
+      content: "";
+      @apply absolute -left-2 -bottom-1 w-10 aspect-square bg-inherit rounded-full -z-10;
+    }
+
+    &::before {
+      content: "";
+      @apply absolute -right-3 -top-1 w-16 aspect-square bg-inherit rounded-full -z-10;
+    }
+  }
 }
 
 /* phone input */

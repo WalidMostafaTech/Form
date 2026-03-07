@@ -14,11 +14,17 @@ const CheckVerifiedEmailGuard = ({ children }) => {
   if (!user?.is_verified) {
     return (
       <section className="h-[90vh] flex flex-col items-center justify-center gap-4 text-center">
-        <CiWarning className="text-[120px] text-primary" />
+        <div className="modal_icon">
+          <CiWarning />
+        </div>
 
-        <h1 className="text-2xl font-bold">{t("checkVerifiedEmailGuard.title")}</h1>
+        <h1 className="text-2xl font-bold">
+          {t("checkVerifiedEmailGuard.title")}
+        </h1>
 
-        <h2 className="font-semibold">{t("checkVerifiedEmailGuard.description")}</h2>
+        <h2 className="font-semibold">
+          {t("checkVerifiedEmailGuard.description")}
+        </h2>
 
         <Link to="/verify-email" replace>
           <Button>{t("checkVerifiedEmailGuard.button")}</Button>

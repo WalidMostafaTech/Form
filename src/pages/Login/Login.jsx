@@ -71,8 +71,6 @@ const Login = () => {
   });
 
   const onSubmit = (data) => {
-    console.log("form login:", data);
-
     loginMutate(data);
   };
 

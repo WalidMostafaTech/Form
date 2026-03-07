@@ -7,7 +7,7 @@ import { FiUser, FiMail, FiPhone, FiLock, FiMapPin } from "react-icons/fi";
 import { z } from "zod";
 import { isValidPhoneNumber } from "react-phone-number-input";
 import { Checkbox } from "@/components/ui/checkbox";
-import { use, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { IoImageOutline } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
 import { openModal } from "@/store/modals/modalsSlice";
@@ -233,7 +233,7 @@ const Step1 = ({ setParentData, parentData, goNext }) => {
                   className="text-primary cursor-pointer hover:underline"
                   onClick={(e) => {
                     e.preventDefault();
-                    dispatch(openModal("termsModal"));
+                    dispatch(openModal({ modalName: "termsModal" }));
                   }}
                 >
                   Terms and Conditions

@@ -1,4 +1,3 @@
-import logoutIcon from "@/assets/icons/logout-icon.png";
 import { logoutAction } from "@/store/user/userActions";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
@@ -13,15 +12,16 @@ import {
 } from "@/components/ui/dialog";
 import { closeModal } from "@/store/modals/modalsSlice";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import { GiEntryDoor } from "react-icons/gi";
 
 const LogOutModal = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const { logoutModal } = useSelector((state) => state.modals);
+  const { modalName } = useSelector((state) => state.modals);
   const { logOutLoading } = useSelector((state) => state.user);
 
   const onClose = () => {
-    dispatch(closeModal("logoutModal"));
+    dispatch(closeModal());
   };
 
   const handleLogout = () => {
@@ -31,25 +31,31 @@ const LogOutModal = () => {
   };
 
   return (
-    <Dialog open={logoutModal} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-md">
+    <Dialog open={modalName === "logOutModal"} onOpenChange={onClose}>
+      <DialogContent>
+        <div className="modal_icon">
+          <GiEntryDoor />
+        </div>
+
         <DialogHeader>
-          <DialogDescription>
-            <img
-              loading="lazy"
-              src={logoutIcon}
-              alt="logout"
-              className="mx-auto"
-            />
-          </DialogDescription>
           <DialogTitle className="text-center">
             {t("logOutModal.logoutConfirm")}
           </DialogTitle>
+          <DialogDescription className="sr-only"></DialogDescription>
         </DialogHeader>
 
         <DialogFooter>
           <Button
-            className="flex-1 flex items-center justify-center gap-2"
+            className={`flex-1`}
+            variant="outline"
+            disabled={logOutLoading}
+            onClick={onClose}
+          >
+            {t("logOutModal.cancel")}
+          </Button>
+
+          <Button
+            className={`flex-1`}
             disabled={logOutLoading}
             onClick={handleLogout}
           >
@@ -57,15 +63,6 @@ const LogOutModal = () => {
               <AiOutlineLoading3Quarters className="w-4 h-4 animate-spin" />
             )}
             {t("logOutModal.logout")}
-          </Button>
-
-          <Button
-            variant="outline"
-            className="flex-1 rounded-full"
-            disabled={logOutLoading}
-            onClick={onClose}
-          >
-            {t("logOutModal.cancel")}
           </Button>
         </DialogFooter>
       </DialogContent>

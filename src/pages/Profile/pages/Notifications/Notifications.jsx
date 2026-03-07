@@ -21,6 +21,9 @@ const Notifications = () => {
     queryFn: getNotifications,
   });
 
+  const isEmpty =
+    !isLoading && (notifications?.items?.length === 0 || !notifications);
+
   const { mutate: markAllAsRead, isPending } = useMutation({
     mutationFn: readAllNotifications,
     onSuccess: () => {
@@ -45,7 +48,7 @@ const Notifications = () => {
 
       {isLoading ? (
         <NotificationsSkeleton />
-      ) : notifications?.items?.length === 0 ? (
+      ) : isEmpty ? (
         <EmptyDataSection msg={t("notifications.empty")} />
       ) : (
         <div className="flex flex-col gap-2">

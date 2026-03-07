@@ -24,7 +24,8 @@ const ProductCard = ({ product, sale_type = "retail" }) => {
 
   // تحقق إذا المنتج ده في الـ favorites
   const isFavorited = favorites?.items?.some(
-    (fav) => fav.id === product.id && fav.sale_type === sale_type,
+    (fav) => fav.id === product.id,
+    // (fav) => fav.id === product.id && fav.sale_type === sale_type,
   );
 
   const { mutate: handleToggle, isPending } = useMutation({
@@ -39,14 +40,16 @@ const ProductCard = ({ product, sale_type = "retail" }) => {
         if (!oldData) return oldData;
 
         const alreadyFavorited = oldData.items?.some(
-          (fav) => fav.id === id && fav.sale_type === sale_type,
+          (fav) => fav.id === id,
+          // (fav) => fav.id === id && fav.sale_type === sale_type,
         );
 
         let newItems;
         if (alreadyFavorited) {
           // لو موجود بالفعل نحذفه
           newItems = oldData.items.filter(
-            (fav) => !(fav.id === id && fav.sale_type === sale_type),
+            (fav) => !(fav.id === id),
+            // (fav) => !(fav.id === id && fav.sale_type === sale_type),
           );
         } else {
           // لو مش موجود نضيفه

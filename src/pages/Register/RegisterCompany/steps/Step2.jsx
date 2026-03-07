@@ -23,7 +23,6 @@ const Step2 = ({ setParentData, parentData, goNext }) => {
   });
 
   const onSubmit = (data) => {
-    console.log(data);
     setParentData({ ...parentData, ...data });
     goNext();
   };

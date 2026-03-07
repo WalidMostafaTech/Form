@@ -11,26 +11,29 @@ import { closeModal } from "@/store/modals/modalsSlice";
 
 const TermsModal = () => {
   const dispatch = useDispatch();
-  const { termsModal } = useSelector((state) => state.modals);
+  const { modalName } = useSelector((state) => state.modals);
   const { settings } = useSelector((state) => state.settings);
 
   const onClose = () => {
-    dispatch(closeModal("termsModal"));
+    dispatch(closeModal());
   };
 
   return (
-    <Dialog open={termsModal} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-xl overflow-auto max-h-[90vh]">
+    <Dialog open={modalName === "termsModal"} onOpenChange={onClose}>
+      <DialogContent className="sm:max-w-2xl">
         <DialogHeader>
-          <DialogTitle className="text-center">Terms & Conditions</DialogTitle>
-          <DialogDescription asChild>
-            <div
-              dangerouslySetInnerHTML={{
-                __html: settings?.registration_form?.terms_conditions,
-              }}
-            />
-          </DialogDescription>
+          <DialogTitle className={`text-center`}>
+            Terms & Conditions
+          </DialogTitle>
+          <DialogDescription className="sr-only"></DialogDescription>
         </DialogHeader>
+
+        <div
+          className="-mx-4 no-scrollbar max-h-[60vh] overflow-y-auto px-4"
+          dangerouslySetInnerHTML={{
+            __html: settings?.registration_form?.terms_conditions,
+          }}
+        />
       </DialogContent>
     </Dialog>
   );

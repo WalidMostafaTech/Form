@@ -19,8 +19,8 @@ const OrderSummaryCard = ({ cart, onConfirm, loading }) => {
           </span>
         </div>
         <div className="flex items-center justify-between gap-2 mb-2">
-          <p className="text-muted-foreground">
-            Vat <strong>{cart?.tax_rate}%</strong>
+          <p className="text-muted-foreground flex items-center gap-1">
+            <span>Vat</span> <strong>{cart?.tax_rate}%</strong>
           </p>
           <span className="font-bold text-primary">{cart?.tax_amount} AED</span>
         </div>

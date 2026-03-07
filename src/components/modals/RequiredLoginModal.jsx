@@ -11,16 +11,16 @@ import { useNavigate } from "react-router";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { closeModal } from "@/store/modals/modalsSlice";
-import warningIcon from "@/assets/icons/Warning-icon.png";
+import { PiShieldWarning } from "react-icons/pi";
 
 const RequiredLoginModal = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { requiredLoginModal } = useSelector((state) => state.modals);
+  const { modalName } = useSelector((state) => state.modals);
 
   const onClose = () => {
-    dispatch(closeModal("requiredLoginModal"));
+    dispatch(closeModal());
   };
 
   const handleCreateAccount = () => {
@@ -34,15 +34,13 @@ const RequiredLoginModal = () => {
   };
 
   return (
-    <Dialog open={requiredLoginModal} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-md">
+    <Dialog open={modalName === "requiredLoginModal"} onOpenChange={onClose}>
+      <DialogContent>
+        <div className="modal_icon">
+          <PiShieldWarning />
+        </div>
+
         <DialogHeader>
-          <img
-            loading="lazy"
-            src={warningIcon}
-            alt="logout"
-            className="mx-auto w-44"
-          />
           <DialogTitle className="text-center">
             {t("requiredLoginModal.title")}
           </DialogTitle>
@@ -52,16 +50,16 @@ const RequiredLoginModal = () => {
         </DialogHeader>
 
         <DialogFooter>
-          <Button className="flex-1" onClick={handleLogin}>
-            {t("requiredLoginModal.login")}
-          </Button>
-
           <Button
             variant="outline"
-            className="flex-1 rounded-full"
+            className="flex-1"
             onClick={handleCreateAccount}
           >
             {t("requiredLoginModal.createAccount")}
+          </Button>
+
+          <Button className="flex-1" onClick={handleLogin}>
+            {t("requiredLoginModal.login")}
           </Button>
         </DialogFooter>
       </DialogContent>

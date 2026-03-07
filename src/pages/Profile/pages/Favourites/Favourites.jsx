@@ -11,14 +11,16 @@ const Favourites = () => {
     queryFn: getFavorites,
   });
 
+  const isEmpty = !isLoading && (favorites?.items?.length === 0 || !favorites);
+
   return (
     <div className="space-y-6">
       <SectionTitle title="Favourites" />
 
       {isLoading ? (
         <ProductsSkeleton />
-      ) : favorites?.items?.length === 0 ? (
-        <EmptyDataSection msg={"Products not found"} />
+      ) : isEmpty ? (
+        <EmptyDataSection msg={"no favorites found"} />
       ) : (
         <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4">
           {favorites?.items?.map((product) => (

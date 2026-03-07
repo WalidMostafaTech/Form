@@ -85,7 +85,6 @@ const ChangePasswordModal = ({ open, onClose }) => {
   return (
     <Dialog open={open} onOpenChange={onClose}>
       <DialogContent
-        className="sm:max-w-md"
         style={{
           pointerEvents: changePasswordMutation.isPending ? "none" : "auto",
         }}

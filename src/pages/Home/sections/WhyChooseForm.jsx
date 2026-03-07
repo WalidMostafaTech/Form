@@ -14,7 +14,7 @@ const WhyChooseForm = ({ data, loading }) => {
 
       <div className="container relative z-10">
         <hgroup className="text-center mb-12  max-w-2xl mx-auto">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6">
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
             {data?.title}
           </h2>
 

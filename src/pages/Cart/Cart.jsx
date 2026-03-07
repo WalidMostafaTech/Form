@@ -34,7 +34,7 @@ const Cart = () => {
     onError: () => {},
   });
 
-  const isCartEmpty = !cart?.cart_items?.length;
+  const isCartEmpty = !isLoading && (cart?.cart_items?.length === 0 || !cart);
 
   return (
     <main>

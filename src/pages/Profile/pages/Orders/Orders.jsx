@@ -5,12 +5,15 @@ import { useQuery } from "@tanstack/react-query";
 import MyOrdersSkeleton from "@/components/Loading/SkeletonLoading/MyOrdersSkeleton";
 import { useState } from "react";
 import OptionSelector from "@/components/common/OptionSelector";
+import EmptyDataSection from "@/components/commonSections/EmptyDataSection";
 
 const Orders = () => {
   const { data: orders, isLoading } = useQuery({
     queryKey: ["orders"],
     queryFn: getOrders,
   });
+
+  const isEmpty = !isLoading && (orders?.length === 0 || !orders);
 
   const [selectedStatus, setSelectedStatus] = useState("all");
 
@@ -47,8 +50,8 @@ const Orders = () => {
 
       {isLoading ? (
         <MyOrdersSkeleton />
-      ) : orders?.length === 0 ? (
-        <p>Orders not found</p>
+      ) : isEmpty ? (
+        <EmptyDataSection msg={"no orders found"} />
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 gap-4">
           {orders?.map((item) => (

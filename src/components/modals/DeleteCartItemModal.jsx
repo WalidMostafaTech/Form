@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -10,13 +11,15 @@ import {
 import { closeModal } from "@/store/modals/modalsSlice";
 import { removeFromCart } from "@/api/cartServices";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { toast } from "sonner";
 
 const DeleteCartItemModal = () => {
   const dispatch = useDispatch();
-  const { deleteCartItemModal } = useSelector((state) => state.modals);
+  const { modalName, modalData } = useSelector((state) => state.modals);
+  const { item_id } = modalData || {};
 
   const onClose = () => {
-    dispatch(closeModal("deleteCartItemModal"));
+    dispatch(closeModal());
   };
 
   const queryClient = useQueryClient();
@@ -25,24 +28,24 @@ const DeleteCartItemModal = () => {
     mutationFn: removeFromCart,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["cart"] });
+      toast.success("Item removed from cart.");
       onClose();
     },
   });
 
   const handleDelete = () => {
-    deleteMutation.mutate(item.id);
+    deleteMutation.mutate(item_id);
   };
 
   return (
-    <Dialog open={deleteCartItemModal} onOpenChange={onClose}>
-      <DialogContent showCloseButton={false} className="sm:max-w-md">
+    <Dialog open={modalName === "deleteCartItemModal"} onOpenChange={onClose}>
+      <DialogContent>
         <DialogHeader>
           <DialogTitle>Delete item from cart?</DialogTitle>
+          <DialogDescription>
+            Are you sure you want to remove this product from your cart?
+          </DialogDescription>
         </DialogHeader>
-
-        <p className="text-sm text-muted-foreground">
-          Are you sure you want to remove this product from your cart?
-        </p>
 
         <DialogFooter className="gap-2">
           <Button variant="outline" onClick={onClose}>

@@ -268,7 +268,7 @@ const RegisterCustomer = () => {
                     className="text-primary cursor-pointer hover:underline"
                     onClick={(e) => {
                       e.preventDefault();
-                      dispatch(openModal("termsModal"));
+                      dispatch(openModal({ modalName: "termsModal" }));
                     }}
                   >
                     Terms and Conditions

@@ -7,12 +7,12 @@ const useRequireAuth = () => {
 
   const requireAuth = (onSuccess) => {
     if (!user) {
-      dispatch(openModal("requiredLoginModal"));
+      dispatch(openModal({ modalName: "requiredLoginModal" }));
       return;
     }
 
     if (!user.is_verified) {
-      dispatch(openModal("requiredVerifyEmailModal"));
+      dispatch(openModal({ modalName: "requiredVerifyEmailModal" }));
       return;
     }
 

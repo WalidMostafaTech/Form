@@ -2,6 +2,7 @@ import PageBannerSkeleton from "../Loading/SkeletonLoading/PageBannerSkeleton";
 
 const PageBanner = ({ image, title, description, html, loading }) => {
   if (loading) return <PageBannerSkeleton />;
+
   return (
     <article
       className="w-full min-h-72 bg-cover bg-center bg-primary relative content-end"

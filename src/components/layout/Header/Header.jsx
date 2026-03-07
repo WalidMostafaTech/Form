@@ -3,12 +3,9 @@ import { Link, useLocation } from "react-router";
 import { useEffect, useState } from "react";
 import NavBar from "./NavBar";
 import HeaderActions from "./HeaderActions/HeaderActions";
-import MobileNav from "./MobileNav";
 import { useSelector } from "react-redux";
 
 const Header = () => {
-  const [mobileNavOpen, setMobileNavOpen] = useState(false);
-
   const { settings } = useSelector((state) => state.settings);
 
   const [scrolled, setScrolled] = useState(false);
@@ -54,9 +51,8 @@ const Header = () => {
         </Link>
 
         <NavBar />
-        <MobileNav open={mobileNavOpen} setOpen={setMobileNavOpen} />
 
-        <HeaderActions setMobileNavOpen={setMobileNavOpen} />
+        <HeaderActions />
       </div>
     </header>
   );

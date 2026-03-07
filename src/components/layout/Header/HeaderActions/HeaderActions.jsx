@@ -1,14 +1,16 @@
 import LanguageSwitcher from "./LanguageSwitcher";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import ProfileSide from "./ProfileSide";
 import { Link } from "react-router";
 import { SlHandbag } from "react-icons/sl";
-import { FaRegBell } from "react-icons/fa";
 import { HiMenuAlt3 } from "react-icons/hi";
 import NotificationsPopUp from "./NotificationsPopUp";
+import { openModal } from "@/store/modals/modalsSlice";
 
-const HeaderActions = ({ setMobileNavOpen }) => {
+const HeaderActions = () => {
   const { user, loading } = useSelector((state) => state.user);
+
+  const dispatch = useDispatch();
 
   return (
     <div className="flex items-center gap-2 md:gap-4">
@@ -28,7 +30,7 @@ const HeaderActions = ({ setMobileNavOpen }) => {
 
       <HiMenuAlt3
         className="header_icon lg:hidden text-3xl!"
-        onClick={() => setMobileNavOpen(true)}
+        onClick={() => dispatch(openModal({ modalName: "mobileNav" }))}
       />
     </div>
   );

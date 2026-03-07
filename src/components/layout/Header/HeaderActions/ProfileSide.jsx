@@ -62,7 +62,7 @@ const ProfileSide = ({ user, loading }) => {
             <DropdownMenuItem
               variant="destructive"
               onClick={() => {
-                dispatch(openModal("logoutModal"));
+                dispatch(openModal({ modalName: "logOutModal" }));
               }}
             >
               <IoIosLogOut />

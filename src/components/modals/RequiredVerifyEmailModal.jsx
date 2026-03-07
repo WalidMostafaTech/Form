@@ -11,16 +11,16 @@ import { useNavigate } from "react-router";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { closeModal } from "@/store/modals/modalsSlice";
-import warningIcon from "@/assets/icons/Warning-icon.png";
+import { PiShieldWarning } from "react-icons/pi";
 
 const RequiredVerifyEmailModal = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { requiredVerifyEmailModal } = useSelector((state) => state.modals);
+  const { modalName } = useSelector((state) => state.modals);
 
   const onClose = () => {
-    dispatch(closeModal("requiredVerifyEmailModal"));
+    dispatch(closeModal());
   };
 
   const handleCancel = () => {
@@ -33,15 +33,16 @@ const RequiredVerifyEmailModal = () => {
   };
 
   return (
-    <Dialog open={requiredVerifyEmailModal} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-md">
+    <Dialog
+      open={modalName === "requiredVerifyEmailModal"}
+      onOpenChange={onClose}
+    >
+      <DialogContent>
+        <div className="modal_icon">
+          <PiShieldWarning />
+        </div>
+
         <DialogHeader>
-          <img
-            loading="lazy"
-            src={warningIcon}
-            alt="logout"
-            className="mx-auto w-44"
-          />
           <DialogTitle className="text-center">
             {t("requiredVerifyEmailModal.title")}
           </DialogTitle>
@@ -51,16 +52,12 @@ const RequiredVerifyEmailModal = () => {
         </DialogHeader>
 
         <DialogFooter>
-          <Button className="flex-1" onClick={handleVerify}>
-            {t("requiredVerifyEmailModal.goToVerify")}
+          <Button variant="outline" className="flex-1" onClick={handleCancel}>
+            {t("requiredVerifyEmailModal.cancel")}
           </Button>
 
-          <Button
-            variant="outline"
-            className="flex-1 rounded-full"
-            onClick={handleCancel}
-          >
-            {t("requiredVerifyEmailModal.cancel")}
+          <Button className="flex-1" onClick={handleVerify}>
+            {t("requiredVerifyEmailModal.goToVerify")}
           </Button>
         </DialogFooter>
       </DialogContent>
