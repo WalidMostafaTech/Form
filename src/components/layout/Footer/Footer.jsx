@@ -7,6 +7,8 @@ import {
   FaYoutube,
   FaTiktok,
   FaTelegramPlane,
+  FaGooglePlay,
+  FaApple,
 } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import { RiInstagramFill } from "react-icons/ri";
@@ -98,21 +100,59 @@ const Footer = () => {
           </ul>
         </div>
 
-        <div className="flex flex-col items-center gap-4 text-center">
-          <h3 className="text-lg font-semibold uppercase">
-            {t("Footer.socialMedia")}
-          </h3>
-          <div className="grid grid-cols-4 gap-2">
-            {socialLinks.map((link) => (
+        <div>
+          <div className="flex flex-col items-center gap-4 text-center">
+            <h3 className="text-lg font-semibold uppercase">
+              {t("Footer.socialMedia")}
+            </h3>
+            <div className="grid grid-cols-4 gap-2">
+              {socialLinks.map((link) => (
+                <a
+                  key={link.name}
+                  href={link.url}
+                  target="_blank"
+                  className="hover:text-secondary hover:border-secondary transition-colors p-1 border rounded"
+                >
+                  {link.icon}
+                </a>
+              ))}
+            </div>
+          </div>
+
+          <div className="flex items-center justify-center gap-3 mt-4">
+            {footerData?.android_app_link && (
               <a
-                key={link.name}
-                href={link.url}
+                href={footerData?.android_app_link}
                 target="_blank"
-                className="hover:text-secondary hover:border-secondary transition-colors p-1 border rounded"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 bg-black text-white px-4 py-2 rounded-lg hover:bg-neutral-800 transition"
               >
-                {link.icon}
+                <FaGooglePlay className="text-lg" />
+                <div className="text-start leading-tight">
+                  <p className="text-[10px]">{t("Footer.downloadAndroid")}</p>
+                  <p className="text-sm font-semibold">
+                    {t("Footer.googlePlay")}
+                  </p>
+                </div>
               </a>
-            ))}
+            )}
+
+            {footerData?.ios_app_link && (
+              <a
+                href={footerData?.ios_app_link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 bg-black text-white px-4 py-2 rounded-lg hover:bg-neutral-800 transition"
+              >
+                <FaApple className="text-xl" />
+                <div className="text-start leading-tight">
+                  <p className="text-[10px]">{t("Footer.downloadIOS")}</p>
+                  <p className="text-sm font-semibold">
+                    {t("Footer.appStore")}
+                  </p>
+                </div>
+              </a>
+            )}
           </div>
         </div>
       </div>

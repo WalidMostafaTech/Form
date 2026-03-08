@@ -37,7 +37,11 @@
   "Footer": {
     "companyLogo": "Company Logo",
     "links": "Links",
-    "socialMedia": "Social Media"
+    "socialMedia": "Social Media",
+    "downloadAndroid": "Get it on",
+    "downloadIOS": "Download on the",
+    "googlePlay": "Google Play",
+    "appStore": "App Store"
   },
 
   "NotificationsPopUp": {

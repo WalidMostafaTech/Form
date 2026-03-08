@@ -37,7 +37,11 @@
   "Footer": {
     "companyLogo": "شعار الشركة",
     "links": "روابط",
-    "socialMedia": "وسائل التواصل"
+    "socialMedia": "وسائل التواصل",
+    "downloadAndroid": "حمل على",
+    "downloadIOS": "تحميل من",
+    "googlePlay": "جوجل بلاي",
+    "appStore": "آب ستور"
   },
 
   "NotificationsPopUp": {
