@@ -132,18 +132,37 @@ input::-webkit-inner-spin-button {
   --sidebar-ring: oklch(0.556 0 0);
 }
 
+@font-face {
+  font-family: "Assistant";
+  src: url("/fonts/assistant_n4.9120912a469cad1cc292572851508ca49d12e768.woff2")
+    format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Assistant";
+  src: url("/fonts/assistant_n7.bf44452348ec8b8efa3aa3068825305886b1c83c.woff2")
+    format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
 @layer base {
   /* * {
     @apply outline-ring/50 border-border font-[inter];
   } */
 
   * {
-    @apply outline-ring/50 border-border font-[Open_Sans];
+    @apply outline-ring/50 border-border font-[Assistant];
   }
 
   body {
     @apply bg-background text-foreground;
-    font-family: "Open Sans", sans-serif;
+    /* font-family: "Open Sans", sans-serif; */
+    font-family: "Assistant", sans-serif;
   }
 
   .sectionPadding {
