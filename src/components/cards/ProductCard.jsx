@@ -1,81 +1,43 @@
 import { useNavigate } from "react-router";
 import { Button } from "../ui/button";
 import { GoHeartFill, GoHeart } from "react-icons/go";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { getFavorites, toggleFavorite } from "@/api/favoritesServices";
-import { useSelector } from "react-redux";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { toggleFavorite } from "@/api/favoritesServices";
 import useRequireAuth from "@/hooks/useRequireAuth";
+import { useEffect, useState } from "react";
 
-const ProductCard = ({ product, sale_type = "retail" }) => {
-  const { user } = useSelector((state) => state.user);
-
+const ProductCard = ({ product, sale_type = "retail", page = "" }) => {
   const navigate = useNavigate();
-
   const requireAuth = useRequireAuth();
-
   const queryClient = useQueryClient();
 
-  // جلب الـ favorites
-  const { data: favorites = [] } = useQuery({
-    queryKey: ["favorites"],
-    queryFn: getFavorites,
-    enabled: !!user,
-  });
+  // حالة محلية للقلب
+  const [isFavorited, setIsFavorited] = useState(false);
 
-  // تحقق إذا المنتج ده في الـ favorites
-  const isFavorited = favorites?.items?.some(
-    (fav) => fav.id === product.id,
-    // (fav) => fav.id === product.id && fav.sale_type === sale_type,
-  );
+  useEffect(() => {
+    if (product?.is_favorite !== undefined) {
+      setIsFavorited(product.is_favorite);
+    }
+  }, [product]);
 
+  // mutation لتبديل المفضلات على السيرفر
   const { mutate: handleToggle, isPending } = useMutation({
     mutationFn: toggleFavorite,
-    // تحديث مؤقت للـ cache قبل نجاح الـ mutation
-    onMutate: async ({ id, sale_type }) => {
-      await queryClient.cancelQueries({ queryKey: ["favorites"] });
-
-      const previousFavorites = queryClient.getQueryData(["favorites"]);
-
-      queryClient.setQueryData(["favorites"], (oldData) => {
-        if (!oldData) return oldData;
-
-        const alreadyFavorited = oldData.items?.some(
-          (fav) => fav.id === id,
-          // (fav) => fav.id === id && fav.sale_type === sale_type,
-        );
-
-        let newItems;
-        if (alreadyFavorited) {
-          // لو موجود بالفعل نحذفه
-          newItems = oldData.items.filter(
-            (fav) => !(fav.id === id),
-            // (fav) => !(fav.id === id && fav.sale_type === sale_type),
-          );
-        } else {
-          // لو مش موجود نضيفه
-          newItems = [...oldData.items, { id, sale_type }];
-        }
-
-        return { ...oldData, items: newItems };
-      });
-
-      return { previousFavorites }; // علشان الرجوع لو حصل خطأ
-    },
-    onError: (err, variables, context) => {
-      // لو حصل خطأ نرجع البيانات القديمة
-      if (context?.previousFavorites) {
-        queryClient.setQueryData(["favorites"], context.previousFavorites);
+    onSuccess: () => {
+      if (page === "favorites") {
+        queryClient.invalidateQueries({ queryKey: ["favorites"] });
       }
     },
-    onSettled: () => {
-      // بعد الانتهاء نعمل refetch للتأكد من تحديث السيرفر
-      queryClient.invalidateQueries({ queryKey: ["favorites"] });
+    onError: () => {
+      // لو حصل خطأ نرجع الحالة
+      setIsFavorited((prev) => !prev);
     },
   });
 
   const handleToggleFavorite = () => {
     requireAuth(() => {
-      handleToggle({ id: product.id, sale_type });
+      setIsFavorited((prev) => !prev); // تحديث محلي فورًا
+      handleToggle({ id: product.id, sale_type }); // تحديث على السيرفر
     });
   };
 
@@ -89,15 +51,17 @@ const ProductCard = ({ product, sale_type = "retail" }) => {
           className="w-full h-full object-cover"
         />
 
-        <button
-          onClick={handleToggleFavorite}
-          disabled={isPending}
-          className="absolute top-2 right-2 z-10 w-8 h-8 
+        {product.for_sale && (
+          <button
+            onClick={handleToggleFavorite}
+            disabled={isPending}
+            className="absolute top-2 right-2 z-10 w-8 h-8 
           flex items-center justify-center bg-white text-primary text-xl 
           rounded-full cursor-pointer hover:brightness-95 transition disabled:opacity-50"
-        >
-          {isFavorited ? <GoHeartFill /> : <GoHeart />}
-        </button>
+          >
+            {isFavorited ? <GoHeartFill /> : <GoHeart />}
+          </button>
+        )}
       </div>
 
       <h3 className="sm:text-lg font-bold line-clamp-1">{product.name}</h3>
@@ -120,14 +84,16 @@ const ProductCard = ({ product, sale_type = "retail" }) => {
         {product.description}
       </p>
 
-      <Button
-        onClick={() =>
-          navigate(`/product/${product.slug}?sale_type=${sale_type}`)
-        }
-        className={`mt-2`}
-      >
-        Add to Cart
-      </Button>
+      {product.for_sale && (
+        <Button
+          onClick={() =>
+            navigate(`/product/${product.slug}?sale_type=${sale_type}`)
+          }
+          className={`mt-2`}
+        >
+          Add to Cart
+        </Button>
+      )}
     </div>
   );
 };

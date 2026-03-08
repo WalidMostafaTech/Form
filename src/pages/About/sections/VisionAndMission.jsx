@@ -1,22 +1,23 @@
 import SectionTitle from "@/components/common/SectionTitle";
 import VisionAndMissionSkeleton from "@/components/Loading/SkeletonLoading/VisionAndMissionSkeleton";
 
-const VisionAndMission = ({ data, loading }) => {
+const VisionAndMission = ({ vision, mission, loading }) => {
   if (loading) return <VisionAndMissionSkeleton />;
-  if (!data) return null;
+
+  if (!vision || !mission) return null;
 
   const list = [
     {
       id: 1,
-      title: data?.vision?.title,
-      description: data?.vision?.description,
-      icon: data?.vision?.icon,
+      title: vision?.title,
+      description: vision?.description,
+      icon: vision?.icon,
     },
     {
       id: 2,
-      title: data?.mission?.title,
-      description: data?.mission?.description,
-      icon: data?.mission?.icon,
+      title: mission?.title,
+      description: mission?.description,
+      icon: mission?.icon,
     },
   ];
 

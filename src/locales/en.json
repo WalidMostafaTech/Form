@@ -31,7 +31,7 @@
   "ProfileSideBar": {
     "profile": "Profile",
     "orders": "Orders",
-    "favourites": "Favourites",
+    "favorites": "Favorites",
     "notifications": "Notifications",
     "logout": "Logout",
     "logoutConfirmTitle": "Are you sure you want to log out?",

@@ -1,40 +1,49 @@
 import SectionTitle from "@/components/common/SectionTitle";
 import OrderCard from "@/components/cards/OrderCard";
-import { getOrders } from "@/api/cartServices";
+import { getOrders, getOrdersStatus } from "@/api/cartServices";
 import { useQuery } from "@tanstack/react-query";
 import MyOrdersSkeleton from "@/components/Loading/SkeletonLoading/MyOrdersSkeleton";
-import { useState } from "react";
 import OptionSelector from "@/components/common/OptionSelector";
 import EmptyDataSection from "@/components/commonSections/EmptyDataSection";
+import { useSearchParams } from "react-router";
+import MainPagination from "@/components/common/MainPagination";
 
 const Orders = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const selectedStatus = searchParams.get("status") || "all";
+  const page = Number(searchParams.get("page")) || 1;
+
   const { data: orders, isLoading } = useQuery({
-    queryKey: ["orders"],
-    queryFn: getOrders,
+    queryKey: ["orders", selectedStatus, page],
+    queryFn: () => getOrders(selectedStatus, page),
   });
 
-  const isEmpty = !isLoading && (orders?.length === 0 || !orders);
+  const { data: ordersStatus } = useQuery({
+    queryKey: ["orders_status"],
+    queryFn: getOrdersStatus,
+  });
 
-  const [selectedStatus, setSelectedStatus] = useState("all");
+  const isEmpty = !isLoading && (orders?.items?.length === 0 || !orders);
 
   const filterList = [
     {
-      id: 1,
-      name: "all",
+      value: "all",
+      label: "all",
     },
-    {
-      id: 2,
-      name: "pending",
-    },
-    {
-      id: 3,
-      name: "completed",
-    },
-    {
-      id: 4,
-      name: "cancelled",
-    },
+    ...(ordersStatus?.map((item) => ({
+      value: item.value,
+      label: item.label,
+    })) || []),
   ];
+
+  const handleSelect = (item) => {
+    if (item.value === "all") {
+      setSearchParams({ page: 1 });
+    } else {
+      setSearchParams({ status: item.value, page: 1 });
+    }
+  };
 
   return (
     <div className="space-y-6">
@@ -43,9 +52,9 @@ const Orders = () => {
       <OptionSelector
         options={filterList}
         selected={selectedStatus}
-        onSelect={(item) => setSelectedStatus(item.name)}
-        getLabel={(item) => item.name}
-        getValue={(item) => item.name}
+        onSelect={handleSelect}
+        getLabel={(item) => item.label}
+        getValue={(item) => item.value}
       />
 
       {isLoading ? (
@@ -54,11 +63,23 @@ const Orders = () => {
         <EmptyDataSection msg={"no orders found"} />
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 gap-4">
-          {orders?.map((item) => (
+          {orders?.items?.map((item) => (
             <OrderCard key={item.id} item={item} />
           ))}
         </div>
       )}
+
+      <MainPagination
+        totalPages={orders?.meta?.last_page}
+        currentPage={page}
+        onPageChange={(newPage) => {
+          const params = {};
+          if (selectedStatus && selectedStatus !== "all")
+            params.status = selectedStatus;
+          params.page = newPage;
+          setSearchParams(params);
+        }}
+      />
     </div>
   );
 };

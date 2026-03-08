@@ -1,9 +1,6 @@
 import { TfiArrowCircleLeft, TfiArrowCircleRight } from "react-icons/tfi";
-import { useTranslation } from "react-i18next";
 
 const MainPagination = ({ totalPages, currentPage, onPageChange }) => {
-  const { t } = useTranslation();
-
   if (!totalPages || totalPages === 0 || totalPages === 1) return null;
 
   const handlePageClick = (page) => {
@@ -37,9 +34,9 @@ const MainPagination = ({ totalPages, currentPage, onPageChange }) => {
   const visiblePages = getVisiblePages();
 
   return (
-    <div className="pagination">
+    <div className="pagination mt-4">
       <button
-        aria-label={t("MainPagination.previous")}
+        aria-label="previous"
         onClick={() => handlePageClick(currentPage - 1)}
         disabled={currentPage === 1}
         className={`pagination-btn ${
@@ -54,7 +51,7 @@ const MainPagination = ({ totalPages, currentPage, onPageChange }) => {
       {visiblePages.map((page) => (
         <button
           key={page}
-          aria-label={`${t("MainPagination.page")} ${page}`}
+          aria-label={`go to page ${page}`}
           onClick={() => handlePageClick(page)}
           className={`pagination-btn ${
             currentPage === page
@@ -67,7 +64,7 @@ const MainPagination = ({ totalPages, currentPage, onPageChange }) => {
       ))}
 
       <button
-        aria-label={t("MainPagination.next")}
+        aria-label="next"
         onClick={() => handlePageClick(currentPage + 1)}
         disabled={currentPage === totalPages}
         className={`pagination-btn ${

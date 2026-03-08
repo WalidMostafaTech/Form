@@ -1,11 +1,10 @@
 import LanguageSwitcher from "./LanguageSwitcher";
 import { useDispatch, useSelector } from "react-redux";
 import ProfileSide from "./ProfileSide";
-import { Link } from "react-router";
-import { SlHandbag } from "react-icons/sl";
 import { HiMenuAlt3 } from "react-icons/hi";
 import NotificationsPopUp from "./NotificationsPopUp";
 import { openModal } from "@/store/modals/modalsSlice";
+import CartIcon from "./CartIcon";
 
 const HeaderActions = () => {
   const { user, loading } = useSelector((state) => state.user);
@@ -18,9 +17,7 @@ const HeaderActions = () => {
         <>
           <NotificationsPopUp />
 
-          <Link to="/cart">
-            <SlHandbag className="header_icon" />
-          </Link>
+          <CartIcon user={user} />
         </>
       )}
 

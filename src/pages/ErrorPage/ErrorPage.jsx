@@ -20,11 +20,7 @@ const ErrorPage = () => {
       </p>
 
       <div className="flex items-center justify-center flex-wrap gap-3 mt-4">
-        <Button
-          variant={`outline`}
-          className={`rounded-full`}
-          onClick={() => window.location.reload()}
-        >
+        <Button variant={`outline`} onClick={() => window.location.reload()}>
           {t("ErrorPage.reload")} <RxReload />
         </Button>
 

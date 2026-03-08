@@ -1,5 +1,6 @@
 import { getCategoriesHero, getProducts } from "@/api/productsServices";
 import ProductCard from "@/components/cards/ProductCard";
+import MainPagination from "@/components/common/MainPagination";
 import OptionSelector from "@/components/common/OptionSelector";
 import SectionTitle from "@/components/common/SectionTitle";
 import EmptyDataSection from "@/components/commonSections/EmptyDataSection";
@@ -14,10 +15,16 @@ const ProductsPage = ({ saleType, title = "Shop" }) => {
 
   const selectedCategory = Number(searchParams.get("category")) || 0;
 
+  const page = Number(searchParams.get("page")) || 1;
+
   const { data: products, isLoading } = useQuery({
-    queryKey: ["products", saleType, selectedCategory],
+    queryKey: ["products", saleType, selectedCategory, page],
     queryFn: () =>
-      getProducts({ category_id: selectedCategory, sale_type: saleType }),
+      getProducts({
+        category_id: selectedCategory,
+        sale_type: saleType,
+        page,
+      }),
   });
 
   const { data: categoryHero, isLoading: isLoadingHero } = useQuery({
@@ -54,7 +61,7 @@ const ProductsPage = ({ saleType, title = "Shop" }) => {
             if (category.id === "0") {
               setSearchParams({});
             } else {
-              setSearchParams({ category: category.id });
+              setSearchParams({ category: category.id, page: 1 });
             }
           }}
         />
@@ -74,6 +81,18 @@ const ProductsPage = ({ saleType, title = "Shop" }) => {
             ))}
           </div>
         )}
+
+        <MainPagination
+          totalPages={products?.meta?.last_page}
+          currentPage={page}
+          onPageChange={(newPage) => {
+            const params = {};
+            if (selectedCategory) params.category = selectedCategory;
+            params.page = newPage;
+
+            setSearchParams(params);
+          }}
+        />
       </section>
     </main>
   );

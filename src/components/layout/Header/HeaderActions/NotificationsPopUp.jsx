@@ -44,7 +44,7 @@ const NotificationsPopUp = () => {
       <PopoverTrigger asChild>
         <div className="relative">
           <FaRegBell className="header_icon" />
-          {unreadNotifications > 0 && (
+          {unreadNotifications && unreadNotifications > 0 && (
             <span
               className="absolute -top-2 -inset-e-1 bg-secondary text-primary text-sm rounded-full w-4 h-4 
             flex items-center justify-center"

@@ -1,5 +1,4 @@
 import React from "react";
-import bgImage from "@/assets/images/bg-img.jpg";
 import logo from "@/assets/images/logo.png";
 import {
   FaFacebookF,
@@ -61,7 +60,7 @@ const Footer = () => {
   return (
     <footer
       className="sectionPadding bg-center bg-cover relative"
-      style={{ backgroundImage: `url(${bgImage})` }}
+      style={{ backgroundImage: `url(${footerData?.footer_image})` }}
     >
       <div className="absolute inset-0 bg-primary/90" />
 
@@ -82,7 +81,7 @@ const Footer = () => {
           <h3 className="text-lg font-semibold uppercase">Links</h3>
           <ul className="space-y-2">
             {links.map((link) => (
-              <li key={link.name}>
+              <li key={link.name} title={link.name}>
                 <Link
                   to={link.href}
                   className="text-sm text-muted hover:text-secondary transition-colors"
@@ -102,7 +101,7 @@ const Footer = () => {
                 key={link.name}
                 href={link.url}
                 target="_blank"
-                className="hover:text-secondary transition-colors p-1 border rounded"
+                className="hover:text-secondary hover:border-secondary transition-colors p-1 border rounded"
               >
                 {link.icon}
               </a>

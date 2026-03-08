@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 
 const ProductImages = ({ images }) => {
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
+  const [activeIndex, setActiveIndex] = useState(0);
 
   const { lang } = useSelector((state) => state.language);
 
@@ -17,6 +18,7 @@ const ProductImages = ({ images }) => {
         dir={lang === "ar" ? "rtl" : "ltr"}
         modules={[Thumbs]}
         thumbs={{ swiper: thumbsSwiper }}
+        onSlideChange={(swiper) => setActiveIndex(swiper.activeIndex)}
         className="rounded-2xl overflow-hidden"
       >
         {images?.map((img, index) => (
@@ -45,7 +47,11 @@ const ProductImages = ({ images }) => {
               loading="lazy"
               src={img}
               alt="thumb"
-              className="w-full aspect-square object-cover rounded-xl cursor-pointer border"
+              className={`w-full aspect-square object-cover rounded-xl cursor-pointer border transition-all ${
+                index === activeIndex
+                  ? "border-2 border-primary"
+                  : "border-gray-200 opacity-70"
+              }`}
             />
           </SwiperSlide>
         ))}

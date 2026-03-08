@@ -51,13 +51,13 @@ const ProfileSideBar = () => {
       </NavLink>
 
       <NavLink
-        to={"/profile/favourites"}
+        to={"/profile/favorites"}
         end
         className="sideBarLink"
         onClick={() => setOpenSideBar(false)}
       >
         <FaRegHeart />
-        {t("ProfileSideBar.favourites")}
+        {t("ProfileSideBar.favorites")}
       </NavLink>
 
       <NavLink
@@ -85,7 +85,7 @@ const ProfileSideBar = () => {
   return (
     <>
       <aside className="hidden lg:block bg-card w-64 p-6 border-e ">
-        <div className="sticky top-20">{sideContent}</div>
+        <div className="sticky top-32">{sideContent}</div>
       </aside>
 
       <Sheet open={openSideBar} onOpenChange={setOpenSideBar}>

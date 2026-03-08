@@ -1,8 +1,13 @@
 import api from "./api";
 
-export const getFavorites = async () => {
-  const { data } = await api.get("/favorites");
-  return data?.data || [];
+export const getFavorites = async (page = 1) => {
+  const { data } = await api.get("/favorites", {
+    params: {
+      page,
+    },
+  });
+
+  return data?.data;
 };
 
 export const toggleFavorite = async ({ id, sale_type }) => {

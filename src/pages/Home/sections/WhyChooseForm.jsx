@@ -1,4 +1,3 @@
-import bgImage from "@/assets/images/bg-img.jpg";
 import WhyChooseFormSkeleton from "@/components/Loading/SkeletonLoading/WhyChooseFormSkeleton";
 
 const WhyChooseForm = ({ data, loading }) => {
@@ -8,7 +7,7 @@ const WhyChooseForm = ({ data, loading }) => {
   return (
     <section
       className="sectionPadding bg-center bg-cover relative"
-      style={{ backgroundImage: `url(${bgImage})` }}
+      style={{ backgroundImage: `url(${data?.image})` }}
     >
       <div className="absolute inset-0 bg-primary/80" />
 

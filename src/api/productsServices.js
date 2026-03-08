@@ -1,14 +1,15 @@
 import api from "./api";
 
-export const getProducts = async ({ category_id, sale_type }) => {
+export const getProducts = async ({ category_id, sale_type, page = 1 }) => {
   const { data } = await api.get(`/products`, {
     params: {
       category_id,
       sale_type,
+      page,
     },
   });
 
-  return data?.data || [];
+  return data?.data;
 };
 
 export const getProduct = async ({ slug, sale_type }) => {
@@ -30,5 +31,3 @@ export const getProductsHero = async () => {
 
   return data?.data || [];
 };
-
-

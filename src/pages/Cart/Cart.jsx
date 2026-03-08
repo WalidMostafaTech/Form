@@ -29,6 +29,7 @@ const Cart = () => {
     onSuccess: () => {
       toast.success("Order confirmed successfully!");
       queryClient.invalidateQueries({ queryKey: ["cart"] });
+      queryClient.invalidateQueries({ queryKey: ["cart_count"] });
       textareaRef.current.value = "";
     },
     onError: () => {},

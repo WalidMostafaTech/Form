@@ -44,3 +44,8 @@ export const getBestSelling = async () => {
   const { data } = await api.get(`/products/best-selling`);
   return data?.data || [];
 };
+
+export const getStrips = async () => {
+  const { data } = await api.get(`/strips`);
+  return data?.data || [];
+};

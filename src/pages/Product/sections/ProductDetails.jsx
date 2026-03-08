@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FiMinus, FiPlus } from "react-icons/fi";
 import { GoHeartFill, GoHeart } from "react-icons/go";
 import {
@@ -8,86 +8,48 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { getFavorites, toggleFavorite } from "@/api/favoritesServices";
-import { useNavigate, useSearchParams } from "react-router";
-import { useSelector } from "react-redux";
-import useRequireAuth from "@/hooks/useRequireAuth";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { toggleFavorite } from "@/api/favoritesServices";
 import { addToCart } from "@/api/cartServices";
+import { useNavigate, useSearchParams } from "react-router";
+import useRequireAuth from "@/hooks/useRequireAuth";
 import { toast } from "sonner";
 import OptionSelector from "@/components/common/OptionSelector";
 
 const ProductDetails = ({ product }) => {
-  const { user } = useSelector((state) => state.user);
-
   const navigate = useNavigate();
-
   const requireAuth = useRequireAuth();
 
   const [quantity, setQuantity] = useState(1);
   const [selectedSizeId, setSelectedSizeId] = useState(null);
+  const [isFavorited, setIsFavorited] = useState(false);
+
+  useEffect(() => {
+    if (product?.is_favorite !== undefined) {
+      setIsFavorited(product.is_favorite);
+    }
+  }, [product]);
 
   const items = product?.items ?? [];
   const selectedSize =
     items.find((item) => item.id === selectedSizeId) ?? items[0];
 
-  const queryClient = useQueryClient();
   const [searchParams] = useSearchParams();
   const sale_type = searchParams.get("sale_type") || "retail";
 
-  // جلب الـ favorites
-  const { data: favorites = [] } = useQuery({
-    queryKey: ["favorites"],
-    queryFn: getFavorites,
-    enabled: !!user,
-  });
-
-  // تحقق إذا المنتج ده في الـ favorites مع الـ sale_type
-  const isFavorited = favorites?.items?.some(
-    (fav) => fav.id === product.id && fav.sale_type === sale_type,
-  );
-
-  // mutation للـ toggle
-  const { mutate: handleToggle, isPending } = useMutation({
-    mutationFn: toggleFavorite,
-    onMutate: async ({ id, sale_type }) => {
-      await queryClient.cancelQueries({ queryKey: ["favorites"] });
-
-      const previousFavorites = queryClient.getQueryData(["favorites"]);
-
-      queryClient.setQueryData(["favorites"], (oldData) => {
-        if (!oldData) return oldData;
-
-        const alreadyFavorited = oldData.items?.some(
-          (fav) => fav.id === id && fav.sale_type === sale_type,
-        );
-
-        let newItems;
-        if (alreadyFavorited) {
-          newItems = oldData.items.filter(
-            (fav) => !(fav.id === id && fav.sale_type === sale_type),
-          );
-        } else {
-          newItems = [...oldData.items, { id, sale_type }];
-        }
-
-        return { ...oldData, items: newItems };
-      });
-
-      return { previousFavorites };
-    },
-    onError: (err, variables, context) => {
-      if (context?.previousFavorites) {
-        queryClient.setQueryData(["favorites"], context.previousFavorites);
-      }
-    },
-    onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ["favorites"] });
-    },
-  });
-
+  const queryClient = useQueryClient();
   const [actionType, setActionType] = useState(null);
 
+  // Mutation لتبديل المفضلات
+  const { mutate: handleToggle, isPending } = useMutation({
+    mutationFn: toggleFavorite,
+    onError: () => {
+      toast.error("Failed to toggle favorite!");
+      setIsFavorited((prev) => !prev); // إعادة الحالة لو حصل خطأ
+    },
+  });
+
+  // Mutation لإضافة المنتج للسلة
   const { mutate: addProductToCart, isPending: isPendingCart } = useMutation({
     mutationFn: addToCart,
     onSuccess: () => {
@@ -96,6 +58,8 @@ const ProductDetails = ({ product }) => {
       if (actionType === "buy") {
         navigate(`/cart?sale_type=${sale_type}`);
       }
+
+      queryClient.invalidateQueries({ queryKey: ["cart_count"] });
     },
     onError: () => {
       toast.error("Failed to add product to cart!");
@@ -107,7 +71,8 @@ const ProductDetails = ({ product }) => {
 
   const handleToggleFavorite = () => {
     requireAuth(() => {
-      handleToggle({ id: product.id, sale_type });
+      setIsFavorited((prev) => !prev); // تحديث محلي فورًا
+      handleToggle({ id: product.id, sale_type }); // تحديث على السيرفر
     });
   };
 
@@ -140,24 +105,8 @@ const ProductDetails = ({ product }) => {
       {/* Title */}
       <h2 className="text-3xl font-bold">{product?.name}</h2>
 
-      {/* Weights */}
+      {/* Weights / Sizes */}
       <div className="flex items-center justify-between flex-wrap gap-2">
-        {/* <ul className="flex items-center flex-wrap gap-2">
-          {product?.items?.map((size, index) => (
-            <li
-              key={index}
-              className={`text-sm px-4 py-2 cursor-pointer rounded-md border transition ${
-                selectedSize?.id === size.id
-                  ? "bg-primary text-white"
-                  : "bg-primary-foreground hover:bg-primary/10"
-              }`}
-              onClick={() => setSelectedSizeId(size.id)}
-            >
-              {size.weight} {size.weight_unit}
-            </li>
-          ))}
-        </ul> */}
-
         <OptionSelector
           options={product?.items}
           selected={selectedSize?.id}
@@ -171,21 +120,23 @@ const ProductDetails = ({ product }) => {
       </div>
 
       {/* Quantity */}
-      <div className="flex items-center gap-2 border rounded w-fit">
-        <button
-          onClick={() => setQuantity((prev) => Math.max(1, prev - 1))}
-          className="w-8 h-8 flex items-center justify-center hover:bg-gray-100 transition cursor-pointer"
-        >
-          <FiMinus />
-        </button>
-        <span className="min-w-8 text-center">{quantity}</span>
-        <button
-          onClick={() => setQuantity((prev) => prev + 1)}
-          className="w-8 h-8 flex items-center justify-center hover:bg-gray-100 transition cursor-pointer"
-        >
-          <FiPlus />
-        </button>
-      </div>
+      {product.for_sale && (
+        <div className="flex items-center gap-2 border rounded w-fit">
+          <button
+            onClick={() => setQuantity((prev) => Math.max(1, prev - 1))}
+            className="w-8 h-8 flex items-center justify-center hover:bg-gray-100 transition cursor-pointer"
+          >
+            <FiMinus />
+          </button>
+          <span className="min-w-8 text-center">{quantity}</span>
+          <button
+            onClick={() => setQuantity((prev) => prev + 1)}
+            className="w-8 h-8 flex items-center justify-center hover:bg-gray-100 transition cursor-pointer"
+          >
+            <FiPlus />
+          </button>
+        </div>
+      )}
 
       {/* Description */}
       <div>
@@ -197,38 +148,42 @@ const ProductDetails = ({ product }) => {
       </div>
 
       {/* Buttons */}
-      <div className="flex flex-wrap gap-2">
-        <div className="flex-1 flex items-center gap-2">
+      {product.for_sale && (
+        <div className="flex flex-wrap gap-2">
+          <div className="flex-1 flex items-center gap-2">
+            <Button
+              variant="outline"
+              onClick={handleToggleFavorite}
+              disabled={isPending}
+            >
+              {isFavorited ? <GoHeartFill /> : <GoHeart />}
+            </Button>
+            <Button
+              onClick={handleAddToCart}
+              className="flex-1"
+              variant="outline"
+              disabled={isPendingCart}
+            >
+              {actionType === "cart" && isPendingCart
+                ? "Adding..."
+                : "ADD TO CART"}
+            </Button>
+          </div>
+
           <Button
-            variant="outline"
-            onClick={handleToggleFavorite}
-            disabled={isPending}
-          >
-            {isFavorited ? <GoHeartFill /> : <GoHeart />}
-          </Button>
-          <Button
-            onClick={handleAddToCart}
+            onClick={handleBuyNow}
             className="flex-1"
-            variant="outline"
             disabled={isPendingCart}
           >
-            {actionType === "cart" && isPendingCart
-              ? "Adding..."
-              : "ADD TO CART"}
+            {actionType === "buy" && isPendingCart
+              ? "Processing..."
+              : "BUY NOW"}
           </Button>
         </div>
-
-        <Button
-          onClick={handleBuyNow}
-          className="flex-1"
-          disabled={isPendingCart}
-        >
-          {actionType === "buy" && isPendingCart ? "Processing..." : "BUY NOW"}
-        </Button>
-      </div>
+      )}
 
       {/* Accordion */}
-      <Accordion type="multiple" collapsible className="border-y">
+      <Accordion type="multiple" collapsible="true" className="border-y">
         <AccordionItem value="shipping">
           <AccordionTrigger className={`cursor-pointer`}>
             Shipping and dispatch information

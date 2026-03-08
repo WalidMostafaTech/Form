@@ -11,14 +11,20 @@ import {
 
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
+import MainPagination from "@/components/common/MainPagination";
+import { useSearchParams } from "react-router";
 
 const Notifications = () => {
   const { t } = useTranslation();
   const queryClient = useQueryClient();
 
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const page = Number(searchParams.get("page")) || 1;
+
   const { data: notifications, isLoading } = useQuery({
-    queryKey: ["notifications"],
-    queryFn: getNotifications,
+    queryKey: ["notifications", page],
+    queryFn: () => getNotifications(page),
   });
 
   const isEmpty =
@@ -32,12 +38,16 @@ const Notifications = () => {
     },
   });
 
+  const allIsRead =
+    notifications?.items?.length === 0 ||
+    notifications?.items?.every((item) => item.read_at === 1);
+
   return (
     <div>
       <div className="flex items-start justify-between">
         <SectionTitle title={t("notifications.title")} />
 
-        {notifications?.items?.length > 0 && (
+        {allIsRead && (
           <Button disabled={isPending} onClick={() => markAllAsRead()}>
             {isPending
               ? t("notifications.loading")
@@ -60,6 +70,14 @@ const Notifications = () => {
           ))}
         </div>
       )}
+
+      <MainPagination
+        totalPages={notifications?.meta?.last_page}
+        currentPage={page}
+        onPageChange={(newPage) => {
+          setSearchParams({ page: newPage });
+        }}
+      />
     </div>
   );
 };

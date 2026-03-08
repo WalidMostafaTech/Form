@@ -28,6 +28,7 @@ const DeleteCartItemModal = () => {
     mutationFn: removeFromCart,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["cart"] });
+      queryClient.invalidateQueries({ queryKey: ["cart_count"] });
       toast.success("Item removed from cart.");
       onClose();
     },

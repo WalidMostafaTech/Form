@@ -52,9 +52,9 @@ const ProfileSide = ({ user, loading }) => {
               Orders
             </DropdownMenuItem>
 
-            <DropdownMenuItem onClick={() => navigate("/profile/favourites")}>
+            <DropdownMenuItem onClick={() => navigate("/profile/favorites")}>
               <FaRegHeart />
-              Favourites
+              Favorites
             </DropdownMenuItem>
 
             <DropdownMenuSeparator />

@@ -36,8 +36,25 @@ export const confirmOrder = async (formData) => {
   return data?.data || null;
 };
 
-export const getOrders = async () => {
-  const { data } = await api.get(`/orders/my-orders`);
+export const getOrders = async (status, page = 1) => {
+  const url =
+    status && status !== "all"
+      ? `/orders/my-orders?status=${status}&page=${page}`
+      : `/orders/my-orders?page=${page}`;
+
+  const { data } = await api.get(url);
+
+  return data?.data || [];
+};
+
+export const getOrdersStatus = async () => {
+  const { data } = await api.get(`/orders/statuses`);
+
+  return data?.data || [];
+};
+
+export const getCartItemsCount = async () => {
+  const { data } = await api.get(`/orders/cart-items-count`);
 
   return data?.data || [];
 };

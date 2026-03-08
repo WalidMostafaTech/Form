@@ -24,8 +24,12 @@ const About = () => {
       />
 
       <OurStory />
-      <VisionAndMission data={aboutPage} loading={isLoading} />
-      <KnowMore />
+      <VisionAndMission
+        vision={aboutPage?.vision}
+        mission={aboutPage?.mission}
+        loading={isLoading}
+      />
+      <KnowMore data={aboutPage?.to_know_more} loading={isLoading} />
       <OurService />
       <WhatTheySay />
     </main>
