@@ -8,8 +8,11 @@ import { Autoplay, Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 import LocationSkeleton from "@/components/Loading/SkeletonLoading/LocationSkeleton";
+import { useTranslation } from "react-i18next";
 
 const Location = () => {
+  const { t } = useTranslation();
+
   const { data: locationSliders = [], isLoading } = useQuery({
     queryKey: ["locationSliders"],
     queryFn: getLocationSliders,
@@ -48,7 +51,7 @@ const Location = () => {
 
                 <a href={item.link} target="_blank" rel="noreferrer">
                   <Button variant="outline" className="min-w-32">
-                    Visit
+                    {t("Visit")}
                   </Button>
                 </a>
               </div>

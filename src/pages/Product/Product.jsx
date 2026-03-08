@@ -27,7 +27,7 @@ const Product = () => {
     <main>
       <PageBanner
         image={productHero?.image}
-        title="Shop"
+        title={product?.name}
         description={productHero?.description}
         html={true}
         loading={isLoadingHero}

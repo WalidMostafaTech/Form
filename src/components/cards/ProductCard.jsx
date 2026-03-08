@@ -5,11 +5,13 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toggleFavorite } from "@/api/favoritesServices";
 import useRequireAuth from "@/hooks/useRequireAuth";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 const ProductCard = ({ product, sale_type = "retail", page = "" }) => {
   const navigate = useNavigate();
   const requireAuth = useRequireAuth();
   const queryClient = useQueryClient();
+  const { t } = useTranslation();
 
   // حالة محلية للقلب
   const [isFavorited, setIsFavorited] = useState(false);
@@ -74,9 +76,13 @@ const ProductCard = ({ product, sale_type = "retail", page = "" }) => {
         </span>
 
         <span className="text-sm sm:text-base text-primary font-bold flex gap-1 items-center flex-wrap">
-          <span>{product.min_price} AED</span>
+          <span>
+            {product.min_price} {t("currency")}
+          </span>
           <strong>-</strong>
-          <span>{product.max_price} AED</span>
+          <span>
+            {product.max_price} {t("currency")}
+          </span>
         </span>
       </div>
 
@@ -91,7 +97,7 @@ const ProductCard = ({ product, sale_type = "retail", page = "" }) => {
           }
           className={`mt-2`}
         >
-          Add to Cart
+          {t("add_to_cart")}
         </Button>
       )}
     </div>

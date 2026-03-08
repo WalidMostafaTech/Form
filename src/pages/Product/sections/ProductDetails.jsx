@@ -15,14 +15,18 @@ import { useNavigate, useSearchParams } from "react-router";
 import useRequireAuth from "@/hooks/useRequireAuth";
 import { toast } from "sonner";
 import OptionSelector from "@/components/common/OptionSelector";
+import { useTranslation } from "react-i18next";
 
 const ProductDetails = ({ product }) => {
   const navigate = useNavigate();
   const requireAuth = useRequireAuth();
+  const queryClient = useQueryClient();
+  const { t } = useTranslation();
 
   const [quantity, setQuantity] = useState(1);
   const [selectedSizeId, setSelectedSizeId] = useState(null);
   const [isFavorited, setIsFavorited] = useState(false);
+  const [actionType, setActionType] = useState(null);
 
   useEffect(() => {
     if (product?.is_favorite !== undefined) {
@@ -37,14 +41,11 @@ const ProductDetails = ({ product }) => {
   const [searchParams] = useSearchParams();
   const sale_type = searchParams.get("sale_type") || "retail";
 
-  const queryClient = useQueryClient();
-  const [actionType, setActionType] = useState(null);
-
   // Mutation لتبديل المفضلات
   const { mutate: handleToggle, isPending } = useMutation({
     mutationFn: toggleFavorite,
     onError: () => {
-      toast.error("Failed to toggle favorite!");
+      toast.error(t("productDetails.favoriteError"));
       setIsFavorited((prev) => !prev); // إعادة الحالة لو حصل خطأ
     },
   });
@@ -53,7 +54,7 @@ const ProductDetails = ({ product }) => {
   const { mutate: addProductToCart, isPending: isPendingCart } = useMutation({
     mutationFn: addToCart,
     onSuccess: () => {
-      toast.success("Product added to cart successfully!");
+      toast.success(t("productDetails.cartSuccess"));
 
       if (actionType === "buy") {
         navigate(`/cart?sale_type=${sale_type}`);
@@ -62,7 +63,7 @@ const ProductDetails = ({ product }) => {
       queryClient.invalidateQueries({ queryKey: ["cart_count"] });
     },
     onError: () => {
-      toast.error("Failed to add product to cart!");
+      toast.error(t("productDetails.cartError"));
     },
     onSettled: () => {
       setActionType(null);
@@ -115,7 +116,7 @@ const ProductDetails = ({ product }) => {
         />
 
         <span className="text-2xl font-bold text-primary bg-primary-foreground rounded-md px-2 py-1">
-          {selectedSize?.price} AED
+          {selectedSize?.price} {t("currency")}
         </span>
       </div>
 
@@ -140,7 +141,9 @@ const ProductDetails = ({ product }) => {
 
       {/* Description */}
       <div>
-        <h3 className="font-semibold mb-2">Description</h3>
+        <h3 className="font-semibold mb-2">
+          {t("productDetails.description")}
+        </h3>
         <div
           className="text-muted-foreground"
           dangerouslySetInnerHTML={{ __html: product?.description }}
@@ -165,8 +168,8 @@ const ProductDetails = ({ product }) => {
               disabled={isPendingCart}
             >
               {actionType === "cart" && isPendingCart
-                ? "Adding..."
-                : "ADD TO CART"}
+                ? t("productDetails.adding")
+                : t("productDetails.addToCart")}
             </Button>
           </div>
 
@@ -176,8 +179,8 @@ const ProductDetails = ({ product }) => {
             disabled={isPendingCart}
           >
             {actionType === "buy" && isPendingCart
-              ? "Processing..."
-              : "BUY NOW"}
+              ? t("productDetails.processing")
+              : t("productDetails.buyNow")}
           </Button>
         </div>
       )}
@@ -186,7 +189,7 @@ const ProductDetails = ({ product }) => {
       <Accordion type="multiple" collapsible="true" className="border-y">
         <AccordionItem value="shipping">
           <AccordionTrigger className={`cursor-pointer`}>
-            Shipping and dispatch information
+            {t("productDetails.shipping")}
           </AccordionTrigger>
           <AccordionContent>
             <div
@@ -200,7 +203,7 @@ const ProductDetails = ({ product }) => {
 
         <AccordionItem value="details">
           <AccordionTrigger className={`cursor-pointer`}>
-            More details
+            {t("productDetails.details")}
           </AccordionTrigger>
           <AccordionContent>
             <div
@@ -214,7 +217,7 @@ const ProductDetails = ({ product }) => {
 
         <AccordionItem value="notes">
           <AccordionTrigger className={`cursor-pointer`}>
-            Additional notes
+            {t("productDetails.notes")}
           </AccordionTrigger>
           <AccordionContent>
             <div

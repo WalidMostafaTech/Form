@@ -4,7 +4,7 @@ import PhoneInputField from "@/components/form/PhoneInputField";
 import { Button } from "@/components/ui/button";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { FiUser, FiMail, FiPhone, FiLock, FiMapPin } from "react-icons/fi";
+import { FiUser, FiMail, FiLock } from "react-icons/fi";
 import { z } from "zod";
 import { isValidPhoneNumber } from "react-phone-number-input";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -17,32 +17,36 @@ import FormError from "@/components/form/FormError";
 import { useDispatch, useSelector } from "react-redux";
 import { getUser } from "@/store/user/userActions";
 import { openModal } from "@/store/modals/modalsSlice";
-
-const registerSchema = z
-  .object({
-    name: z.string().min(3, "Name is too short"),
-    email: z.string().email("Invalid email address"),
-    phone: z.string().refine((value) => isValidPhoneNumber(value || ""), {
-      message: "Invalid phone number",
-    }),
-    emirate_id: z.string().min(1, "Please select your emirate"),
-    password: z.string().min(6, "Password must be at least 6 characters"),
-    password_confirmation: z.string().min(6, "Confirm your password"),
-    terms_accepted: z.boolean().refine((val) => val === true, {
-      message: "You must accept terms",
-    }),
-  })
-  .refine((data) => data.password === data.password_confirmation, {
-    message: "Passwords do not match",
-    path: ["password_confirmation"],
-  });
+import { useTranslation } from "react-i18next";
 
 const RegisterCustomer = () => {
+  const { t } = useTranslation();
   const [imagePreview, setImagePreview] = useState(null);
   const [imageFile, setImageFile] = useState(null);
   const fileInputRef = useRef(null);
 
   const navigate = useNavigate();
+
+  const registerSchema = z
+    .object({
+      name: z.string().min(3, t("registerCustomer.nameTooShort")),
+      email: z.string().email(t("registerCustomer.invalidEmail")),
+      phone: z.string().refine((value) => isValidPhoneNumber(value || ""), {
+        message: t("registerCustomer.invalidPhone"),
+      }),
+      emirate_id: z.string().min(1, t("registerCustomer.selectEmirate")),
+      password: z.string().min(6, t("registerCustomer.passwordMin")),
+      password_confirmation: z
+        .string()
+        .min(6, t("registerCustomer.confirmPassword")),
+      terms_accepted: z.boolean().refine((val) => val === true, {
+        message: t("registerCustomer.termsRequired"),
+      }),
+    })
+    .refine((data) => data.password === data.password_confirmation, {
+      message: t("registerCustomer.passwordsMismatch"),
+      path: ["password_confirmation"],
+    });
 
   const {
     handleSubmit,
@@ -87,12 +91,8 @@ const RegisterCustomer = () => {
       formData.append(key, payload[key]);
     });
 
-    // ابعت 1 بدل true
     formData.append("terms_accepted", 1);
-
-    // ابعت نوع المستخدم
     formData.append("type", "user");
-
     formData.append("source", "web");
 
     if (imageFile) {
@@ -106,8 +106,8 @@ const RegisterCustomer = () => {
 
   return (
     <AuthContainer
-      title="Create Customer Account"
-      description="Please enter your details to access your account"
+      title={t("registerCustomer.createAccount")}
+      description={t("registerCustomer.enterDetails")}
     >
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
         <div className="flex flex-col items-center justify-center">
@@ -147,7 +147,7 @@ const RegisterCustomer = () => {
             htmlFor="image"
             className="font-semibold text-sm mt-1 cursor-pointer"
           >
-            Upload your image
+            {t("registerCustomer.uploadImage")}
           </label>
         </div>
 
@@ -158,8 +158,8 @@ const RegisterCustomer = () => {
           render={({ field }) => (
             <MainInput
               {...field}
-              label="Full Name"
-              placeholder="Enter your full name"
+              label={t("registerCustomer.fullName")}
+              placeholder={t("registerCustomer.fullNamePlaceholder")}
               icon={<FiUser size={18} />}
               error={errors.name?.message}
             />
@@ -174,8 +174,8 @@ const RegisterCustomer = () => {
             <MainInput
               {...field}
               type="email"
-              label="Email Address"
-              placeholder="example@example.com"
+              label={t("registerCustomer.email")}
+              placeholder={t("registerCustomer.emailPlaceholder")}
               icon={<FiMail size={18} />}
               error={errors.email?.message}
             />
@@ -189,8 +189,8 @@ const RegisterCustomer = () => {
           render={({ field }) => (
             <PhoneInputField
               {...field}
-              label="Phone"
-              placeholder="Enter phone number"
+              label={t("registerCustomer.phone")}
+              placeholder={t("registerCustomer.phonePlaceholder")}
               error={errors.phone?.message}
             />
           )}
@@ -208,8 +208,8 @@ const RegisterCustomer = () => {
                 label: item.name,
               }))}
               type="select"
-              label="Your Emirate"
-              placeholder="Select your emirate"
+              label={t("registerCustomer.emirate")}
+              placeholder={t("registerCustomer.selectEmirate")}
               error={errors.emirate_id?.message}
             />
           )}
@@ -223,7 +223,7 @@ const RegisterCustomer = () => {
             <MainInput
               {...field}
               type="password"
-              label="Password"
+              label={t("registerCustomer.password")}
               placeholder="************"
               icon={<FiLock size={18} />}
               error={errors.password?.message}
@@ -239,7 +239,7 @@ const RegisterCustomer = () => {
             <MainInput
               {...field}
               type="password"
-              label="Confirm Password"
+              label={t("registerCustomer.confirmPassword")}
               placeholder="************"
               icon={<FiLock size={18} />}
               error={errors.password_confirmation?.message}
@@ -263,7 +263,7 @@ const RegisterCustomer = () => {
                   htmlFor="terms"
                   className="text-sm font-medium leading-none flex items-center gap-1"
                 >
-                  I agree to the{" "}
+                  {t("registerCustomer.agreeTo")}{" "}
                   <span
                     className="text-primary cursor-pointer hover:underline"
                     onClick={(e) => {
@@ -271,7 +271,7 @@ const RegisterCustomer = () => {
                       dispatch(openModal({ modalName: "termsModal" }));
                     }}
                   >
-                    Terms and Conditions
+                    {t("registerCustomer.termsAndConditions")}
                   </span>
                 </label>
               </div>
@@ -286,12 +286,17 @@ const RegisterCustomer = () => {
         </div>
 
         <Button type="submit" className="w-full" disabled={isPending}>
-          {isPending ? "Creating..." : "Create Account"}
+          {isPending
+            ? t("registerCustomer.creating")
+            : t("registerCustomer.createAccount")}
         </Button>
 
         {error && (
           <FormError
-            errorMsg={error?.response?.data?.message || "Something went wrong"}
+            errorMsg={
+              error?.response?.data?.message ||
+              t("registerCustomer.somethingWentWrong")
+            }
           />
         )}
       </form>

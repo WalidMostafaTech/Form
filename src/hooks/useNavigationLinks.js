@@ -1,6 +1,8 @@
 import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 const useNavigationLinks = () => {
+  const { t } = useTranslation();
   const { user } = useSelector((state) => state.user);
   const { categories } = useSelector((state) => state.categories);
 
@@ -8,33 +10,33 @@ const useNavigationLinks = () => {
 
   if (!user) {
     wholesaleLink = {
-      name: "Wholesale",
+      name: t("NavigationLinks.wholesale"),
       href: "/register/company",
       items: [],
     };
   } else if (user.type === "company") {
     wholesaleLink = {
-      name: "Wholesale",
+      name: t("NavigationLinks.wholesale"),
       href: "/wholesale",
       items: [],
     };
   }
 
   const links = [
-    { name: "Home", href: "/", items: [] },
-    { name: "About", href: "/about", items: [] },
+    { name: t("NavigationLinks.home"), href: "/", items: [] },
+    { name: t("NavigationLinks.about"), href: "/about", items: [] },
     {
-      name: "Shop",
+      name: t("NavigationLinks.shop"),
       href: "/shop",
       items:
         categories?.map((c) => ({
-          name: c.name,
+          name: c.name, // لو عندك ترجمة للفئات، ممكن تحل هنا
           href: `/shop?category=${c.id}`,
         })) || [],
     },
     ...(wholesaleLink ? [wholesaleLink] : []),
-    { name: "Location", href: "/location", items: [] },
-    { name: "Contact Us", href: "/contact", items: [] },
+    { name: t("NavigationLinks.location"), href: "/location", items: [] },
+    { name: t("NavigationLinks.contact"), href: "/contact", items: [] },
   ];
 
   return links;

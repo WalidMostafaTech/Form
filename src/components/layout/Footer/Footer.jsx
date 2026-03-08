@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import logo from "@/assets/images/logo.png";
 import {
   FaFacebookF,
@@ -8,15 +9,17 @@ import {
   FaTelegramPlane,
 } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
+import { RiInstagramFill } from "react-icons/ri";
+import { IoLogoWhatsapp } from "react-icons/io5";
 import { Link } from "react-router";
 import { useQuery } from "@tanstack/react-query";
 import { getFooter } from "@/api/mainServices";
-import { RiInstagramFill } from "react-icons/ri";
-import { IoLogoWhatsapp } from "react-icons/io5";
 import FooterSkeleton from "@/components/Loading/SkeletonLoading/FooterSkeleton";
 import useNavigationLinks from "@/hooks/useNavigationLinks";
 
 const Footer = () => {
+  const { t } = useTranslation();
+
   const { data: footerData, isLoading } = useQuery({
     queryKey: ["footer"],
     queryFn: getFooter,
@@ -70,7 +73,7 @@ const Footer = () => {
             <img
               loading="lazy"
               src={footerData?.footer_logo || logo}
-              alt="Company Logo"
+              alt={t("Footer.companyLogo")}
               className="w-full h-full object-contain"
             />
           </div>
@@ -78,7 +81,9 @@ const Footer = () => {
         </div>
 
         <div className="flex flex-col items-center gap-4 text-center">
-          <h3 className="text-lg font-semibold uppercase">Links</h3>
+          <h3 className="text-lg font-semibold uppercase">
+            {t("Footer.links")}
+          </h3>
           <ul className="space-y-2">
             {links.map((link) => (
               <li key={link.name} title={link.name}>
@@ -94,7 +99,9 @@ const Footer = () => {
         </div>
 
         <div className="flex flex-col items-center gap-4 text-center">
-          <h3 className="text-lg font-semibold uppercase">Social Media</h3>
+          <h3 className="text-lg font-semibold uppercase">
+            {t("Footer.socialMedia")}
+          </h3>
           <div className="grid grid-cols-4 gap-2">
             {socialLinks.map((link) => (
               <a

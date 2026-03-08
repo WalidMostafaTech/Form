@@ -1,43 +1,45 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
+
 import CheckEmail from "./sections/CheckEmail";
 import OTP from "./sections/OTP";
 import ResetPassword from "./sections/ResetPassword";
 import AuthContainer from "@/components/form/AuthContainer";
 
 const ForgotPassword = () => {
+  const { t } = useTranslation();
+
   const steps = [
     {
       id: 1,
-      title: "Forget Your Password",
-      description: "Enter your email to receive a password reset link.",
+      title: t("ForgotPassword.step1Title"),
+      description: t("ForgotPassword.step1Description"),
     },
     {
       id: 2,
-      title: "Check Your Messages",
-      description: "Enter the OTP sent to your email to verify your identity.",
+      title: t("ForgotPassword.step2Title"),
+      description: t("ForgotPassword.step2Description"),
     },
     {
       id: 3,
-      title: "Reset Your Password",
-      description: "Create a new password for your account.",
+      title: t("ForgotPassword.step3Title"),
+      description: t("ForgotPassword.step3Description"),
     },
   ];
 
   const [step, setStep] = useState(1);
+  const [parentData, setParentData] = useState({});
 
   const goNext = () => {
     if (step >= steps.length) return;
     setStep((prev) => prev + 1);
   };
 
-  const [parentData, setParentData] = useState({});
-
   return (
     <AuthContainer
       title={steps.find((s) => s.id === step)?.title}
       description={steps.find((s) => s.id === step)?.description}
     >
-      {/* Step Content */}
       {step === 1 && (
         <CheckEmail
           setParentData={setParentData}

@@ -9,16 +9,18 @@ import {
 import { FaRegUser } from "react-icons/fa6";
 import { FiShoppingCart } from "react-icons/fi";
 import { IoIosLogOut } from "react-icons/io";
+import { FaRegHeart } from "react-icons/fa";
 import UserAvatar from "@/components/common/UserAvatar";
 import { Link, useNavigate } from "react-router";
 import { Skeleton } from "@/components/ui/skeleton";
 import { openModal } from "@/store/modals/modalsSlice";
 import { useDispatch } from "react-redux";
-import { FaRegHeart } from "react-icons/fa";
+import { useTranslation } from "react-i18next";
 
 const ProfileSide = ({ user, loading }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   return (
     <>
@@ -34,7 +36,7 @@ const ProfileSide = ({ user, loading }) => {
             />
           </DropdownMenuTrigger>
 
-          <DropdownMenuContent align="end" className={`w-52`}>
+          <DropdownMenuContent align="end" className="w-52">
             <DropdownMenuLabel className="flex items-center gap-2">
               <UserAvatar name={user?.name} image={user?.image} />
               <h3 className="font-semibold">{user?.name}</h3>
@@ -44,17 +46,17 @@ const ProfileSide = ({ user, loading }) => {
 
             <DropdownMenuItem onClick={() => navigate("/profile")}>
               <FaRegUser />
-              Profile
+              {t("ProfileSide.profile")}
             </DropdownMenuItem>
 
             <DropdownMenuItem onClick={() => navigate("/profile/orders")}>
               <FiShoppingCart />
-              Orders
+              {t("ProfileSide.orders")}
             </DropdownMenuItem>
 
             <DropdownMenuItem onClick={() => navigate("/profile/favorites")}>
               <FaRegHeart />
-              Favorites
+              {t("ProfileSide.favorites")}
             </DropdownMenuItem>
 
             <DropdownMenuSeparator />
@@ -66,7 +68,7 @@ const ProfileSide = ({ user, loading }) => {
               }}
             >
               <IoIosLogOut />
-              Logout
+              {t("ProfileSide.logout")}
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
@@ -76,7 +78,7 @@ const ProfileSide = ({ user, loading }) => {
           className="bg-white px-4 py-1 rounded-md text-primary 
             hover:text-white hover:bg-primary transition-all duration-300"
         >
-          Login
+          {t("ProfileSide.login")}
         </Link>
       )}
     </>

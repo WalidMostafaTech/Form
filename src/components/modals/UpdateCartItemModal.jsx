@@ -14,19 +14,20 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { FiMinus, FiPlus } from "react-icons/fi";
+import { useTranslation } from "react-i18next";
 
 const UpdateCartItemModal = () => {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
   const { modalName, modalData } = useSelector((state) => state.modals);
   const { item_id, item_quantity } = modalData || {};
   const [quantity, setQuantity] = useState(1);
 
   useEffect(() => {
     if (item_quantity) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
       setQuantity(item_quantity);
     }
-  }, [item_id]);
+  }, [item_id, item_quantity]);
 
   const onClose = () => {
     setQuantity(1);
@@ -39,7 +40,7 @@ const UpdateCartItemModal = () => {
     mutationFn: updateCart,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["cart"] });
-      toast.success("Item quantity updated.");
+      toast.success(t("UpdateCartItemModal.itemUpdated"));
       onClose();
     },
   });
@@ -55,8 +56,10 @@ const UpdateCartItemModal = () => {
     <Dialog open={modalName === "updateCartItemModal"} onOpenChange={onClose}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Update Quantity</DialogTitle>
-          <DialogDescription className="sr-only"></DialogDescription>
+          <DialogTitle>{t("UpdateCartItemModal.title")}</DialogTitle>
+          <DialogDescription className="sr-only">
+            {t("UpdateCartItemModal.description")}
+          </DialogDescription>
         </DialogHeader>
 
         <div className="flex items-center justify-center gap-4 py-4">
@@ -83,11 +86,13 @@ const UpdateCartItemModal = () => {
 
         <DialogFooter className="gap-2">
           <Button variant="outline" onClick={onClose}>
-            Cancel
+            {t("UpdateCartItemModal.cancel")}
           </Button>
 
           <Button onClick={handleUpdate} disabled={updateMutation.isPending}>
-            {updateMutation.isPending ? "Updating..." : "Update"}
+            {updateMutation.isPending
+              ? t("UpdateCartItemModal.updating")
+              : t("UpdateCartItemModal.update")}
           </Button>
         </DialogFooter>
       </DialogContent>

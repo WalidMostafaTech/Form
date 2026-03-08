@@ -13,8 +13,10 @@ import { Button } from "@/components/ui/button";
 import { Link } from "react-router";
 import NotificationCard from "@/components/cards/NotificationCard";
 import useNotificationsPolling from "@/hooks/useNotificationsPolling";
+import { useTranslation } from "react-i18next";
 
 const NotificationsPopUp = () => {
+  const { t } = useTranslation();
   const [openNotifications, setOpenNotifications] = useState(false);
   const { user } = useSelector((state) => state.user);
 
@@ -44,7 +46,7 @@ const NotificationsPopUp = () => {
       <PopoverTrigger asChild>
         <div className="relative">
           <FaRegBell className="header_icon" />
-          {unreadNotifications && unreadNotifications > 0 && (
+          {unreadNotifications > 0 && (
             <span
               className="absolute -top-2 -inset-e-1 bg-secondary text-primary text-sm rounded-full w-4 h-4 
             flex items-center justify-center"
@@ -70,7 +72,7 @@ const NotificationsPopUp = () => {
           </div>
         ) : (
           <p className="text-center text-sm text-muted-foreground py-6">
-            Notifications not found
+            {t("NotificationsPopUp.notFound")}
           </p>
         )}
 
@@ -80,7 +82,7 @@ const NotificationsPopUp = () => {
             to="/profile/notifications"
             onClick={() => setOpenNotifications(false)}
           >
-            <Button className="w-full">see all notifications</Button>
+            <Button className="w-full">{t("NotificationsPopUp.seeAll")}</Button>
           </Link>
         )}
       </PopoverContent>

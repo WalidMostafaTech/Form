@@ -1,23 +1,27 @@
+import { useTranslation } from "react-i18next";
+
 const ContactInfo = ({ contactDetails }) => {
+  const { t } = useTranslation();
+
   const contactDetailsList = [
     {
       id: 1,
-      label: "location",
+      label: t("ContactInfo.location"),
       value: contactDetails?.address || "-",
     },
     {
       id: 2,
-      label: "phone",
+      label: t("ContactInfo.phone"),
       value: contactDetails?.phone || "-",
     },
     {
       id: 3,
-      label: "email",
+      label: t("ContactInfo.email"),
       value: contactDetails?.email || "-",
     },
     {
       id: 4,
-      label: "office hours",
+      label: t("ContactInfo.officeHours"),
       value: contactDetails?.working_hours || "-",
     },
   ];
@@ -25,7 +29,7 @@ const ContactInfo = ({ contactDetails }) => {
   return (
     <div>
       <h3 className="text-xl uppercase tracking-widest mb-4">
-        form information
+        {t("ContactInfo.heading")}
       </h3>
 
       <ul className="space-y-4">

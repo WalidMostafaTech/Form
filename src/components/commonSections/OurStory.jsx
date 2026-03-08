@@ -1,9 +1,12 @@
+import { useTranslation } from "react-i18next";
 import { getOurStory } from "@/api/homeServices";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router";
 import OurStorySkeleton from "../Loading/SkeletonLoading/OurStorySkeleton";
 
 const OurStory = () => {
+  const { t } = useTranslation();
+
   const { data: ourStory, isLoading } = useQuery({
     queryKey: ["ourStory"],
     queryFn: getOurStory,
@@ -18,7 +21,8 @@ const OurStory = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         <div className="space-y-6">
           <p className="text-secondary flex items-center gap-2">
-            <span className="h-0.5 w-12 bg-secondary"></span> Our Story
+            <span className="h-0.5 w-12 bg-secondary"></span>
+            {t("OurStory.title")}
           </p>
 
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold">

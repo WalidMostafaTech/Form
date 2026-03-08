@@ -1,5 +1,66 @@
 {
   "loading": "جاري التحميل...",
+  "currency": "د.ا.ع.",
+  "exploreCollection": "تصفح المجموعة",
+  "HideDetails": "اخفاء التفاصيل",
+  "ViewDetails": "اظهار التفاصيل",
+  "add_to_cart": "اضافة الى السلة",
+  "About_Us": "من نحن",
+  "VisionAndMission": "رؤية ورسالة",
+  "Visit": "زيارة",
+
+  "OrderSummaryCard": {
+    "title": "ملخص الطلب",
+    "subtotal": "المجموع الفرعي",
+    "deliveryFees": "رسوم التوصيل",
+    "vat": "ضريبة القيمة المضافة",
+    "currency": "ج.م",
+    "confirmOrder": "تأكيد الطلب",
+    "confirming": "جارٍ التأكيد..."
+  },
+
+  "BestSellers": {
+    "title": "الأكثر",
+    "spanTitle": "مبيعاً",
+    "viewAll": "عرض جميع المنتجات"
+  },
+
+  "OurService": {
+    "title": "خدماتنا",
+    "spanTitle": ""
+  },
+
+  "OurStory": {
+    "title": "قصتنا"
+  },
+
+  "Footer": {
+    "companyLogo": "شعار الشركة",
+    "links": "روابط",
+    "socialMedia": "وسائل التواصل"
+  },
+
+  "NotificationsPopUp": {
+    "notFound": "لا توجد إشعارات",
+    "seeAll": "عرض كل الإشعارات"
+  },
+
+  "ProfileSide": {
+    "profile": "الملف الشخصي",
+    "orders": "الطلبات",
+    "favorites": "المفضلة",
+    "logout": "تسجيل الخروج",
+    "login": "تسجيل الدخول"
+  },
+
+  "DeleteCartItemModal": {
+    "title": "حذف المنتج من السلة؟",
+    "description": "هل أنت متأكد أنك تريد إزالة هذا المنتج من سلتك؟",
+    "cancel": "إلغاء",
+    "delete": "حذف",
+    "deleting": "جارٍ الحذف...",
+    "itemRemoved": "تمت إزالة المنتج من السلة."
+  },
 
   "logOutModal": {
     "logout": "تسجيل الخروج",
@@ -22,10 +83,175 @@
     "cancel": "تراجع"
   },
 
+  "TermsModal": {
+    "title": "الشروط والأحكام",
+    "description": "شروط وأحكام نموذج التسجيل."
+  },
+
+  "UpdateCartItemModal": {
+    "title": "تحديث الكمية",
+    "description": "تحديث كمية هذا المنتج في سلتك.",
+    "cancel": "إلغاء",
+    "update": "تحديث",
+    "updating": "جارٍ التحديث...",
+    "itemUpdated": "تم تحديث كمية المنتج."
+  },
+
   "checkVerifiedEmailGuard": {
     "title": "بريدك الإلكتروني غير مُفعّل!",
     "description": "يجب تفعيل بريدك الإلكتروني للوصول إلى هذه الصفحة",
     "button": "تفعيل البريد الإلكتروني"
+  },
+
+  "NavigationLinks": {
+    "home": "الرئيسية",
+    "about": "من نحن",
+    "shop": "المتجر",
+    "wholesale": "جملة",
+    "location": "الموقع",
+    "contact": "اتصل بنا"
+  },
+
+  "Cart": {
+    "pageTitle": "سلة التسوق",
+    "emptyMessage": "السلة فارغة",
+    "orderConfirmed": "تم تأكيد الطلب بنجاح!",
+    "commentLabel": "تعليق",
+    "commentPlaceholder": "أضف تعليق"
+  },
+
+  "ContactUS": {
+    "pageTitle": "اتصل بنا"
+  },
+
+  "ContactForm": {
+    "heading": "أرسل رسالتك",
+    "firstName": "الاسم الأول",
+    "firstNamePlaceholder": "أدخل الاسم الأول",
+    "firstNameRequired": "الاسم الأول مطلوب",
+    "lastName": "اسم العائلة",
+    "lastNamePlaceholder": "أدخل اسم العائلة",
+    "lastNameRequired": "اسم العائلة مطلوب",
+    "phone": "الهاتف",
+    "phonePlaceholder": "أدخل رقم الهاتف",
+    "invalidPhone": "رقم الهاتف غير صالح",
+    "email": "البريد الإلكتروني",
+    "emailPlaceholder": "example@example.com",
+    "invalidEmail": "البريد الإلكتروني غير صالح",
+    "message": "الرسالة",
+    "messagePlaceholder": "اكتب رسالتك...",
+    "messageMin": "يجب أن تحتوي الرسالة على 10 أحرف على الأقل",
+    "send": "إرسال",
+    "sending": "جاري الإرسال...",
+    "successMessage": "تم إرسال الرسالة بنجاح! سنعاود الاتصال بك قريبًا.",
+    "somethingWrong": "حدث خطأ ما"
+  },
+
+  "ContactInfo": {
+    "heading": "بيانات النموذج",
+    "location": "الموقع",
+    "phone": "الهاتف",
+    "email": "البريد الإلكتروني",
+    "officeHours": "ساعات العمل"
+  },
+
+  "ForgotPassword": {
+    "step1Title": "نسيت كلمة المرور",
+    "step1Description": "أدخل بريدك الإلكتروني لتلقي رابط إعادة تعيين كلمة المرور.",
+    "step2Title": "تحقق من رسائلك",
+    "step2Description": "أدخل الرمز المرسل إلى بريدك الإلكتروني للتحقق من هويتك.",
+    "step3Title": "إعادة تعيين كلمة المرور",
+    "step3Description": "أنشئ كلمة مرور جديدة لحسابك."
+  },
+
+  "checkEmail": {
+    "title": "نسيت كلمة المرور",
+    "description": "أدخل بريدك الإلكتروني لإعادة تعيين كلمة المرور",
+    "emailLabel": "البريد الإلكتروني",
+    "emailPlaceholder": "example@email.com",
+    "sending": "جاري الإرسال...",
+    "sendResetLink": "إرسال رابط إعادة التعيين",
+    "rememberPassword": "تذكرت كلمة المرور؟",
+    "login": "تسجيل الدخول",
+    "invalidEmail": "البريد الإلكتروني غير صحيح",
+    "genericError": "حدث خطأ، حاول مرة أخرى"
+  },
+
+  "otp": {
+    "title": "تأكيد الرمز",
+    "description": "لقد قمنا بارسال كود الاسترجاع الى رقم الواتساب الخاص بك قم بالتحقق من الرسائل وادخل الكود المرسل الى {{email}}",
+    "otpRequired": "أدخل رمز مكوّن من 6 أرقام",
+    "verifying": "جاري التحقق...",
+    "confirm": "تأكيد الرمز",
+    "notReceived": "لم يصلك الرمز؟",
+    "resendIn": "إعادة الإرسال خلال {{countdown}}s",
+    "resend": "إعادة الإرسال",
+    "backToLogin": "الرجوع لتسجيل الدخول",
+    "wrongOtp": "الرمز غير صحيح"
+  },
+
+  "resetPassword": {
+    "newPassword": "كلمة المرور الجديدة",
+    "confirmPassword": "تأكيد كلمة المرور",
+    "passwordStrength": "قوة كلمة المرور:",
+    "resetting": "جارٍ إعادة التعيين...",
+    "saveNewPassword": "حفظ كلمة المرور الجديدة",
+    "minLength": "يجب أن تكون كلمة المرور 6 أحرف على الأقل",
+    "mismatch": "كلمتا المرور غير متطابقتين",
+    "genericError": "حدث خطأ ما"
+  },
+
+  "categorySection": {
+    "shopBy": "تسوق حسب",
+    "category": "الفئة"
+  },
+
+  "login": {
+    "title": "مرحبا بعودتك",
+    "description": "الرجاء إدخال بياناتك للوصول إلى حسابك",
+    "tabs": {
+      "email": "البريد الإلكتروني",
+      "phone": "رقم الهاتف"
+    },
+    "placeholders": {
+      "email": "example@example.com",
+      "phone": "أدخل رقم هاتفك",
+      "password": "************"
+    },
+    "labels": {
+      "email": "البريد الإلكتروني",
+      "phone": "رقم الهاتف",
+      "password": "كلمة المرور"
+    },
+    "forgotPassword": "نسيت كلمة المرور؟",
+    "loginButton": "تسجيل الدخول",
+    "loggingIn": "جاري تسجيل الدخول...",
+    "noAccount": "ليس لديك حساب؟",
+    "createAccount": "إنشاء حساب",
+    "invalidEmail": "البريد الإلكتروني غير صالح",
+    "invalidPhone": "رقم الهاتف غير صالح",
+    "passwordMin": "كلمة المرور يجب أن تكون 6 أحرف على الأقل"
+  },
+
+  "productDetails": {
+    "addToCart": "أضف إلى السلة",
+    "adding": "جارٍ الإضافة...",
+    "buyNow": "اشتري الآن",
+    "processing": "جارٍ المعالجة...",
+    "description": "الوصف",
+    "shipping": "معلومات الشحن والتوصيل",
+    "details": "مزيد من التفاصيل",
+    "notes": "ملاحظات إضافية",
+    "favoriteError": "فشل في إضافة/إزالة من المفضلة!",
+    "cartError": "فشل في إضافة المنتج إلى السلة!",
+    "cartSuccess": "تم إضافة المنتج إلى السلة بنجاح!"
+  },
+
+  "productsPage": {
+    "shopTitle": "المتجر",
+    "wholesaleTitle": "البيع بالجملة",
+    "allCategories": "الكل",
+    "noProducts": "لا توجد منتجات"
   },
 
   "ProfileSideBar": {
@@ -114,46 +340,6 @@
     }
   },
 
-  "checkEmail": {
-    "title": "نسيت كلمة المرور",
-    "description": "أدخل بريدك الإلكتروني لإعادة تعيين كلمة المرور",
-    "emailLabel": "البريد الإلكتروني",
-    "emailPlaceholder": "example@email.com",
-    "sending": "جاري الإرسال...",
-    "sendResetLink": "إرسال رابط إعادة التعيين",
-    "rememberPassword": "تذكرت كلمة المرور؟",
-    "login": "تسجيل الدخول",
-    "invalidEmail": "البريد الإلكتروني غير صحيح",
-    "genericError": "حدث خطأ، حاول مرة أخرى"
-  },
-
-  "otp": {
-    "title": "تأكيد الرمز",
-    "description": "لقد قمنا بارسال كود الاسترجاع الى رقم الواتساب الخاص بك قم بالتحقق من الرسائل وادخل الكود المرسل الى {{email}}",
-    "otpRequired": "أدخل رمز مكوّن من 6 أرقام",
-    "verifying": "جاري التحقق...",
-    "confirm": "تأكيد الرمز",
-    "notReceived": "لم يصلك الرمز؟",
-    "resendIn": "إعادة الإرسال خلال {{countdown}}s",
-    "resend": "إعادة الإرسال",
-    "backToLogin": "الرجوع لتسجيل الدخول",
-    "wrongOtp": "الرمز غير صحيح"
-  },
-
-  "resetPassword": {
-    "title": "إعادة تعيين كلمة المرور",
-    "description": "أدخل كلمة مرور جديدة لحسابك",
-    "newPassword": "كلمة المرور الجديدة",
-    "confirmPassword": "تأكيد كلمة المرور",
-    "strength": "قوة كلمة المرور:",
-    "resetting": "جاري إعادة التعيين...",
-    "save": "حفظ كلمة المرور الجديدة",
-    "error": "حدث خطأ، حاول مرة أخرى",
-    "passwordShort": "كلمة المرور قصيرة",
-    "confirmRequired": "تأكيد كلمة المرور مطلوب",
-    "notMatched": "كلمتا المرور غير متطابقتين"
-  },
-
   "notifications": {
     "title": "الإشعارات",
     "subtitle": "اطلع على الإشعارات الخاصة بك",
@@ -163,9 +349,117 @@
     "loading": "جاري القراءة..."
   },
 
-  "orders": {
-    "title": "طلباتى",
-    "empty": "لا يوجد طلبات"
+  "favoritesPage": {
+    "title": "المفضلة",
+    "noFavorites": "لا توجد عناصر مفضلة"
+  },
+
+  "ordersPage": {
+    "title": "طلباتي",
+    "all": "الكل",
+    "noOrders": "لا توجد طلبات"
+  },
+
+  "verifyEmailPage": {
+    "title": "تحقق من رسائلك",
+    "description": "لأمانك، أرسلنا رمز تحقق لمرة واحدة (OTP) إلى تفاصيل الاتصال المسجلة لديك. أدخل الرمز أدناه للتحقق من هويتك والمتابعة.",
+    "verifyButton": "تحقق من البريد الإلكتروني",
+    "checking": "جارٍ التحقق...",
+    "didntReceive": "لم تستلم الرمز؟",
+    "resend": "إعادة الإرسال",
+    "backToRegister": "العودة للتسجيل",
+    "otpError": "يجب أن يكون الرمز مكونًا من 6 أرقام",
+    "invalidOtp": "رمز التحقق غير صحيح",
+    "resendIn": "إعادة الإرسال بعد {{seconds}} ثانية"
+  },
+
+  "registerPage": {
+    "title": "اختر مسارك",
+    "description": "يرجى إدخال بياناتك للوصول إلى حسابك",
+    "customer": "عميل",
+    "company": "شركة",
+    "alreadyHaveAccount": "هل لديك حساب بالفعل؟",
+    "signInHere": "تسجيل الدخول هنا"
+  },
+
+  "registerCustomer": {
+    "createAccount": "إنشاء حساب مستخدم",
+    "enterDetails": "يرجى إدخال بياناتك للوصول إلى حسابك",
+    "uploadImage": "قم بتحميل صورتك",
+    "fullName": "الاسم الكامل",
+    "fullNamePlaceholder": "أدخل اسمك الكامل",
+    "email": "البريد الإلكتروني",
+    "emailPlaceholder": "example@example.com",
+    "phone": "رقم الهاتف",
+    "phonePlaceholder": "أدخل رقم الهاتف",
+    "emirate": "الإمارة",
+    "selectEmirate": "اختر إمارتك",
+    "password": "كلمة المرور",
+    "agreeTo": "أوافق على",
+    "termsAndConditions": "الشروط والأحكام",
+    "creating": "جارٍ الإنشاء...",
+    "somethingWentWrong": "حدث خطأ ما",
+    "nameTooShort": "الاسم قصير جدًا",
+    "invalidEmail": "البريد الإلكتروني غير صالح",
+    "invalidPhone": "رقم الهاتف غير صالح",
+    "passwordMin": "يجب أن تكون كلمة المرور 6 أحرف على الأقل",
+    "confirmPassword": "تأكيد كلمة المرور",
+    "termsRequired": "يجب قبول الشروط",
+    "passwordsMismatch": "كلمتا المرور غير متطابقتين"
+  },
+
+  "registerCompany": {
+    "createAccount": "إنشاء حساب شركة",
+    "enterDetails": "يرجى إدخال بياناتك للوصول إلى حسابك"
+  },
+
+  "registerCompanyStep1": {
+    "uploadImage": "قم بتحميل صورتك",
+    "fullName": "الاسم الكامل",
+    "fullNamePlaceholder": "أدخل اسمك الكامل",
+    "email": "البريد الإلكتروني",
+    "emailPlaceholder": "example@example.com",
+    "phone": "رقم الهاتف",
+    "phonePlaceholder": "أدخل رقم الهاتف",
+    "emirate": "الإمارة",
+    "selectEmirate": "اختر إمارتك",
+    "password": "كلمة المرور",
+    "agreeTo": "أوافق على",
+    "termsAndConditions": "الشروط والأحكام",
+    "continueNextStep": "المتابعة للخطوة التالية",
+    "nameTooShort": "الاسم قصير جدًا",
+    "invalidEmail": "البريد الإلكتروني غير صالح",
+    "invalidPhone": "رقم الهاتف غير صالح",
+    "passwordMin": "يجب أن تكون كلمة المرور 6 أحرف على الأقل",
+    "confirmPassword": "تأكيد كلمة المرور",
+    "termsRequired": "يجب قبول الشروط",
+    "passwordsMismatch": "كلمتا المرور غير متطابقتين"
+  },
+
+  "registerCompanyStep2": {
+    "coffeeVolumes": "ما هي كميات القهوة التي ترغب في طلبها؟",
+    "coffeeUsage": "لما ترغب في استخدام قهوتنا؟",
+    "textAreaPlaceholder": "مساحة نصية للإجابة",
+    "continueNextStep": "المتابعة للخطوة التالية",
+    "provideMoreDetails": "يرجى تقديم مزيد من التفاصيل"
+  },
+
+  "registerCompanyStep3": {
+    "tradeLicenseName": "اسم الرخصة التجارية",
+    "tradeLicenseNumber": "رقم الرخصة التجارية",
+    "trnNumber": "رقم TRN",
+    "uploadTradeLicense": "رفع الرخصة التجارية",
+    "uploadTrnCertificate": "رفع شهادة TRN",
+    "tradeLicensePlaceholder": "الرخصة",
+    "completeRegistration": "إكمال التسجيل",
+    "creating": "جارٍ الإنشاء...",
+    "somethingWentWrong": "حدث خطأ ما",
+
+    "tradeLicenseNameShort": "اسم الرخصة التجارية قصير جدًا",
+    "tradeLicenseNumberShort": "رقم الرخصة التجارية قصير جدًا",
+    "trnNumberShort": "رقم TRN قصير جدًا",
+    "tradeLicenseFileRequired": "يجب رفع ملف الرخصة التجارية",
+    "trnCertificateRequired": "يجب رفع شهادة TRN"
   },
 
   "notFound": {

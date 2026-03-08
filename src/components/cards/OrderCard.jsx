@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { HiCalendarDateRange } from "react-icons/hi2";
 
 const OrderCard = ({ item }) => {
@@ -11,6 +12,8 @@ const OrderCard = ({ item }) => {
       year: "numeric",
     });
   };
+
+  const { t } = useTranslation();
 
   return (
     <div key={item.id} className="p-3 border rounded-lg flex items-start gap-4">
@@ -51,7 +54,7 @@ const OrderCard = ({ item }) => {
               </p>
 
               <p className="text-primary text-lg">
-                {item?.order_items[0]?.price} AED
+                {item?.order_items[0]?.price} {t("currency")}
               </p>
             </div>
 
@@ -66,7 +69,7 @@ const OrderCard = ({ item }) => {
 
         <div className="flex items-center flex-wrap justify-between gap-2">
           <p className="text-lg font-bold text-primary">
-            {item.final_total} AED
+            {item.final_total} {t("currency")}
           </p>
 
           {showDetails && (
@@ -83,7 +86,7 @@ const OrderCard = ({ item }) => {
             className="py-1 px-2 rounded-md border border-primary text-primary
                       bg-white cursor-pointer hover:brightness-90 transition"
           >
-            {showDetails ? "Hide Details" : "View Details"}
+            {showDetails ? t("HideDetails") : t("ViewDetails")}
           </button>
         </div>
       </div>

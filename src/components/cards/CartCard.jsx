@@ -1,9 +1,11 @@
 import { RiEdit2Line, RiDeleteBinLine } from "react-icons/ri";
 import { useDispatch } from "react-redux";
 import { openModal } from "@/store/modals/modalsSlice";
+import { useTranslation } from "react-i18next";
 
 const CartCard = ({ item }) => {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   return (
     <div className="p-3 border rounded-lg flex items-start gap-4">
@@ -60,7 +62,9 @@ const CartCard = ({ item }) => {
           {item.weight} {item.weight_unit}
         </p>
 
-        <p className="font-bold text-primary">{item.price} AED</p>
+        <p className="font-bold text-primary">
+          {item.price} {t("currency")}
+        </p>
 
         <div className="flex items-center flex-wrap justify-between gap-2">
           <span className="p-1 min-w-16 text-lg text-center font-semibold text-primary bg-primary-foreground rounded-md">
@@ -68,7 +72,7 @@ const CartCard = ({ item }) => {
           </span>
 
           <p className="text-lg font-bold text-primary">
-            {item.price * item.quantity} AED
+            {item.price * item.quantity} {t("currency")}
           </p>
         </div>
       </div>

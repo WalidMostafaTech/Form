@@ -6,6 +6,7 @@ import OurStory from "@/components/commonSections/OurStory";
 import WhatTheySay from "@/components/commonSections/WhatTheySay";
 import { useQuery } from "@tanstack/react-query";
 import { getAboutPage } from "@/api/mainServices";
+import { useTranslation } from "react-i18next";
 
 const About = () => {
   const { data: aboutPage, isLoading } = useQuery({
@@ -13,11 +14,13 @@ const About = () => {
     queryFn: getAboutPage,
   });
 
+  const { t } = useTranslation();
+
   return (
     <main>
       <PageBanner
         image={aboutPage?.image}
-        title={"about us"}
+        title={t("About_Us")}
         description={aboutPage?.description}
         html={true}
         loading={isLoading}

@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import SectionTitle from "@/components/common/SectionTitle";
 import ServiceCard from "@/components/cards/ServiceCard";
 import MainSlider from "@/components/commonSections/MainSlider";
@@ -6,6 +7,8 @@ import { getOurServices } from "@/api/homeServices";
 import OurServiceSkeleton from "../Loading/SkeletonLoading/OurServiceSkeleton";
 
 const OurService = () => {
+  const { t } = useTranslation();
+
   const { data: ourServices, isLoading } = useQuery({
     queryKey: ["ourServices"],
     queryFn: getOurServices,
@@ -18,7 +21,10 @@ const OurService = () => {
   return (
     <section className="bg-primary-foreground sectionPadding">
       <div className="container">
-        <SectionTitle title="Our" spanTitle="Services" />
+        <SectionTitle
+          title={t("OurService.title")}
+          spanTitle={t("OurService.spanTitle")}
+        />
 
         <MainSlider
           data={ourServices}

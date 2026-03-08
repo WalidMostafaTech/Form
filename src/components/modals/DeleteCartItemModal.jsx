@@ -12,9 +12,11 @@ import { closeModal } from "@/store/modals/modalsSlice";
 import { removeFromCart } from "@/api/cartServices";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
+import { useTranslation } from "react-i18next";
 
 const DeleteCartItemModal = () => {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
   const { modalName, modalData } = useSelector((state) => state.modals);
   const { item_id } = modalData || {};
 
@@ -29,7 +31,7 @@ const DeleteCartItemModal = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["cart"] });
       queryClient.invalidateQueries({ queryKey: ["cart_count"] });
-      toast.success("Item removed from cart.");
+      toast.success(t("DeleteCartItemModal.itemRemoved"));
       onClose();
     },
   });
@@ -42,15 +44,15 @@ const DeleteCartItemModal = () => {
     <Dialog open={modalName === "deleteCartItemModal"} onOpenChange={onClose}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Delete item from cart?</DialogTitle>
+          <DialogTitle>{t("DeleteCartItemModal.title")}</DialogTitle>
           <DialogDescription>
-            Are you sure you want to remove this product from your cart?
+            {t("DeleteCartItemModal.description")}
           </DialogDescription>
         </DialogHeader>
 
         <DialogFooter className="gap-2">
           <Button variant="outline" onClick={onClose}>
-            Cancel
+            {t("DeleteCartItemModal.cancel")}
           </Button>
 
           <Button
@@ -58,7 +60,9 @@ const DeleteCartItemModal = () => {
             onClick={handleDelete}
             disabled={deleteMutation.isPending}
           >
-            {deleteMutation.isPending ? "Deleting..." : "Delete"}
+            {deleteMutation.isPending
+              ? t("DeleteCartItemModal.deleting")
+              : t("DeleteCartItemModal.delete")}
           </Button>
         </DialogFooter>
       </DialogContent>

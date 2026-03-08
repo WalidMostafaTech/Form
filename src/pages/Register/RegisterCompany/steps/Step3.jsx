@@ -11,21 +11,34 @@ import { registerUser } from "@/api/authServices";
 import { useDispatch } from "react-redux";
 import FormError from "@/components/form/FormError";
 import { getUser } from "@/store/user/userActions";
-
-const schema = z.object({
-  trade_license_name: z.string().min(3, "Trade license name is too short"),
-  trade_license_number: z.string().min(3, "Trade license number is too short"),
-  trn_number: z.string().min(3, "TRN number is too short"),
-  trade_license_file: z
-    .instanceof(FileList)
-    .refine((files) => files.length > 0, "Trade license file is required"),
-  trn_certificate_file: z
-    .instanceof(FileList)
-    .refine((files) => files.length > 0, "TRN certificate file is required"),
-});
+import { useTranslation } from "react-i18next";
 
 const Step3 = ({ setParentData, parentData }) => {
+  const { t } = useTranslation();
+
   const navigate = useNavigate();
+
+  const schema = z.object({
+    trade_license_name: z
+      .string()
+      .min(3, t("registerCompanyStep3.tradeLicenseNameShort")),
+    trade_license_number: z
+      .string()
+      .min(3, t("registerCompanyStep3.tradeLicenseNumberShort")),
+    trn_number: z.string().min(3, t("registerCompanyStep3.trnNumberShort")),
+    trade_license_file: z
+      .instanceof(FileList)
+      .refine(
+        (files) => files.length > 0,
+        t("registerCompanyStep3.tradeLicenseFileRequired"),
+      ),
+    trn_certificate_file: z
+      .instanceof(FileList)
+      .refine(
+        (files) => files.length > 0,
+        t("registerCompanyStep3.trnCertificateRequired"),
+      ),
+  });
 
   const {
     handleSubmit,
@@ -76,12 +89,8 @@ const Step3 = ({ setParentData, parentData }) => {
       }
     });
 
-    // ابعت 1 بدل true
     formData.append("terms_accepted", 1);
-
-    // ابعت نوع المستخدم
     formData.append("type", "company");
-
     formData.append("source", "web");
 
     mutate(formData);
@@ -96,8 +105,8 @@ const Step3 = ({ setParentData, parentData }) => {
         render={({ field }) => (
           <MainInput
             {...field}
-            label="Trade license name"
-            placeholder="trade"
+            label={t("registerCompanyStep3.tradeLicenseName")}
+            placeholder={t("registerCompanyStep3.tradeLicensePlaceholder")}
             icon={<BsBuildings size={18} />}
             error={errors.trade_license_name?.message}
           />
@@ -111,7 +120,7 @@ const Step3 = ({ setParentData, parentData }) => {
         render={({ field }) => (
           <MainInput
             {...field}
-            label="Trade license number"
+            label={t("registerCompanyStep3.tradeLicenseNumber")}
             placeholder="123456789"
             icon={<BsBuildings size={18} />}
             error={errors.trade_license_number?.message}
@@ -126,7 +135,7 @@ const Step3 = ({ setParentData, parentData }) => {
         render={({ field }) => (
           <MainInput
             {...field}
-            label="TRN number"
+            label={t("registerCompanyStep3.trnNumber")}
             placeholder="123456789"
             icon={<MdFormatListNumbered size={18} />}
             error={errors.trn_number?.message}
@@ -142,7 +151,7 @@ const Step3 = ({ setParentData, parentData }) => {
           <MainInput
             {...field}
             type="file"
-            label="Upload Trade license"
+            label={t("registerCompanyStep3.uploadTradeLicense")}
             error={errors.trade_license_file?.message}
           />
         )}
@@ -156,19 +165,24 @@ const Step3 = ({ setParentData, parentData }) => {
           <MainInput
             {...field}
             type="file"
-            label="Upload TRN certificate"
+            label={t("registerCompanyStep3.uploadTrnCertificate")}
             error={errors.trn_certificate_file?.message}
           />
         )}
       />
 
       <Button type="submit" className="w-full" disabled={isPending}>
-        {isPending ? "Creating..." : "Complete Registration"}
+        {isPending
+          ? t("registerCompanyStep3.creating")
+          : t("registerCompanyStep3.completeRegistration")}
       </Button>
 
       {error && (
         <FormError
-          errorMsg={error?.response?.data?.message || "Something went wrong"}
+          errorMsg={
+            error?.response?.data?.message ||
+            t("registerCompanyStep3.somethingWentWrong")
+          }
         />
       )}
     </form>

@@ -14,30 +14,34 @@ import { useMutation } from "@tanstack/react-query";
 import { loginUser } from "@/api/authServices";
 import { useDispatch } from "react-redux";
 import { addUser } from "@/store/user/userSlice";
-
-// Dynamic Schema
-const loginSchema = (type) => {
-  return z.object({
-    email:
-      type === "email"
-        ? z.string().email("Invalid email address")
-        : z.string().optional(),
-
-    phone:
-      type === "phone"
-        ? z.string().refine((value) => isValidPhoneNumber(value || ""), {
-            message: "Invalid phone number",
-          })
-        : z.string().optional(),
-
-    password: z.string().min(6, "Password must be at least 6 characters"),
-  });
-};
+import { toast } from "sonner";
+import { useTranslation } from "react-i18next";
 
 const Login = () => {
   const [loginType, setLoginType] = useState("email");
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { t } = useTranslation();
+
+  // Dynamic Schema
+  const loginSchema = (type) => {
+    return z.object({
+      email:
+        type === "email"
+          ? z.string().email(t("login.invalidEmail"))
+          : z.string().optional(),
+
+      phone:
+        type === "phone"
+          ? z.string().refine((value) => isValidPhoneNumber(value || ""), {
+              message: t("login.invalidPhone"),
+            })
+          : z.string().optional(),
+
+      password: z.string().min(6, t("login.passwordMin")),
+    });
+  };
 
   const {
     handleSubmit,
@@ -53,8 +57,6 @@ const Login = () => {
     },
   });
 
-  const dispatch = useDispatch();
-
   const {
     mutate: loginMutate,
     isPending,
@@ -66,6 +68,7 @@ const Login = () => {
       dispatch(addUser({ ...data?.user, image: data?.user?.image_url }));
     },
     onError: (err) => {
+      toast.error(err?.response?.data?.message || "Login failed!");
       console.log("Login Error:", err);
     },
   });
@@ -81,8 +84,8 @@ const Login = () => {
 
   return (
     <AuthContainer
-      title="Welcome Back"
-      description="Please enter your details to access your account"
+      title={t("login.title")}
+      description={t("login.description")}
     >
       {/* Tabs */}
       <div className="flex items-center gap-1 bg-muted p-1 rounded-lg">
@@ -92,7 +95,7 @@ const Login = () => {
           className={`flex-1 p-2 rounded-md transition cursor-pointer text-sm
             ${loginType === "email" ? "bg-primary text-white" : "hover:bg-primary/10"}`}
         >
-          Email Address
+          {t("login.tabs.email")}
         </button>
 
         <button
@@ -101,12 +104,15 @@ const Login = () => {
           className={`flex-1 p-2 rounded-md transition cursor-pointer text-sm
             ${loginType === "phone" ? "bg-primary text-white" : "hover:bg-primary/10"}`}
         >
-          Phone Number
+          {t("login.tabs.phone")}
         </button>
       </div>
 
       {/* Form */}
-      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="flex flex-col gap-4 mt-4"
+      >
         {/* Email / Phone */}
         {loginType === "email" ? (
           <Controller
@@ -116,8 +122,8 @@ const Login = () => {
               <MainInput
                 {...field}
                 type="email"
-                label="Email Address"
-                placeholder="example@example.com"
+                label={t("login.labels.email")}
+                placeholder={t("login.placeholders.email")}
                 icon={<FiMail size={18} />}
                 error={errors.email?.message}
               />
@@ -130,8 +136,8 @@ const Login = () => {
             render={({ field }) => (
               <PhoneInputField
                 {...field}
-                label="Phone Number"
-                placeholder="Enter your phone number"
+                label={t("login.labels.phone")}
+                placeholder={t("login.placeholders.phone")}
                 error={errors.phone?.message}
               />
             )}
@@ -146,8 +152,8 @@ const Login = () => {
             <MainInput
               {...field}
               type="password"
-              label="Password"
-              placeholder="************"
+              label={t("login.labels.password")}
+              placeholder={t("login.placeholders.password")}
               icon={<FiLock size={18} />}
               error={errors.password?.message}
             />
@@ -158,11 +164,11 @@ const Login = () => {
           to={"/forgot-password"}
           className="inline-block ms-auto text-xs text-primary cursor-pointer hover:underline"
         >
-          Forget Password?
+          {t("login.forgotPassword")}
         </Link>
 
         <Button type="submit" className="w-full" disabled={isPending}>
-          {isPending ? "Logging in..." : "Login Your Account"}
+          {isPending ? t("login.loggingIn") : t("login.loginButton")}
         </Button>
       </form>
 
@@ -172,10 +178,10 @@ const Login = () => {
         />
       )}
 
-      <hr />
+      <hr className="my-4" />
 
-      <div className="text-center text-xs text-muted-foreground">
-        Don't have an account?
+      <div className="text-center text-xs text-muted-foreground mb-2">
+        {t("login.noAccount")}
       </div>
 
       <Button
@@ -183,7 +189,7 @@ const Login = () => {
         className="w-full"
         onClick={() => navigate("/register")}
       >
-        Create an Account
+        {t("login.createAccount")}
       </Button>
     </AuthContainer>
   );

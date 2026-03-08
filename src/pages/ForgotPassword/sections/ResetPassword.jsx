@@ -16,19 +16,22 @@ import { getPasswordStrength, strengthLabel } from "@/utils/PasswordStrength";
 import { z } from "zod";
 import { useNavigate } from "react-router";
 import { resetPassword } from "@/api/forgotPasswordServices";
-
-const resetPasswordSchema = z
-  .object({
-    password: z.string().min(6, "Password must be at least 6 characters"),
-    password_confirmation: z.string().min(6, "Please confirm your password"),
-  })
-  .refine((data) => data.password === data.password_confirmation, {
-    message: "Passwords do not match",
-    path: ["password_confirmation"],
-  });
+import { useTranslation } from "react-i18next";
 
 const ResetPasswordPage = ({ parentData }) => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
+
+  // ⚡ Zod Schema مع الترجمة
+  const resetPasswordSchema = z
+    .object({
+      password: z.string().min(6, t("resetPassword.minLength")),
+      password_confirmation: z.string().min(6, t("resetPassword.minLength")),
+    })
+    .refine((data) => data.password === data.password_confirmation, {
+      message: t("resetPassword.mismatch"),
+      path: ["password_confirmation"],
+    });
 
   const {
     handleSubmit,
@@ -80,7 +83,9 @@ const ResetPasswordPage = ({ parentData }) => {
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
       {error && (
         <FormError
-          errorMsg={error.response?.data?.message || "Something went wrong"}
+          errorMsg={
+            error.response?.data?.message || t("resetPassword.genericError")
+          }
         />
       )}
 
@@ -91,7 +96,7 @@ const ResetPasswordPage = ({ parentData }) => {
           <MainInput
             {...field}
             type="password"
-            label="New Password"
+            label={t("resetPassword.newPassword")}
             placeholder="************"
             icon={<FaLock size={18} />}
             error={errors.password?.message}
@@ -106,7 +111,7 @@ const ResetPasswordPage = ({ parentData }) => {
           <MainInput
             {...field}
             type="password"
-            label="Confirm Password"
+            label={t("resetPassword.confirmPassword")}
             placeholder="************"
             icon={<FaLock size={18} />}
             error={errors.password_confirmation?.message}
@@ -124,7 +129,7 @@ const ResetPasswordPage = ({ parentData }) => {
 
         {strength > 0 && (
           <p className="text-sm text-muted-foreground">
-            Password strength:
+            {t("resetPassword.passwordStrength")}
             <span
               className="font-semibold ms-1"
               style={{ color: progressColor }}
@@ -136,7 +141,9 @@ const ResetPasswordPage = ({ parentData }) => {
       </div>
 
       <Button type="submit" className="w-full" disabled={isPending}>
-        {isPending ? "Resetting..." : "Save New Password"}
+        {isPending
+          ? t("resetPassword.resetting")
+          : t("resetPassword.saveNewPassword")}
       </Button>
     </form>
   );

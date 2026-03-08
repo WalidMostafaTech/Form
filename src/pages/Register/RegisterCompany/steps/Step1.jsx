@@ -3,7 +3,7 @@ import PhoneInputField from "@/components/form/PhoneInputField";
 import { Button } from "@/components/ui/button";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { FiUser, FiMail, FiPhone, FiLock, FiMapPin } from "react-icons/fi";
+import { FiUser, FiMail, FiPhone, FiLock } from "react-icons/fi";
 import { z } from "zod";
 import { isValidPhoneNumber } from "react-phone-number-input";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -11,30 +11,35 @@ import { useRef, useState } from "react";
 import { IoImageOutline } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
 import { openModal } from "@/store/modals/modalsSlice";
-
-const schema = z
-  .object({
-    name: z.string().min(3, "Name is too short"),
-    email: z.string().email("Invalid email address"),
-    phone: z.string().refine((value) => isValidPhoneNumber(value || ""), {
-      message: "Invalid phone number",
-    }),
-    emirate_id: z.string().min(1, "Please select your emirate"),
-    password: z.string().min(6, "Password must be at least 6 characters"),
-    password_confirmation: z.string().min(6, "Confirm your password"),
-    terms_accepted: z.boolean().refine((val) => val === true, {
-      message: "You must accept terms",
-    }),
-  })
-  .refine((data) => data.password === data.password_confirmation, {
-    message: "Passwords do not match",
-    path: ["password_confirmation"],
-  });
+import { useTranslation } from "react-i18next";
 
 const Step1 = ({ setParentData, parentData, goNext }) => {
+  const { t } = useTranslation();
   const [imagePreview, setImagePreview] = useState(null);
   const [imageFile, setImageFile] = useState(null);
   const fileInputRef = useRef(null);
+  const dispatch = useDispatch();
+
+  const schema = z
+    .object({
+      name: z.string().min(3, t("registerCompanyStep1.nameTooShort")),
+      email: z.string().email(t("registerCompanyStep1.invalidEmail")),
+      phone: z.string().refine((value) => isValidPhoneNumber(value || ""), {
+        message: t("registerCompanyStep1.invalidPhone"),
+      }),
+      emirate_id: z.string().min(1, t("registerCompanyStep1.selectEmirate")),
+      password: z.string().min(6, t("registerCompanyStep1.passwordMin")),
+      password_confirmation: z
+        .string()
+        .min(6, t("registerCompanyStep1.confirmPassword")),
+      terms_accepted: z.boolean().refine((val) => val === true, {
+        message: t("registerCompanyStep1.termsRequired"),
+      }),
+    })
+    .refine((data) => data.password === data.password_confirmation, {
+      message: t("registerCompanyStep1.passwordsMismatch"),
+      path: ["password_confirmation"],
+    });
 
   const {
     handleSubmit,
@@ -52,8 +57,6 @@ const Step1 = ({ setParentData, parentData, goNext }) => {
       terms_accepted: parentData.terms_accepted ? true : false,
     },
   });
-
-  const dispatch = useDispatch();
 
   const onSubmit = (data) => {
     // eslint-disable-next-line no-unused-vars
@@ -74,6 +77,7 @@ const Step1 = ({ setParentData, parentData, goNext }) => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
+      {/* Image Upload */}
       <div className="flex flex-col items-center justify-center">
         <input
           type="file"
@@ -111,7 +115,7 @@ const Step1 = ({ setParentData, parentData, goNext }) => {
           htmlFor="image"
           className="font-semibold text-sm mt-1 cursor-pointer"
         >
-          Upload your image
+          {t("registerCompanyStep1.uploadImage")}
         </label>
       </div>
 
@@ -122,8 +126,8 @@ const Step1 = ({ setParentData, parentData, goNext }) => {
         render={({ field }) => (
           <MainInput
             {...field}
-            label="Full Name"
-            placeholder="Enter your full name"
+            label={t("registerCompanyStep1.fullName")}
+            placeholder={t("registerCompanyStep1.fullNamePlaceholder")}
             icon={<FiUser size={18} />}
             error={errors.name?.message}
           />
@@ -138,8 +142,8 @@ const Step1 = ({ setParentData, parentData, goNext }) => {
           <MainInput
             {...field}
             type="email"
-            label="Email Address"
-            placeholder="example@example.com"
+            label={t("registerCompanyStep1.email")}
+            placeholder={t("registerCompanyStep1.emailPlaceholder")}
             icon={<FiMail size={18} />}
             error={errors.email?.message}
           />
@@ -153,8 +157,8 @@ const Step1 = ({ setParentData, parentData, goNext }) => {
         render={({ field }) => (
           <PhoneInputField
             {...field}
-            label="Phone"
-            placeholder="Enter phone number"
+            label={t("registerCompanyStep1.phone")}
+            placeholder={t("registerCompanyStep1.phonePlaceholder")}
             error={errors.phone?.message}
           />
         )}
@@ -172,8 +176,8 @@ const Step1 = ({ setParentData, parentData, goNext }) => {
               label: item.name,
             }))}
             type="select"
-            label="Your Emirate"
-            placeholder="Select your emirate"
+            label={t("registerCompanyStep1.emirate")}
+            placeholder={t("registerCompanyStep1.selectEmirate")}
             error={errors.emirate_id?.message}
           />
         )}
@@ -187,7 +191,7 @@ const Step1 = ({ setParentData, parentData, goNext }) => {
           <MainInput
             {...field}
             type="password"
-            label="Password"
+            label={t("registerCompanyStep1.password")}
             placeholder="************"
             icon={<FiLock size={18} />}
             error={errors.password?.message}
@@ -203,7 +207,7 @@ const Step1 = ({ setParentData, parentData, goNext }) => {
           <MainInput
             {...field}
             type="password"
-            label="Confirm Password"
+            label={t("registerCompanyStep1.confirmPassword")}
             placeholder="************"
             icon={<FiLock size={18} />}
             error={errors.password_confirmation?.message}
@@ -223,12 +227,11 @@ const Step1 = ({ setParentData, parentData, goNext }) => {
                 checked={field.value}
                 onCheckedChange={field.onChange}
               />
-
               <label
                 htmlFor="terms"
                 className="text-sm font-medium leading-none flex items-center gap-1"
               >
-                I agree to the{" "}
+                {t("registerCompanyStep1.agreeTo")}{" "}
                 <span
                   className="text-primary cursor-pointer hover:underline"
                   onClick={(e) => {
@@ -236,7 +239,7 @@ const Step1 = ({ setParentData, parentData, goNext }) => {
                     dispatch(openModal({ modalName: "termsModal" }));
                   }}
                 >
-                  Terms and Conditions
+                  {t("registerCompanyStep1.termsAndConditions")}
                 </span>
               </label>
             </div>
@@ -251,7 +254,7 @@ const Step1 = ({ setParentData, parentData, goNext }) => {
       </div>
 
       <Button type="submit" className="w-full">
-        Continue Next Step
+        {t("registerCompanyStep1.continueNextStep")}
       </Button>
     </form>
   );

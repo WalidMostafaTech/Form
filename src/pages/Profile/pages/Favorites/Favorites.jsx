@@ -6,8 +6,10 @@ import ProductsSkeleton from "@/components/Loading/SkeletonLoading/ProductsSkele
 import EmptyDataSection from "@/components/commonSections/EmptyDataSection";
 import { useSearchParams } from "react-router";
 import MainPagination from "@/components/common/MainPagination";
+import { useTranslation } from "react-i18next";
 
 const Favorites = () => {
+  const { t } = useTranslation();
   const [searchParams, setSearchParams] = useSearchParams();
 
   const page = Number(searchParams.get("page")) || 1;
@@ -21,12 +23,12 @@ const Favorites = () => {
 
   return (
     <div className="space-y-6">
-      <SectionTitle title="Favorites" />
+      <SectionTitle title={t("favoritesPage.title")} />
 
       {isLoading ? (
         <ProductsSkeleton />
       ) : isEmpty ? (
-        <EmptyDataSection msg={"no favorites found"} />
+        <EmptyDataSection msg={t("favoritesPage.noFavorites")} />
       ) : (
         <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4">
           {favorites?.items?.map((product) => (

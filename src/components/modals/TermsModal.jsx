@@ -1,16 +1,17 @@
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
+  DialogDescription,
 } from "@/components/ui/dialog";
-
 import { useDispatch, useSelector } from "react-redux";
 import { closeModal } from "@/store/modals/modalsSlice";
+import { useTranslation } from "react-i18next";
 
 const TermsModal = () => {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
   const { modalName } = useSelector((state) => state.modals);
   const { settings } = useSelector((state) => state.settings);
 
@@ -22,10 +23,12 @@ const TermsModal = () => {
     <Dialog open={modalName === "termsModal"} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-2xl">
         <DialogHeader>
-          <DialogTitle className={`text-center`}>
-            Terms & Conditions
+          <DialogTitle className="text-center">
+            {t("TermsModal.title")}
           </DialogTitle>
-          <DialogDescription className="sr-only"></DialogDescription>
+          <DialogDescription className="sr-only">
+            {t("TermsModal.description")}
+          </DialogDescription>
         </DialogHeader>
 
         <div

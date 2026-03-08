@@ -4,11 +4,13 @@ import { useState } from "react";
 import Step1 from "./steps/Step1";
 import Step2 from "./steps/Step2";
 import Step3 from "./steps/Step3";
+import { useTranslation } from "react-i18next";
 
 const RegisterCompany = () => {
+  const { t } = useTranslation();
   const steps = [1, 2, 3];
 
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(3);
 
   const goNext = () => {
     if (step >= steps.length) return;
@@ -20,8 +22,8 @@ const RegisterCompany = () => {
 
   return (
     <AuthContainer
-      title="Create Company Account"
-      description="Please enter your details to access your account"
+      title={t("registerCompany.createAccount")}
+      description={t("registerCompany.enterDetails")}
     >
       <StepProgress steps={steps} currentStep={step} onStepClick={setStep} />
 

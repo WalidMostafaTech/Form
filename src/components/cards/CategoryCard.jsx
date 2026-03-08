@@ -1,6 +1,9 @@
+import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
 
 const CategoryCard = ({ category }) => {
+  const { t } = useTranslation();
+
   return (
     <div
       key={category.id}
@@ -19,13 +22,17 @@ const CategoryCard = ({ category }) => {
       >
         <h3 className="text-2xl font-bold mb-2">{category.name}</h3>
 
-        <p className="text-sm opacity-90 max-h-30 transition-all duration-500 
-        group-hover:opacity-0 group-hover:max-h-0 mb-2 group-hover:mb-0">
+        <p
+          className="text-sm opacity-90 max-h-30 transition-all duration-500 
+        group-hover:opacity-0 group-hover:max-h-0 mb-2 group-hover:mb-0"
+        >
           {category.first_description}
         </p>
 
-        <p className="text-sm opacity-0 max-h-0 overflow-hidden transition-all duration-500 
-        group-hover:opacity-100 group-hover:max-h-40 group-hover:mb-2">
+        <p
+          className="text-sm opacity-0 max-h-0 overflow-hidden transition-all duration-500 
+        group-hover:opacity-100 group-hover:max-h-40 group-hover:mb-2"
+        >
           {category.second_description}
         </p>
 
@@ -34,7 +41,7 @@ const CategoryCard = ({ category }) => {
           className="inline-block w-max border-b-2 border-secondary text-sm tracking-wide line-clamp-10 hover:opacity-80 transition-all duration-500
                     group-hover:bg-white group-hover:text-primary group-hover:border-transparent group-hover:px-2 group-hover:py-1 group-hover:rounded"
         >
-          Explore Collection
+          {t("exploreCollection")}
         </Link>
       </div>
     </div>

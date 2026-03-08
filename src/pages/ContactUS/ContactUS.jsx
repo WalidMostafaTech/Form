@@ -4,8 +4,11 @@ import ContactInfo from "./sections/ContactInfo";
 import ContactMap from "./sections/ContactMap";
 import { getContactInformation } from "@/api/mainServices";
 import { useQuery } from "@tanstack/react-query";
+import { useTranslation } from "react-i18next";
 
 const ContactUS = () => {
+  const { t } = useTranslation();
+
   const { data: contactInfo, isLoading } = useQuery({
     queryKey: ["contactInformation"],
     queryFn: getContactInformation,
@@ -15,7 +18,7 @@ const ContactUS = () => {
     <main>
       <PageBanner
         image={contactInfo?.contact_us_image}
-        title={"contact us"}
+        title={t("ContactUS.pageTitle")}
         description={contactInfo?.contact_us_description}
         html={true}
         loading={isLoading}

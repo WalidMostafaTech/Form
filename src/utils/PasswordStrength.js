@@ -12,13 +12,13 @@ export const getPasswordStrength = (password = "") => {
 export const strengthLabel = (score) => {
   switch (score) {
     case 1:
-      return "ضعيفة";
+      return "weak";
     case 2:
-      return "متوسطة";
+      return "medium";
     case 3:
-      return "جيدة";
+      return "strong";
     case 4:
-      return "قوية";
+      return "very strong";
     default:
       return "";
   }

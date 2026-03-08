@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import SectionTitle from "@/components/common/SectionTitle";
 import ProductCard from "@/components/cards/ProductCard";
 import MainSlider from "./MainSlider";
@@ -6,6 +7,8 @@ import { useQuery } from "@tanstack/react-query";
 import { getBestSelling } from "@/api/mainServices";
 
 const BestSellers = () => {
+  const { t } = useTranslation();
+
   const { data: bestSellers, isLoading } = useQuery({
     queryKey: ["bestSellers"],
     queryFn: getBestSelling,
@@ -19,10 +22,10 @@ const BestSellers = () => {
     <section className="sectionPadding">
       <div className="container">
         <SectionTitle
-          title="best"
-          spanTitle="sellers"
+          title={t("BestSellers.title")}
+          spanTitle={t("BestSellers.spanTitle")}
           link={"/shop"}
-          linkText={"view all products"}
+          linkText={t("BestSellers.viewAll")}
         />
 
         <MainSlider
@@ -40,4 +43,5 @@ const BestSellers = () => {
     </section>
   );
 };
+
 export default BestSellers;

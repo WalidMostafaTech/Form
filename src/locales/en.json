@@ -1,5 +1,66 @@
 {
   "loading": "Loading...",
+  "currency": "AED",
+  "exploreCollection": "Explore Collection",
+  "HideDetails": "Hide Details",
+  "ViewDetails": "Show Details",
+  "add_to_cart": "Add to Cart",
+  "About_Us": "About Us",
+  "VisionAndMission": "Vision & Mission",
+  "Visit": "Visit",
+
+  "OrderSummaryCard": {
+    "title": "Order Summary",
+    "subtotal": "Subtotal",
+    "deliveryFees": "Delivery Fees",
+    "vat": "Vat",
+    "currency": "EGP",
+    "confirmOrder": "Confirm Order",
+    "confirming": "Confirming..."
+  },
+
+  "BestSellers": {
+    "title": "best",
+    "spanTitle": "sellers",
+    "viewAll": "view all products"
+  },
+
+  "OurService": {
+    "title": "Our",
+    "spanTitle": "Services"
+  },
+
+  "OurStory": {
+    "title": "Our Story"
+  },
+
+  "Footer": {
+    "companyLogo": "Company Logo",
+    "links": "Links",
+    "socialMedia": "Social Media"
+  },
+
+  "NotificationsPopUp": {
+    "notFound": "Notifications not found",
+    "seeAll": "see all notifications"
+  },
+
+  "ProfileSide": {
+    "profile": "Profile",
+    "orders": "Orders",
+    "favorites": "Favorites",
+    "logout": "Logout",
+    "login": "Login"
+  },
+
+  "DeleteCartItemModal": {
+    "title": "Delete item from cart?",
+    "description": "Are you sure you want to remove this product from your cart?",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "deleting": "Deleting...",
+    "itemRemoved": "Item removed from cart."
+  },
 
   "logOutModal": {
     "logoutConfirm": "Are you sure you want to logout?",
@@ -22,10 +83,175 @@
     "cancel": "Cancel"
   },
 
+  "TermsModal": {
+    "title": "Terms & Conditions",
+    "description": "Terms and conditions of the registration form."
+  },
+
+  "UpdateCartItemModal": {
+    "title": "Update Quantity",
+    "description": "Update the quantity of this product in your cart.",
+    "cancel": "Cancel",
+    "update": "Update",
+    "updating": "Updating...",
+    "itemUpdated": "Item quantity updated."
+  },
+
   "checkVerifiedEmailGuard": {
     "title": "Your email is not verified!",
     "description": "You need to verify your email to access this page.",
     "button": "Verify your email"
+  },
+
+  "NavigationLinks": {
+    "home": "Home",
+    "about": "About",
+    "shop": "Shop",
+    "wholesale": "Wholesale",
+    "location": "Location",
+    "contact": "Contact Us"
+  },
+
+  "Cart": {
+    "pageTitle": "Cart",
+    "emptyMessage": "Cart is empty",
+    "orderConfirmed": "Order confirmed successfully!",
+    "commentLabel": "Comment",
+    "commentPlaceholder": "Add comment"
+  },
+
+  "ContactUS": {
+    "pageTitle": "Contact Us"
+  },
+
+  "ContactForm": {
+    "heading": "Send Your Message",
+    "firstName": "First Name",
+    "firstNamePlaceholder": "Enter your first name",
+    "firstNameRequired": "First name is required",
+    "lastName": "Last Name",
+    "lastNamePlaceholder": "Enter your last name",
+    "lastNameRequired": "Last name is required",
+    "phone": "Phone",
+    "phonePlaceholder": "Enter your phone number",
+    "invalidPhone": "Invalid phone number",
+    "email": "Email Address",
+    "emailPlaceholder": "example@example.com",
+    "invalidEmail": "Invalid email address",
+    "message": "Message",
+    "messagePlaceholder": "Write your message...",
+    "messageMin": "Message must be at least 10 characters",
+    "send": "Send",
+    "sending": "Sending...",
+    "successMessage": "Message sent successfully! We will get back to you soon.",
+    "somethingWrong": "Something went wrong"
+  },
+
+  "ContactInfo": {
+    "heading": "Form Information",
+    "location": "Location",
+    "phone": "Phone",
+    "email": "Email",
+    "officeHours": "Office Hours"
+  },
+
+  "ForgotPassword": {
+    "step1Title": "Forget Your Password",
+    "step1Description": "Enter your email to receive a password reset link.",
+    "step2Title": "Check Your Messages",
+    "step2Description": "Enter the OTP sent to your email to verify your identity.",
+    "step3Title": "Reset Your Password",
+    "step3Description": "Create a new password for your account."
+  },
+
+  "checkEmail": {
+    "title": "Forgot Password",
+    "description": "Enter your email to reset your password",
+    "emailLabel": "Email",
+    "emailPlaceholder": "example@email.com",
+    "sending": "Sending...",
+    "sendResetLink": "Send Reset Link",
+    "rememberPassword": "Remembered your password?",
+    "login": "Login",
+    "invalidEmail": "Invalid email address",
+    "genericError": "Something went wrong, please try again"
+  },
+
+  "otp": {
+    "title": "OTP Verification",
+    "description": "We sent a recovery code to your WhatsApp number. Please check your messages and enter the code sent to {{email}}",
+    "otpRequired": "Enter a 6-digit code",
+    "verifying": "Verifying...",
+    "confirm": "Confirm Code",
+    "notReceived": "Didn't receive the code?",
+    "resendIn": "Resend in {{countdown}}s",
+    "resend": "Resend",
+    "backToLogin": "Back to Login",
+    "wrongOtp": "Invalid code"
+  },
+
+  "resetPassword": {
+    "newPassword": "New Password",
+    "confirmPassword": "Confirm Password",
+    "passwordStrength": "Password strength:",
+    "resetting": "Resetting...",
+    "saveNewPassword": "Save New Password",
+    "minLength": "Password must be at least 6 characters",
+    "mismatch": "Passwords do not match",
+    "genericError": "Something went wrong"
+  },
+
+  "categorySection": {
+    "shopBy": "Shop by",
+    "category": "Category"
+  },
+
+  "login": {
+    "title": "Welcome Back",
+    "description": "Please enter your details to access your account",
+    "tabs": {
+      "email": "Email Address",
+      "phone": "Phone Number"
+    },
+    "placeholders": {
+      "email": "example@example.com",
+      "phone": "Enter your phone number",
+      "password": "************"
+    },
+    "labels": {
+      "email": "Email Address",
+      "phone": "Phone Number",
+      "password": "Password"
+    },
+    "forgotPassword": "Forget Password?",
+    "loginButton": "Login Your Account",
+    "loggingIn": "Logging in...",
+    "noAccount": "Don't have an account?",
+    "createAccount": "Create an Account",
+    "invalidEmail": "Invalid email address",
+    "invalidPhone": "Invalid phone number",
+    "passwordMin": "Password must be at least 6 characters"
+  },
+
+  "productDetails": {
+    "addToCart": "ADD TO CART",
+    "adding": "Adding...",
+    "buyNow": "BUY NOW",
+    "processing": "Processing...",
+    "description": "Description",
+    "shipping": "Shipping and dispatch information",
+    "details": "More details",
+    "notes": "Additional notes",
+    "favoriteError": "Failed to toggle favorite!",
+    "cartError": "Failed to add product to cart!",
+    "cartSuccess": "Product added to cart successfully!"
+  },
+
+  "productsPage": {
+    "shopTitle": "Shop",
+    "wholesaleTitle": "Wholesale",
+    "allCategories": "All",
+    "noProducts": "No products found"
   },
 
   "ProfileSideBar": {
@@ -114,46 +340,6 @@
     }
   },
 
-  "checkEmail": {
-    "title": "Forgot Password",
-    "description": "Enter your email to reset your password",
-    "emailLabel": "Email",
-    "emailPlaceholder": "example@email.com",
-    "sending": "Sending...",
-    "sendResetLink": "Send Reset Link",
-    "rememberPassword": "Remembered your password?",
-    "login": "Login",
-    "invalidEmail": "Invalid email address",
-    "genericError": "Something went wrong, please try again"
-  },
-
-  "otp": {
-    "title": "OTP Verification",
-    "description": "We sent a recovery code to your WhatsApp number. Please check your messages and enter the code sent to {{email}}",
-    "otpRequired": "Enter a 6-digit code",
-    "verifying": "Verifying...",
-    "confirm": "Confirm Code",
-    "notReceived": "Didn't receive the code?",
-    "resendIn": "Resend in {{countdown}}s",
-    "resend": "Resend",
-    "backToLogin": "Back to Login",
-    "wrongOtp": "Invalid code"
-  },
-
-  "resetPassword": {
-    "title": "Reset Password",
-    "description": "Enter a new password for your account",
-    "newPassword": "New Password",
-    "confirmPassword": "Confirm Password",
-    "strength": "Password strength:",
-    "resetting": "Resetting...",
-    "save": "Save New Password",
-    "error": "Something went wrong, please try again",
-    "passwordShort": "Password is too short",
-    "confirmRequired": "Password confirmation is required",
-    "notMatched": "Passwords do not match"
-  },
-
   "notifications": {
     "title": "Notifications",
     "subtitle": "Check your notifications",
@@ -163,9 +349,117 @@
     "loading": "Loading..."
   },
 
-  "orders": {
-    "title": "Orders",
-    "empty": "No orders found"
+  "favoritesPage": {
+    "title": "Favorites",
+    "noFavorites": "No favorites found"
+  },
+
+  "ordersPage": {
+    "title": "My Orders",
+    "all": "All",
+    "noOrders": "No orders found"
+  },
+
+  "verifyEmailPage": {
+    "title": "Check Your Messages",
+    "description": "For your security, we’ve sent a one-time password (OTP) to your registered contact details. Enter the code below to verify your identity and proceed.",
+    "verifyButton": "Verify Email",
+    "checking": "Checking...",
+    "didntReceive": "Didn't receive the code?",
+    "resend": "Resend",
+    "backToRegister": "Back to Register",
+    "otpError": "OTP must be 6 digits",
+    "invalidOtp": "Invalid OTP",
+    "resendIn": "Resend in {{seconds}}s"
+  },
+
+  "registerPage": {
+    "title": "Choose Your Path",
+    "description": "Please enter your details to access your account",
+    "customer": "Customer",
+    "company": "Company",
+    "alreadyHaveAccount": "Already have an account?",
+    "signInHere": "sign in here"
+  },
+
+  "registerCustomer": {
+    "createAccount": "Create Customer Account",
+    "enterDetails": "Please enter your details to access your account",
+    "uploadImage": "Upload your image",
+    "fullName": "Full Name",
+    "fullNamePlaceholder": "Enter your full name",
+    "email": "Email Address",
+    "emailPlaceholder": "example@example.com",
+    "phone": "Phone",
+    "phonePlaceholder": "Enter phone number",
+    "emirate": "Your Emirate",
+    "selectEmirate": "Select your emirate",
+    "password": "Password",
+    "agreeTo": "I agree to the",
+    "termsAndConditions": "Terms and Conditions",
+    "creating": "Creating...",
+    "somethingWentWrong": "Something went wrong",
+    "nameTooShort": "Name is too short",
+    "invalidEmail": "Invalid email address",
+    "invalidPhone": "Invalid phone number",
+    "passwordMin": "Password must be at least 6 characters",
+    "confirmPassword": "Confirm your password",
+    "termsRequired": "You must accept terms",
+    "passwordsMismatch": "Passwords do not match"
+  },
+
+  "registerCompany": {
+    "createAccount": "Create Company Account",
+    "enterDetails": "Please enter your details to access your account"
+  },
+
+  "registerCompanyStep1": {
+    "uploadImage": "Upload your image",
+    "fullName": "Full Name",
+    "fullNamePlaceholder": "Enter your full name",
+    "email": "Email Address",
+    "emailPlaceholder": "example@example.com",
+    "phone": "Phone",
+    "phonePlaceholder": "Enter phone number",
+    "emirate": "Your Emirate",
+    "selectEmirate": "Select your emirate",
+    "password": "Password",
+    "agreeTo": "I agree to the",
+    "termsAndConditions": "Terms and Conditions",
+    "continueNextStep": "Continue Next Step",
+    "nameTooShort": "Name is too short",
+    "invalidEmail": "Invalid email address",
+    "invalidPhone": "Invalid phone number",
+    "passwordMin": "Password must be at least 6 characters",
+    "confirmPassword": "Confirm your password",
+    "termsRequired": "You must accept terms",
+    "passwordsMismatch": "Passwords do not match"
+  },
+
+  "registerCompanyStep2": {
+    "coffeeVolumes": "What volumes of coffee are you interested in ordering?",
+    "coffeeUsage": "What would you like to use our coffees for?",
+    "textAreaPlaceholder": "Text area to answer",
+    "continueNextStep": "Continue Next Step",
+    "provideMoreDetails": "Please provide more details"
+  },
+
+  "registerCompanyStep3": {
+    "tradeLicenseName": "Trade license name",
+    "tradeLicenseNumber": "Trade license number",
+    "trnNumber": "TRN number",
+    "uploadTradeLicense": "Upload Trade license",
+    "uploadTrnCertificate": "Upload TRN certificate",
+    "tradeLicensePlaceholder": "trade",
+    "completeRegistration": "Complete Registration",
+    "creating": "Creating...",
+    "somethingWentWrong": "Something went wrong",
+
+    "tradeLicenseNameShort": "Trade license name is too short",
+    "tradeLicenseNumberShort": "Trade license number is too short",
+    "trnNumberShort": "TRN number is too short",
+    "tradeLicenseFileRequired": "Trade license file is required",
+    "trnCertificateRequired": "TRN certificate file is required"
   },
 
   "ErrorPage": {

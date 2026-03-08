@@ -3,13 +3,20 @@ import { Button } from "@/components/ui/button";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-
-const schema = z.object({
-  coffee_volumes: z.string().min(10, "Please provide more details"),
-  coffee_usage: z.string().min(10, "Please provide more details"),
-});
+import { useTranslation } from "react-i18next";
 
 const Step2 = ({ setParentData, parentData, goNext }) => {
+  const { t } = useTranslation();
+
+  const schema = z.object({
+    coffee_volumes: z
+      .string()
+      .min(10, t("registerCompanyStep2.provideMoreDetails")),
+    coffee_usage: z
+      .string()
+      .min(10, t("registerCompanyStep2.provideMoreDetails")),
+  });
+
   const {
     handleSubmit,
     control,
@@ -37,14 +44,14 @@ const Step2 = ({ setParentData, parentData, goNext }) => {
           <MainInput
             {...field}
             type="textarea"
-            label="What volumes of coffee are you interested in ordering?"
-            placeholder="text area to answer"
+            label={t("registerCompanyStep2.coffeeVolumes")}
+            placeholder={t("registerCompanyStep2.textAreaPlaceholder")}
             error={errors.coffee_volumes?.message}
           />
         )}
       />
 
-      {/* use_case */}
+      {/* Use Case */}
       <Controller
         name="coffee_usage"
         control={control}
@@ -52,15 +59,15 @@ const Step2 = ({ setParentData, parentData, goNext }) => {
           <MainInput
             {...field}
             type="textarea"
-            label="What would you like to use our coffees for?"
-            placeholder="text area to answer"
+            label={t("registerCompanyStep2.coffeeUsage")}
+            placeholder={t("registerCompanyStep2.textAreaPlaceholder")}
             error={errors.coffee_usage?.message}
           />
         )}
       />
 
       <Button type="submit" className="w-full">
-        Continue Next Step
+        {t("registerCompanyStep2.continueNextStep")}
       </Button>
     </form>
   );

@@ -8,8 +8,10 @@ import { useRef } from "react";
 import EmptyDataSection from "@/components/commonSections/EmptyDataSection";
 import { toast } from "sonner";
 import CartPageSkeleton from "@/components/Loading/SkeletonLoading/CartSkeletonPage";
+import { useTranslation } from "react-i18next";
 
 const Cart = () => {
+  const { t } = useTranslation();
   const textareaRef = useRef(null);
 
   const { data: cartHero, isLoading: isLoadingHero } = useQuery({
@@ -27,10 +29,10 @@ const Cart = () => {
   const { mutate: createOrder, isPending } = useMutation({
     mutationFn: confirmOrder,
     onSuccess: () => {
-      toast.success("Order confirmed successfully!");
+      toast.success(t("Cart.orderConfirmed"));
       queryClient.invalidateQueries({ queryKey: ["cart"] });
       queryClient.invalidateQueries({ queryKey: ["cart_count"] });
-      textareaRef.current.value = "";
+      if (textareaRef.current) textareaRef.current.value = "";
     },
     onError: () => {},
   });
@@ -41,7 +43,7 @@ const Cart = () => {
     <main>
       <PageBanner
         image={cartHero?.image}
-        title={"cart"}
+        title={t("Cart.pageTitle")}
         description={cartHero?.description}
         loading={isLoadingHero}
       />
@@ -49,7 +51,7 @@ const Cart = () => {
       {isLoading ? (
         <CartPageSkeleton />
       ) : isCartEmpty ? (
-        <EmptyDataSection msg={"Cart is empty"} />
+        <EmptyDataSection msg={t("Cart.emptyMessage")} />
       ) : (
         <section className="container pagePadding">
           <div className="flex flex-col md:flex-row gap-4 lg:gap-8">
@@ -73,15 +75,15 @@ const Cart = () => {
               htmlFor="comment"
               className="inline-block mb-1 text-sm font-medium text-gray-900"
             >
-              Comment
+              {t("Cart.commentLabel")}
             </label>
 
             <Textarea
               ref={textareaRef}
               name="comment"
               id="comment"
-              placeholder={`add comment`}
-              className={`bg-muted`}
+              placeholder={t("Cart.commentPlaceholder")}
+              className="bg-muted"
             />
           </div>
         </section>

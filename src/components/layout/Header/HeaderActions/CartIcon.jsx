@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getCartItemsCount } from "@/api/cartServices";
 
 const CartIcon = ({ user }) => {
-  const { data: cartCount } = useQuery({
+  const { data: cartCount = 0 } = useQuery({
     queryKey: ["cart_count"],
     queryFn: getCartItemsCount,
     enabled: !!user,
@@ -14,7 +14,7 @@ const CartIcon = ({ user }) => {
     <Link to="/cart" className="relative">
       <SlHandbag className="header_icon" />
 
-      {cartCount && cartCount > 0 && (
+      {cartCount > 0 && (
         <span
           className="absolute -top-2 -inset-e-1 bg-secondary text-primary text-sm rounded-full w-4 h-4 
             flex items-center justify-center"

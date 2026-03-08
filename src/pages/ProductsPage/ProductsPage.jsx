@@ -9,12 +9,13 @@ import ProductsSkeleton from "@/components/Loading/SkeletonLoading/ProductsSkele
 import { useQuery } from "@tanstack/react-query";
 import { useSelector } from "react-redux";
 import { useSearchParams } from "react-router";
+import { useTranslation } from "react-i18next";
 
-const ProductsPage = ({ saleType, title = "Shop" }) => {
+const ProductsPage = ({ saleType, title }) => {
+  const { t } = useTranslation();
   const [searchParams, setSearchParams] = useSearchParams();
 
   const selectedCategory = Number(searchParams.get("category")) || 0;
-
   const page = Number(searchParams.get("page")) || 1;
 
   const { data: products, isLoading } = useQuery({
@@ -40,7 +41,7 @@ const ProductsPage = ({ saleType, title = "Shop" }) => {
     <main>
       <PageBanner
         image={categoryHero?.image}
-        title={title}
+        title={title || t("productsPage.shopTitle")}
         description={categoryHero?.description}
         html={true}
         loading={isLoadingHero}
@@ -49,7 +50,8 @@ const ProductsPage = ({ saleType, title = "Shop" }) => {
       <section className="container pagePadding">
         <SectionTitle
           title={
-            categories?.find((c) => c.id === selectedCategory)?.name || "All"
+            categories?.find((c) => c.id === selectedCategory)?.name ||
+            t("productsPage.allCategories")
           }
         />
 
@@ -69,7 +71,7 @@ const ProductsPage = ({ saleType, title = "Shop" }) => {
         {isLoading ? (
           <ProductsSkeleton />
         ) : isEmpty ? (
-          <EmptyDataSection msg={"no products found"} />
+          <EmptyDataSection msg={t("productsPage.noProducts")} />
         ) : (
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6">
             {products?.items?.map((product) => (

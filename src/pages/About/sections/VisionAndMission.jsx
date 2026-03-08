@@ -1,7 +1,10 @@
 import SectionTitle from "@/components/common/SectionTitle";
 import VisionAndMissionSkeleton from "@/components/Loading/SkeletonLoading/VisionAndMissionSkeleton";
+import { useTranslation } from "react-i18next";
 
 const VisionAndMission = ({ vision, mission, loading }) => {
+  const { t } = useTranslation();
+
   if (loading) return <VisionAndMissionSkeleton />;
 
   if (!vision || !mission) return null;
@@ -24,7 +27,7 @@ const VisionAndMission = ({ vision, mission, loading }) => {
   return (
     <section className="sectionPadding">
       <div className="container">
-        <SectionTitle title="Vision & Mission" />
+        <SectionTitle title={t("VisionAndMission")} />
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-8 mt-8">
           {list.map((item) => (

@@ -2,18 +2,21 @@ import AuthContainer from "@/components/form/AuthContainer";
 import { FaRegUser } from "react-icons/fa";
 import { HiOutlineBuildingOffice2 } from "react-icons/hi2";
 import { Link } from "react-router";
+import { useTranslation } from "react-i18next";
 
 const Register = () => {
+  const { t } = useTranslation();
+
   return (
     <AuthContainer
-      title="Choose Your Path"
-      description="Please enter your details to access your account"
+      title={t("registerPage.title")}
+      description={t("registerPage.description")}
       coffeeIcon
     >
       <div className="grid grid-cols-2 gap-4">
         <Link
           to="/register/customer"
-          className="flex flex-col items-center gap-2 border  p-4 rounded-lg hover:bg-primary/10 transition"
+          className="flex flex-col items-center gap-2 border p-4 rounded-lg hover:bg-primary/10 transition"
         >
           <div
             className="text-2xl text-primary bg-primary-foreground w-16 h-16 
@@ -21,12 +24,12 @@ const Register = () => {
           >
             <FaRegUser />
           </div>
-          <p>Customer</p>
+          <p>{t("registerPage.customer")}</p>
         </Link>
 
         <Link
           to="/register/company"
-          className="flex flex-col items-center gap-2 border  p-4 rounded-lg hover:bg-primary/10 transition"
+          className="flex flex-col items-center gap-2 border p-4 rounded-lg hover:bg-primary/10 transition"
         >
           <div
             className="text-2xl text-primary bg-primary-foreground w-16 h-16 
@@ -34,16 +37,16 @@ const Register = () => {
           >
             <HiOutlineBuildingOffice2 />
           </div>
-          <p>Company</p>
+          <p>{t("registerPage.company")}</p>
         </Link>
       </div>
 
-      <hr className="" />
+      <hr />
 
       <div className="text-center text-xs text-muted-foreground">
-        Already have an account?
+        {t("registerPage.alreadyHaveAccount")}
         <Link to="/login" className="text-primary hover:underline ms-1">
-          sign in here
+          {t("registerPage.signInHere")}
         </Link>
       </div>
     </AuthContainer>

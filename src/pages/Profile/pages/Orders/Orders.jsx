@@ -7,8 +7,10 @@ import OptionSelector from "@/components/common/OptionSelector";
 import EmptyDataSection from "@/components/commonSections/EmptyDataSection";
 import { useSearchParams } from "react-router";
 import MainPagination from "@/components/common/MainPagination";
+import { useTranslation } from "react-i18next";
 
 const Orders = () => {
+  const { t } = useTranslation();
   const [searchParams, setSearchParams] = useSearchParams();
 
   const selectedStatus = searchParams.get("status") || "all";
@@ -29,7 +31,7 @@ const Orders = () => {
   const filterList = [
     {
       value: "all",
-      label: "all",
+      label: t("ordersPage.all"),
     },
     ...(ordersStatus?.map((item) => ({
       value: item.value,
@@ -47,7 +49,7 @@ const Orders = () => {
 
   return (
     <div className="space-y-6">
-      <SectionTitle title="My Orders" />
+      <SectionTitle title={t("ordersPage.title")} />
 
       <OptionSelector
         options={filterList}
@@ -60,7 +62,7 @@ const Orders = () => {
       {isLoading ? (
         <MyOrdersSkeleton />
       ) : isEmpty ? (
-        <EmptyDataSection msg={"no orders found"} />
+        <EmptyDataSection msg={t("ordersPage.noOrders")} />
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 gap-4">
           {orders?.items?.map((item) => (

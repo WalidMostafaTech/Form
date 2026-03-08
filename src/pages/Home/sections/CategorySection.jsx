@@ -4,8 +4,11 @@ import MainSlider from "@/components/commonSections/MainSlider";
 import { useQuery } from "@tanstack/react-query";
 import { getCategories } from "@/api/homeServices";
 import CategorySectionSkeleton from "@/components/Loading/SkeletonLoading/CategorySectionSkeleton";
+import { useTranslation } from "react-i18next";
 
 const CategorySection = () => {
+  const { t } = useTranslation();
+
   const { data: categoriesData, isLoading } = useQuery({
     queryKey: ["categories"],
     queryFn: getCategories,
@@ -18,11 +21,16 @@ const CategorySection = () => {
   return (
     <section className="bg-primary-foreground sectionPadding">
       <div className="container">
-        <SectionTitle title="shop by" spanTitle="category" />
+        <SectionTitle
+          title={t("categorySection.shopBy")}
+          spanTitle={t("categorySection.category")}
+        />
 
         <MainSlider
           data={categoriesData}
-          renderItem={(category) => <CategoryCard category={category} />}
+          renderItem={(category) => (
+            <CategoryCard key={category.id} category={category} />
+          )}
         />
       </div>
     </section>

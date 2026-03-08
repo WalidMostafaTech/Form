@@ -20,12 +20,14 @@ import { sendOtpVerifyEmail, verifyEmail } from "@/api/verifyEmailServices";
 import { useDispatch, useSelector } from "react-redux";
 import { addUser, clearUser } from "@/store/user/userSlice";
 import { logoutAction } from "@/store/user/userActions";
+import { useTranslation } from "react-i18next";
 
 const otpSchema = z.object({
-  otp: z.string().length(6, "OTP must be 6 digits"),
+  otp: z.string().length(6, "otpError"),
 });
 
 const VerifyEmail = () => {
+  const { t } = useTranslation();
   const { user } = useSelector((state) => state.user);
 
   const navigate = useNavigate();
@@ -41,7 +43,6 @@ const VerifyEmail = () => {
   });
 
   const timerNum = 60; // 60 seconds for OTP resend
-
   const [countdown, setCountdown] = useState(timerNum);
   const [otpSent, setOtpSent] = useState(false);
 
@@ -104,8 +105,8 @@ const VerifyEmail = () => {
 
   return (
     <AuthContainer
-      title="Check Your Messages"
-      description="For your security, we’ve sent a one-time password (OTP) to your registered contact details. Enter the code below to verify your identity and proceed."
+      title={t("verifyEmailPage.title")}
+      description={t("verifyEmailPage.description")}
     >
       <form
         onSubmit={handleSubmit(onSubmit)}
@@ -136,7 +137,7 @@ const VerifyEmail = () => {
 
               {errors.otp && (
                 <p className="text-sm text-red-600 text-center">
-                  {errors.otp.message}
+                  {t(`verifyEmailPage.${errors.otp.message}`)}
                 </p>
               )}
             </div>
@@ -144,11 +145,13 @@ const VerifyEmail = () => {
         />
 
         <Button type="submit" className="w-full" disabled={isPending}>
-          {isPending ? "Checking..." : "Verify Email"}
+          {isPending
+            ? t("verifyEmailPage.checking")
+            : t("verifyEmailPage.verifyButton")}
         </Button>
 
         <p className="text-sm text-muted-foreground text-center">
-          Didn't receive the code?
+          {t("verifyEmailPage.didntReceive")}
           <button
             type="button"
             onClick={handleResend}
@@ -157,7 +160,9 @@ const VerifyEmail = () => {
               countdown > 0 ? "opacity-50 cursor-not-allowed" : ""
             }`}
           >
-            {countdown > 0 ? `Resend in ${countdown}s` : "Resend"}
+            {countdown > 0
+              ? t("verifyEmailPage.resendIn", { seconds: countdown })
+              : t("verifyEmailPage.resend")}
           </button>
         </p>
 
@@ -166,12 +171,14 @@ const VerifyEmail = () => {
           onClick={handleBackToRegister}
           className="text-sm hover:underline cursor-pointer text-muted-foreground"
         >
-          Back to Register
+          {t("verifyEmailPage.backToRegister")}
         </button>
 
         {error && (
           <FormError
-            errorMsg={error.response?.data?.message || "Invalid OTP"}
+            errorMsg={
+              error.response?.data?.message || t("verifyEmailPage.invalidOtp")
+            }
           />
         )}
       </form>
