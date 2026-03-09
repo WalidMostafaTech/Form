@@ -63,7 +63,7 @@ const ProductsPage = ({ saleType, title }) => {
         loading={isLoadingHero}
       />
 
-      <section className="container pagePadding">
+      <section className="container pagePadding space-y-6">
         <SectionTitle
           title={
             categories?.find((c) => c.id === selectedCategory)?.name ||
@@ -74,7 +74,6 @@ const ProductsPage = ({ saleType, title }) => {
         <OptionSelector
           options={categories}
           selected={selectedCategory}
-          className="mb-8"
           onSelect={(category) => {
             if (category.id === "0") {
               setSearchParams({});

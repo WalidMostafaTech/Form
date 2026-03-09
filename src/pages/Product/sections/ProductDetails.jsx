@@ -105,7 +105,7 @@ const ProductDetails = ({ product }) => {
   return (
     <section className="space-y-6">
       {/* Title */}
-      <h2 className="text-3xl font-extrabold">{product?.name}</h2>
+      <h2 className="text-3xl lg:text-4xl font-extrabold">{product?.name}</h2>
 
       {/* Weights / Sizes */}
       <div className="flex items-center justify-between flex-wrap gap-2">
@@ -116,24 +116,24 @@ const ProductDetails = ({ product }) => {
           getLabel={(size) => `${size.weight} ${size.weight_unit}`}
         />
 
-        <span className="text-xl font-bold text-primary bg-primary-foreground rounded-md px-2 py-1 flex items-center gap-1">
+        <span className="text-xl lg:text-2xl font-extrabold text-primary bg-primary-foreground rounded-md px-2 py-1 flex items-center gap-1">
           {selectedSize?.price} <UEAIcon className="w-6 h-6" />
         </span>
       </div>
 
       {/* Quantity */}
-      {product.for_sale && (
+      {!product.for_sale && (
         <div className="flex items-center gap-2 border rounded w-fit">
           <button
             onClick={() => setQuantity((prev) => Math.max(1, prev - 1))}
-            className="w-8 h-8 flex items-center justify-center hover:bg-gray-100 transition cursor-pointer"
+            className="w-10 aspect-square flex items-center justify-center hover:bg-gray-100 transition cursor-pointer"
           >
             <FiMinus />
           </button>
-          <span className="min-w-8 text-center">{quantity}</span>
+          <span className="min-w-10 text-center font-semibold text-lg">{quantity}</span>
           <button
             onClick={() => setQuantity((prev) => prev + 1)}
-            className="w-8 h-8 flex items-center justify-center hover:bg-gray-100 transition cursor-pointer"
+            className="w-10 aspect-square flex items-center justify-center hover:bg-gray-100 transition cursor-pointer"
           >
             <FiPlus />
           </button>
@@ -142,11 +142,11 @@ const ProductDetails = ({ product }) => {
 
       {/* Description */}
       <div>
-        <h3 className="font-semibold mb-2">
+        <h3 className="text-xl font-semibold mb-2">
           {t("productDetails.description")}
         </h3>
         <div
-          className="text-muted-foreground"
+          className="text-muted-foreground font-semibold"
           dangerouslySetInnerHTML={{ __html: product?.description }}
         />
       </div>
@@ -189,12 +189,12 @@ const ProductDetails = ({ product }) => {
       {/* Accordion */}
       <Accordion type="multiple" collapsible="true" className="border-y">
         <AccordionItem value="shipping">
-          <AccordionTrigger className={`cursor-pointer`}>
+          <AccordionTrigger className={`cursor-pointer text-lg`}>
             {t("productDetails.shipping")}
           </AccordionTrigger>
           <AccordionContent>
             <div
-              className="text-sm text-muted-foreground"
+              className="text-sm font-semibold text-muted-foreground"
               dangerouslySetInnerHTML={{
                 __html: product?.shipping_and_dispatch_information,
               }}
@@ -203,12 +203,12 @@ const ProductDetails = ({ product }) => {
         </AccordionItem>
 
         <AccordionItem value="details">
-          <AccordionTrigger className={`cursor-pointer`}>
+          <AccordionTrigger className={`cursor-pointer text-lg`}>
             {t("productDetails.details")}
           </AccordionTrigger>
           <AccordionContent>
             <div
-              className="text-sm text-muted-foreground"
+              className="text-sm font-semibold text-muted-foreground"
               dangerouslySetInnerHTML={{
                 __html: product?.more_details,
               }}
@@ -217,12 +217,12 @@ const ProductDetails = ({ product }) => {
         </AccordionItem>
 
         <AccordionItem value="notes">
-          <AccordionTrigger className={`cursor-pointer`}>
+          <AccordionTrigger className={`cursor-pointer text-lg`}>
             {t("productDetails.notes")}
           </AccordionTrigger>
           <AccordionContent>
             <div
-              className="text-sm text-muted-foreground"
+              className="text-sm font-semibold text-muted-foreground"
               dangerouslySetInnerHTML={{
                 __html: product?.additional_notes,
               }}

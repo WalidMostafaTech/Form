@@ -67,19 +67,19 @@ const Footer = () => {
       className="sectionPadding bg-center bg-cover relative"
       style={{ backgroundImage: `url(${footerData?.footer_image})` }}
     >
-      <div className="absolute inset-0 bg-primary/90" />
+      <div className="absolute inset-0 bg-primary/95" />
 
       <div className="container relative z-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 text-white">
         <div className="flex flex-col items-center gap-4 text-center">
           <div className="w-48 overflow-hidden">
             <img
               loading="lazy"
-              src={footerData?.footer_logo || logo}
+              src={logo}
               alt={t("Footer.companyLogo")}
               className="w-full h-full object-contain"
             />
           </div>
-          <p className="text-xs">{footerData?.footer_text}</p>
+          <p className="text-sm">{footerData?.footer_text}</p>
         </div>
 
         <div className="flex flex-col items-center gap-4 text-center">
@@ -91,7 +91,7 @@ const Footer = () => {
               <li key={link.name} title={link.name}>
                 <Link
                   to={link.href}
-                  className="text-sm text-muted hover:text-secondary transition-colors"
+                  className="text-muted hover:text-secondary transition-colors"
                 >
                   {link.name}
                 </Link>
@@ -105,13 +105,13 @@ const Footer = () => {
             <h3 className="text-lg font-semibold uppercase">
               {t("Footer.socialMedia")}
             </h3>
-            <div className="grid grid-cols-4 gap-2">
+            <div className="grid grid-cols-4 gap-4">
               {socialLinks.map((link) => (
                 <a
                   key={link.name}
                   href={link.url}
                   target="_blank"
-                  className="hover:text-secondary hover:border-secondary transition-colors p-1 border rounded"
+                  className="hover:text-secondary hover:border-secondary transition-colors p-1 border rounded text-xl"
                 >
                   {link.icon}
                 </a>
@@ -127,7 +127,7 @@ const Footer = () => {
                 rel="noopener noreferrer"
                 className="flex items-center gap-2 bg-black text-white px-4 py-2 rounded-lg hover:bg-neutral-800 transition"
               >
-                <FaGooglePlay className="text-lg" />
+                <FaGooglePlay className="text-xl" />
                 <div className="text-start leading-tight">
                   <p className="text-[10px]">{t("Footer.downloadAndroid")}</p>
                   <p className="text-sm font-semibold">
@@ -144,7 +144,7 @@ const Footer = () => {
                 rel="noopener noreferrer"
                 className="flex items-center gap-2 bg-black text-white px-4 py-2 rounded-lg hover:bg-neutral-800 transition"
               >
-                <FaApple className="text-xl" />
+                <FaApple className="text-3xl" />
                 <div className="text-start leading-tight">
                   <p className="text-[10px]">{t("Footer.downloadIOS")}</p>
                   <p className="text-sm font-semibold">

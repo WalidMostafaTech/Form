@@ -7,7 +7,7 @@ const CategoryCard = ({ category }) => {
   return (
     <div
       key={category.id}
-      className="relative w-full h-120 rounded-xl overflow-hidden group cursor-pointer bg-cover bg-center"
+      className="relative w-full h-110 rounded-3xl overflow-hidden group cursor-pointer bg-cover bg-center"
       style={{ backgroundImage: `url(${category.image})` }}
     >
       {/* Overlay */}
@@ -20,7 +20,7 @@ const CategoryCard = ({ category }) => {
         className="absolute inset-0 z-10 h-full flex flex-col justify-end p-6 text-white
         transition-all duration-500 group-hover:-translate-y-6"
       >
-        <h3 className="text-2xl font-bold mb-2">{category.name}</h3>
+        <h3 className="text-2xl lg:text-3xl font-extrabold mb-2">{category.name}</h3>
 
         <p
           className="text-sm opacity-90 max-h-30 transition-all duration-500 

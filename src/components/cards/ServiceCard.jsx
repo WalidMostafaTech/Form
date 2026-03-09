@@ -3,7 +3,7 @@ import React from "react";
 const ServiceCard = ({ service }) => {
   return (
     <div className="flex flex-col gap-2">
-      <div className="w-full aspect-square overflow-hidden rounded-lg">
+      <div className="w-full aspect-square overflow-hidden rounded-2xl">
         <img
           loading="lazy"
           src={service.image}
@@ -12,9 +12,9 @@ const ServiceCard = ({ service }) => {
         />
       </div>
 
-      <h3 className="text-lg font-bold line-clamp-1">{service.title}</h3>
+      <h3 className="text-lg lg:text-xl font-extrabold line-clamp-1">{service.title}</h3>
 
-      <p className="text-xs text-muted-foreground line-clamp-2">
+      <p className="text-sm text-muted-foreground line-clamp-2">
         {service.description}
       </p>
     </div>

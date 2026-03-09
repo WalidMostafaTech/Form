@@ -28,15 +28,15 @@ const ContactInfo = ({ contactDetails }) => {
 
   return (
     <div>
-      <h3 className="text-xl uppercase tracking-widest mb-4">
+      <h3 className="text-xl uppercase tracking-widest font-semibold mb-4">
         {t("ContactInfo.heading")}
       </h3>
 
       <ul className="space-y-4">
         {contactDetailsList.map((detail) => (
           <li key={detail.id} className="space-y-1">
-            <p className="font-semibold uppercase">{detail.label}</p>
-            <span className="text-muted-foreground text-sm">
+            <p className="font-semibold uppercase text-lg">{detail.label}</p>
+            <span className="text-muted-foreground font-semibold">
               {detail.value}
             </span>
           </li>

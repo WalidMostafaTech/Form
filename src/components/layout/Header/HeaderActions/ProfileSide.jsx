@@ -11,11 +11,12 @@ import { FiShoppingCart } from "react-icons/fi";
 import { IoIosLogOut } from "react-icons/io";
 import { FaRegHeart } from "react-icons/fa";
 import UserAvatar from "@/components/common/UserAvatar";
-import { Link, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 import { Skeleton } from "@/components/ui/skeleton";
 import { openModal } from "@/store/modals/modalsSlice";
 import { useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
+import { Button } from "@/components/ui/button";
 
 const ProfileSide = ({ user, loading }) => {
   const dispatch = useDispatch();
@@ -73,13 +74,13 @@ const ProfileSide = ({ user, loading }) => {
           </DropdownMenuContent>
         </DropdownMenu>
       ) : (
-        <Link
-          to="/login"
-          className="bg-white px-4 py-1 rounded-md text-primary 
-            hover:text-white hover:bg-primary transition-all duration-300"
+        <Button
+          variant="outline"
+          onClick={() => navigate("/login")}
+          className={`lg:min-w-40`}
         >
           {t("ProfileSide.login")}
-        </Link>
+        </Button>
       )}
     </>
   );

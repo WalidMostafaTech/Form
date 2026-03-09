@@ -54,7 +54,7 @@ const ContactForm = () => {
 
   return (
     <div>
-      <h3 className="text-xl tracking-widest uppercase mb-6">
+      <h3 className="text-xl tracking-widest font-semibold uppercase mb-6">
         {t("ContactForm.heading")}
       </h3>
 

@@ -41,9 +41,7 @@ const Location = () => {
               <div className="absolute inset-0 bg-primary/60" />
 
               <div className="w-full p-4 max-w-2xl mx-auto text-center h-full flex flex-col items-center justify-center gap-6 relative z-10 text-white">
-                <p className="text-xs tracking-widest uppercase">
-                  {item.title}
-                </p>
+                <p className="-tracking-widest uppercase">{item.title}</p>
 
                 <img loading="lazy" src={logo} alt="logo" />
 

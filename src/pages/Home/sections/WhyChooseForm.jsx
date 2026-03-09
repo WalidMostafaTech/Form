@@ -4,6 +4,26 @@ const WhyChooseForm = ({ data, loading }) => {
   if (loading) return <WhyChooseFormSkeleton />;
   if (!data || !data?.items.length) return null;
 
+  const highlightFormWord = (text) => {
+    if (!text) return text;
+
+    const words = text.split(" ");
+
+    return words.map((word, index) => {
+      const lowerWord = word.toLowerCase();
+
+      if (lowerWord === "form" || word === "فورم") {
+        return (
+          <span key={index} className="text-secondary">
+            {word}{" "}
+          </span>
+        );
+      }
+
+      return word + " ";
+    });
+  };
+
   return (
     <section
       className="sectionPadding bg-center bg-cover relative"
@@ -11,10 +31,10 @@ const WhyChooseForm = ({ data, loading }) => {
     >
       <div className="absolute inset-0 bg-primary/80" />
 
-      <div className="container relative z-10">
+      <div className="container relative z-10 py-8">
         <hgroup className="text-center mb-12  max-w-2xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
-            {data?.title}
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-white mb-6">
+            {highlightFormWord(data?.title)}
           </h2>
 
           {data?.description && (
@@ -42,7 +62,9 @@ const WhyChooseForm = ({ data, loading }) => {
               <h3 className="text-lg font-bold text-white mb-2">
                 {item.title}
               </h3>
-              <p className="text-xs text-muted/80 max-w-xs">{item.description}</p>
+              <p className="text-xs text-muted/80 max-w-50">
+                {item.description}
+              </p>
             </li>
           ))}
         </ul>

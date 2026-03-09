@@ -51,7 +51,7 @@ const ProductCard = ({ product, sale_type = "retail", page = "" }) => {
         navigate(`/product/${product.slug}?sale_type=${sale_type}`)
       }
     >
-      <div className="w-full aspect-square overflow-hidden rounded-lg relative">
+      <div className="w-full aspect-square overflow-hidden rounded-xl relative">
         <img
           loading="lazy"
           src={product.main_image}
@@ -81,7 +81,7 @@ const ProductCard = ({ product, sale_type = "retail", page = "" }) => {
           <span>{product.max_weight}</span>
         </span>
 
-        <span className="text-sm sm:text-base text-primary font-bold flex gap-1 items-center flex-wrap">
+        <span className="text-sm sm:text-base text-primary font-extrabold flex gap-1 items-center flex-wrap">
           <span className="flex items-center gap-1">
             {product.min_price} <UEAIcon />
           </span>

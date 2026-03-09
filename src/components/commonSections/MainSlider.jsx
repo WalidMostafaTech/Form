@@ -52,7 +52,6 @@ const MainSlider = ({
         ))}
       </Swiper>
 
-      {/* Prev Button */}
       <button
         onClick={() => swiperRef.current?.slidePrev()}
         disabled={isBeginning}
@@ -61,7 +60,6 @@ const MainSlider = ({
         <FaArrowLeftLong />
       </button>
 
-      {/* Next Button */}
       <button
         onClick={() => swiperRef.current?.slideNext()}
         disabled={isEnd}
@@ -79,7 +77,6 @@ const MainSlider = ({
           <FaArrowLeftLong />
         </button>
 
-        {/* Next Button */}
         <button
           onClick={() => swiperRef.current?.slideNext()}
           disabled={isEnd}

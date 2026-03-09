@@ -20,16 +20,16 @@ const OurStory = () => {
     <section className="container sectionPadding">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         <div className="space-y-6 content-center">
-          <p className="text-secondary flex items-center gap-2">
+          <p className="text-secondary text-lg flex items-center gap-2">
             <span className="h-0.5 w-12 bg-secondary"></span>
             {t("OurStory.title")}
           </p>
 
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold">
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold">
             {ourStory?.title}
           </h1>
 
-          <p className="text-muted-foreground text-sm">
+          <p className="text-muted-foreground">
             {ourStory?.description}
           </p>
 
@@ -37,9 +37,9 @@ const OurStory = () => {
             {ourStory?.statistics?.map((item) => (
               <li
                 key={item.label}
-                className="not-last:border-e border-muted not-last:pe-8"
+                className="not-last:border-e not-last:pe-8"
               >
-                <p className="text-2xl font-bold text-primary leading-none mb-1">
+                <p className="text-4xl font-extrabold text-primary leading-none mb-1">
                   {item.number}
                 </p>
                 <p className="text-xs text-muted-foreground font-semibold uppercase">
@@ -52,7 +52,7 @@ const OurStory = () => {
           {ourStory?.button.url && (
             <Link
               to={ourStory?.button?.url}
-              className="text-primary font-bold py-2 px-4 border-2 rounded-full
+              className="text-primary text-center font-bold py-3 px-4 border-2 rounded-full min-w-[160px]
             border-primary hover:bg-primary hover:text-background duration-300 inline-block"
             >
               {ourStory?.button?.text}
@@ -60,8 +60,8 @@ const OurStory = () => {
           )}
         </div>
 
-        <div className="hidden md:block w-full aspect-[4/5] min-h-100 relative">
-          <div className="w-full h-full overflow-hidden rounded-lg shadow-lg">
+        <div className="hidden md:block w-full aspect-4/5 min-h-100 relative">
+          <div className="w-full h-full overflow-hidden rounded-xl shadow-lg">
             <img
               loading="lazy"
               src={ourStory?.image}
@@ -72,7 +72,7 @@ const OurStory = () => {
 
           {ourStory?.established_year && (
             <div className="absolute -bottom-4 -inset-e-2 bg-primary p-4 rounded-lg shadow-lg">
-              <p className="text-white text-sm font-bold">
+              <p className="text-white text-lg font-bold text-center min-w-24">
                 {ourStory?.established_year}
               </p>
             </div>

@@ -49,13 +49,13 @@ const ProductsFilter = ({ selectedCategory }) => {
   };
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+    <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
       {/* Search */}
       <Input
         placeholder="Search product..."
         value={search}
         onChange={(e) => setSearch(e.target.value)}
-        className="w-full"
+        className="w-full col-span-2 md:col-span-1"
       />
 
       {/* Sub Categories */}
