@@ -2,6 +2,7 @@ import { RiEdit2Line, RiDeleteBinLine } from "react-icons/ri";
 import { useDispatch } from "react-redux";
 import { openModal } from "@/store/modals/modalsSlice";
 import { useTranslation } from "react-i18next";
+import UEAIcon from "@/components/common/UEAIcon";
 
 const CartCard = ({ item }) => {
   const dispatch = useDispatch();
@@ -62,8 +63,8 @@ const CartCard = ({ item }) => {
           {item.weight} {item.weight_unit}
         </p>
 
-        <p className="font-bold text-primary">
-          {item.price} {t("currency")}
+        <p className="font-bold text-primary flex items-center gap-1">
+          {item.price} <UEAIcon />
         </p>
 
         <div className="flex items-center flex-wrap justify-between gap-2">
@@ -71,8 +72,8 @@ const CartCard = ({ item }) => {
             {item.quantity}
           </span>
 
-          <p className="text-lg font-bold text-primary">
-            {item.price * item.quantity} {t("currency")}
+          <p className="text-lg font-bold text-primary flex items-center gap-1">
+            {item.price * item.quantity} <UEAIcon />
           </p>
         </div>
       </div>

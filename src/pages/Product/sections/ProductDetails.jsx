@@ -16,6 +16,7 @@ import useRequireAuth from "@/hooks/useRequireAuth";
 import { toast } from "sonner";
 import OptionSelector from "@/components/common/OptionSelector";
 import { useTranslation } from "react-i18next";
+import UEAIcon from "@/components/common/UEAIcon";
 
 const ProductDetails = ({ product }) => {
   const navigate = useNavigate();
@@ -115,8 +116,8 @@ const ProductDetails = ({ product }) => {
           getLabel={(size) => `${size.weight} ${size.weight_unit}`}
         />
 
-        <span className="text-2xl font-bold text-primary bg-primary-foreground rounded-md px-2 py-1">
-          {selectedSize?.price} {t("currency")}
+        <span className="text-2xl font-bold text-primary bg-primary-foreground rounded-md px-2 py-1 flex items-center gap-1">
+          {selectedSize?.price} <UEAIcon className="w-6 h-6" />
         </span>
       </div>
 

@@ -1,5 +1,6 @@
 import { useTranslation } from "react-i18next";
 import { Button } from "../ui/button";
+import UEAIcon from "@/components/common/UEAIcon";
 
 const OrderSummaryCard = ({ cart, onConfirm, loading }) => {
   const { t } = useTranslation();
@@ -15,16 +16,16 @@ const OrderSummaryCard = ({ cart, onConfirm, loading }) => {
           <p className="text-muted-foreground">
             {t("OrderSummaryCard.subtotal")}
           </p>
-          <span className="font-bold text-primary">
-            {cart?.sub_total} {t("currency")}
+          <span className="font-bold text-primary flex items-center gap-1">
+            {cart?.sub_total} <UEAIcon />
           </span>
         </div>
         <div className="flex items-center justify-between gap-2 mb-2">
           <p className="text-muted-foreground">
             {t("OrderSummaryCard.deliveryFees")}
           </p>
-          <span className="font-bold text-primary">
-            {cart?.shipping_price} {t("currency")}
+          <span className="font-bold text-primary flex items-center gap-1">
+            {cart?.shipping_price} <UEAIcon />
           </span>
         </div>
         <div className="flex items-center justify-between gap-2 mb-2">
@@ -32,14 +33,14 @@ const OrderSummaryCard = ({ cart, onConfirm, loading }) => {
             <span>{t("OrderSummaryCard.vat")}</span>{" "}
             <strong>{cart?.tax_rate}%</strong>
           </p>
-          <span className="font-bold text-primary">
-            {cart?.tax_amount} {t("currency")}
+          <span className="font-bold text-primary flex items-center gap-1">
+            {cart?.tax_amount} <UEAIcon />
           </span>
         </div>
       </div>
 
-      <p className="text-2xl font-bold text-primary pt-2 border-t-2">
-        {cart?.final_total} {t("currency")}
+      <p className="text-2xl font-bold text-primary pt-2 border-t-2 flex items-center gap-1">
+        {cart?.final_total} <UEAIcon className="w-6 h-6" />
       </p>
 
       <Button disabled={loading} onClick={onConfirm} className="w-full">

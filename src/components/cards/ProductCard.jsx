@@ -6,6 +6,7 @@ import { toggleFavorite } from "@/api/favoritesServices";
 import useRequireAuth from "@/hooks/useRequireAuth";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import UEAIcon from "@/components/common/UEAIcon";
 
 const ProductCard = ({ product, sale_type = "retail", page = "" }) => {
   const navigate = useNavigate();
@@ -76,12 +77,12 @@ const ProductCard = ({ product, sale_type = "retail", page = "" }) => {
         </span>
 
         <span className="text-sm sm:text-base text-primary font-bold flex gap-1 items-center flex-wrap">
-          <span>
-            {product.min_price} {t("currency")}
+          <span className="flex items-center gap-1">
+            {product.min_price} <UEAIcon />
           </span>
           <strong>-</strong>
-          <span>
-            {product.max_price} {t("currency")}
+          <span className="flex items-center gap-1">
+            {product.max_price} <UEAIcon />
           </span>
         </span>
       </div>

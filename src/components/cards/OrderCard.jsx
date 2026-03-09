@@ -1,3 +1,4 @@
+import UEAIcon from "@/components/common/UEAIcon";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { HiCalendarDateRange } from "react-icons/hi2";
@@ -53,8 +54,8 @@ const OrderCard = ({ item }) => {
                 {item?.order_items[0]?.weight_unit}
               </p>
 
-              <p className="text-primary text-lg">
-                {item?.order_items[0]?.price} {t("currency")}
+              <p className="text-primary text-lg flex items-center gap-1">
+                {item?.order_items[0]?.price} <UEAIcon />
               </p>
             </div>
 
@@ -68,8 +69,8 @@ const OrderCard = ({ item }) => {
         )}
 
         <div className="flex items-center flex-wrap justify-between gap-2">
-          <p className="text-lg font-bold text-primary">
-            {item.final_total} {t("currency")}
+          <p className="text-lg font-bold text-primary flex items-center gap-1">
+            {item.final_total} <UEAIcon />
           </p>
 
           {showDetails && (
