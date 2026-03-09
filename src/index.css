@@ -9,6 +9,7 @@
 @utility container {
   margin-inline: auto;
   padding-inline: 1rem;
+  max-width: 1024px;
 }
 
 /* fix hover in mobile */
@@ -151,18 +152,18 @@ input::-webkit-inner-spin-button {
 }
 
 @layer base {
-  /* * {
-    @apply outline-ring/50 border-border font-[inter];
-  } */
-
   * {
-    @apply outline-ring/50 border-border font-[Assistant];
+    @apply outline-ring/50 border-border;
   }
 
   body {
     @apply bg-background text-foreground;
-    /* font-family: "Open Sans", sans-serif; */
     font-family: "Assistant", sans-serif;
+  }
+
+  /* لما الاتجاه يبقى RTL */
+  html[dir="rtl"] body {
+    font-family: "Noto Sans Arabic", sans-serif;
   }
 
   .sectionPadding {
@@ -174,7 +175,7 @@ input::-webkit-inner-spin-button {
   }
 
   .nav_link {
-    @apply text-sm text-white transition-all duration-300 relative;
+    @apply text-lg text-white transition-all duration-300 relative;
 
     &::after {
       content: "";
@@ -201,18 +202,21 @@ input::-webkit-inner-spin-button {
   }
 
   .main_slider_btn {
-    @apply w-8 h-8 rounded-full cursor-pointer border border-primary/20
+    @apply w-8 h-8 rounded-full cursor-pointer
     flex items-center justify-center 
-    bg-primary-foreground text-primary
-    absolute top-1/2 -translate-y-1/2 z-10 rtl:rotate-180
+    bg-primary-foreground text-primary rtl:rotate-180
     hover:scale-110 transition-all duration-200;
 
+    &.layout {
+      @apply absolute top-1/2 -translate-y-1/2 z-10 hidden xl:flex;
+    }
+
     &.prev {
-      @apply left-0 rtl:left-auto rtl:right-0;
+      @apply -left-12 rtl:left-auto rtl:right-0;
     }
 
     &.next {
-      @apply right-0 rtl:right-auto rtl:left-0;
+      @apply -right-12 rtl:right-auto rtl:left-0;
     }
 
     &:disabled {

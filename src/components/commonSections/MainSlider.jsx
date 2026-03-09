@@ -10,11 +10,11 @@ const MainSlider = ({
   data = [],
   renderItem,
   breakpoints = {
-    0: { slidesPerView: 1.2 },
-    560: { slidesPerView: 1.8 },
-    720: { slidesPerView: 2.3 },
-    1024: { slidesPerView: 3.2 },
-    1280: { slidesPerView: 4.2 },
+    0: { slidesPerView: 1 },
+    480: { slidesPerView: 1.3 },
+    640: { slidesPerView: 2 },
+    720: { slidesPerView: 2.5 },
+    960: { slidesPerView: 3 },
   },
   spaceBetween = 24,
   className = "",
@@ -56,7 +56,7 @@ const MainSlider = ({
       <button
         onClick={() => swiperRef.current?.slidePrev()}
         disabled={isBeginning}
-        className="main_slider_btn prev"
+        className="main_slider_btn layout prev"
       >
         <FaArrowLeftLong />
       </button>
@@ -65,10 +65,29 @@ const MainSlider = ({
       <button
         onClick={() => swiperRef.current?.slideNext()}
         disabled={isEnd}
-        className="main_slider_btn next"
+        className="main_slider_btn layout next"
       >
         <FaArrowRightLong />
       </button>
+
+      <div className="flex items-center justify-center gap-4 mt-4 xl:hidden">
+        <button
+          onClick={() => swiperRef.current?.slidePrev()}
+          disabled={isBeginning}
+          className="main_slider_btn"
+        >
+          <FaArrowLeftLong />
+        </button>
+
+        {/* Next Button */}
+        <button
+          onClick={() => swiperRef.current?.slideNext()}
+          disabled={isEnd}
+          className="main_slider_btn"
+        >
+          <FaArrowRightLong />
+        </button>
+      </div>
     </div>
   );
 };

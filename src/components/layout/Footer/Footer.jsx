@@ -71,7 +71,7 @@ const Footer = () => {
 
       <div className="container relative z-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 text-white">
         <div className="flex flex-col items-center gap-4 text-center">
-          <div className="w-36 overflow-hidden">
+          <div className="w-48 overflow-hidden">
             <img
               loading="lazy"
               src={footerData?.footer_logo || logo}

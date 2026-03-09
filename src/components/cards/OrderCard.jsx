@@ -2,6 +2,7 @@ import UEAIcon from "@/components/common/UEAIcon";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { HiCalendarDateRange } from "react-icons/hi2";
+import { Button } from "../ui/button";
 
 const OrderCard = ({ item }) => {
   const [showDetails, setShowDetails] = useState(false);
@@ -81,14 +82,25 @@ const OrderCard = ({ item }) => {
               {item.order_items_count}
             </p>
           )}
+        </div>
 
-          <button
+        <div className="flex items-center flex-wrap justify-end gap-2">
+          <Button
+            size="xs"
+            onClick={() => {
+              window.open(item.invoice_file, "_blank");
+            }}
+          >
+            {t("DownloadInvoice")}
+          </Button>
+
+          <Button
+            size="xs"
+            variant="outline"
             onClick={() => setShowDetails(!showDetails)}
-            className="py-1 px-2 rounded-md border border-primary text-primary
-                      bg-white cursor-pointer hover:brightness-90 transition"
           >
             {showDetails ? t("HideDetails") : t("ViewDetails")}
-          </button>
+          </Button>
         </div>
       </div>
     </div>

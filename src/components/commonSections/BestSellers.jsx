@@ -31,11 +31,11 @@ const BestSellers = () => {
         <MainSlider
           data={bestSellers || []}
           breakpoints={{
-            0: { slidesPerView: 1.3 },
+            0: { slidesPerView: 1 },
+            450: { slidesPerView: 1.8 },
             560: { slidesPerView: 2.2 },
             720: { slidesPerView: 3.3 },
             1024: { slidesPerView: 4.2 },
-            1280: { slidesPerView: 5.2 },
           }}
           renderItem={(product) => <ProductCard product={product} />}
         />

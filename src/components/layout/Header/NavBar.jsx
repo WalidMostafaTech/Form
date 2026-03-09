@@ -12,7 +12,7 @@ const NavBar = () => {
   const links = useNavigationLinks();
 
   return (
-    <nav className="hidden lg:flex items-center gap-6">
+    <nav className="hidden lg:flex items-center justify-between gap-6 flex-1 px-16">
       {links.map((link) => {
         // لو مفيش items
         if (!link.items || link.items.length === 0) {

@@ -29,7 +29,7 @@ const WhyChooseForm = ({ data, loading }) => {
               className="flex flex-col items-center text-center"
             >
               <div
-                className="w-14 h-14 bg-white/10 rounded-xl p-2
+                className="w-18 h-18 bg-white/10 rounded-xl p-2
               flex items-center justify-center mb-4 text-secondary text-3xl"
               >
                 <img
@@ -42,7 +42,7 @@ const WhyChooseForm = ({ data, loading }) => {
               <h3 className="text-lg font-bold text-white mb-2">
                 {item.title}
               </h3>
-              <p className="text-xs text-muted/80">{item.description}</p>
+              <p className="text-xs text-muted/80 max-w-xs">{item.description}</p>
             </li>
           ))}
         </ul>

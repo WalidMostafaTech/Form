@@ -103,9 +103,9 @@ const ProductDetails = ({ product }) => {
   };
 
   return (
-    <section className="space-y-6 xl:col-span-2">
+    <section className="space-y-6">
       {/* Title */}
-      <h2 className="text-3xl font-bold">{product?.name}</h2>
+      <h2 className="text-3xl font-extrabold">{product?.name}</h2>
 
       {/* Weights / Sizes */}
       <div className="flex items-center justify-between flex-wrap gap-2">
@@ -116,7 +116,7 @@ const ProductDetails = ({ product }) => {
           getLabel={(size) => `${size.weight} ${size.weight_unit}`}
         />
 
-        <span className="text-2xl font-bold text-primary bg-primary-foreground rounded-md px-2 py-1 flex items-center gap-1">
+        <span className="text-xl font-bold text-primary bg-primary-foreground rounded-md px-2 py-1 flex items-center gap-1">
           {selectedSize?.price} <UEAIcon className="w-6 h-6" />
         </span>
       </div>

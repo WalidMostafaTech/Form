@@ -20,7 +20,7 @@ const WhatTheySay = () => {
       <div className="container">
         <SectionTitle title={testimonials?.title} />
 
-        <p className="text-muted-foreground text-sm mb-6 -mt-4">
+        <p className="text-muted-foreground text-sm mb-6 -mt-4 max-w-4xl">
           {testimonials?.description}
         </p>
 

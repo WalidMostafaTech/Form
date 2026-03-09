@@ -10,21 +10,37 @@ import { useQuery } from "@tanstack/react-query";
 import { useSelector } from "react-redux";
 import { useSearchParams } from "react-router";
 import { useTranslation } from "react-i18next";
+import ProductsFilter from "./section/ProductsFilter";
 
 const ProductsPage = ({ saleType, title }) => {
   const { t } = useTranslation();
   const [searchParams, setSearchParams] = useSearchParams();
 
+  const subCategory = searchParams.get("sub_category") || "";
+  const search = searchParams.get("search") || "";
+  const sortPrice = searchParams.get("sort_price") || "";
+
   const selectedCategory = Number(searchParams.get("category")) || 0;
   const page = Number(searchParams.get("page")) || 1;
 
   const { data: products, isLoading } = useQuery({
-    queryKey: ["products", saleType, selectedCategory, page],
+    queryKey: [
+      "products",
+      saleType,
+      selectedCategory,
+      subCategory,
+      search,
+      sortPrice,
+      page,
+    ],
     queryFn: () =>
       getProducts({
         category_id: selectedCategory,
+        sub_category_id: subCategory,
         sale_type: saleType,
         page,
+        search,
+        sort_price: sortPrice,
       }),
   });
 
@@ -67,6 +83,8 @@ const ProductsPage = ({ saleType, title }) => {
             }
           }}
         />
+
+        <ProductsFilter selectedCategory={selectedCategory} />
 
         {isLoading ? (
           <ProductsSkeleton />

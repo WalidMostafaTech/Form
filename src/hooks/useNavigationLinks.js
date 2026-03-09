@@ -23,7 +23,7 @@ const useNavigationLinks = () => {
   }
 
   const links = [
-    { name: t("NavigationLinks.home"), href: "/", items: [] },
+    // { name: t("NavigationLinks.home"), href: "/", items: [] },
     { name: t("NavigationLinks.about"), href: "/about", items: [] },
     {
       name: t("NavigationLinks.shop"),

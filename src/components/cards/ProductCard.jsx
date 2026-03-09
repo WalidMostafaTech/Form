@@ -45,7 +45,12 @@ const ProductCard = ({ product, sale_type = "retail", page = "" }) => {
   };
 
   return (
-    <div className="flex flex-col gap-1">
+    <div
+      className="flex flex-col gap-1 cursor-pointer"
+      onClick={() =>
+        navigate(`/product/${product.slug}?sale_type=${sale_type}`)
+      }
+    >
       <div className="w-full aspect-square overflow-hidden rounded-lg relative">
         <img
           loading="lazy"
@@ -92,14 +97,7 @@ const ProductCard = ({ product, sale_type = "retail", page = "" }) => {
       </p>
 
       {product.for_sale && (
-        <Button
-          onClick={() =>
-            navigate(`/product/${product.slug}?sale_type=${sale_type}`)
-          }
-          className={`mt-2`}
-        >
-          {t("add_to_cart")}
-        </Button>
+        <Button className={`mt-2`}>{t("add_to_cart")}</Button>
       )}
     </div>
   );

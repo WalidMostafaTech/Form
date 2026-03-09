@@ -27,7 +27,7 @@ const ProductImages = ({ images }) => {
               loading="lazy"
               src={img}
               alt="product"
-              className="w-full aspect-square object-cover rounded-2xl"
+              className="w-full aspect-4/5 object-cover rounded-2xl"
             />
           </SwiperSlide>
         ))}

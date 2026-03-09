@@ -1,11 +1,21 @@
 import api from "./api";
 
-export const getProducts = async ({ category_id, sale_type, page = 1 }) => {
+export const getProducts = async ({
+  category_id,
+  sub_category_id,
+  sale_type,
+  page = 1,
+  search,
+  sort_price,
+}) => {
   const { data } = await api.get(`/products`, {
     params: {
       category_id,
+      sub_category_id,
       sale_type,
       page,
+      search,
+      sort_price,
     },
   });
 
@@ -28,6 +38,12 @@ export const getCategoriesHero = async () => {
 
 export const getProductsHero = async () => {
   const { data } = await api.get(`/products/hero/section`);
+
+  return data?.data || [];
+};
+
+export const getSubCategories = async (category_id) => {
+  const { data } = await api.get(`/sub-categories/${category_id}`);
 
   return data?.data || [];
 };

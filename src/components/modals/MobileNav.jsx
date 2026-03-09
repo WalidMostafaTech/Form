@@ -35,7 +35,7 @@ const MobileNav = () => {
     >
       <button
         onClick={closeOnLinkClick}
-        className="absolute top-4 inset-e-4 text-primary bg-white
+        className="absolute top-8 inset-e-4 text-primary bg-white
         w-8 h-8 rounded-full flex items-center justify-center text-xl cursor-pointer"
       >
         <IoClose />

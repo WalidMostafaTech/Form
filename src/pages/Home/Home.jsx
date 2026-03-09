@@ -16,7 +16,7 @@ const Home = () => {
 
   return (
     <main>
-      <Hero video={homeData?.introduction_video} loading={isLoading} />
+      <Hero data={homeData} loading={isLoading} />
       <OurStory />
       <CategorySection />
       <BestSellers />

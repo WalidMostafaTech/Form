@@ -14,12 +14,12 @@ const OurStory = () => {
 
   if (isLoading) return <OurStorySkeleton />;
 
-  if (!ourStory || !ourStory?.our_story) return null;
+  if (!ourStory || !ourStory?.title) return null;
 
   return (
     <section className="container sectionPadding">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <div className="space-y-6">
+        <div className="space-y-6 content-center">
           <p className="text-secondary flex items-center gap-2">
             <span className="h-0.5 w-12 bg-secondary"></span>
             {t("OurStory.title")}
@@ -40,7 +40,7 @@ const OurStory = () => {
                 className="not-last:border-e border-muted not-last:pe-8"
               >
                 <p className="text-2xl font-bold text-primary leading-none mb-1">
-                  {item.value}
+                  {item.number}
                 </p>
                 <p className="text-xs text-muted-foreground font-semibold uppercase">
                   {item.label}
@@ -60,7 +60,7 @@ const OurStory = () => {
           )}
         </div>
 
-        <div className="hidden md:block w-full h-full min-h-100 relative">
+        <div className="hidden md:block w-full aspect-[4/5] min-h-100 relative">
           <div className="w-full h-full overflow-hidden rounded-lg shadow-lg">
             <img
               loading="lazy"

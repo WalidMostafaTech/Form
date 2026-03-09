@@ -3,7 +3,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 const ProductDetailsSkeleton = () => {
   return (
-    <section className="container pagePadding grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-10">
+    <section className="container pagePadding grid grid-cols-1 md:grid-cols-2 gap-10">
       {/* Product Images Skeleton */}
       <div className="space-y-4 xl:col-span-1">
         {/* Main Image */}
@@ -18,7 +18,7 @@ const ProductDetailsSkeleton = () => {
       </div>
 
       {/* Product Details Skeleton */}
-      <div className="space-y-6 xl:col-span-2">
+      <div className="space-y-6">
         {/* Title */}
         <Skeleton className="h-8 w-2/3 rounded-md" />
 

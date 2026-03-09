@@ -11,7 +11,7 @@ const SectionTitle = ({ title, spanTitle, link, linkText }) => {
       )}
 
       {link && (
-        <Link to={link} className="text-secondary text-xs border-b-2 border-secondary uppercase">
+        <Link to={link} className="text-secondary border-b-2 border-secondary uppercase">
           {linkText}
         </Link>
       )}
