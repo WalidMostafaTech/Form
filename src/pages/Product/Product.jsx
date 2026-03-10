@@ -6,6 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useParams, useSearchParams } from "react-router";
 import { getProduct, getProductsHero } from "@/api/productsServices";
 import ProductDetailsSkeleton from "@/components/Loading/SkeletonLoading/ProductDetailsSkeleton";
+import SeoManager from "@/utils/SeoManager";
 
 const Product = () => {
   const { slug } = useParams();
@@ -24,26 +25,36 @@ const Product = () => {
   });
 
   return (
-    <main>
-      <PageBanner
-        image={productHero?.image}
-        title={product?.name}
-        description={productHero?.description}
-        html={true}
-        loading={isLoadingHero}
+    <>
+      <SeoManager
+        title={product?.seo?.meta_title}
+        description={product?.seo?.meta_description}
+        keywords={product?.seo?.keywords}
+        canonical={product?.seo?.canonical_url}
+        ogImage={product?.seo?.og_image}
       />
 
-      {isLoading ? (
-        <ProductDetailsSkeleton />
-      ) : (
-        <section className="container w-full lg:max-w-5xl pagePadding grid grid-cols-1 sm:grid-cols-2 gap-10">
-          <ProductImages images={product?.images} />
-          <ProductDetails product={product} />
-        </section>
-      )}
+      <main>
+        <PageBanner
+          image={productHero?.image}
+          title={product?.name}
+          description={productHero?.description}
+          html={true}
+          loading={isLoadingHero}
+        />
 
-      <BestSellers />
-    </main>
+        {isLoading ? (
+          <ProductDetailsSkeleton />
+        ) : (
+          <section className="container w-full lg:max-w-5xl pagePadding grid grid-cols-1 sm:grid-cols-2 gap-10">
+            <ProductImages images={product?.images} />
+            <ProductDetails product={product} />
+          </section>
+        )}
+
+        <BestSellers />
+      </main>
+    </>
   );
 };
 

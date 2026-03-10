@@ -11,6 +11,7 @@ import { useSelector } from "react-redux";
 import { useSearchParams } from "react-router";
 import { useTranslation } from "react-i18next";
 import ProductsFilter from "./section/ProductsFilter";
+import SeoManager from "@/utils/SeoManager";
 
 const ProductsPage = ({ saleType, title }) => {
   const { t } = useTranslation();
@@ -54,66 +55,76 @@ const ProductsPage = ({ saleType, title }) => {
   const isEmpty = !isLoading && (products?.items?.length === 0 || !products);
 
   return (
-    <main>
-      <PageBanner
-        image={categoryHero?.image}
-        title={title || t("productsPage.shopTitle")}
-        description={categoryHero?.description}
-        html={true}
-        loading={isLoadingHero}
+    <>
+      <SeoManager
+        title={products?.meta?.seo?.meta_title}
+        description={products?.meta?.seo?.meta_description}
+        keywords={products?.meta?.seo?.keywords}
+        canonical={products?.meta?.seo?.canonical_url}
+        ogImage={products?.meta?.seo?.og_image}
       />
 
-      <section className="container pagePadding space-y-6">
-        <SectionTitle
-          title={
-            categories?.find((c) => c.id === selectedCategory)?.name ||
-            t("productsPage.allCategories")
-          }
+      <main>
+        <PageBanner
+          image={categoryHero?.image}
+          title={title || t("productsPage.shopTitle")}
+          description={categoryHero?.description}
+          html={true}
+          loading={isLoadingHero}
         />
 
-        <OptionSelector
-          options={categories}
-          selected={selectedCategory}
-          onSelect={(category) => {
-            if (category.id === "0") {
-              setSearchParams({});
-            } else {
-              setSearchParams({ category: category.id, page: 1 });
+        <section className="container pagePadding space-y-6">
+          <SectionTitle
+            title={
+              categories?.find((c) => c.id === selectedCategory)?.name ||
+              t("productsPage.allCategories")
             }
-          }}
-        />
+          />
 
-        <ProductsFilter selectedCategory={selectedCategory} />
+          <OptionSelector
+            options={categories}
+            selected={selectedCategory}
+            onSelect={(category) => {
+              if (category.id === "0") {
+                setSearchParams({});
+              } else {
+                setSearchParams({ category: category.id, page: 1 });
+              }
+            }}
+          />
 
-        {isLoading ? (
-          <ProductsSkeleton />
-        ) : isEmpty ? (
-          <EmptyDataSection msg={t("productsPage.noProducts")} />
-        ) : (
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6">
-            {products?.items?.map((product) => (
-              <ProductCard
-                key={product.id}
-                product={product}
-                sale_type={saleType}
-              />
-            ))}
-          </div>
-        )}
+          <ProductsFilter selectedCategory={selectedCategory} />
 
-        <MainPagination
-          totalPages={products?.meta?.last_page}
-          currentPage={page}
-          onPageChange={(newPage) => {
-            const params = {};
-            if (selectedCategory) params.category = selectedCategory;
-            params.page = newPage;
+          {isLoading ? (
+            <ProductsSkeleton />
+          ) : isEmpty ? (
+            <EmptyDataSection msg={t("productsPage.noProducts")} />
+          ) : (
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6">
+              {products?.items?.map((product) => (
+                <ProductCard
+                  key={product.id}
+                  product={product}
+                  sale_type={saleType}
+                />
+              ))}
+            </div>
+          )}
 
-            setSearchParams(params);
-          }}
-        />
-      </section>
-    </main>
+          <MainPagination
+            totalPages={products?.meta?.last_page}
+            currentPage={page}
+            onPageChange={(newPage) => {
+              const params = {};
+              if (selectedCategory) params.category = selectedCategory;
+              params.page = newPage;
+
+              setSearchParams(params);
+            }}
+          />
+        </section>
+      </main>
+    </>
   );
 };
 

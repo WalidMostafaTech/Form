@@ -15,14 +15,23 @@ import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 
-import { FaLock } from "react-icons/fa";
 import { useMutation } from "@tanstack/react-query";
 import { updateProfile } from "@/api/authServices";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
+import { FiLock } from "react-icons/fi";
+import { useDispatch, useSelector } from "react-redux";
+import { closeModal } from "@/store/modals/modalsSlice";
 
-const ChangePasswordModal = ({ open, onClose }) => {
+const ChangePasswordModal = () => {
+  const { modalName } = useSelector((state) => state.modals);
+  const dispatch = useDispatch();
+
+  const onClose = () => {
+    dispatch(closeModal());
+  };
+
   const { t } = useTranslation();
   const [errorMsg, setErrorMsg] = useState("");
 
@@ -83,7 +92,7 @@ const ChangePasswordModal = ({ open, onClose }) => {
   };
 
   return (
-    <Dialog open={open} onOpenChange={onClose}>
+    <Dialog open={modalName === "changePasswordModal"} onOpenChange={onClose}>
       <DialogContent
         style={{
           pointerEvents: changePasswordMutation.isPending ? "none" : "auto",
@@ -106,7 +115,7 @@ const ChangePasswordModal = ({ open, onClose }) => {
                 {...field}
                 label={t("changePassword.form.currentPassword.label")}
                 type="password"
-                icon={<FaLock size={18} />}
+                icon={<FiLock size={18} />}
                 error={errors.current_password?.message}
               />
             )}
@@ -121,7 +130,7 @@ const ChangePasswordModal = ({ open, onClose }) => {
                 {...field}
                 label={t("changePassword.form.newPassword.label")}
                 type="password"
-                icon={<FaLock size={18} />}
+                icon={<FiLock size={18} />}
                 error={errors.password?.message}
               />
             )}
@@ -136,23 +145,13 @@ const ChangePasswordModal = ({ open, onClose }) => {
                 {...field}
                 label={t("changePassword.form.confirmPassword.label")}
                 type="password"
-                icon={<FaLock size={18} />}
+                icon={<FiLock size={18} />}
                 error={errors.password_confirmation?.message}
               />
             )}
           />
 
           <DialogFooter className="flex gap-3 pt-2">
-            <Button
-              type="submit"
-              className="flex-1"
-              disabled={changePasswordMutation.isPending}
-            >
-              {changePasswordMutation.isPending
-                ? t("changePassword.buttons.submitting")
-                : t("changePassword.buttons.submit")}
-            </Button>
-
             <Button
               type="button"
               variant="outline"
@@ -163,6 +162,16 @@ const ChangePasswordModal = ({ open, onClose }) => {
               }}
             >
               {t("changePassword.buttons.cancel")}
+            </Button>
+
+            <Button
+              type="submit"
+              className="flex-1"
+              disabled={changePasswordMutation.isPending}
+            >
+              {changePasswordMutation.isPending
+                ? t("changePassword.buttons.submitting")
+                : t("changePassword.buttons.submit")}
             </Button>
           </DialogFooter>
 

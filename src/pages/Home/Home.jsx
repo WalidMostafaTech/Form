@@ -7,6 +7,7 @@ import WhatTheySay from "../../components/commonSections/WhatTheySay";
 import { useQuery } from "@tanstack/react-query";
 import { getHome } from "@/api/homeServices";
 import OurService from "@/components/commonSections/OurService";
+import SeoManager from "@/utils/SeoManager";
 
 const Home = () => {
   const { data: homeData, isLoading } = useQuery({
@@ -15,15 +16,25 @@ const Home = () => {
   });
 
   return (
-    <main>
-      <Hero data={homeData} loading={isLoading} />
-      <OurStory />
-      <CategorySection />
-      <BestSellers />
-      <WhyChooseForm data={homeData?.why_choose_us} loading={isLoading} />
-      <OurService />
-      <WhatTheySay />
-    </main>
+    <>
+      <SeoManager
+        title={homeData?.home_seo?.meta_title}
+        description={homeData?.home_seo?.meta_description}
+        keywords={homeData?.home_seo?.keywords}
+        canonical={homeData?.home_seo?.canonical_url}
+        ogImage={homeData?.home_seo?.og_image}
+      />
+
+      <main>
+        <Hero data={homeData} loading={isLoading} />
+        <OurStory />
+        <CategorySection />
+        <BestSellers />
+        <WhyChooseForm data={homeData?.why_choose_us} loading={isLoading} />
+        <OurService />
+        <WhatTheySay />
+      </main>
+    </>
   );
 };
 

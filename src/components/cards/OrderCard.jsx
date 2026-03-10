@@ -77,7 +77,7 @@ const OrderCard = ({ item }) => {
           {showDetails && (
             <p
               className="text-primary bg-primary-foreground py-1 px-2 rounded-md 
-            min-w-10 text-center font-semibold border"
+            min-w-14 text-center text-lg font-semibold border"
             >
               {item.order_items_count}
             </p>
@@ -96,7 +96,7 @@ const OrderCard = ({ item }) => {
 
           <Button
             size="xs"
-            variant="outline"
+            variant={showDetails ? "destructive" : "outline"}
             onClick={() => setShowDetails(!showDetails)}
           >
             {showDetails ? t("HideDetails") : t("ViewDetails")}

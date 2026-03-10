@@ -8,7 +8,7 @@ const CartCard = ({ item }) => {
 
   return (
     <div className="p-3 border rounded-lg items-start flex gap-4">
-      <div className="w-28 md:w-48 aspect-square overflow-hidden rounded-lg">
+      <div className="w-28 lg:w-48 aspect-square overflow-hidden rounded-lg">
         <img
           loading="lazy"
           src={item.image}
@@ -50,7 +50,7 @@ const CartCard = ({ item }) => {
                 )
               }
               className="w-7 h-7 flex items-center justify-center 
-                  bg-red-100 text-red-600 rounded-full hover:brightness-95 transition"
+                  bg-destructive-foreground text-destructive rounded-full hover:brightness-95 transition"
             >
               <RiDeleteBinLine />
             </button>

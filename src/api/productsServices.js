@@ -8,16 +8,17 @@ export const getProducts = async ({
   search,
   sort_price,
 }) => {
-  const { data } = await api.get(`/products`, {
-    params: {
-      category_id,
-      sub_category_id,
-      sale_type,
-      page,
-      search,
-      sort_price,
-    },
-  });
+  const params = {
+    sale_type,
+    page,
+  };
+
+  if (category_id) params.category_id = category_id;
+  if (sub_category_id) params.sub_category_id = sub_category_id;
+  if (search) params.search = search;
+  if (sort_price) params.sort_price = sort_price;
+
+  const { data } = await api.get(`/products`, { params });
 
   return data?.data;
 };

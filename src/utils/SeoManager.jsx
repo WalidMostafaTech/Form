@@ -16,7 +16,7 @@ const SeoManager = ({ title, description, keywords, canonical, ogImage }) => {
     };
 
     // Update tags
-    document.title = title || "KMG";
+    document.title = title || "Form";
 
     const setMeta = (selector, attrName, value, tagName = "meta") => {
       let tag = document.querySelector(selector);

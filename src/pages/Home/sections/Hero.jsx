@@ -17,7 +17,7 @@ const Hero = ({ data, loading }) => {
         muted
       />
 
-      <div className="absolute inset-0 z-10 bg-black/40">
+      <div className="absolute inset-0 z-10 bg-black/50">
         <div className="container max-w-2xl h-full flex flex-col justify-center items-center text-center text-white gap-6">
           <h1 className="text-5xl md:text-7xl font-bold">
             {data?.introduction_title}
@@ -28,7 +28,7 @@ const Hero = ({ data, loading }) => {
 
           {data?.introduction_link && (
             <Link to={data?.introduction_link}>
-              <Button variant="secondary" size="lg" className={`mt-2 text-lg`}>
+              <Button variant="secondary" size="lg" className={`mt-2 text-lg min-w-36`}>
                 {data?.introduction_button_title}
               </Button>
             </Link>

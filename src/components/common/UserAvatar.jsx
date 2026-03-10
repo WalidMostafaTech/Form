@@ -15,7 +15,7 @@ const UserAvatar = ({
 
   return (
     <Avatar
-      className={`${className}`}
+      className={`${className} bg-muted-foreground/20`}
       style={{
         width: size,
         height: size,

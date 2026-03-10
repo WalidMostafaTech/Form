@@ -37,7 +37,8 @@ const ProductCard = ({ product, sale_type = "retail", page = "" }) => {
     },
   });
 
-  const handleToggleFavorite = () => {
+  const handleToggleFavorite = (e) => {
+    e.stopPropagation(); // لمنع التنقل عند الضغط على القلب
     requireAuth(() => {
       setIsFavorited((prev) => !prev); // تحديث محلي فورًا
       handleToggle({ id: product.id, sale_type }); // تحديث على السيرفر

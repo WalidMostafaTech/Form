@@ -12,8 +12,6 @@ import FormError from "@/components/form/FormError";
 import { FaUser, FaEnvelope, FaPen } from "react-icons/fa";
 import { isValidPhoneNumber } from "react-phone-number-input";
 
-import ChangePasswordModal from "./sections/ChangePasswordModal";
-
 import { useMutation } from "@tanstack/react-query";
 import { updateProfile } from "@/api/authServices";
 
@@ -21,13 +19,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { useRef, useState } from "react";
 import { addUser } from "@/store/user/userSlice";
 import { toast } from "sonner";
+import { openModal } from "@/store/modals/modalsSlice";
 
 const Account = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
 
-  const [openChangePassword, setOpenChangePassword] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
   const [avatar, setAvatar] = useState(user?.image || null);
 
@@ -44,19 +42,24 @@ const Account = () => {
         (val) => !val || isValidPhoneNumber(val),
         t("account.form.phone.validation.invalid"),
       ),
+    image: z.any().optional(),
   });
 
   /* ---------------- form ---------------- */
   const {
     handleSubmit,
     control,
-    formState: { errors },
+    setValue,
+    watch,
+    reset,
+    formState: { errors, isDirty },
   } = useForm({
     resolver: zodResolver(accountSchema),
     defaultValues: {
       name: user?.name || "",
       email: user?.email || "",
       phone: user?.phone || "",
+      image: user?.image || null,
     },
     mode: "onChange",
   });
@@ -67,6 +70,17 @@ const Account = () => {
     onSuccess: (data) => {
       dispatch(addUser(data));
       setErrorMsg("");
+
+      // تحديث الفورم بالقيم الجديدة
+      reset({
+        name: data?.name,
+        email: data?.email,
+        phone: data?.phone,
+        image: data?.image,
+      });
+
+      setAvatar(data?.image);
+
       toast.success(t("account.messages.success"));
     },
     onError: (error) => {
@@ -74,15 +88,18 @@ const Account = () => {
     },
   });
 
+  const image = watch("image");
+
   /* ---------------- submit ---------------- */
   const onSubmit = (values) => {
     const formData = new FormData();
+
     formData.append("name", values.name);
     formData.append("email", values.email);
     formData.append("phone", values.phone || "");
 
-    if (fileInputRef.current?.files?.[0]) {
-      formData.append("image", fileInputRef.current.files[0]);
+    if (values.image instanceof File) {
+      formData.append("image", values.image);
     }
 
     updateProfileMutation.mutate(formData);
@@ -114,7 +131,9 @@ const Account = () => {
               ref={fileInputRef}
               onChange={(e) => {
                 const file = e.target.files?.[0];
+
                 if (file) {
+                  setValue("image", file, { shouldDirty: true });
                   const reader = new FileReader();
                   reader.onload = () => setAvatar(reader.result);
                   reader.readAsDataURL(file);
@@ -179,8 +198,8 @@ const Account = () => {
           <div className="flex items-center flex-wrap gap-2">
             <Button
               type="submit"
-              className={`flex-1`}
-              disabled={updateProfileMutation.isPending}
+              className="flex-1"
+              disabled={updateProfileMutation.isPending || !isDirty}
             >
               {updateProfileMutation.isPending
                 ? t("account.buttons.saving")
@@ -191,7 +210,9 @@ const Account = () => {
               className={`flex-1`}
               type="button"
               variant="outline"
-              onClick={() => setOpenChangePassword(true)}
+              onClick={() =>
+                dispatch(openModal({ modalName: "changePasswordModal" }))
+              }
             >
               {t("account.buttons.changePassword")}
             </Button>
@@ -200,11 +221,6 @@ const Account = () => {
           {errorMsg && <FormError errorMsg={errorMsg} />}
         </form>
       </div>
-
-      <ChangePasswordModal
-        open={openChangePassword}
-        onClose={() => setOpenChangePassword(false)}
-      />
     </div>
   );
 };

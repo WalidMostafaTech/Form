@@ -44,8 +44,8 @@ const CategoryCard = ({ category }) => {
 
         <Link
           to={`/shop?category=${category.id}`}
-          className="inline-block w-max border-b-2 border-secondary text-sm tracking-wide line-clamp-10 hover:opacity-80 transition-all duration-500
-                    group-hover:bg-white group-hover:text-primary group-hover:border-transparent group-hover:px-2 group-hover:py-1 group-hover:rounded"
+          className="inline-block w-max border-b-2 border-secondary text-sm tracking-wide line-clamp-10 hover:opacity-85 transition-all duration-500
+                    group-hover:bg-white group-hover:text-primary group-hover:font-bold group-hover:border-transparent group-hover:px-2 group-hover:py-1 group-hover:rounded"
         >
           {t("exploreCollection")}
         </Link>

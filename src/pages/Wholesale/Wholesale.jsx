@@ -6,9 +6,9 @@ import { Navigate } from "react-router";
 const Wholesale = () => {
   const { t } = useTranslation();
 
-  const { user } = useSelector((state) => state.auth);
+  const { user } = useSelector((state) => state.user);
 
-  if (!user || user?.type !== "company") return <Navigate to="/shop" replace />;
+  if (!user || user?.type !== "company") return <Navigate to="/shop?type=retail" replace />;
 
   return (
     <ProductsPage

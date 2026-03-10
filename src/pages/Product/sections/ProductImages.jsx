@@ -4,12 +4,22 @@ import { Thumbs } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/thumbs";
 import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 const ProductImages = ({ images }) => {
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
   const [activeIndex, setActiveIndex] = useState(0);
 
+  const { t } = useTranslation();
+
   const { lang } = useSelector((state) => state.language);
+
+  if (!images?.length)
+    return (
+      <div className="w-full aspect-6/7 bg-primary-foreground rounded-2xl flex items-center justify-center">
+        <span className="text-muted-foreground text-lg font-semibold">{t("no_images_available")}</span>
+      </div>
+    );
 
   return (
     <section>

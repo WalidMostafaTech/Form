@@ -33,7 +33,7 @@ const LogOutModal = () => {
   return (
     <Dialog open={modalName === "logOutModal"} onOpenChange={onClose}>
       <DialogContent>
-        <div className="modal_icon">
+        <div className="modal_icon danger">
           <GiEntryDoor />
         </div>
 
@@ -56,6 +56,7 @@ const LogOutModal = () => {
 
           <Button
             className={`flex-1`}
+            variant="destructive"
             disabled={logOutLoading}
             onClick={handleLogout}
           >

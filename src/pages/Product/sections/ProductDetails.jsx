@@ -122,7 +122,7 @@ const ProductDetails = ({ product }) => {
       </div>
 
       {/* Quantity */}
-      {!product.for_sale && (
+      {product.for_sale && (
         <div className="flex items-center gap-2 border rounded w-fit">
           <button
             onClick={() => setQuantity((prev) => Math.max(1, prev - 1))}

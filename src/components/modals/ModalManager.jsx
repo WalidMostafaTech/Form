@@ -5,6 +5,7 @@ import RequiredVerifyEmailModal from "./RequiredVerifyEmailModal";
 import TermsModal from "./TermsModal";
 import DeleteCartItemModal from "./DeleteCartItemModal";
 import UpdateCartItemModal from "./UpdateCartItemModal";
+import ChangePasswordModal from "./ChangePasswordModal";
 
 const ModalManager = () => {
   return (
@@ -16,6 +17,7 @@ const ModalManager = () => {
       <TermsModal />
       <DeleteCartItemModal />
       <UpdateCartItemModal />
+      <ChangePasswordModal />
     </>
   );
 };

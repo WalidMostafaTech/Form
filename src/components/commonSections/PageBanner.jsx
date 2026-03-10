@@ -10,9 +10,9 @@ const PageBanner = ({ image, title, description, html, loading }) => {
     >
       <div className="absolute inset-0 bg-primary/50" />
 
-      <div className="relative z-10 container h-full pt-20 pb-10 flex flex-col items-start justify-end gap-4">
+      <div className="relative z-10 container h-full pt-20 pb-4 lg:pb-10 flex flex-col items-start justify-end gap-2 lg:gap-4">
         {title && (
-          <h1 className="text-2xl md:text-3xl lg:text-5xl font-extrabold text-white capitalize">
+          <h1 className="text-3xl lg:text-5xl font-extrabold text-white capitalize">
             {title}
           </h1>
         )}
@@ -20,11 +20,11 @@ const PageBanner = ({ image, title, description, html, loading }) => {
         {description &&
           (html ? (
             <div
-              className="md:text-base text-white max-w-2xl"
+              className="text-sm lg:text-base text-white max-w-2xl"
               dangerouslySetInnerHTML={{ __html: description }}
             />
           ) : (
-            <p className="md:text-base text-white max-w-2xl">
+            <p className="text-sm lg:text-base text-white max-w-2xl">
               {description}
             </p>
           ))}
