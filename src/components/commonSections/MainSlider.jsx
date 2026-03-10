@@ -12,6 +12,7 @@ const MainSlider = ({
   breakpoints = {
     0: { slidesPerView: 1 },
     480: { slidesPerView: 1.3 },
+    570: { slidesPerView: 1.6 },
     640: { slidesPerView: 2 },
     720: { slidesPerView: 2.5 },
     960: { slidesPerView: 3 },

@@ -52,7 +52,7 @@ const OurStory = () => {
           {ourStory?.button.url && (
             <Link
               to={ourStory?.button?.url}
-              className="text-primary text-center font-bold py-3 px-4 border-2 rounded-full min-w-[160px]
+              className="text-primary text-center font-bold py-3 px-4 border-2 rounded-full min-w-40
             border-primary hover:bg-primary hover:text-background duration-300 inline-block"
             >
               {ourStory?.button?.text}

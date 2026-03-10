@@ -14,8 +14,8 @@ const OurStorySkeleton = () => {
 
           {/* Title */}
           <div className="space-y-3">
-            <Skeleton className="h-8 w-3/4" />
-            <Skeleton className="h-8 w-2/3" />
+            <Skeleton className="h-10 w-3/4" />
+            <Skeleton className="h-10 w-2/3" />
           </div>
 
           {/* Description */}
@@ -43,7 +43,7 @@ const OurStorySkeleton = () => {
         </div>
 
         {/* Right Image */}
-        <div className="hidden md:block w-full h-full min-h-100 relative">
+        <div className="hidden md:block w-full aspect-4/5 min-h-100 relative">
           <Skeleton className="w-full h-full rounded-lg" />
 
           {/* Established Year Badge */}

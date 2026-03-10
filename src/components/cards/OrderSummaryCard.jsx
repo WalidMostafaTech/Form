@@ -1,9 +1,16 @@
 import { useTranslation } from "react-i18next";
 import { Button } from "../ui/button";
 import UEAIcon from "@/components/common/UEAIcon";
+import { useNavigate, useSearchParams } from "react-router";
 
 const OrderSummaryCard = ({ cart, onConfirm, loading }) => {
   const { t } = useTranslation();
+
+  const navigate = useNavigate();
+
+  const [searchParams] = useSearchParams();
+
+  const sale_type = searchParams.get("sale_type") || "retail";
 
   if (!cart?.cart_items?.length) return null;
 
@@ -45,15 +52,21 @@ const OrderSummaryCard = ({ cart, onConfirm, loading }) => {
         {cart?.final_total} <UEAIcon className="w-6 h-6" />
       </p>
 
-      <Button disabled={loading} onClick={onConfirm} className="w-full">
-        {loading
-          ? t("OrderSummaryCard.confirming")
-          : t("OrderSummaryCard.confirmOrder")}
-      </Button>
+      <div className="space-y-2">
+        <Button disabled={loading} onClick={onConfirm} className="w-full">
+          {loading
+            ? t("OrderSummaryCard.confirming")
+            : t("OrderSummaryCard.confirmOrder")}
+        </Button>
 
-      <Button variant="outline" onClick={onConfirm} className="w-full">
-        {t("OrderSummaryCard.addMoreProducts")}
-      </Button>
+        <Button
+          variant="outline"
+          onClick={() => navigate(`/shop?sale_type=${sale_type}`)}
+          className="w-full"
+        >
+          {t("OrderSummaryCard.addMoreProducts")}
+        </Button>
+      </div>
     </div>
   );
 };
