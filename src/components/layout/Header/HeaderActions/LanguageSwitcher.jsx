@@ -29,7 +29,15 @@ const LanguageSwitcher = () => {
         <span className="font-semibold text-sm sm:hidden">
           {lang === "en" ? "AR" : "EN"}
         </span>
-        <span className="font-semibold text-sm hidden sm:inline">
+        <span
+          style={{
+            fontFamily:
+              lang === "en"
+                ? "Noto Sans Arabic, sans-serif"
+                : "Assistant, sans-serif",
+          }}
+          className="font-semibold text-sm hidden sm:inline"
+        >
           {lang === "en" ? "العربية" : "English"}
         </span>
         <AiOutlineGlobal />

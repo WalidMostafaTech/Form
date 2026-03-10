@@ -12,7 +12,7 @@ const CartPageSkeleton = () => {
               className="p-3 border rounded-lg flex items-start gap-4"
             >
               {/* image */}
-              <Skeleton className="w-24 md:w-32 aspect-square rounded-lg" />
+              <Skeleton className="w-28 md:w-48 aspect-square rounded-lg" />
 
               <div className="flex-1 space-y-3">
                 {/* title + actions */}

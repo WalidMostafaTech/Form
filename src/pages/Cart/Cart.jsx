@@ -55,10 +55,29 @@ const Cart = () => {
       ) : (
         <section className="container pagePadding">
           <div className="flex flex-col md:flex-row gap-4 lg:gap-8">
-            <div className="space-y-4 flex-1">
-              {cart?.cart_items?.map((item) => (
-                <CartCard key={item.id} item={item} />
-              ))}
+            <div className="flex-1 h-full flex flex-col gap-4 justify-between">
+              <div className="space-y-4">
+                {cart?.cart_items?.map((item) => (
+                  <CartCard key={item.id} item={item} />
+                ))}
+              </div>
+
+              <div>
+                <label
+                  htmlFor="comment"
+                  className="inline-block mb-1 text-sm font-medium text-gray-900"
+                >
+                  {t("Cart.commentLabel")}
+                </label>
+
+                <Textarea
+                  ref={textareaRef}
+                  name="comment"
+                  id="comment"
+                  placeholder={t("Cart.commentPlaceholder")}
+                  className="bg-muted"
+                />
+              </div>
             </div>
 
             <OrderSummaryCard
@@ -67,23 +86,6 @@ const Cart = () => {
                 createOrder({ comment: textareaRef.current?.value.trim() })
               }
               loading={isPending}
-            />
-          </div>
-
-          <div className="mt-4">
-            <label
-              htmlFor="comment"
-              className="inline-block mb-1 text-sm font-medium text-gray-900"
-            >
-              {t("Cart.commentLabel")}
-            </label>
-
-            <Textarea
-              ref={textareaRef}
-              name="comment"
-              id="comment"
-              placeholder={t("Cart.commentPlaceholder")}
-              className="bg-muted"
             />
           </div>
         </section>

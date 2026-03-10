@@ -48,7 +48,7 @@ const Header = () => {
           <Link to="/" className="w-30 md:w-38">
             <img
               loading="lazy"
-              src={logo}
+              src={settings?.header_logo || logo}
               alt="Company Logo"
               className="w-full h-full object-contain hover:scale-105 transition-transform duration-300"
             />

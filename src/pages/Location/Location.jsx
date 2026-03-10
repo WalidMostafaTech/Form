@@ -9,9 +9,13 @@ import "swiper/css";
 import "swiper/css/pagination";
 import LocationSkeleton from "@/components/Loading/SkeletonLoading/LocationSkeleton";
 import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
 
 const Location = () => {
   const { t } = useTranslation();
+
+
+  const {settings} = useSelector(state => state.settings)
 
   const { data: locationSliders = [], isLoading } = useQuery({
     queryKey: ["locationSliders"],
@@ -30,25 +34,36 @@ const Location = () => {
           disableOnInteraction: false,
         }}
         pagination={{ clickable: true }}
-        className="h-dvh location-swiper"
+        className="h-[calc(100vh-30px)] location-swiper"
       >
         {locationSliders.map((item) => (
           <SwiperSlide key={item.id}>
             <div
-              className="sectionPadding bg-center bg-cover relative h-dvh"
+              className="sectionPadding bg-center bg-cover relative h-[calc(100vh-30px)]"
               style={{ backgroundImage: `url(${item.image})` }}
             >
-              <div className="absolute inset-0 bg-primary/60" />
+              <div className="absolute inset-0 bg-primary/40" />
 
               <div className="w-full p-4 max-w-2xl mx-auto text-center h-full flex flex-col items-center justify-center gap-6 relative z-10 text-white">
-                <p className="-tracking-widest uppercase">{item.title}</p>
+                <p className="tracking-widest uppercase text-lg">
+                  {item.title}
+                </p>
 
-                <img loading="lazy" src={logo} alt="logo" />
+                <img
+                  loading="lazy"
+                  src={settings?.header_logo || logo}
+                  alt="logo"
+                  className="w-60 lg:w-80"
+                />
 
-                <p>{item.description}</p>
+                <p className="text-lg">{item.description}</p>
 
                 <a href={item.link} target="_blank" rel="noreferrer">
-                  <Button variant="outline" className="min-w-32">
+                  <Button
+                    size="lg"
+                    variant="outline"
+                    className="min-w-32 font-bold text-lg"
+                  >
                     {t("Visit")}
                   </Button>
                 </a>

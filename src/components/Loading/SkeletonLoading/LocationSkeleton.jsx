@@ -3,7 +3,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 const LocationSkeleton = () => {
   return (
     <main>
-      <div className="h-dvh relative flex items-center justify-center">
+      <div className="min-h-[calc(100vh-30px)] relative flex items-center justify-center">
         {/* background */}
         <Skeleton className="absolute inset-0 w-full h-full bg-primary/20" />
 

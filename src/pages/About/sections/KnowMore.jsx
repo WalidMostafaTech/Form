@@ -16,7 +16,7 @@ const KnowMore = ({ data, loading }) => {
     >
       <div className="absolute inset-0 bg-primary/80" />
 
-      <div className="w-full max-w-3xl p-4 mx-auto relative z-10 flex flex-col items-center text-center gap-6 text-white">
+      <div className="w-full max-w-3xl p-4 mx-auto relative z-10 flex flex-col items-center text-center gap-6 lg:gap-10 text-white">
         <h2 className="text-2xl md:text-4xl lg:text-5xl font-extrabold">{data?.title}</h2>
 
         <p className="text-muted/80 text-sm">{data?.description}</p>

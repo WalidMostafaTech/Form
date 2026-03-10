@@ -37,7 +37,7 @@ const VisionAndMission = ({ vision, mission, loading }) => {
             flex flex-col items-center text-center md:text-start md:items-start gap-2"
             >
               <div
-                className="text-3xl text-primary bg-primary-foreground w-14 h-14 p-2
+                className="text-3xl text-primary bg-primary-foreground w-14 aspect-square p-4
               flex items-center justify-center rounded-full"
               >
                 <img
@@ -48,9 +48,9 @@ const VisionAndMission = ({ vision, mission, loading }) => {
                 />
               </div>
 
-              <h3 className="text-xl font-semibold">{item.title}</h3>
+              <h3 className="text-xl font-bold">{item.title}</h3>
 
-              <p className="text-sm text-muted-foreground">
+              <p className="">
                 {item.description}
               </p>
             </div>

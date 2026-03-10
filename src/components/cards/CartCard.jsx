@@ -1,16 +1,14 @@
 import { RiEdit2Line, RiDeleteBinLine } from "react-icons/ri";
 import { useDispatch } from "react-redux";
 import { openModal } from "@/store/modals/modalsSlice";
-import { useTranslation } from "react-i18next";
 import UEAIcon from "@/components/common/UEAIcon";
 
 const CartCard = ({ item }) => {
   const dispatch = useDispatch();
-  const { t } = useTranslation();
 
   return (
-    <div className="p-3 border rounded-lg flex items-start gap-4">
-      <div className="w-24 md:w-32 aspect-square overflow-hidden rounded-lg">
+    <div className="p-3 border rounded-lg items-start flex gap-4">
+      <div className="w-28 md:w-48 aspect-square overflow-hidden rounded-lg">
         <img
           loading="lazy"
           src={item.image}
@@ -19,9 +17,9 @@ const CartCard = ({ item }) => {
         />
       </div>
 
-      <div className="flex-1 space-y-2 text-sm">
+      <div className="flex-1 font-semibold flex flex-col justify-between gap-2 h-full">
         <div className="flex items-start justify-between gap-2">
-          <h3 className="text-lg font-semibold line-clamp-2">{item.name}</h3>
+          <h3 className="text-lg font-bold line-clamp-2">{item.name}</h3>
 
           <div className="flex items-center gap-2">
             <button
@@ -63,17 +61,17 @@ const CartCard = ({ item }) => {
           {item.weight} {item.weight_unit}
         </p>
 
-        <p className="font-bold text-primary flex items-center gap-1">
+        <p className="font-bold text-primary text-lg flex items-center gap-1">
           {item.price} <UEAIcon />
         </p>
 
         <div className="flex items-center flex-wrap justify-between gap-2">
-          <span className="p-1 min-w-16 text-lg text-center font-semibold text-primary bg-primary-foreground rounded-md">
+          <span className="p-1 min-w-16 text-lg text-center font-semibold text-primary bg-primary-foreground rounded-md border">
             {item.quantity}
           </span>
 
-          <p className="text-lg font-bold text-primary flex items-center gap-1">
-            {item.price * item.quantity} <UEAIcon />
+          <p className="text-3xl font-extrabold text-primary flex items-center gap-1">
+            {item.price * item.quantity} <UEAIcon className="w-7 h-7" />
           </p>
         </div>
       </div>

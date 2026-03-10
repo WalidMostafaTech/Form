@@ -20,16 +20,16 @@ const OurStory = () => {
     <section className="container sectionPadding">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         <div className="space-y-6 content-center">
-          <p className="text-secondary text-lg flex items-center gap-2">
+          <p className="text-secondary text-lg font-semibold uppercase flex items-center gap-2">
             <span className="h-0.5 w-12 bg-secondary"></span>
             {t("OurStory.title")}
           </p>
 
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold">
+          <h1 className="text-3xl sm:text-4xl lg:text-6xl font-extrabold">
             {ourStory?.title}
           </h1>
 
-          <p className="text-muted-foreground">
+          <p className="text-muted-foreground lg:text-lg">
             {ourStory?.description}
           </p>
 
@@ -39,10 +39,10 @@ const OurStory = () => {
                 key={item.label}
                 className="not-last:border-e not-last:pe-8"
               >
-                <p className="text-4xl font-extrabold text-primary leading-none mb-1">
+                <p className="text-5xl font-extrabold text-primary leading-none">
                   {item.number}
                 </p>
-                <p className="text-xs text-muted-foreground font-semibold uppercase">
+                <p className=":text-sm text-muted-foreground font-semibold uppercase">
                   {item.label}
                 </p>
               </li>

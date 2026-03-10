@@ -9,7 +9,9 @@ const OrderSummaryCard = ({ cart, onConfirm, loading }) => {
 
   return (
     <div className="md:w-75 lg:w-96 p-3 space-y-4 border rounded-lg h-max bg-primary-foreground sticky top-20">
-      <h2 className="text-xl font-bold">{t("OrderSummaryCard.title")}</h2>
+      <h2 className="text-xl font-bold text-primary">
+        {t("OrderSummaryCard.title")}
+      </h2>
 
       <div className="space-y-2">
         <div className="flex items-center justify-between gap-2 mb-2">
@@ -47,6 +49,10 @@ const OrderSummaryCard = ({ cart, onConfirm, loading }) => {
         {loading
           ? t("OrderSummaryCard.confirming")
           : t("OrderSummaryCard.confirmOrder")}
+      </Button>
+
+      <Button variant="outline" onClick={onConfirm} className="w-full">
+        {t("OrderSummaryCard.addMoreProducts")}
       </Button>
     </div>
   );

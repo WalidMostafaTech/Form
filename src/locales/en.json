@@ -17,7 +17,8 @@
     "vat": "Vat",
     "currency": "EGP",
     "confirmOrder": "Confirm Order",
-    "confirming": "Confirming..."
+    "confirming": "Confirming...",
+    "addMoreProducts": "Add more products"
   },
 
   "BestSellers": {
@@ -257,6 +258,17 @@
     "wholesaleTitle": "Wholesale",
     "allCategories": "All",
     "noProducts": "No products found"
+  },
+
+  "ProductsFilter": {
+    "search": "Search",
+    "searchPlaceholder": "Search products...",
+    "subCategory": "Subcategory",
+    "subCategoryPlaceholder": "Select subcategory",
+    "sortPrice": "Sort by price",
+    "sortPricePlaceholder": "Select sort by price",
+    "sortPriceAsc": "Low to High",
+    "sortPriceDesc": "High to Low"
   },
 
   "ProfileSideBar": {

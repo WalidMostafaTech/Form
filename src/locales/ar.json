@@ -17,7 +17,8 @@
     "vat": "ضريبة القيمة المضافة",
     "currency": "ج.م",
     "confirmOrder": "تأكيد الطلب",
-    "confirming": "جارٍ التأكيد..."
+    "confirming": "جارٍ التأكيد...",
+    "addMoreProducts": "إضافة منتجات أكثر"
   },
 
   "BestSellers": {
@@ -257,6 +258,17 @@
     "wholesaleTitle": "البيع بالجملة",
     "allCategories": "الكل",
     "noProducts": "لا توجد منتجات"
+  },
+
+  "ProductsFilter": {
+    "search": "بحث",
+    "searchPlaceholder": "ابحث عن منتج...",
+    "subCategory": "الفئة الفرعية",
+    "subCategoryPlaceholder": "اختر الفئة الفرعية",
+    "sortPrice": "ترتيب السعر",
+    "sortPricePlaceholder": "اختر ترتيب السعر",
+    "sortPriceAsc": "السعر من الأقل إلى الأعلى",
+    "sortPriceDesc": "السعر من الأعلى إلى الأقل"
   },
 
   "ProfileSideBar": {

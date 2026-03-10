@@ -36,7 +36,7 @@ const Product = () => {
       {isLoading ? (
         <ProductDetailsSkeleton />
       ) : (
-        <section className="container pagePadding grid grid-cols-1 md:grid-cols-2 gap-10">
+        <section className="container w-full lg:max-w-5xl pagePadding grid grid-cols-1 sm:grid-cols-2 gap-10">
           <ProductImages images={product?.images} />
           <ProductDetails product={product} />
         </section>

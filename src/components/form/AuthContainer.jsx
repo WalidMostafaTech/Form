@@ -16,7 +16,7 @@ const AuthContainer = ({
         style={{
           backgroundImage: `url(${settings?.registration_form?.image})`,
         }}
-        className="hidden md:flex sticky top-0 h-dvh bg-cover bg-center bg-primary"
+        className="hidden md:flex sticky top-0 h-[calc(100vh-30px)] bg-cover bg-center bg-primary"
       >
         <div className="absolute inset-0 bg-primary/40" />
 

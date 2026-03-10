@@ -1,6 +1,6 @@
 const TestimonialCard = ({ testimonial }) => {
   return (
-    <div className="bg-stone-50 p-2 rounded-md">
+    <div className="bg-stone-50 p-3 rounded-md">
       <div className="flex items-center gap-2 mb-4">
         <div className="bg-white rounded p-1 w-14 aspect-square">
           <img
@@ -12,8 +12,8 @@ const TestimonialCard = ({ testimonial }) => {
         </div>
 
         <div>
-          <h3 className="font-semibold text-lg">{testimonial.name}</h3>
-          <p className="text-muted-foreground text-sm">{testimonial.job}</p>
+          <h3 className="font-semibold text-lg lg:text-xl">{testimonial.name}</h3>
+          <p className="text-sm lg:text-base">{testimonial.job}</p>
         </div>
       </div>
 
