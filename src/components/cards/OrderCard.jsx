@@ -70,7 +70,7 @@ const OrderCard = ({ item }) => {
         )}
 
         <div className="flex items-center flex-wrap justify-between gap-2">
-          <p className="text-lg font-bold text-primary flex items-center gap-1">
+          <p className="text-lg  text-primary flex items-center gap-1">
             {item.final_total} <UEAIcon />
           </p>
 

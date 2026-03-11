@@ -261,7 +261,7 @@ const RegisterCustomer = () => {
                 />
                 <label
                   htmlFor="terms"
-                  className="text-sm font-medium leading-none flex items-center gap-1"
+                  className="text-sm  leading-none flex items-center gap-1"
                 >
                   {t("registerCustomer.agreeTo")}{" "}
                   <span

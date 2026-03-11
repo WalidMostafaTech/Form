@@ -30,7 +30,7 @@ const AuthContainer = ({
             />
           </div>
 
-          <h1 className="text-2xl font-bold text-white">
+          <h1 className="text-2xl text-white">
             {settings?.registration_form?.title}
           </h1>
           <p className="text-sm text-white/80">
@@ -46,13 +46,15 @@ const AuthContainer = ({
         <div className="w-full max-w-sm pt-16">
           <hgroup className="text-center space-y-2 mb-6">
             {coffeeIcon && (
-              <div className="text-4xl text-primary bg-primary-foreground w-16 h-16 
-              flex items-center justify-center rounded-full mx-auto">
+              <div
+                className="text-4xl text-primary bg-primary-foreground w-16 h-16 
+              flex items-center justify-center rounded-full mx-auto"
+              >
                 <GiCoffeeBeans />
               </div>
             )}
 
-            <h3 className="text-2xl font-bold text-primary">{title}</h3>
+            <h3 className="text-2xl font-medium text-primary">{title}</h3>
             <p className="text-xs text-muted-foreground">{description}</p>
           </hgroup>
 

@@ -13,7 +13,7 @@ const ErrorPage = () => {
     <section className="h-screen flex flex-col items-center justify-center gap-4 text-center px-4">
       <CiWarning className="text-[120px] text-primary" />
 
-      <h2 className="text-2xl font-bold">{t("ErrorPage.title")}</h2>
+      <h2 className="text-2xl ">{t("ErrorPage.title")}</h2>
 
       <p className="text-primary font-semibold max-w-md">
         {error?.message || t("ErrorPage.description")}

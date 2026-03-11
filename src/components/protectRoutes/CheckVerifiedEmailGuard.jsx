@@ -18,9 +18,7 @@ const CheckVerifiedEmailGuard = ({ children }) => {
           <CiWarning />
         </div>
 
-        <h1 className="text-2xl font-bold">
-          {t("checkVerifiedEmailGuard.title")}
-        </h1>
+        <h1 className="text-2xl ">{t("checkVerifiedEmailGuard.title")}</h1>
 
         <h2 className="font-semibold">
           {t("checkVerifiedEmailGuard.description")}

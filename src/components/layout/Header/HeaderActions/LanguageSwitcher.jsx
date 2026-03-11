@@ -23,10 +23,10 @@ const LanguageSwitcher = () => {
     <>
       <button
         onClick={handleToggle}
-        className="flex items-center gap-1 text-white border-2 px-2 py-1 rounded-md cursor-pointer 
+        className="flex items-center gap-1 text-white border px-2 py-1 rounded-md cursor-pointer 
         hover:text-secondary hover:border-secondary transition-colors duration-300"
       >
-        <span className="font-semibold text-sm sm:hidden">
+        <span className="font-medium text-sm sm:hidden">
           {lang === "en" ? "AR" : "EN"}
         </span>
         <span
@@ -36,7 +36,7 @@ const LanguageSwitcher = () => {
                 ? "Noto Sans Arabic, sans-serif"
                 : "Assistant, sans-serif",
           }}
-          className="font-semibold text-sm hidden sm:inline"
+          className="font-medium text-sm hidden sm:inline"
         >
           {lang === "en" ? "العربية" : "English"}
         </span>

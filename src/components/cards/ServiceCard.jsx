@@ -12,7 +12,9 @@ const ServiceCard = ({ service }) => {
         />
       </div>
 
-      <h3 className="text-lg lg:text-2xl font-extrabold line-clamp-1">{service.title}</h3>
+      <h3 className="text-lg lg:text-2xl font-semibold line-clamp-1">
+        {service.title}
+      </h3>
 
       <p className="text-sm text-muted-foreground line-clamp-2">
         {service.description}

@@ -142,7 +142,7 @@ const Account = () => {
             />
           </div>
 
-          <h3 className="text-2xl font-bold">{t("account.personalInfo")}</h3>
+          <h3 className="text-2xl ">{t("account.personalInfo")}</h3>
         </div>
 
         {/* ===== Form ===== */}

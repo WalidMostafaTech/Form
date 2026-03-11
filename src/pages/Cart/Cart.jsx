@@ -65,7 +65,7 @@ const Cart = () => {
               <div>
                 <label
                   htmlFor="comment"
-                  className="inline-block mb-1 text-sm font-medium text-gray-900"
+                  className="inline-block mb-1 text-sm  text-gray-900"
                 >
                   {t("Cart.commentLabel")}
                 </label>

@@ -105,7 +105,7 @@ const ProductDetails = ({ product }) => {
   return (
     <section className="space-y-6">
       {/* Title */}
-      <h2 className="text-3xl lg:text-4xl font-extrabold">{product?.name}</h2>
+      <h2 className="text-3xl lg:text-4xl font-medium">{product?.name}</h2>
 
       {/* Weights / Sizes */}
       <div className="flex items-center justify-between flex-wrap gap-2">
@@ -116,13 +116,13 @@ const ProductDetails = ({ product }) => {
           getLabel={(size) => `${size.weight} ${size.weight_unit}`}
         />
 
-        <span className="text-xl lg:text-2xl font-extrabold text-primary bg-primary-foreground rounded-md px-2 py-1 flex items-center gap-1">
+        <span className="text-xl lg:text-2xl font-semibold text-primary bg-primary-foreground rounded-md px-2 py-1 flex items-center gap-1">
           {selectedSize?.price} <UEAIcon className="w-6 h-6" />
         </span>
       </div>
 
       {/* Quantity */}
-      {product.for_sale && (
+      {product?.for_sale && (
         <div className="flex items-center gap-2 border rounded w-fit">
           <button
             onClick={() => setQuantity((prev) => Math.max(1, prev - 1))}
@@ -154,7 +154,7 @@ const ProductDetails = ({ product }) => {
       </div>
 
       {/* Buttons */}
-      {product.for_sale && (
+      {product?.for_sale && (
         <div className="flex flex-wrap gap-2">
           <div className="flex-1 flex items-center gap-2">
             <Button

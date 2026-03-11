@@ -229,7 +229,7 @@ const Step1 = ({ setParentData, parentData, goNext }) => {
               />
               <label
                 htmlFor="terms"
-                className="text-sm font-medium leading-none flex items-center gap-1"
+                className="text-sm  leading-none flex items-center gap-1"
               >
                 {t("registerCompanyStep1.agreeTo")}{" "}
                 <span

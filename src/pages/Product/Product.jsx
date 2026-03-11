@@ -3,13 +3,18 @@ import ProductImages from "./sections/ProductImages";
 import PageBanner from "@/components/commonSections/PageBanner";
 import BestSellers from "@/components/commonSections/BestSellers";
 import { useQuery } from "@tanstack/react-query";
-import { useParams, useSearchParams } from "react-router";
+import { useNavigate, useParams, useSearchParams } from "react-router";
 import { getProduct, getProductsHero } from "@/api/productsServices";
 import ProductDetailsSkeleton from "@/components/Loading/SkeletonLoading/ProductDetailsSkeleton";
 import SeoManager from "@/utils/SeoManager";
+import { useSelector } from "react-redux";
+import { useEffect } from "react";
 
 const Product = () => {
   const { slug } = useParams();
+  const navigate = useNavigate();
+
+  const { user, loading } = useSelector((state) => state.user);
 
   const [searchParams] = useSearchParams();
   const sale_type = searchParams.get("sale_type") || "retail";
@@ -24,6 +29,16 @@ const Product = () => {
     queryFn: getProductsHero,
   });
 
+  useEffect(() => {
+    if (
+      !loading &&
+      sale_type === "wholesale" &&
+      (!user || user?.type === "user")
+    ) {
+      navigate("?sale_type=retail", { replace: true });
+    }
+  }, [user, sale_type, loading, navigate]);
+
   return (
     <>
       <SeoManager
@@ -37,7 +52,7 @@ const Product = () => {
       <main>
         <PageBanner
           image={productHero?.image}
-          title={product?.name}
+          title={`${product?.category}, ${product?.sub_category}`}
           description={productHero?.description}
           html={true}
           loading={isLoadingHero}

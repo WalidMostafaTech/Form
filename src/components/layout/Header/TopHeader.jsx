@@ -10,7 +10,7 @@ const TopHeader = () => {
 
   if (isLoading) return <div className="bg-black text-white h-7" />;
 
-  if (!strips || !strips?.length) return null;
+  if (!strips || !strips?.length) return <div className="bg-black text-white h-7" />;
 
   return (
     <div className="bg-black text-white py-1 overflow-hidden relative">

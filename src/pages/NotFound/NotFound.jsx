@@ -8,8 +8,8 @@ const NotFound = () => {
 
   return (
     <section className="h-[90vh] flex flex-col items-center justify-center gap-4">
-      <h1 className="text-7xl font-bold">{t("notFound.title")}</h1>
-      <h2 className="text-2xl font-bold">{t("notFound.subtitle")}</h2>
+      <h1 className="text-7xl ">{t("notFound.title")}</h1>
+      <h2 className="text-2xl ">{t("notFound.subtitle")}</h2>
 
       <Link to="/" replace>
         <Button>

@@ -14,7 +14,7 @@ const OptionSelector = ({
         return (
           <li key={value || index}>
             <button
-              className={`font-bold px-4 py-1 cursor-pointer rounded border transition capitalize ${
+              className={` px-4 py-1 cursor-pointer rounded border transition capitalize ${
                 selected === value
                   ? "bg-primary text-white"
                   : "bg-primary-foreground hover:bg-primary/10"

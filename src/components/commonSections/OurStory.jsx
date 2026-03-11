@@ -25,7 +25,7 @@ const OurStory = () => {
             {t("OurStory.title")}
           </p>
 
-          <h1 className="text-3xl sm:text-4xl lg:text-6xl font-extrabold">
+          <h1 className="text-3xl sm:text-4xl lg:text-6xl">
             {ourStory?.title}
           </h1>
 
@@ -35,11 +35,8 @@ const OurStory = () => {
 
           <ul className="flex gap-8">
             {ourStory?.statistics?.map((item) => (
-              <li
-                key={item.label}
-                className="not-last:border-e not-last:pe-8"
-              >
-                <p className="text-5xl font-extrabold text-primary leading-none">
+              <li key={item.label} className="not-last:border-e not-last:pe-8">
+                <p className="text-5xl text-primary leading-none">
                   {item.number}
                 </p>
                 <p className=":text-sm text-muted-foreground font-semibold uppercase">
@@ -52,7 +49,7 @@ const OurStory = () => {
           {ourStory?.button.url && (
             <Link
               to={ourStory?.button?.url}
-              className="text-primary text-center font-bold py-3 px-4 border-2 rounded-full min-w-40
+              className="text-primary text-center  py-3 px-4 border-2 rounded-full min-w-40
             border-primary hover:bg-primary hover:text-background duration-300 inline-block"
             >
               {ourStory?.button?.text}
@@ -72,7 +69,7 @@ const OurStory = () => {
 
           {ourStory?.established_year && (
             <div className="absolute -bottom-4 -inset-e-2 bg-primary p-4 rounded-lg shadow-lg">
-              <p className="text-white text-lg font-bold text-center min-w-24">
+              <p className="text-white text-lg  text-center min-w-24">
                 {ourStory?.established_year}
               </p>
             </div>

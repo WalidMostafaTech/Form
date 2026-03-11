@@ -19,16 +19,18 @@ const Hero = ({ data, loading }) => {
 
       <div className="absolute inset-0 z-10 bg-black/50">
         <div className="container max-w-2xl h-full flex flex-col justify-center items-center text-center text-white gap-6">
-          <h1 className="text-5xl md:text-7xl font-bold">
-            {data?.introduction_title}
-          </h1>
+          <h1 className="text-5xl md:text-7xl ">{data?.introduction_title}</h1>
           <p className="text-lg md:text-2xl">
             {data?.introduction_description}
           </p>
 
           {data?.introduction_link && (
             <Link to={data?.introduction_link}>
-              <Button variant="secondary" size="lg" className={`mt-2 text-lg min-w-36`}>
+              <Button
+                variant="secondary"
+                size="lg"
+                className={`mt-2 text-lg min-w-36`}
+              >
                 {data?.introduction_button_title}
               </Button>
             </Link>

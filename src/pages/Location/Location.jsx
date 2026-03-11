@@ -62,7 +62,7 @@ const Location = () => {
                   <Button
                     size="lg"
                     variant="outline"
-                    className="min-w-32 font-bold text-lg"
+                    className="min-w-32  text-lg"
                   >
                     {t("Visit")}
                   </Button>

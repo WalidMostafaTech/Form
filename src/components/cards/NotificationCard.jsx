@@ -56,8 +56,8 @@ const NotificationCard = ({ notification }) => {
       </div>
 
       <div className="flex flex-col gap-1 flex-1">
-        <p className="font-bold text-xs lg:text-sm">{notification.title}</p>
-        <p className="text-xs opacity-70">{notification.message}</p>
+        <h3 className="font-medium">{notification.title}</h3>
+        <p className="text-sm opacity-70">{notification.message}</p>
         <p className="text-xs opacity-70">
           {formatDate(notification.notification_date)}
         </p>

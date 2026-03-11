@@ -36,7 +36,7 @@ const WhyChooseForm = ({ data, loading }) => {
 
       <div className="container relative z-10 py-8">
         <hgroup className="text-center mb-12 max-w-2xl mx-auto">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-white mb-6 lg:mb-10">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-semibold text-white mb-6 lg:mb-10">
             {highlightFormWord(data?.title)}
           </h2>
 
@@ -62,9 +62,7 @@ const WhyChooseForm = ({ data, loading }) => {
                   className="w-full h-full object-contain"
                 />
               </div>
-              <h3 className="text-lg lg:text-xl font-bold text-white">
-                {item.title}
-              </h3>
+              <h3 className="text-lg lg:text-xl  text-white">{item.title}</h3>
               <p className="text-sm text-muted/80 max-w-56">
                 {item.description}
               </p>

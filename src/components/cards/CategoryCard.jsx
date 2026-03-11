@@ -24,7 +24,7 @@ const CategoryCard = ({ category }) => {
         className="absolute inset-0 z-10 h-full flex flex-col justify-end p-6 text-white
         transition-all duration-500 group-hover:-translate-y-6"
       >
-        <h3 className="text-2xl lg:text-3xl font-extrabold mb-2">
+        <h3 className="text-2xl lg:text-3xl font-semibold mb-2">
           {category.name}
         </h3>
 
@@ -45,7 +45,7 @@ const CategoryCard = ({ category }) => {
         <Link
           to={`/shop?category=${category.id}`}
           className="inline-block w-max border-b-2 border-secondary text-sm tracking-wide line-clamp-10 hover:opacity-85 transition-all duration-500
-                    group-hover:bg-white group-hover:text-primary group-hover:font-bold group-hover:border-transparent group-hover:px-2 group-hover:py-1 group-hover:rounded"
+                    group-hover:bg-white group-hover:text-primary group-hover: group-hover:border-transparent group-hover:px-2 group-hover:py-1 group-hover:rounded"
         >
           {t("exploreCollection")}
         </Link>

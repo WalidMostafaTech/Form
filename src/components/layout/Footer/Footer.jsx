@@ -103,7 +103,7 @@ const Footer = () => {
         </div>
 
         <div className="flex flex-col items-center gap-4 text-center">
-          <h3 className="text-xl lg:text-2xl font-semibold uppercase">
+          <h3 className="text-xl lg:text-2xl font-medium uppercase">
             {t("Footer.links")}
           </h3>
           <ul className="space-y-2">
@@ -122,7 +122,7 @@ const Footer = () => {
 
         <div>
           <div className="flex flex-col items-center gap-4 text-center">
-            <h3 className="text-xl lg:text-2xl font-semibold uppercase">
+            <h3 className="text-xl lg:text-2xl font-medium uppercase">
               {t("Footer.socialMedia")}
             </h3>
             <div className="grid grid-cols-4 gap-4">

@@ -48,11 +48,9 @@ const VisionAndMission = ({ vision, mission, loading }) => {
                 />
               </div>
 
-              <h3 className="text-xl font-bold">{item.title}</h3>
+              <h3 className="text-xl font-medium">{item.title}</h3>
 
-              <p className="">
-                {item.description}
-              </p>
+              <p className="">{item.description}</p>
             </div>
           ))}
         </div>

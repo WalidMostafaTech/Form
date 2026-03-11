@@ -52,11 +52,13 @@ const ProductsFilter = ({ selectedCategory }) => {
   };
 
   return (
-    <div className="grid grid-cols-2 md:grid-cols-4 gap-2 lg:gap-4 
-    p-2 shadow-lg rounded bg-primary/10">
+    <div
+      className="grid grid-cols-2 md:grid-cols-4 gap-2 lg:gap-4 
+    p-2 shadow-lg rounded bg-primary/10"
+    >
       {/* Search */}
       <div className="col-span-2">
-        <label className="inline-block text-sm font-medium">
+        <label className="inline-block text-sm ">
           {t("ProductsFilter.search")}
         </label>
         <Input
@@ -69,7 +71,7 @@ const ProductsFilter = ({ selectedCategory }) => {
 
       {/* Sub Categories */}
       <div>
-        <label className="inline-block text-sm font-medium">
+        <label className="inline-block text-sm ">
           {t("ProductsFilter.subCategory")}
         </label>
         <Select
@@ -95,7 +97,7 @@ const ProductsFilter = ({ selectedCategory }) => {
 
       {/* Sort Price */}
       <div>
-        <label className="inline-block text-sm font-medium">
+        <label className="inline-block text-sm ">
           {t("ProductsFilter.sortPrice")}
         </label>
         <Select

@@ -34,8 +34,8 @@ const BestSellers = () => {
             0: { slidesPerView: 1.5 },
             450: { slidesPerView: 1.8 },
             560: { slidesPerView: 2.6 },
-            720: { slidesPerView: 3.3 },
-            1024: { slidesPerView: 4 },
+            640: { slidesPerView: 3.3 },
+            860: { slidesPerView: 4 },
           }}
           renderItem={(product) => <ProductCard product={product} />}
         />

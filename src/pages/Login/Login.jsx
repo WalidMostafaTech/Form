@@ -180,7 +180,7 @@ const Login = () => {
 
       <hr className="my-4" />
 
-      <div className="text-center text-xs text-muted-foreground mb-2">
+      <div className="text-center text-sm text-muted-foreground mb-2">
         {t("login.noAccount")}
       </div>
 

@@ -60,7 +60,7 @@ const ProductCard = ({ product, sale_type = "retail", page = "" }) => {
           className="w-full h-full object-cover"
         />
 
-        {product.for_sale && (
+        {product?.for_sale && (
           <button
             onClick={handleToggleFavorite}
             disabled={isPending}
@@ -73,23 +73,23 @@ const ProductCard = ({ product, sale_type = "retail", page = "" }) => {
         )}
       </div>
 
-      <h3 className="sm:text-lg font-bold line-clamp-1">{product.name}</h3>
+      <h3 className="sm:text-lg font-medium line-clamp-1">{product.name}</h3>
 
       <div className="flex items-center flex-wrap justify-between gap-2">
-        <span className="text-xs sm:text-sm font-semibold flex gap-1 items-center flex-wrap">
+        <span className="text-xs sm:text-base font-semibold flex gap-1 items-center flex-wrap">
           <span>{product.min_weight}</span>
-          <strong>-</strong>
-          <span>{product.max_weight}</span>
+          {/* <strong>-</strong>
+          <span>{product.max_weight}</span> */}
         </span>
 
-        <span className="text-sm sm:text-base text-primary font-extrabold flex gap-1 items-center flex-wrap">
+        <span className="text-sm sm:text-lg text-primary font-semibold flex gap-1 items-center flex-wrap">
           <span className="flex items-center gap-1">
             {product.min_price} <UEAIcon />
           </span>
-          <strong>-</strong>
+          {/* <strong>-</strong>
           <span className="flex items-center gap-1">
             {product.max_price} <UEAIcon />
-          </span>
+          </span> */}
         </span>
       </div>
 
@@ -97,7 +97,7 @@ const ProductCard = ({ product, sale_type = "retail", page = "" }) => {
         {product.description}
       </p>
 
-      {product.for_sale && (
+      {product?.for_sale && (
         <Button className={`mt-2`}>{t("add_to_cart")}</Button>
       )}
     </div>
