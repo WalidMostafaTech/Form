@@ -6,7 +6,7 @@ const lang = localStorage.getItem("lang") || "en";
 const categoriesSlice = createSlice({
   name: "categories",
   initialState: {
-    categories: [{ id: 0, name: lang === "en" ? "All" : "الكل" }],
+    categories: [{ id: 0, name: lang === "en" ? "All Products" : "كل المنتجات" }],
     loading: false,
     error: null,
   },
@@ -20,7 +20,7 @@ const categoriesSlice = createSlice({
       .addCase(fetchCategories.fulfilled, (state, action) => {
         state.loading = false;
         state.categories = [
-          { id: 0, name: lang === "en" ? "All" : "الكل" },
+          { id: 0, name: lang === "en" ? "All Products" : "كل المنتجات" },
           ...action.payload,
         ];
       })

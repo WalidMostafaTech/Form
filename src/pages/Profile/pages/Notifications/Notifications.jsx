@@ -38,17 +38,15 @@ const Notifications = () => {
     },
   });
 
-  const allIsRead =
-    notifications?.items?.length === 0 ||
-    notifications?.items?.every((item) => item.read_at === 1);
+  const hasUnread = notifications?.items?.some((item) => item.read_at === null);
 
   return (
     <div>
       <div className="flex items-start justify-between">
         <SectionTitle title={t("notifications.title")} />
 
-        {allIsRead && (
-          <Button disabled={isPending} onClick={() => markAllAsRead()}>
+        {hasUnread && (
+          <Button disabled={isPending} onClick={markAllAsRead}>
             {isPending
               ? t("notifications.loading")
               : t("notifications.markAllRead")}

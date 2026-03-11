@@ -10,7 +10,7 @@ const RegisterCompany = () => {
   const { t } = useTranslation();
   const steps = [1, 2, 3];
 
-  const [step, setStep] = useState(3);
+  const [step, setStep] = useState(1);
 
   const goNext = () => {
     if (step >= steps.length) return;

@@ -14,8 +14,7 @@ import { useSelector } from "react-redux";
 const Location = () => {
   const { t } = useTranslation();
 
-
-  const {settings} = useSelector(state => state.settings)
+  const { settings } = useSelector((state) => state.settings);
 
   const { data: locationSliders = [], isLoading } = useQuery({
     queryKey: ["locationSliders"],
@@ -30,8 +29,9 @@ const Location = () => {
         modules={[Autoplay, Pagination]}
         loop={true}
         autoplay={{
-          delay: 4000,
+          delay: 5000,
           disableOnInteraction: false,
+          pauseOnMouseEnter: true,
         }}
         pagination={{ clickable: true }}
         className="h-[calc(100vh-30px)] location-swiper"

@@ -82,7 +82,7 @@ const MobileNav = () => {
                   <div className="flex flex-col gap-3">
                     {link.items.map((sub) => (
                       <NavLink
-                        key={sub.name}
+                        key={sub.href}
                         to={sub.href}
                         onClick={closeOnLinkClick}
                         className="text-primary font-semibold hover:text-white transition"

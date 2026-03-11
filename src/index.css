@@ -253,6 +253,22 @@ input::-webkit-inner-spin-button {
   }
 }
 
+.custom_scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: var(--primary) transparent;
+  &::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  &::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--primary);
+    border-radius: 3px;
+  }
+}
+
 @layer base {
   * {
     @apply outline-ring/50 border-border;
@@ -314,11 +330,11 @@ input::-webkit-inner-spin-button {
     }
 
     &.prev {
-      @apply -left-12 rtl:left-auto rtl:-right-12;
+      @apply -left-10 rtl:left-auto rtl:-right-10;
     }
 
     &.next {
-      @apply -right-12 rtl:right-auto rtl:-left-12;
+      @apply -right-10 rtl:right-auto rtl:-left-10;
     }
 
     &:disabled {

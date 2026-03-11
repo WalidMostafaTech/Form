@@ -52,10 +52,13 @@ const ProductsFilter = ({ selectedCategory }) => {
   };
 
   return (
-    <div className="grid grid-cols-2 md:grid-cols-4 gap-2 lg:gap-4 p-2 shadow-lg rounded bg-primary/10">
+    <div className="grid grid-cols-2 md:grid-cols-4 gap-2 lg:gap-4 
+    p-2 shadow-lg rounded bg-primary/10">
       {/* Search */}
       <div className="col-span-2">
-        <label className="inline-block text-sm font-medium">{t("ProductsFilter.search")}</label>
+        <label className="inline-block text-sm font-medium">
+          {t("ProductsFilter.search")}
+        </label>
         <Input
           placeholder={t("ProductsFilter.searchPlaceholder")}
           value={search}
@@ -66,14 +69,18 @@ const ProductsFilter = ({ selectedCategory }) => {
 
       {/* Sub Categories */}
       <div>
-        <label className="inline-block text-sm font-medium">{t("ProductsFilter.subCategory")}</label>
+        <label className="inline-block text-sm font-medium">
+          {t("ProductsFilter.subCategory")}
+        </label>
         <Select
           value={searchParams.get("sub_category") || ""}
           onValueChange={(value) => handleSelect("sub_category", value)}
           disabled={!subCategories?.length}
         >
           <SelectTrigger className="w-full bg-white">
-            <SelectValue placeholder={t("ProductsFilter.subCategoryPlaceholder")} />
+            <SelectValue
+              placeholder={t("ProductsFilter.subCategoryPlaceholder")}
+            />
           </SelectTrigger>
 
           <SelectContent>
@@ -88,18 +95,26 @@ const ProductsFilter = ({ selectedCategory }) => {
 
       {/* Sort Price */}
       <div>
-        <label className="inline-block text-sm font-medium">{t("ProductsFilter.sortPrice")}</label>
+        <label className="inline-block text-sm font-medium">
+          {t("ProductsFilter.sortPrice")}
+        </label>
         <Select
           value={searchParams.get("sort_price") || ""}
           onValueChange={(value) => handleSelect("sort_price", value)}
         >
           <SelectTrigger className="w-full bg-white">
-            <SelectValue placeholder={t("ProductsFilter.sortPricePlaceholder")} />
+            <SelectValue
+              placeholder={t("ProductsFilter.sortPricePlaceholder")}
+            />
           </SelectTrigger>
 
           <SelectContent>
-            <SelectItem value="asc">{t("ProductsFilter.sortPriceAsc")}</SelectItem>
-            <SelectItem value="desc">{t("ProductsFilter.sortPriceDesc")}</SelectItem>
+            <SelectItem value="asc">
+              {t("ProductsFilter.sortPriceAsc")}
+            </SelectItem>
+            <SelectItem value="desc">
+              {t("ProductsFilter.sortPriceDesc")}
+            </SelectItem>
           </SelectContent>
         </Select>
       </div>

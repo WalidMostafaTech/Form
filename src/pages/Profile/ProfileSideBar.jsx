@@ -85,7 +85,7 @@ const ProfileSideBar = () => {
   return (
     <>
       <aside className="hidden lg:block bg-card w-64 p-6 border-e ">
-        <div className="sticky top-32">{sideContent}</div>
+        <div className="sticky top-35">{sideContent}</div>
       </aside>
 
       <Sheet open={openSideBar} onOpenChange={setOpenSideBar}>
@@ -97,13 +97,13 @@ const ProfileSideBar = () => {
         </SheetTrigger>
 
         <SheetContent side={lang === "ar" ? "right" : "left"} className="w-64">
-          <SheetTitle className="flex items-center justify-center">
-            <div className="w-20 h-12 overflow-hidden mt-4">
+          <SheetTitle asChild className="flex items-center justify-center w-full">
+            <div className="w-32 h-12 overflow-hidden mt-4">
               <img
                 loading="lazy"
                 src={settings?.header_logo || logo}
                 alt="logo"
-                className="w-full h-full object-contain invert-1"
+                className="w-full h-full object-contain invert"
               />
             </div>
           </SheetTitle>

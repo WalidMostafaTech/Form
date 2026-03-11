@@ -7,7 +7,7 @@ const ContactInfo = ({ contactDetails }) => {
     {
       id: 1,
       label: t("ContactInfo.location"),
-      value: contactDetails?.address || "-",
+      value: contactDetails?.location || "-",
     },
     {
       id: 2,

@@ -53,12 +53,14 @@ const Footer = () => {
     {
       name: "Telegram",
       icon: <FaTelegramPlane />,
-      url: footerData?.telegram || "/",
+      url: footerData?.telegram ? `https://t.me/+${footerData.telegram}` : "/",
     },
     {
       name: "Whatsapp",
       icon: <IoLogoWhatsapp />,
-      url: footerData?.whatsapp || "/",
+      url: footerData?.whatsapp
+        ? `https://wa.me/${footerData?.whatsapp?.replace("+", "")}`
+        : "/",
     },
   ];
 
