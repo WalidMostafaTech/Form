@@ -130,7 +130,9 @@ const ProductDetails = ({ product }) => {
           >
             <FiMinus />
           </button>
-          <span className="min-w-10 text-center font-semibold text-lg">{quantity}</span>
+          <span className="min-w-10 text-center font-semibold text-lg">
+            {quantity}
+          </span>
           <button
             onClick={() => setQuantity((prev) => prev + 1)}
             className="w-10 aspect-square flex items-center justify-center hover:bg-gray-100 transition cursor-pointer"
@@ -146,7 +148,7 @@ const ProductDetails = ({ product }) => {
           {t("productDetails.description")}
         </h3>
         <div
-          className="text-muted-foreground font-semibold"
+          className="text-muted-foreground font-semibold rich_content"
           dangerouslySetInnerHTML={{ __html: product?.description }}
         />
       </div>
@@ -194,7 +196,7 @@ const ProductDetails = ({ product }) => {
           </AccordionTrigger>
           <AccordionContent>
             <div
-              className="text-sm font-semibold text-muted-foreground"
+              className="text-sm font-semibold text-muted-foreground rich_content"
               dangerouslySetInnerHTML={{
                 __html: product?.shipping_and_dispatch_information,
               }}
@@ -208,7 +210,7 @@ const ProductDetails = ({ product }) => {
           </AccordionTrigger>
           <AccordionContent>
             <div
-              className="text-sm font-semibold text-muted-foreground"
+              className="text-sm font-semibold text-muted-foreground rich_content"
               dangerouslySetInnerHTML={{
                 __html: product?.more_details,
               }}
@@ -222,7 +224,7 @@ const ProductDetails = ({ product }) => {
           </AccordionTrigger>
           <AccordionContent>
             <div
-              className="text-sm font-semibold text-muted-foreground"
+              className="text-sm font-semibold text-muted-foreground rich_content"
               dangerouslySetInnerHTML={{
                 __html: product?.additional_notes,
               }}

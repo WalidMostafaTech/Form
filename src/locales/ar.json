@@ -11,6 +11,8 @@
   "DownloadInvoice": "تنزيل الفاتورة",
   "call_us": "اتصل بنا",
   "no_images_available": "لا توجد صور متاحة",
+  "privacyPolicy": "سياسة الخصوصية",
+  "termsAndConditions": "الشروط والاحكام",
 
   "OrderSummaryCard": {
     "title": "ملخص الطلب",

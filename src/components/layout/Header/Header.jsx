@@ -15,9 +15,13 @@ const Header = () => {
   const coloredPages = ["/login", "/verify-email", "/forgot-password"];
   const isProfilePage = location.pathname.startsWith("/profile");
   const isRegisterPage = location.pathname.startsWith("/register");
+  const isSitePages = location.pathname.startsWith("/pages");
 
   const isColoredPage =
-    coloredPages.includes(location.pathname) || isProfilePage || isRegisterPage;
+    coloredPages.includes(location.pathname) ||
+    isProfilePage ||
+    isRegisterPage ||
+    isSitePages;
 
   useEffect(() => {
     const handleScroll = () => {

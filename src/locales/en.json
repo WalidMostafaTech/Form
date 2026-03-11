@@ -11,6 +11,8 @@
   "DownloadInvoice": "Download Invoice",
   "call_us": "Call Us",
   "no_images_available": "No images available",
+  "privacyPolicy": "Privacy Policy",
+  "termsAndConditions": "Terms and Conditions",
 
   "OrderSummaryCard": {
     "title": "Order Summary",

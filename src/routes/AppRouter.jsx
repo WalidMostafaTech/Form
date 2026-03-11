@@ -44,6 +44,8 @@ const ForgotPassword = React.lazy(
   () => import("../pages/ForgotPassword/ForgotPassword"),
 );
 
+const SitePages = React.lazy(() => import("../pages/SitePages/SitePages"));
+
 const NotFound = React.lazy(() => import("../pages/NotFound/NotFound"));
 const ErrorPage = React.lazy(() => import("../pages/ErrorPage/ErrorPage"));
 
@@ -60,6 +62,8 @@ const router = createBrowserRouter([
       { path: "/wholesale", element: <Wholesale /> },
       { path: "/product/:slug", element: <Product /> },
       { path: "/contact", element: <ContactUS /> },
+
+      { path: "/pages/:slug", element: <SitePages /> },
 
       {
         element: <ProtectedRoute />,

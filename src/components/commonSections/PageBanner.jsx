@@ -20,7 +20,7 @@ const PageBanner = ({ image, title, description, html, loading }) => {
         {description &&
           (html ? (
             <div
-              className="text-sm lg:text-base text-white max-w-2xl"
+              className="text-sm lg:text-base text-white max-w-2xl rich_content"
               dangerouslySetInnerHTML={{ __html: description }}
             />
           ) : (

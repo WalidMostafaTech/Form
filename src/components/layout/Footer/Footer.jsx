@@ -80,6 +80,24 @@ const Footer = () => {
             />
           </div>
           <p className="text-sm">{footerData?.footer_text}</p>
+
+          <div className="flex items-center gap-2">
+            <Link
+              to="/pages/terms"
+              className="hover:text-secondary transition-colors"
+            >
+              {t("termsAndConditions")}
+            </Link>
+
+            <span className="text-muted">|</span>
+
+            <Link
+              to="/pages/policy"
+              className="hover:text-secondary transition-colors"
+            >
+              {t("privacyPolicy")}
+            </Link>
+          </div>
         </div>
 
         <div className="flex flex-col items-center gap-4 text-center">

@@ -213,6 +213,46 @@ input::-webkit-inner-spin-button {
   src: url("/fonts/assistant-v24-latin-800.woff2") format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
 }
 
+.rich_content {
+  h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+  }
+  h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+  }
+  h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+  p {
+    font-size: 1rem;
+    line-height: 1.7;
+    margin-bottom: 1rem;
+  }
+  ul {
+    list-style: disc;
+    padding-inline-start: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  ol {
+    list-style: decimal;
+    padding-inline-start: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  li {
+    margin-bottom: 0.25rem;
+  }
+  a {
+    color: var(--primary);
+    text-decoration: underline;
+  }
+}
+
 @layer base {
   * {
     @apply outline-ring/50 border-border;

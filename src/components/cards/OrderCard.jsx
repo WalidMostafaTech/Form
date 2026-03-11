@@ -61,7 +61,7 @@ const OrderCard = ({ item }) => {
             </div>
 
             <div
-              className="text-muted-foreground"
+              className="text-muted-foreground rich_content"
               dangerouslySetInnerHTML={{
                 __html: item?.order_items[0]?.description,
               }}

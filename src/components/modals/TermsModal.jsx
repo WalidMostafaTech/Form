@@ -32,9 +32,9 @@ const TermsModal = () => {
         </DialogHeader>
 
         <div
-          className="-mx-4 no-scrollbar max-h-[60vh] overflow-y-auto px-4"
+          className="-mx-4 no-scrollbar max-h-[60vh] overflow-y-auto px-4 rich_content"
           dangerouslySetInnerHTML={{
-            __html: settings?.registration_form?.terms_conditions,
+            __html: settings?.terms_conditions,
           }}
         />
       </DialogContent>
