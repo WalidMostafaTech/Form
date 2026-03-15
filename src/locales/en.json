@@ -13,6 +13,8 @@
   "no_images_available": "No images available",
   "privacyPolicy": "Privacy Policy",
   "termsAndConditions": "Terms and Conditions",
+  "event": "Event",
+  "download_menu": "Download Menu",
 
   "OrderSummaryCard": {
     "title": "Order Summary",
@@ -107,6 +109,24 @@
     "itemUpdated": "Item quantity updated."
   },
 
+  "DeleteEventOrderModal": {
+    "title": "Delete Event",
+    "description": "Are you sure you want to delete this event? This action cannot be undone.",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "deleting": "Deleting...",
+    "itemRemoved": "Event removed successfully"
+  },
+
+  "UpdateEventModal": {
+    "title": "Update Event",
+    "description": "Update the event details below",
+    "cancel": "Cancel",
+    "update": "Update",
+    "updating": "Updating...",
+    "itemUpdated": "Event updated successfully!"
+  },
+
   "checkVerifiedEmailGuard": {
     "title": "Your email is not verified!",
     "description": "You need to verify your email to access this page.",
@@ -118,6 +138,7 @@
     "about": "About",
     "shop": "Shop",
     "wholesale": "Wholesale",
+    "event": "Event",
     "location": "Location",
     "contact": "Contact Us"
   },
@@ -278,6 +299,7 @@
   "ProfileSideBar": {
     "profile": "Profile",
     "orders": "Orders",
+    "eventOrders": "Event Orders",
     "favorites": "Favorites",
     "notifications": "Notifications",
     "logout": "Logout",
@@ -381,6 +403,15 @@
     "noOrders": "No orders found"
   },
 
+  "EventOrders": {
+    "title": "Event Orders",
+    "eventType": "Event Type",
+    "selectEventType": "Select Event Type",
+    "date": "Date",
+    "resetFilters": "Reset Filters",
+    "noOrders": "No orders found"
+  },
+
   "verifyEmailPage": {
     "title": "Check Your Messages",
     "description": "For your security, we’ve sent a one-time password (OTP) to your registered contact details. Enter the code below to verify your identity and proceed.",
@@ -481,6 +512,66 @@
     "trnNumberShort": "TRN number is too short",
     "tradeLicenseFileRequired": "Trade license file is required",
     "trnCertificateRequired": "TRN certificate file is required"
+  },
+
+  "EventForm": {
+    "eventType": "Event Type",
+    "eventTypePlaceholder": "Event Type",
+    "eventDate": "Event Date",
+    "startTime": "Start Time",
+    "endTime": "End Time",
+    "emirate": "Emirate",
+    "emiratePlaceholder": "Abu Dhabi",
+    "eventLocation": "Event Location",
+    "eventLocationPlaceholder": "Abu Dhabi",
+    "eventLocationLink": "Event Location Link",
+    "expectedNumberOfPeople": "Expected Number of People",
+    "typeOfEventAttendees": "Type of Event Attendees",
+    "typeOfEventAttendeesPlaceholder": "Men or Women",
+    "send": "Send",
+    "sending": "Sending...",
+    "successMessage": "Event submitted successfully!",
+    "somethingWrong": "Something went wrong, please try again.",
+    "men": "Men",
+    "women": "Women",
+    "mixed": "Mixed",
+    "validation": {
+      "eventTypeRequired": "Event type is required",
+      "dateRequired": "Event date is required",
+      "startTimeRequired": "Start time is required",
+      "endTimeRequired": "End time is required",
+      "emirateRequired": "Emirate is required",
+      "locationRequired": "Event location is required",
+      "peopleRequired": "Expected number of people is required",
+      "peoplePositive": "Must be a valid positive number",
+      "attendeesRequired": "Type of event attendees is required",
+      "noPastDate": "The date cannot be in the past",
+      "invalidLocationLink": "Please enter a valid location link"
+    }
+  },
+
+  "EventOrderDetails": {
+    "title": "Event Details",
+    "delete": "Delete",
+    "edit": "Edit",
+    "eventType": "Event Type",
+    "eventDate": "Event Date",
+    "schedule": "Schedule",
+    "attendeeType": "Attendee Type",
+    "emirate": "Emirate",
+    "location": "Location",
+    "openInGoogleMaps": "Open in Google Maps",
+    "expectedAttendees": "Expected Attendees",
+    "pax": "pax",
+    "highDensity": "High density capacity confirmed",
+    "noLocation": "No location available"
+  },
+
+  "EventOrderCard": {
+    "start": "Start",
+    "end": "End",
+    "guests": "guests",
+    "viewDetails": "View Details"
   },
 
   "ErrorPage": {

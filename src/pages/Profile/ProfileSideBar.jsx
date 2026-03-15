@@ -19,6 +19,7 @@ import { useTranslation } from "react-i18next";
 import { openModal } from "@/store/modals/modalsSlice";
 import { SlHandbag } from "react-icons/sl";
 import { FaRegHeart } from "react-icons/fa";
+import { FiCoffee } from "react-icons/fi";
 
 const ProfileSideBar = () => {
   const { t } = useTranslation();
@@ -28,47 +29,44 @@ const ProfileSideBar = () => {
 
   const dispatch = useDispatch();
 
+  const links = [
+    { name: t("ProfileSideBar.profile"), href: "/profile", icon: FaRegUser },
+    {
+      name: t("ProfileSideBar.orders"),
+      href: "/profile/orders",
+      icon: SlHandbag,
+    },
+    {
+      name: t("ProfileSideBar.eventOrders"),
+      href: "/profile/event-orders",
+      icon: FiCoffee,
+    },
+    {
+      name: t("ProfileSideBar.favorites"),
+      href: "/profile/favorites",
+      icon: FaRegHeart,
+    },
+    {
+      name: t("ProfileSideBar.notifications"),
+      href: "/profile/notifications",
+      icon: FaRegBell,
+    },
+  ];
+
   const sideContent = (
     <div className="flex flex-col gap-2">
-      <NavLink
-        to={"/profile"}
-        end
-        className="sideBarLink"
-        onClick={() => setOpenSideBar(false)}
-      >
-        <FaRegUser />
-        {t("ProfileSideBar.profile")}
-      </NavLink>
-
-      <NavLink
-        to={"/profile/orders"}
-        end
-        className="sideBarLink"
-        onClick={() => setOpenSideBar(false)}
-      >
-        <SlHandbag />
-        {t("ProfileSideBar.orders")}
-      </NavLink>
-
-      <NavLink
-        to={"/profile/favorites"}
-        end
-        className="sideBarLink"
-        onClick={() => setOpenSideBar(false)}
-      >
-        <FaRegHeart />
-        {t("ProfileSideBar.favorites")}
-      </NavLink>
-
-      <NavLink
-        to={"/profile/notifications"}
-        end
-        className="sideBarLink"
-        onClick={() => setOpenSideBar(false)}
-      >
-        <FaRegBell />
-        {t("ProfileSideBar.notifications")}
-      </NavLink>
+      {links.map((link) => (
+        <NavLink
+          key={link.name}
+          to={link.href}
+          end
+          className="sideBarLink"
+          onClick={() => setOpenSideBar(false)}
+        >
+          <link.icon />
+          {link.name}
+        </NavLink>
+      ))}
 
       <hr className="" />
 
@@ -97,7 +95,10 @@ const ProfileSideBar = () => {
         </SheetTrigger>
 
         <SheetContent side={lang === "ar" ? "right" : "left"} className="w-64">
-          <SheetTitle asChild className="flex items-center justify-center w-full">
+          <SheetTitle
+            asChild
+            className="flex items-center justify-center w-full"
+          >
             <div className="w-32 h-12 overflow-hidden mt-4">
               <img
                 loading="lazy"

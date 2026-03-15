@@ -49,7 +49,12 @@ const MainInput = ({
       {/* SELECT */}
       {type === "select" && (
         <Select value={value} onValueChange={onChange} disabled={disabled}>
-          <SelectTrigger className={"w-full bg-muted"}>
+          <SelectTrigger className={`w-full bg-muted relative ${icon ? "ps-10" : ""}`}>
+            {icon && (
+              <span className="absolute inset-s-3 top-1/2 -translate-y-1/2 text-muted-foreground pointer-events-none">
+                {icon}
+              </span>
+            )}
             <SelectValue placeholder={placeholder} />
           </SelectTrigger>
 

@@ -7,6 +7,7 @@ const useNavigationLinks = () => {
   const { categories } = useSelector((state) => state.categories);
 
   let wholesaleLink = null;
+  let eventLink = null;
 
   if (!user) {
     wholesaleLink = {
@@ -18,6 +19,20 @@ const useNavigationLinks = () => {
     wholesaleLink = {
       name: t("NavigationLinks.wholesale"),
       href: "/wholesale",
+      items: [],
+    };
+  }
+
+  if (user) {
+    eventLink = {
+      name: t("NavigationLinks.event"),
+      href: "/event",
+      items: [],
+    };
+  } else {
+    eventLink = {
+      name: t("NavigationLinks.event"),
+      href: "/login",
       items: [],
     };
   }
@@ -35,6 +50,7 @@ const useNavigationLinks = () => {
         })) || [],
     },
     ...(wholesaleLink ? [wholesaleLink] : []),
+    ...(eventLink ? [eventLink] : []),
     { name: t("NavigationLinks.location"), href: "/location", items: [] },
     { name: t("NavigationLinks.contact"), href: "/contact", items: [] },
   ];

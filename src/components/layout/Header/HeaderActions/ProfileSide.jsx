@@ -7,7 +7,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { FaRegUser } from "react-icons/fa6";
-import { FiShoppingCart } from "react-icons/fi";
+import { FiCoffee, FiShoppingCart } from "react-icons/fi";
 import { IoIosLogOut } from "react-icons/io";
 import { FaRegHeart } from "react-icons/fa";
 import UserAvatar from "@/components/common/UserAvatar";
@@ -22,6 +22,25 @@ const ProfileSide = ({ user, loading }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { t } = useTranslation();
+
+  const links = [
+    { name: t("ProfileSideBar.profile"), href: "/profile", icon: FaRegUser },
+    {
+      name: t("ProfileSideBar.orders"),
+      href: "/profile/orders",
+      icon: FiShoppingCart,
+    },
+    {
+      name: t("ProfileSideBar.eventOrders"),
+      href: "/profile/event-orders",
+      icon: FiCoffee,
+    },
+    {
+      name: t("ProfileSideBar.favorites"),
+      href: "/profile/favorites",
+      icon: FaRegHeart,
+    },
+  ];
 
   return (
     <>
@@ -45,20 +64,15 @@ const ProfileSide = ({ user, loading }) => {
 
             <DropdownMenuSeparator />
 
-            <DropdownMenuItem onClick={() => navigate("/profile")}>
-              <FaRegUser />
-              {t("ProfileSide.profile")}
-            </DropdownMenuItem>
-
-            <DropdownMenuItem onClick={() => navigate("/profile/orders")}>
-              <FiShoppingCart />
-              {t("ProfileSide.orders")}
-            </DropdownMenuItem>
-
-            <DropdownMenuItem onClick={() => navigate("/profile/favorites")}>
-              <FaRegHeart />
-              {t("ProfileSide.favorites")}
-            </DropdownMenuItem>
+            {links.map((link) => (
+              <DropdownMenuItem
+                key={link.name}
+                onClick={() => navigate(link.href)}
+              >
+                <link.icon />
+                {link.name}
+              </DropdownMenuItem>
+            ))}
 
             <DropdownMenuSeparator />
 

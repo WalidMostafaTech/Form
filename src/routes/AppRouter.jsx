@@ -16,12 +16,19 @@ const Product = React.lazy(() => import("../pages/Product/Product"));
 const ContactUS = React.lazy(() => import("../pages/ContactUS/ContactUS"));
 
 const Cart = React.lazy(() => import("../pages/Cart/Cart"));
+const Event = React.lazy(() => import("../pages/Event/Event"));
 
 const Profile = React.lazy(() => import("../pages/Profile/Profile"));
 const Account = React.lazy(
   () => import("../pages/Profile/pages/Account/Account"),
 );
 const Orders = React.lazy(() => import("../pages/Profile/pages/Orders/Orders"));
+const EventOrders = React.lazy(
+  () => import("../pages/Profile/pages/EventOrders/EventOrders"),
+);
+const EventOrderDetails = React.lazy(
+  () => import("../pages/Profile/pages/EventOrderDetails/EventOrderDetails"),
+);
 const Favorites = React.lazy(
   () => import("../pages/Profile/pages/Favorites/Favorites"),
 );
@@ -74,6 +81,8 @@ const router = createBrowserRouter([
             children: [
               { index: true, element: <Account /> },
               { path: "orders", element: <Orders /> },
+              { path: "event-orders", element: <EventOrders /> },
+              { path: "event-orders/:id", element: <EventOrderDetails /> },
               { path: "favorites", element: <Favorites /> },
               { path: "notifications", element: <Notifications /> },
             ],
@@ -82,8 +91,15 @@ const router = createBrowserRouter([
             path: "/cart",
             element: (
               <CheckVerifiedEmailGuard>
-                {" "}
-                <Cart />{" "}
+                <Cart />
+              </CheckVerifiedEmailGuard>
+            ),
+          },
+          {
+            path: "/event",
+            element: (
+              <CheckVerifiedEmailGuard>
+                <Event />
               </CheckVerifiedEmailGuard>
             ),
           },

@@ -13,6 +13,8 @@
   "no_images_available": "لا توجد صور متاحة",
   "privacyPolicy": "سياسة الخصوصية",
   "termsAndConditions": "الشروط والاحكام",
+  "event": "الحدث",
+  "download_menu": "تحميل القائمة",
 
   "OrderSummaryCard": {
     "title": "ملخص الطلب",
@@ -107,6 +109,24 @@
     "itemUpdated": "تم تحديث كمية المنتج."
   },
 
+  "DeleteEventOrderModal": {
+    "title": "حذف الفعالية",
+    "description": "هل أنت متأكد أنك تريد حذف هذه الفعالية؟ لا يمكن التراجع عن هذا الإجراء.",
+    "cancel": "إلغاء",
+    "delete": "حذف",
+    "deleting": "جارٍ الحذف...",
+    "itemRemoved": "تم حذف الفعالية بنجاح"
+  },
+
+  "UpdateEventModal": {
+    "title": "تحديث الفعالية",
+    "description": "قم بتحديث تفاصيل الفعالية أدناه",
+    "cancel": "إلغاء",
+    "update": "تحديث",
+    "updating": "جاري التحديث...",
+    "itemUpdated": "تم تحديث الفعالية بنجاح!"
+  },
+
   "checkVerifiedEmailGuard": {
     "title": "بريدك الإلكتروني غير مُفعّل!",
     "description": "يجب تفعيل بريدك الإلكتروني للوصول إلى هذه الصفحة",
@@ -118,6 +138,7 @@
     "about": "من نحن",
     "shop": "المتجر",
     "wholesale": "جملة",
+    "event": "الحدث",
     "location": "الموقع",
     "contact": "اتصل بنا"
   },
@@ -278,6 +299,7 @@
   "ProfileSideBar": {
     "profile": "الملف الشخصى",
     "orders": "الطلبات",
+    "eventOrders": "طلبات الحدث",
     "favorites": "المفضلة",
     "notifications": "الاشعارات",
     "logout": "تسجيل الخروج",
@@ -381,6 +403,15 @@
     "noOrders": "لا توجد طلبات"
   },
 
+  "EventOrders": {
+    "title": "طلبات الفعاليات",
+    "eventType": "نوع الفعالية",
+    "selectEventType": "اختر نوع الفعالية",
+    "date": "التاريخ",
+    "resetFilters": "إعادة ضبط الفلاتر",
+    "noOrders": "لا توجد طلبات"
+  },
+
   "verifyEmailPage": {
     "title": "تحقق من رسائلك",
     "description": "لأمانك، أرسلنا رمز تحقق لمرة واحدة (OTP) إلى تفاصيل الاتصال المسجلة لديك. أدخل الرمز أدناه للتحقق من هويتك والمتابعة.",
@@ -481,6 +512,66 @@
     "trnNumberShort": "رقم TRN قصير جدًا",
     "tradeLicenseFileRequired": "يجب رفع ملف الرخصة التجارية",
     "trnCertificateRequired": "يجب رفع شهادة TRN"
+  },
+
+  "EventForm": {
+    "eventType": "نوع الفعالية",
+    "eventTypePlaceholder": "نوع الفعالية",
+    "eventDate": "تاريخ الفعالية",
+    "startTime": "وقت البداية",
+    "endTime": "وقت النهاية",
+    "emirate": "الإمارة",
+    "emiratePlaceholder": "أبو ظبي",
+    "eventLocation": "موقع الفعالية",
+    "eventLocationPlaceholder": "أبو ظبي",
+    "eventLocationLink": "رابط موقع الفعالية",
+    "expectedNumberOfPeople": "العدد المتوقع للحضور",
+    "typeOfEventAttendees": "نوع الحضور",
+    "typeOfEventAttendeesPlaceholder": "رجال أو نساء",
+    "send": "إرسال",
+    "sending": "جاري الإرسال...",
+    "successMessage": "تم إرسال الفعالية بنجاح!",
+    "somethingWrong": "حدث خطأ ما، حاول مرة أخرى.",
+    "men": "رجال",
+    "women": "نساء",
+    "mixed": "مختلط",
+    "validation": {
+      "eventTypeRequired": "نوع الفعالية مطلوب",
+      "dateRequired": "تاريخ الفعالية مطلوب",
+      "startTimeRequired": "وقت البداية مطلوب",
+      "endTimeRequired": "وقت النهاية مطلوب",
+      "emirateRequired": "الإمارة مطلوبة",
+      "locationRequired": "موقع الفعالية مطلوب",
+      "peopleRequired": "عدد الحضور المتوقع مطلوب",
+      "peoplePositive": "يجب أن يكون رقمًا صحيحًا أكبر من صفر",
+      "attendeesRequired": "نوع الحضور مطلوب",
+      "noPastDate": "لا يمكن تحديد تاريخ سابق",
+      "invalidLocationLink": "رابط موقع غير صالح"
+    }
+  },
+
+  "EventOrderDetails": {
+    "title": "تفاصيل الفعالية",
+    "delete": "حذف",
+    "edit": "تعديل",
+    "eventType": "نوع الفعالية",
+    "eventDate": "تاريخ الفعالية",
+    "schedule": "الوقت",
+    "attendeeType": "نوع الحضور",
+    "emirate": "الإمارة",
+    "location": "الموقع",
+    "openInGoogleMaps": "فتح في خرائط جوجل",
+    "expectedAttendees": "عدد الحضور المتوقع",
+    "pax": "شخص",
+    "highDensity": "تم تأكيد السعة العالية للحضور",
+    "noLocation": "لا يوجد موقع"
+  },
+
+  "EventOrderCard": {
+    "start": "بداية",
+    "end": "نهاية",
+    "guests": "زائر",
+    "viewDetails": "عرض التفاصيل"
   },
 
   "notFound": {

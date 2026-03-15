@@ -6,10 +6,14 @@ import TermsModal from "./TermsModal";
 import DeleteCartItemModal from "./DeleteCartItemModal";
 import UpdateCartItemModal from "./UpdateCartItemModal";
 import ChangePasswordModal from "./ChangePasswordModal";
+import DeleteEventOrderModal from "./DeleteEventOrderModal";
+import UpdateEventModal from "./UpdateEventModal";
+import LoadingModal from "./LoadingModal";
 
 const ModalManager = () => {
   return (
     <>
+      <LoadingModal />
       <MobileNav />
       <LogOutModal />
       <RequiredLoginModal />
@@ -18,6 +22,8 @@ const ModalManager = () => {
       <DeleteCartItemModal />
       <UpdateCartItemModal />
       <ChangePasswordModal />
+      <DeleteEventOrderModal />
+      <UpdateEventModal />
     </>
   );
 };

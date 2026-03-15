@@ -4,7 +4,7 @@ import { fetchEmirates } from "./emiratesActions";
 const emiratesSlice = createSlice({
   name: "emirates",
   initialState: {
-    emirates: {},
+    emirates: [],
     loading: false,
     error: null,
   },
