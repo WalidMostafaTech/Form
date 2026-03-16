@@ -62,7 +62,7 @@ const NotificationsPopUp = () => {
           <NotificationsSkeleton />
         ) : notifications?.items?.length ? (
           <div className="flex flex-col gap-2 max-h-100 overflow-y-auto custom_scrollbar">
-            {notifications.items.slice(0, 4).map((notification) => (
+            {notifications.items.slice(0, 3).map((notification) => (
               <NotificationCard
                 key={notification.id}
                 notification={notification}

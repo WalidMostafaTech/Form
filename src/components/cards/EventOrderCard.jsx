@@ -11,7 +11,7 @@ const EventOrderCard = ({ item }) => {
   const { t } = useTranslation();
 
   return (
-    <div className="p-3 border rounded-lg items-start flex flex-col gap-2">
+    <div className="p-3 border rounded-lg shadow flex flex-col gap-2">
       <div className="flex items-start justify-between gap-2 w-full">
         <h3 className="text-lg line-clamp-2">{item.event_type}</h3>
 
@@ -60,16 +60,17 @@ const EventOrderCard = ({ item }) => {
         </span>
       </div>
 
-      <p className="text-sm text-muted-foreground">
+      <p className="text-sm text-muted-foreground font-medium">
         {item.people_number} {t("EventOrderCard.guests")}
       </p>
-      <p className="text-sm text-muted-foreground">{item.attendees_gender}</p>
-      <p className="text-sm text-muted-foreground">{item.location}</p>
+      <p className="text-sm text-muted-foreground font-medium">{item.attendees_gender}</p>
+      <p className="text-sm text-muted-foreground font-medium">{item.location}</p>
 
       <Button
         size="xs"
         variant={"outline"}
         onClick={() => navigate(`/profile/event-orders/${item.id}`)}
+        className={`ms-auto`}
       >
         {t("EventOrderCard.viewDetails")}
       </Button>

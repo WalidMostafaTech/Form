@@ -13,7 +13,7 @@
   "no_images_available": "لا توجد صور متاحة",
   "privacyPolicy": "سياسة الخصوصية",
   "termsAndConditions": "الشروط والاحكام",
-  "event": "الحدث",
+  "event": "الفعالية",
   "download_menu": "تحميل القائمة",
 
   "OrderSummaryCard": {
@@ -138,7 +138,7 @@
     "about": "من نحن",
     "shop": "المتجر",
     "wholesale": "جملة",
-    "event": "الحدث",
+    "event": "الفعالية",
     "location": "الموقع",
     "contact": "اتصل بنا"
   },
@@ -299,7 +299,7 @@
   "ProfileSideBar": {
     "profile": "الملف الشخصى",
     "orders": "الطلبات",
-    "eventOrders": "طلبات الحدث",
+    "eventOrders": "طلبات الفعالية",
     "favorites": "المفضلة",
     "notifications": "الاشعارات",
     "logout": "تسجيل الخروج",

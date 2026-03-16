@@ -62,8 +62,10 @@ const EventOrders = () => {
 
       {/* filters */}
       <div
-        className="max-w-xl grid grid-cols-2 md:grid-cols-3 gap-2 lg:gap-4 
-        p-4 shadow-lg rounded-lg bg-primary/10 items-end"
+        className={`grid grid-cols-2 gap-2 lg:gap-4 
+        p-4 shadow-lg rounded-lg bg-primary/10 items-end
+        ${isLoading && "animate-pulse"} 
+        ${searchParams.toString() ? "md:grid-cols-3 max-w-xl" : "max-w-sm"}`}
       >
         {/* Event Type */}
         <div>
@@ -104,11 +106,13 @@ const EventOrders = () => {
           />
         </div>
 
-        <Button onClick={() => setSearchParams({})}>
-          <RiResetRightLine />
+        {searchParams.toString() && (
+          <Button onClick={() => setSearchParams({})}>
+            <RiResetRightLine />
 
-          {t("EventOrders.resetFilters")}
-        </Button>
+            {t("EventOrders.resetFilters")}
+          </Button>
+        )}
       </div>
 
       {/* content */}

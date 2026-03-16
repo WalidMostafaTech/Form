@@ -88,14 +88,12 @@ const UpdateEventModal = () => {
     // ✅ تعبئة البيانات الموجودة من modalData
     values: {
       event_type_id: String(
-        eventTypes?.find((et) => et.name === modalData?.event_type)?.id ?? "",
+        modalData?.event_type_id ?? "",
       ),
       date: modalData?.date ?? "",
       start_time: modalData?.start_time ?? "",
       end_time: modalData?.end_time ?? "",
-      emirate_id: String(
-        emirates?.find((e) => e.name === modalData?.emirate)?.id ?? "",
-      ),
+      emirate_id: String(modalData?.emirate_id ?? ""),
       location: modalData?.location ?? "",
       location_link: modalData?.location_link ?? "",
       people_number: String(modalData?.people_number ?? ""),

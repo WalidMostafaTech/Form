@@ -38,14 +38,15 @@ const Event = () => {
               <p className="text-muted-foreground font-medium">
                 {eventSteps?.second_description}
               </p>
-
-              <Button
-                onClick={() => {
-                  window.open(eventSteps?.menu_link, "_blank");
-                }}
-              >
-                {t("download_menu")} <FaClipboardList />
-              </Button>
+              {eventSteps?.menu_link && (
+                <Button
+                  onClick={() => {
+                    window.open(eventSteps?.menu_link, "_blank");
+                  }}
+                >
+                  {t("download_menu")} <FaClipboardList />
+                </Button>
+              )}
             </div>
           </>
         )}
