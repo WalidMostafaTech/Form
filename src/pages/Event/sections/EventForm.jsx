@@ -216,7 +216,7 @@ const EventForm = () => {
               <MainInput
                 {...field}
                 label={t("EventForm.eventLocationLink")}
-                placeholder="location link"
+                placeholder={t("EventForm.eventLocationLinkPlaceholder")}
                 error={errors.location_link?.message}
                 icon={<GrMapLocation />}
               />
@@ -232,7 +232,7 @@ const EventForm = () => {
                 {...field}
                 type="number"
                 label={t("EventForm.expectedNumberOfPeople")}
-                placeholder="40"
+                placeholder={t("EventForm.expectedNumberOfPeoplePlaceholder")}
                 error={errors.people_number?.message}
                 icon={<HiMiniUserGroup />}
               />

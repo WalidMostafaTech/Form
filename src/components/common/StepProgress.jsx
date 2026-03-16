@@ -5,11 +5,11 @@ const StepProgress = ({ steps, currentStep, onStepClick }) => {
     <div className="relative w-full">
       <div className="relative flex justify-between items-center">
         {/* Background Line */}
-        <div className="absolute top-1/2 left-0 w-full h-1 bg-gray-200 -translate-y-1/2 rounded-full" />
+        <div className="absolute top-1/2 inset-s-0 w-full h-1 bg-gray-200 -translate-y-1/2 rounded-full" />
 
         {/* Active Line */}
         <div
-          className="absolute top-1/2 left-0 h-1 bg-primary -translate-y-1/2 rounded-full transition-all duration-500"
+          className="absolute top-1/2 inset-s-0 h-1 bg-primary -translate-y-1/2 rounded-full transition-all duration-500"
           style={{ width: `${progressWidth}%` }}
         />
 
