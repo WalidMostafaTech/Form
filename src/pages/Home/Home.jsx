@@ -28,8 +28,8 @@ const Home = () => {
       <main>
         <Hero data={homeData} loading={isLoading} />
         <OurStory />
-        <CategorySection />
         <BestSellers />
+        <CategorySection />
         <WhyChooseForm data={homeData?.why_choose_us} loading={isLoading} />
         <OurService />
         <WhatTheySay />

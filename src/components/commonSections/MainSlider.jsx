@@ -41,6 +41,7 @@ const MainSlider = ({
         onSlideChange={handleSlideChange}
         spaceBetween={spaceBetween}
         breakpoints={breakpoints}
+        loop={true}
         autoplay={{
           delay: 3000,
           disableOnInteraction: false,

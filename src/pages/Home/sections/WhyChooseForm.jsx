@@ -1,6 +1,9 @@
 import WhyChooseFormSkeleton from "@/components/Loading/SkeletonLoading/WhyChooseFormSkeleton";
+import { useNavigate } from "react-router";
 
 const WhyChooseForm = ({ data, loading }) => {
+  const navigate = useNavigate();
+
   if (loading) return <WhyChooseFormSkeleton />;
   if (!data || !data?.items.length) return null;
 
@@ -45,11 +48,12 @@ const WhyChooseForm = ({ data, loading }) => {
           )}
         </hgroup>
 
-        <ul className="grid grid-cols-2 md:grid-cols-4 gap-8">
+        <ul className="flex flex-wrap items-start justify-center gap-8">
           {data?.items.map((item) => (
             <li
               key={item.id}
-              className="flex flex-col items-center gap-4 text-center"
+              className="flex flex-col items-center gap-4 text-center flex-1 min-w-62 cursor-pointer"
+              onClick={() => navigate(item.link)}
             >
               <div
                 className="w-20 aspect-square bg-white/10 rounded-3xl p-5

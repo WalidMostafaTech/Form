@@ -102,7 +102,7 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="flex flex-col items-center gap-4 text-center">
+        <div className="flex flex-col items-start gap-4 text-start w-fit mx-auto">
           <h3 className="text-xl lg:text-2xl font-medium uppercase">
             {t("Footer.links")}
           </h3>

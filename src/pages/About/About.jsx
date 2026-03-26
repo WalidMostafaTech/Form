@@ -36,7 +36,7 @@ const About = () => {
           loading={isLoading}
         />
 
-        <OurStory />
+        <OurStory removeBtn={true} />
         <VisionAndMission
           vision={aboutPage?.vision}
           mission={aboutPage?.mission}

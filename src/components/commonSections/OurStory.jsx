@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router";
 import OurStorySkeleton from "../Loading/SkeletonLoading/OurStorySkeleton";
 
-const OurStory = () => {
+const OurStory = ({ removeBtn = false }) => {
   const { t } = useTranslation();
 
   const { data: ourStory, isLoading } = useQuery({
@@ -25,9 +25,9 @@ const OurStory = () => {
             {t("OurStory.title")}
           </p>
 
-          <h1 className="text-3xl sm:text-4xl lg:text-6xl">
+          {/* <h1 className="text-3xl sm:text-4xl lg:text-6xl">
             {ourStory?.title}
-          </h1>
+          </h1> */}
 
           <p className="text-muted-foreground lg:text-lg">
             {ourStory?.description}
@@ -46,7 +46,7 @@ const OurStory = () => {
             ))}
           </ul>
 
-          {ourStory?.button.url && (
+          {!removeBtn && ourStory?.button.url && (
             <Link
               to={ourStory?.button?.url}
               className="text-primary text-center  py-3 px-4 border-2 rounded-full min-w-40

@@ -269,6 +269,16 @@ input::-webkit-inner-spin-button {
   }
 }
 
+.raleway-light {
+  font-family: "Raleway", sans-serif;
+  font-weight: 300;
+}
+
+/* لما اللغة عربي */
+html[dir="rtl"] .raleway-light {
+  font-family: "Noto Sans Arabic", sans-serif;
+}
+
 @layer base {
   * {
     @apply outline-ring/50 border-border;
@@ -434,4 +444,9 @@ input::-webkit-inner-spin-button {
   background: var(--primary-foreground);
   width: 30px;
   border-radius: 5px;
+}
+
+.location-swiper .swiper-button-next,
+.location-swiper .swiper-button-prev {
+  color: white;
 }
