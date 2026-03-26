@@ -40,6 +40,7 @@ const About = () => {
         <VisionAndMission
           vision={aboutPage?.vision}
           mission={aboutPage?.mission}
+          trainings={aboutPage?.trainings}
           loading={isLoading}
         />
         <KnowMore data={aboutPage?.to_know_more} loading={isLoading} />
