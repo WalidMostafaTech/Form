@@ -52,7 +52,7 @@ const WhyChooseForm = ({ data, loading }) => {
           {data?.items.map((item) => (
             <li
               key={item.id}
-              className="flex flex-col items-center gap-4 text-center flex-1 min-w-62 cursor-pointer"
+              className="flex flex-col items-center gap-4 text-center flex-1 min-w-62 cursor-pointer group"
               onClick={() => navigate(item.link)}
             >
               <div
@@ -63,7 +63,7 @@ const WhyChooseForm = ({ data, loading }) => {
                   loading="lazy"
                   src={item.icon}
                   alt={item.title}
-                  className="w-full h-full object-contain"
+                  className="w-full h-full object-contain group-hover:scale-115 transition-all duration-300"
                 />
               </div>
               <h3 className="text-lg lg:text-xl  text-white">{item.title}</h3>

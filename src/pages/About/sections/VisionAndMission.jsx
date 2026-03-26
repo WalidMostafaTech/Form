@@ -52,15 +52,26 @@ const VisionAndMission = ({
                 className="p-4 rounded-xl border flex-1 min-w-62 md:min-w-75
               flex flex-col items-center text-center md:text-start md:items-start gap-2"
               >
-                <div
-                  className="text-3xl text-primary bg-primary-foreground w-14 aspect-square
-              flex items-center justify-center rounded-full"
+                {/* <div
+                  className="text-3xl text-primary bg-primary-foreground w-14 aspect-square p-4
+                  flex items-center justify-center rounded-full"
                 >
                   <img
                     loading="lazy"
                     src={item.icon}
                     alt={item.title}
-                    className="w-6 object-contain"
+                    className="w-full h-full object-contain"
+                  />
+                </div> */}
+                <div
+                  className="text-3xl text-primary bg-primary-foreground w-16 aspect-square
+                  flex items-center justify-center rounded-full overflow-hidden"
+                >
+                  <img
+                    loading="lazy"
+                    src={item.icon}
+                    alt={item.title}
+                    className="w-full h-full object-cover"
                   />
                 </div>
 
