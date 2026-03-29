@@ -1,19 +1,46 @@
 import PageBanner from "@/components/commonSections/PageBanner";
 import CartCard from "@/components/cards/CartCard";
 import OrderSummaryCard from "@/components/cards/OrderSummaryCard";
-import { Textarea } from "@/components/ui/textarea";
+import MainInput from "@/components/form/MainInput";
 import { confirmOrder, getCart, getCartHero } from "@/api/cartServices";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useRef } from "react";
 import EmptyDataSection from "@/components/commonSections/EmptyDataSection";
 import { toast } from "sonner";
 import CartPageSkeleton from "@/components/Loading/SkeletonLoading/CartSkeletonPage";
 import { useTranslation } from "react-i18next";
 
+// 🔥 form
+import { useForm, Controller } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+
 const Cart = () => {
   const { t } = useTranslation();
-  const textareaRef = useRef(null);
+  const queryClient = useQueryClient();
 
+  // ✅ schema
+  const schema = z.object({
+    location: z.string().min(1, t("Cart.validation.locationRequired")),
+    home_num: z.string().min(1, t("Cart.validation.homeNumRequired")),
+    comment: z.string().optional(),
+  });
+
+  // ✅ form setup
+  const {
+    control,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm({
+    resolver: zodResolver(schema),
+    defaultValues: {
+      location: "",
+      home_num: "",
+      comment: "",
+    },
+  });
+
+  // ✅ queries
   const { data: cartHero, isLoading: isLoadingHero } = useQuery({
     queryKey: ["cartHero"],
     queryFn: getCartHero,
@@ -24,18 +51,27 @@ const Cart = () => {
     queryFn: getCart,
   });
 
-  const queryClient = useQueryClient();
-
+  // ✅ mutation
   const { mutate: createOrder, isPending } = useMutation({
     mutationFn: confirmOrder,
     onSuccess: () => {
       toast.success(t("Cart.orderConfirmed"));
       queryClient.invalidateQueries({ queryKey: ["cart"] });
       queryClient.invalidateQueries({ queryKey: ["cart_count"] });
-      if (textareaRef.current) textareaRef.current.value = "";
+
+      reset(); // 🔥 reset form
     },
     onError: () => {},
   });
+
+  // ✅ submit
+  const onSubmit = (data) => {
+    createOrder({
+      location: data.location,
+      home_num: data.home_num,
+      comment: data.comment?.trim() || "",
+    });
+  };
 
   const isCartEmpty = !isLoading && (cart?.cart_items?.length === 0 || !cart);
 
@@ -62,29 +98,58 @@ const Cart = () => {
                 ))}
               </div>
 
-              <div>
-                <label
-                  htmlFor="comment"
-                  className="inline-block mb-1 text-sm  text-gray-900"
-                >
-                  {t("Cart.commentLabel")}
-                </label>
+              {/* 🔥 FORM */}
+              <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                  {/* LOCATION */}
+                  <Controller
+                    name="location"
+                    control={control}
+                    render={({ field }) => (
+                      <MainInput
+                        {...field}
+                        label={t("Cart.locationLabel")}
+                        placeholder={t("Cart.locationPlaceholder")}
+                        error={errors.location?.message}
+                      />
+                    )}
+                  />
 
-                <Textarea
-                  ref={textareaRef}
+                  {/* HOME NUMBER */}
+                  <Controller
+                    name="home_num"
+                    control={control}
+                    render={({ field }) => (
+                      <MainInput
+                        {...field}
+                        label={t("Cart.homeNumLabel")}
+                        placeholder={t("Cart.homeNumPlaceholder")}
+                        error={errors.home_num?.message}
+                      />
+                    )}
+                  />
+                </div>
+
+                {/* COMMENT (OPTIONAL) */}
+                <Controller
                   name="comment"
-                  id="comment"
-                  placeholder={t("Cart.commentPlaceholder")}
-                  className="bg-muted"
+                  control={control}
+                  render={({ field }) => (
+                    <MainInput
+                      {...field}
+                      type="textarea"
+                      label={t("Cart.commentLabel")}
+                      placeholder={t("Cart.commentPlaceholder")}
+                      error={errors.comment?.message}
+                    />
+                  )}
                 />
-              </div>
+              </form>
             </div>
 
             <OrderSummaryCard
               cart={cart}
-              onConfirm={() =>
-                createOrder({ comment: textareaRef.current?.value.trim() })
-              }
+              onConfirm={handleSubmit(onSubmit)}
               loading={isPending}
             />
           </div>

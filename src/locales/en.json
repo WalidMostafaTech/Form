@@ -147,8 +147,20 @@
     "pageTitle": "Cart",
     "emptyMessage": "Cart is empty",
     "orderConfirmed": "Order confirmed successfully!",
+
+    "locationLabel": "Location",
+    "locationPlaceholder": "Enter your location",
+
+    "homeNumLabel": "Home Number",
+    "homeNumPlaceholder": "Enter your home number",
+
     "commentLabel": "Comment",
-    "commentPlaceholder": "Add comment"
+    "commentPlaceholder": "Add comment",
+
+    "validation": {
+      "locationRequired": "Location is required",
+      "homeNumRequired": "Home number is required"
+    }
   },
 
   "ContactUS": {

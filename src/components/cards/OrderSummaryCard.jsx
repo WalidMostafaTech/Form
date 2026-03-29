@@ -15,7 +15,7 @@ const OrderSummaryCard = ({ cart, onConfirm, loading }) => {
   if (!cart?.cart_items?.length) return null;
 
   return (
-    <div className="md:w-75 lg:w-96 p-3 space-y-4 border rounded-lg h-max bg-primary-foreground sticky top-20">
+    <div className="md:w-75 lg:w-96 p-3 space-y-4 border rounded-lg h-max bg-primary-foreground sticky top-32">
       <h2 className="text-xl  text-primary">{t("OrderSummaryCard.title")}</h2>
 
       <div className="space-y-2">

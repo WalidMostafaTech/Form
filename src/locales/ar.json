@@ -147,8 +147,20 @@
     "pageTitle": "سلة التسوق",
     "emptyMessage": "السلة فارغة",
     "orderConfirmed": "تم تأكيد الطلب بنجاح!",
+
+    "locationLabel": "الموقع",
+    "locationPlaceholder": "أدخل موقعك",
+
+    "homeNumLabel": "رقم المنزل",
+    "homeNumPlaceholder": "أدخل رقم المنزل",
+
     "commentLabel": "تعليق",
-    "commentPlaceholder": "أضف تعليق"
+    "commentPlaceholder": "أضف تعليق",
+
+    "validation": {
+      "locationRequired": "الموقع مطلوب",
+      "homeNumRequired": "رقم المنزل مطلوب"
+    }
   },
 
   "ContactUS": {
