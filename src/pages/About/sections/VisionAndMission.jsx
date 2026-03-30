@@ -41,7 +41,7 @@ const VisionAndMission = ({
   return (
     <section className="sectionPadding">
       <div className="container">
-        <SectionTitle title={t("VisionAndMission")} />
+        {/* <SectionTitle title={t("VisionAndMission")} /> */}
 
         <div className="flex flex-wrap justify-center gap-4 lg:gap-6 mt-8">
           {list
@@ -52,21 +52,7 @@ const VisionAndMission = ({
                 className="p-4 rounded-xl border flex-1 min-w-62 md:min-w-75
               flex flex-col items-center text-center md:text-start md:items-start gap-2"
               >
-                {/* <div
-                  className="text-3xl text-primary bg-primary-foreground w-14 aspect-square p-4
-                  flex items-center justify-center rounded-full"
-                >
-                  <img
-                    loading="lazy"
-                    src={item.icon}
-                    alt={item.title}
-                    className="w-full h-full object-contain"
-                  />
-                </div> */}
-                <div
-                  className="text-3xl text-primary bg-primary-foreground w-16 aspect-square
-                  flex items-center justify-center rounded-full overflow-hidden"
-                >
+                <div className="bg-primary-foreground w-full aspect-5/3 rounded-lg overflow-hidden">
                   <img
                     loading="lazy"
                     src={item.icon}
@@ -75,7 +61,7 @@ const VisionAndMission = ({
                   />
                 </div>
 
-                <h3 className="text-xl font-medium">{item.title}</h3>
+                <h3 className="text-2xl font-medium">{item.title}</h3>
 
                 <p className="">{item.description}</p>
               </div>

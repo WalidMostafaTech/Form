@@ -29,7 +29,7 @@ const OurStory = ({ removeBtn = false }) => {
             {ourStory?.title}
           </h1> */}
 
-          <p className="text-muted-foreground lg:text-lg">
+          <p className="text-black/80 lg:text-lg">
             {ourStory?.description}
           </p>
 
