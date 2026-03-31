@@ -294,7 +294,8 @@
     "shopTitle": "المتجر",
     "wholesaleTitle": "البيع بالجملة",
     "allCategories": "الكل",
-    "noProducts": "لا توجد منتجات"
+    "noProducts": "لا توجد منتجات",
+    "downloadPricesFile": "تحميل قائمة الاسعار"
   },
 
   "ProductsFilter": {

@@ -12,6 +12,8 @@ import { useSearchParams } from "react-router";
 import { useTranslation } from "react-i18next";
 import ProductsFilter from "./section/ProductsFilter";
 import SeoManager from "@/utils/SeoManager";
+import { Button } from "@/components/ui/button";
+import { HiOutlineClipboardList } from "react-icons/hi";
 
 const ProductsPage = ({ saleType, title }) => {
   const { t } = useTranslation();
@@ -51,6 +53,7 @@ const ProductsPage = ({ saleType, title }) => {
   });
 
   const { categories } = useSelector((state) => state.categories);
+  const { settings } = useSelector((state) => state.settings);
 
   const isEmpty = !isLoading && (products?.items?.length === 0 || !products);
 
@@ -74,12 +77,25 @@ const ProductsPage = ({ saleType, title }) => {
         />
 
         <section className="container pagePadding space-y-6">
-          <SectionTitle
-            title={
-              categories?.find((c) => c.id === selectedCategory)?.name ||
-              t("productsPage.allCategories")
-            }
-          />
+          <div className="flex items-center justify-between flex-wrap gap-2">
+            <SectionTitle
+              title={
+                categories?.find((c) => c.id === selectedCategory)?.name ||
+                t("productsPage.allCategories")
+              }
+              margin={false}
+            />
+
+            {saleType === "wholesale" && settings?.prices_file && (
+              <Button
+                size="sm"
+                onClick={() => window.open(settings?.prices_file, "_blank")}
+              >
+                {t("productsPage.downloadPricesFile")}{" "}
+                <HiOutlineClipboardList />
+              </Button>
+            )}
+          </div>
 
           <OptionSelector
             options={categories}

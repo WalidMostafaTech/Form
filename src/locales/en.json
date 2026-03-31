@@ -294,7 +294,8 @@
     "shopTitle": "Shop",
     "wholesaleTitle": "Wholesale",
     "allCategories": "All",
-    "noProducts": "No products found"
+    "noProducts": "No products found",
+    "downloadPricesFile": "Download Prices List"
   },
 
   "ProductsFilter": {
