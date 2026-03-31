@@ -148,8 +148,8 @@
     "emptyMessage": "Cart is empty",
     "orderConfirmed": "Order confirmed successfully!",
 
-    "locationLabel": "Location",
-    "locationPlaceholder": "Enter your location",
+    "locationLabel": "Address",
+    "locationPlaceholder": "Enter your address",
 
     "homeNumLabel": "Home Number",
     "homeNumPlaceholder": "Enter your home number",

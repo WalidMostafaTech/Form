@@ -148,8 +148,8 @@
     "emptyMessage": "السلة فارغة",
     "orderConfirmed": "تم تأكيد الطلب بنجاح!",
 
-    "locationLabel": "الموقع",
-    "locationPlaceholder": "أدخل موقعك",
+    "locationLabel": "العنوان",
+    "locationPlaceholder": "أدخل العنوان",
 
     "homeNumLabel": "رقم المنزل",
     "homeNumPlaceholder": "أدخل رقم المنزل",

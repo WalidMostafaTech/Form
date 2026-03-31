@@ -28,7 +28,7 @@ const TopHeader = () => {
         pauseOnHover
         speed={50}
         gradient={false}
-        direction={lang === "en" ? "right" : "left"}
+        direction={lang === "ar" ? "right" : "left"}
         style={{ direction: "ltr" }}
       >
         {strips.map((item) => (
