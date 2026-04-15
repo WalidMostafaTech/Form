@@ -15,6 +15,9 @@
   "termsAndConditions": "الشروط والاحكام",
   "event": "الفعالية",
   "download_menu": "تحميل القائمة",
+  "close": "اغلاق",
+  "OrderDetails": "تفاصيل الطلب",
+  "OrderCount": "عدد الطلبات",
 
   "OrderSummaryCard": {
     "title": "ملخص الطلب",

@@ -15,6 +15,9 @@
   "termsAndConditions": "Terms and Conditions",
   "event": "Event",
   "download_menu": "Download Menu",
+  "close": "Close",
+  "OrderDetails": "Order Details",
+  "OrderCount": "Order Count",
 
   "OrderSummaryCard": {
     "title": "Order Summary",
