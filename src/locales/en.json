@@ -20,7 +20,7 @@
     "title": "Order Summary",
     "subtotal": "Subtotal",
     "deliveryFees": "Delivery Fees",
-    "vat": "Vat",
+    "tax": "Tax",
     "currency": "EGP",
     "confirmOrder": "Confirm Order",
     "confirming": "Confirming...",
@@ -151,8 +151,8 @@
     "locationLabel": "Address",
     "locationPlaceholder": "Enter your address",
 
-    "homeNumLabel": "Home Number",
-    "homeNumPlaceholder": "Enter your home number",
+    "homeNumLabel": "Building Number",
+    "homeNumPlaceholder": "Enter your Building number",
 
     "commentLabel": "Comment",
     "commentPlaceholder": "Add comment",
@@ -346,6 +346,14 @@
         "validation": {
           "invalid": "Invalid phone number"
         }
+      },
+      "country": {
+        "label": "Country",
+        "placeholder": "Select your country"
+      },
+      "city": {
+        "label": "City",
+        "placeholder": "Enter your city"
       }
     },
 
@@ -457,8 +465,11 @@
     "emailPlaceholder": "example@example.com",
     "phone": "Phone",
     "phonePlaceholder": "Enter phone number",
-    "emirate": "Your Emirate",
-    "selectEmirate": "Select your emirate",
+    "country": "Country",
+    "selectCountry": "Select your country",
+    "city": "City",
+    "cityPlaceholder": "Enter your city",
+    "cityRequired": "City is required",
     "password": "Password",
     "agreeTo": "I agree to the",
     "termsAndConditions": "Terms and Conditions",
@@ -486,8 +497,8 @@
     "emailPlaceholder": "example@example.com",
     "phone": "Phone",
     "phonePlaceholder": "Enter phone number",
-    "emirate": "Your Emirate",
-    "selectEmirate": "Select your emirate",
+    "emirate": "Country",
+    "selectCountry": "Select your country",
     "password": "Password",
     "agreeTo": "I agree to the",
     "termsAndConditions": "Terms and Conditions",
@@ -498,7 +509,10 @@
     "passwordMin": "Password must be at least 6 characters",
     "confirmPassword": "Confirm your password",
     "termsRequired": "You must accept terms",
-    "passwordsMismatch": "Passwords do not match"
+    "passwordsMismatch": "Passwords do not match",
+    "city": "City",
+    "cityPlaceholder": "Enter your city",
+    "cityRequired": "City is required"
   },
 
   "registerCompanyStep2": {
@@ -535,6 +549,8 @@
     "endTime": "End Time",
     "emirate": "Emirate",
     "emiratePlaceholder": "Abu Dhabi",
+    "country": "Country",
+    "countryPlaceholder": "Select your country",
     "eventLocation": "Event Location",
     "eventLocationPlaceholder": "Abu Dhabi",
     "eventLocationLink": "Event Location Link",
@@ -556,6 +572,7 @@
       "startTimeRequired": "Start time is required",
       "endTimeRequired": "End time is required",
       "emirateRequired": "Emirate is required",
+      "countryRequired": "Country is required",
       "locationRequired": "Event location is required",
       "peopleRequired": "Expected number of people is required",
       "peoplePositive": "Must be a valid positive number",

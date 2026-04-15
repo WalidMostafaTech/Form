@@ -67,6 +67,7 @@ const router = createBrowserRouter([
       { path: "/location", element: <Location /> },
       { path: "/shop", element: <Shop /> },
       { path: "/wholesale", element: <Wholesale /> },
+      { path: "/event", element: <Event /> },
       { path: "/product/:slug", element: <Product /> },
       { path: "/contact", element: <ContactUS /> },
 
@@ -95,14 +96,14 @@ const router = createBrowserRouter([
               </CheckVerifiedEmailGuard>
             ),
           },
-          {
-            path: "/event",
-            element: (
-              <CheckVerifiedEmailGuard>
-                <Event />
-              </CheckVerifiedEmailGuard>
-            ),
-          },
+          // {
+          //   path: "/event",
+          //   element: (
+          //   <CheckVerifiedEmailGuard>
+          //     <Event />
+          //   </CheckVerifiedEmailGuard>
+          //   ),
+          // },
         ],
       },
 

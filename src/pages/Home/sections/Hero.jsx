@@ -8,7 +8,7 @@ const Hero = ({ data, loading }) => {
   if (!data) return null;
 
   return (
-    <section className="w-full h-screen relative">
+    <section className="w-full h-[calc(100vh-28px)] relative">
       <video
         className="absolute top-0 left-0 w-full h-full object-cover"
         src={data?.introduction_video}
@@ -18,9 +18,9 @@ const Hero = ({ data, loading }) => {
       />
 
       <div className="absolute inset-0 z-10 bg-black/50">
-        <div className="container max-w-2xl h-full flex flex-col justify-center items-center text-center text-white gap-6">
+        <div className="container h-full flex flex-col justify-end items-start text-white gap-4 py-6 lg:py-14">
           {/* <h1 className="text-5xl md:text-7xl ">{data?.introduction_title}</h1> */}
-          <p className="text-lg md:text-2xl raleway-light">
+          <p className="text- raleway-light">
             {data?.introduction_description}
           </p>
 
@@ -29,7 +29,7 @@ const Hero = ({ data, loading }) => {
               <Button
                 variant="secondary"
                 size="lg"
-                className={`mt-2 text-lg min-w-36`}
+                className={`mt-2 text-lg min-w-36 py-6 rounded-full`}
               >
                 {data?.introduction_button_title}
               </Button>

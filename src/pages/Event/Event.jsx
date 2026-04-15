@@ -7,9 +7,12 @@ import { useTranslation } from "react-i18next";
 import EventPageSkeleton from "@/components/Loading/SkeletonLoading/EventPageSkeleton";
 import { Button } from "@/components/ui/button";
 import { FaClipboardList } from "react-icons/fa";
+import { useSelector } from "react-redux";
 
 const Event = () => {
   const { t } = useTranslation();
+
+  const { user } = useSelector((state) => state.user);
 
   const { data: eventSteps, isLoading } = useQuery({
     queryKey: ["eventSteps"],
@@ -38,7 +41,7 @@ const Event = () => {
               <p className="text-muted-foreground font-medium">
                 {eventSteps?.second_description}
               </p>
-              {eventSteps?.menu_link && (
+              {user && eventSteps?.menu_link && (
                 <Button
                   onClick={() => {
                     window.open(eventSteps?.menu_link, "_blank");

@@ -14,9 +14,11 @@ import { HiMiniUserGroup } from "react-icons/hi2";
 import { LuUserRoundSearch } from "react-icons/lu";
 import { GrMapLocation } from "react-icons/gr";
 import { useSelector } from "react-redux";
+import useRequireAuth from "@/hooks/useRequireAuth";
 
 const EventForm = () => {
   const { t } = useTranslation();
+  const requireAuth = useRequireAuth();
 
   const today = new Date().toISOString().split("T")[0];
 
@@ -32,7 +34,7 @@ const EventForm = () => {
       }),
     start_time: z.string().min(1, t("EventForm.validation.startTimeRequired")),
     end_time: z.string().min(1, t("EventForm.validation.endTimeRequired")),
-    emirate_id: z.string().min(1, t("EventForm.validation.emirateRequired")),
+    emirate_id: z.string().min(1, t("EventForm.validation.countryRequired")),
     location: z.string().min(1, t("EventForm.validation.locationRequired")),
     location_link: z
       .string()
@@ -93,7 +95,9 @@ const EventForm = () => {
   });
 
   const onSubmit = (data) => {
-    mutate(data);
+    requireAuth(() => {
+      mutate(data);
+    });
   };
 
   const { data: eventTypes, isLoading: eventTypesLoading } = useQuery({
@@ -185,8 +189,8 @@ const EventForm = () => {
                   label: item.name,
                 }))}
                 type="select"
-                label={t("EventForm.emirate")}
-                placeholder={t("EventForm.emiratePlaceholder")}
+                label={t("EventForm.country")}
+                placeholder={t("EventForm.countryPlaceholder")}
                 error={errors.emirate_id?.message}
                 icon={<SlLocationPin />}
               />

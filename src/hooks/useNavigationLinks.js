@@ -23,19 +23,19 @@ const useNavigationLinks = () => {
     };
   }
 
-  if (user) {
-    eventLink = {
-      name: t("NavigationLinks.event"),
-      href: "/event",
-      items: [],
-    };
-  } else {
-    eventLink = {
-      name: t("NavigationLinks.event"),
-      href: "/login",
-      items: [],
-    };
-  }
+  // if (user) {
+  //   eventLink = {
+  //     name: t("NavigationLinks.event"),
+  //     href: "/event",
+  //     items: [],
+  //   };
+  // } else {
+  //   eventLink = {
+  //     name: t("NavigationLinks.event"),
+  //     href: "/login",
+  //     items: [],
+  //   };
+  // }
 
   const links = [
     // { name: t("NavigationLinks.home"), href: "/", items: [] },
@@ -50,7 +50,12 @@ const useNavigationLinks = () => {
         })) || [],
     },
     ...(wholesaleLink ? [wholesaleLink] : []),
-    ...(eventLink ? [eventLink] : []),
+    {
+      name: t("NavigationLinks.event"),
+      href: "/event",
+      items: [],
+    },
+    // ...(eventLink ? [eventLink] : []),
     { name: t("NavigationLinks.location"), href: "/location", items: [] },
     { name: t("NavigationLinks.contact"), href: "/contact", items: [] },
   ];

@@ -18,6 +18,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getUser } from "@/store/user/userActions";
 import { openModal } from "@/store/modals/modalsSlice";
 import { useTranslation } from "react-i18next";
+import { BsBuildings } from "react-icons/bs";
 
 const RegisterCustomer = () => {
   const { t } = useTranslation();
@@ -34,7 +35,11 @@ const RegisterCustomer = () => {
       phone: z.string().refine((value) => isValidPhoneNumber(value || ""), {
         message: t("registerCustomer.invalidPhone"),
       }),
-      emirate_id: z.string().min(1, t("registerCustomer.selectEmirate")),
+
+      emirate_id: z.string().min(1, t("registerCustomer.selectCountry")),
+
+      city: z.string().min(1, t("registerCustomer.cityRequired")),
+
       password: z.string().min(6, t("registerCustomer.passwordMin")),
       password_confirmation: z
         .string()
@@ -59,6 +64,7 @@ const RegisterCustomer = () => {
       email: "",
       phone: "",
       emirate_id: "",
+      city: "",
       password: "",
       password_confirmation: "",
       terms_accepted: false,
@@ -208,9 +214,24 @@ const RegisterCustomer = () => {
                 label: item.name,
               }))}
               type="select"
-              label={t("registerCustomer.emirate")}
-              placeholder={t("registerCustomer.selectEmirate")}
+              label={t("registerCustomer.country")}
+              placeholder={t("registerCustomer.selectCountry")}
               error={errors.emirate_id?.message}
+            />
+          )}
+        />
+
+        {/* City */}
+        <Controller
+          name="city"
+          control={control}
+          render={({ field }) => (
+            <MainInput
+              {...field}
+              label={t("registerCustomer.city")}
+              placeholder={t("registerCustomer.cityPlaceholder")}
+              icon={<BsBuildings size={18} />}
+              error={errors.city?.message}
             />
           )}
         />

@@ -37,7 +37,7 @@ const OrderSummaryCard = ({ cart, onConfirm, loading }) => {
         </div>
         <div className="flex items-center justify-between gap-2 mb-2">
           <p className="text-muted-foreground flex items-center gap-1">
-            <span>{t("OrderSummaryCard.vat")}</span>{" "}
+            <span>{t("OrderSummaryCard.tax")}</span>{" "}
             <strong>{cart?.tax_rate}%</strong>
           </p>
           <span className=" text-primary flex items-center gap-1">

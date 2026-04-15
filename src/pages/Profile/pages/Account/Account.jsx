@@ -20,6 +20,7 @@ import { useRef, useState } from "react";
 import { addUser } from "@/store/user/userSlice";
 import { toast } from "sonner";
 import { openModal } from "@/store/modals/modalsSlice";
+import { BsBuildings } from "react-icons/bs";
 
 const Account = () => {
   const { t } = useTranslation();
@@ -42,6 +43,11 @@ const Account = () => {
         (val) => !val || isValidPhoneNumber(val),
         t("account.form.phone.validation.invalid"),
       ),
+
+    // ✅ الجديد
+    emirate_id: z.string().optional(), // أو .min(1, ...) لو عايزها required
+    city: z.string().optional(), // أو .min(1, ...) لو required
+
     image: z.any().optional(),
   });
 
@@ -59,6 +65,8 @@ const Account = () => {
       name: user?.name || "",
       email: user?.email || "",
       phone: user?.phone || "",
+      emirate_id: String(user?.emirate_id || ""),
+      city: user?.city || "", // ✅
       image: user?.image || null,
     },
     mode: "onChange",
@@ -90,6 +98,8 @@ const Account = () => {
 
   const image = watch("image");
 
+  const { emirates } = useSelector((state) => state.emirates);
+
   /* ---------------- submit ---------------- */
   const onSubmit = (values) => {
     const formData = new FormData();
@@ -97,6 +107,8 @@ const Account = () => {
     formData.append("name", values.name);
     formData.append("email", values.email);
     formData.append("phone", values.phone || "");
+    formData.append("emirate_id", values.emirate_id || "");
+    formData.append("city", values.city || "");
 
     if (values.image instanceof File) {
       formData.append("image", values.image);
@@ -190,6 +202,40 @@ const Account = () => {
                 {...field}
                 label={t("account.form.phone.label")}
                 error={errors.phone?.message}
+              />
+            )}
+          />
+
+          {/* Country */}
+          <Controller
+            name="emirate_id"
+            control={control}
+            render={({ field }) => (
+              <MainInput
+                {...field}
+                type="select"
+                options={emirates.map((item) => ({
+                  value: String(item.id),
+                  label: item.name,
+                }))}
+                label={t("account.form.country.label")}
+                placeholder={t("account.form.country.placeholder")}
+                error={errors.emirate_id?.message}
+              />
+            )}
+          />
+
+          {/* City */}
+          <Controller
+            name="city"
+            control={control}
+            render={({ field }) => (
+              <MainInput
+                {...field}
+                label={t("account.form.city.label")}
+                placeholder={t("account.form.city.placeholder")}
+                icon={<BsBuildings size={18} />}
+                error={errors.city?.message}
               />
             )}
           />

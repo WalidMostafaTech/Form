@@ -12,6 +12,7 @@ import { IoImageOutline } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
 import { openModal } from "@/store/modals/modalsSlice";
 import { useTranslation } from "react-i18next";
+import { BsBuildings } from "react-icons/bs";
 
 const Step1 = ({ setParentData, parentData, goNext }) => {
   const { t } = useTranslation();
@@ -27,7 +28,8 @@ const Step1 = ({ setParentData, parentData, goNext }) => {
       phone: z.string().refine((value) => isValidPhoneNumber(value || ""), {
         message: t("registerCompanyStep1.invalidPhone"),
       }),
-      emirate_id: z.string().min(1, t("registerCompanyStep1.selectEmirate")),
+      emirate_id: z.string().min(1, t("registerCompanyStep1.selectCountry")),
+      city: z.string().min(1, t("registerCompanyStep1.cityRequired")),
       password: z.string().min(6, t("registerCompanyStep1.passwordMin")),
       password_confirmation: z
         .string()
@@ -52,6 +54,7 @@ const Step1 = ({ setParentData, parentData, goNext }) => {
       email: parentData.email || "",
       phone: parentData.phone || "",
       emirate_id: parentData.emirate_id || "",
+      city: parentData.city || "",
       password: parentData.password || "",
       password_confirmation: parentData.password_confirmation || "",
       terms_accepted: parentData.terms_accepted ? true : false,
@@ -177,8 +180,23 @@ const Step1 = ({ setParentData, parentData, goNext }) => {
             }))}
             type="select"
             label={t("registerCompanyStep1.emirate")}
-            placeholder={t("registerCompanyStep1.selectEmirate")}
+            placeholder={t("registerCompanyStep1.selectCountry")}
             error={errors.emirate_id?.message}
+          />
+        )}
+      />
+
+      {/* City */}
+      <Controller
+        name="city"
+        control={control}
+        render={({ field }) => (
+          <MainInput
+            {...field}
+            label={t("registerCompanyStep1.city")}
+            placeholder={t("registerCompanyStep1.cityPlaceholder")}
+            icon={<BsBuildings size={18} />}
+            error={errors.city?.message}
           />
         )}
       />

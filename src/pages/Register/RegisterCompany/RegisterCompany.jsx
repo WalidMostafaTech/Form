@@ -8,7 +8,7 @@ import { useTranslation } from "react-i18next";
 
 const RegisterCompany = () => {
   const { t } = useTranslation();
-  const steps = [1, 2, 3];
+  const steps = [1, 2];
 
   const [step, setStep] = useState(1);
 
@@ -35,14 +35,14 @@ const RegisterCompany = () => {
           goNext={goNext}
         />
       )}
-      {step === 2 && (
+      {/* {step === 2 && (
         <Step2
           setParentData={setParentData}
           parentData={parentData}
           goNext={goNext}
         />
-      )}
-      {step === 3 && (
+      )} */}
+      {step === 2 && (
         <Step3 setParentData={setParentData} parentData={parentData} />
       )}
     </AuthContainer>

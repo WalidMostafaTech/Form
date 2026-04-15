@@ -27,6 +27,7 @@ const PhoneInputField = ({
         value={value}
         onChange={onChange}
         disabled={disabled}
+        countryCallingCodeEditable={false}
         placeholder={placeholder}
         className={cn(
           "phone-input-wrapper",

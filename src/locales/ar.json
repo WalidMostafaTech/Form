@@ -20,7 +20,7 @@
     "title": "ملخص الطلب",
     "subtotal": "المجموع الفرعي",
     "deliveryFees": "رسوم التوصيل",
-    "vat": "ضريبة القيمة المضافة",
+    "tax": "ضريبة القيمة المضافة",
     "currency": "ج.م",
     "confirmOrder": "تأكيد الطلب",
     "confirming": "جارٍ التأكيد...",
@@ -346,6 +346,14 @@
         "validation": {
           "invalid": "رقم الهاتف غير صالح"
         }
+      },
+      "country": {
+        "label": "الدولة",
+        "placeholder": "اختر دولتك"
+      },
+      "city": {
+        "label": "المدينة",
+        "placeholder": "أدخل مدينتك"
       }
     },
 
@@ -457,8 +465,11 @@
     "emailPlaceholder": "example@example.com",
     "phone": "رقم الهاتف",
     "phonePlaceholder": "أدخل رقم الهاتف",
-    "emirate": "الإمارة",
-    "selectEmirate": "اختر إمارتك",
+    "country": "الدولة",
+    "selectCountry": "اختر دولتك",
+    "city": "المدينة",
+    "cityPlaceholder": "أدخل مدينتك",
+    "cityRequired": "يجب إدخال المدينة",
     "password": "كلمة المرور",
     "agreeTo": "أوافق على",
     "termsAndConditions": "الشروط والأحكام",
@@ -486,8 +497,8 @@
     "emailPlaceholder": "example@example.com",
     "phone": "رقم الهاتف",
     "phonePlaceholder": "أدخل رقم الهاتف",
-    "emirate": "الإمارة",
-    "selectEmirate": "اختر إمارتك",
+    "emirate": "الدولة",
+    "selectCountry": "اختر دولتك",
     "password": "كلمة المرور",
     "agreeTo": "أوافق على",
     "termsAndConditions": "الشروط والأحكام",
@@ -498,7 +509,10 @@
     "passwordMin": "يجب أن تكون كلمة المرور 6 أحرف على الأقل",
     "confirmPassword": "تأكيد كلمة المرور",
     "termsRequired": "يجب قبول الشروط",
-    "passwordsMismatch": "كلمتا المرور غير متطابقتين"
+    "passwordsMismatch": "كلمتا المرور غير متطابقتين",
+    "city": "المدينة",
+    "cityPlaceholder": "أدخل مدينتك",
+    "cityRequired": "يجب إدخال المدينة"
   },
 
   "registerCompanyStep2": {
@@ -535,6 +549,8 @@
     "endTime": "وقت النهاية",
     "emirate": "الإمارة",
     "emiratePlaceholder": "أبو ظبي",
+    "country": "الدولة",
+    "countryPlaceholder": "اختر دولتك",
     "eventLocation": "موقع الفعالية",
     "eventLocationPlaceholder": "أبو ظبي",
     "eventLocationLink": "رابط موقع الفعالية",
@@ -556,6 +572,7 @@
       "startTimeRequired": "وقت البداية مطلوب",
       "endTimeRequired": "وقت النهاية مطلوب",
       "emirateRequired": "الإمارة مطلوبة",
+      "countryRequired": "الدولة مطلوبة",
       "locationRequired": "موقع الفعالية مطلوب",
       "peopleRequired": "عدد الحضور المتوقع مطلوب",
       "peoplePositive": "يجب أن يكون رقمًا صحيحًا أكبر من صفر",
