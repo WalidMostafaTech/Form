@@ -43,6 +43,11 @@ const OrderCard = ({ item }) => {
           {item.status}
         </p>
 
+        <p className="flex flex-wrap items-center gap-2">
+          {t("OrderCode")} :
+          <span className="text-primary font-semibold">{item.order_code}</span>
+        </p>
+
         <div className="flex items-center gap-2">
           <span className="p-1 text-lg text-primary bg-primary-foreground rounded-md">
             <HiCalendarDateRange />
@@ -57,14 +62,16 @@ const OrderCard = ({ item }) => {
         </div>
 
         <div className="flex items-center flex-wrap justify-end gap-2">
-          <Button
-            size="xs"
-            onClick={() => {
-              window.open(item.invoice_file, "_blank");
-            }}
-          >
-            {t("DownloadInvoice")}
-          </Button>
+          {item.invoice_file && (
+            <Button
+              size="xs"
+              onClick={() => {
+                window.open(item.invoice_file, "_blank");
+              }}
+            >
+              {t("DownloadInvoice")}
+            </Button>
+          )}
 
           <Dialog>
             <DialogTrigger asChild>
@@ -74,13 +81,20 @@ const OrderCard = ({ item }) => {
             </DialogTrigger>
             <DialogContent className="lg:max-w-xl">
               <DialogHeader>
-                <DialogTitle>
+                <DialogTitle className={`text-start`}>
                   {t("OrderDetails")}{" "}
                   <span className="text-primary text-sm">
                     ( {t("OrderCount")} {item.order_items_count})
                   </span>
                 </DialogTitle>
-                <DialogDescription></DialogDescription>
+                <DialogDescription>
+                  <p className="flex flex-wrap items-center gap-2">
+                    {t("OrderCode")} :
+                    <span className="text-primary font-semibold">
+                      {item.order_code}
+                    </span>
+                  </p>
+                </DialogDescription>
               </DialogHeader>
 
               <div className="space-y-2 custom_scrollbar max-h-[60vh] overflow-y-auto">

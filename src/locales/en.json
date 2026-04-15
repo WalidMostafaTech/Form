@@ -18,6 +18,7 @@
   "close": "Close",
   "OrderDetails": "Order Details",
   "OrderCount": "Order Count",
+  "OrderCode": "Order Code",
 
   "OrderSummaryCard": {
     "title": "Order Summary",

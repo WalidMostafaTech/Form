@@ -18,6 +18,7 @@
   "close": "اغلاق",
   "OrderDetails": "تفاصيل الطلب",
   "OrderCount": "عدد الطلبات",
+  "OrderCode": "كود الطلب",
 
   "OrderSummaryCard": {
     "title": "ملخص الطلب",
