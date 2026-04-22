@@ -16,12 +16,14 @@ const Header = () => {
   const isProfilePage = location.pathname.startsWith("/profile");
   const isRegisterPage = location.pathname.startsWith("/register");
   const isSitePages = location.pathname.startsWith("/pages");
+  const isPaymentPage = location.pathname.startsWith("/payment");
 
   const isColoredPage =
     coloredPages.includes(location.pathname) ||
     isProfilePage ||
     isRegisterPage ||
-    isSitePages;
+    isSitePages ||
+    isPaymentPage;
 
   useEffect(() => {
     const handleScroll = () => {

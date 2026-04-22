@@ -16,6 +16,7 @@ const Product = React.lazy(() => import("../pages/Product/Product"));
 const ContactUS = React.lazy(() => import("../pages/ContactUS/ContactUS"));
 
 const Cart = React.lazy(() => import("../pages/Cart/Cart"));
+const Payment = React.lazy(() => import("../pages/Payment/Payment"));
 const Event = React.lazy(() => import("../pages/Event/Event"));
 
 const Profile = React.lazy(() => import("../pages/Profile/Profile"));
@@ -73,6 +74,11 @@ const router = createBrowserRouter([
 
       { path: "/pages/:slug", element: <SitePages /> },
 
+      // {
+      //   path: "payment/:status?",
+      //   element: <Payment />,
+      // },
+
       {
         element: <ProtectedRoute />,
         children: [
@@ -96,14 +102,14 @@ const router = createBrowserRouter([
               </CheckVerifiedEmailGuard>
             ),
           },
-          // {
-          //   path: "/event",
-          //   element: (
-          //   <CheckVerifiedEmailGuard>
-          //     <Event />
-          //   </CheckVerifiedEmailGuard>
-          //   ),
-          // },
+          {
+            path: "payment/:status?",
+            element: (
+              <CheckVerifiedEmailGuard>
+                <Payment />
+              </CheckVerifiedEmailGuard>
+            ),
+          },
         ],
       },
 

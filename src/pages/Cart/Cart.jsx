@@ -54,12 +54,19 @@ const Cart = () => {
   // ✅ mutation
   const { mutate: createOrder, isPending } = useMutation({
     mutationFn: confirmOrder,
-    onSuccess: () => {
-      toast.success(t("Cart.orderConfirmed"));
+    onSuccess: (res) => {
+      // toast.success(t("Cart.orderConfirmed"));
+
+      if (res?.payment_url) {
+        window.location.href = res.payment_url;
+      } else {
+        toast.success(t("Cart.orderConfirmed"));
+      }
+
       queryClient.invalidateQueries({ queryKey: ["cart"] });
       queryClient.invalidateQueries({ queryKey: ["cart_count"] });
 
-      reset(); // 🔥 reset form
+      reset();
     },
     onError: () => {},
   });
