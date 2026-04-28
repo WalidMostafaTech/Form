@@ -19,6 +19,7 @@
   "OrderDetails": "تفاصيل الطلب",
   "OrderCount": "عدد الطلبات",
   "OrderCode": "كود الطلب",
+  "quick_add": "إضافة سريعة",
 
   "OrderSummaryCard": {
     "title": "ملخص الطلب",

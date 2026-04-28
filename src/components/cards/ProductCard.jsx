@@ -7,12 +7,16 @@ import useRequireAuth from "@/hooks/useRequireAuth";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import UEAIcon from "@/components/common/UEAIcon";
+import AddToCartModal from "../modals/AddToCartModal";
 
 const ProductCard = ({ product, sale_type = "retail", page = "" }) => {
   const navigate = useNavigate();
   const requireAuth = useRequireAuth();
   const queryClient = useQueryClient();
   const { t } = useTranslation();
+
+  const [showSize, setShowSize] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
 
   // حالة محلية للقلب
   const [isFavorited, setIsFavorited] = useState(false);
@@ -45,62 +49,86 @@ const ProductCard = ({ product, sale_type = "retail", page = "" }) => {
     });
   };
 
+  const handleShowSize = (e) => {
+    e.stopPropagation();
+    setShowSize(true);
+  };
+
   return (
-    <div
-      className="flex flex-col gap-1 cursor-pointer"
-      onClick={() =>
-        navigate(`/product/${product.slug}?sale_type=${sale_type}`)
-      }
-    >
-      <div className="w-full aspect-square overflow-hidden rounded-xl relative">
-        <img
-          loading="lazy"
-          src={product.main_image}
-          alt={product.title}
-          className="w-full h-full object-cover"
-        />
+    <>
+      <div
+        className="flex flex-col gap-2 cursor-pointer group"
+        onClick={() =>
+          navigate(`/product/${product.slug}?sale_type=${sale_type}`)
+        }
+      >
+        <div className="w-full aspect-square overflow-hidden relative mb-2">
+          <img
+            loading="lazy"
+            src={product.main_image}
+            alt={product.title}
+            className="w-full h-full object-cover"
+          />
 
-        {product?.for_sale && (
-          <button
-            onClick={handleToggleFavorite}
-            disabled={isPending}
-            className="absolute top-2 right-2 z-10 w-8 h-8 
-          flex items-center justify-center bg-white text-primary text-xl 
-          rounded-full cursor-pointer hover:brightness-95 transition disabled:opacity-50"
-          >
-            {isFavorited ? <GoHeartFill /> : <GoHeart />}
-          </button>
-        )}
-      </div>
+          {product?.for_sale && (
+            <button
+              onClick={handleToggleFavorite}
+              disabled={isPending}
+              className="absolute top-2 right-2 z-10 w-8 h-8 
+            flex items-center justify-center bg-white text-primary text-xl 
+            rounded-full cursor-pointer hover:brightness-95 transition disabled:opacity-50"
+            >
+              {isFavorited ? <GoHeartFill /> : <GoHeart />}
+            </button>
+          )}
 
-      <h3 className="sm:text-lg font-medium line-clamp-1">{product.name}</h3>
+          {product?.for_sale && (
+            <div className="absolute bottom-0 left-0 z-10 w-full p-2 opacity-0 group-hover:opacity-100 transition">
+              {showSize ? (
+                <div className="w-full flex items-center justify-center">
+                  {Array.from({ length: 4 }, (_, i) => (
+                    <span
+                      key={i}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setOpenModal(true);
+                      }}
+                      className="flex-1 text-center p-2 bg-secondary text-black not-last:border-e border-primary
+                      hover:bg-primary hover:text-white transition cursor-pointer"
+                    >
+                      15 KG
+                    </span>
+                  ))}
+                </div>
+              ) : (
+                <button
+                  onClick={handleShowSize}
+                  className={`w-full bg-primary cursor-pointer text-white p-2 text-center uppercase
+                hover:bg-primary/90 transition`}
+                >
+                  + {t("quick_add")}
+                </button>
+              )}
+            </div>
+          )}
+        </div>
 
-      <div className="flex items-center flex-wrap justify-between gap-2">
-        <span className="text-xs sm:text-base font-semibold flex gap-1 items-center flex-wrap">
-          <span>{product.min_weight}</span>
-          {/* <strong>-</strong>
-          <span>{product.max_weight}</span> */}
-        </span>
-
-        <span className="text-sm sm:text-lg text-primary font-semibold flex gap-1 items-center flex-wrap">
+        <div className="flex items-center justify-between gap-2">
+          <h3 className="line-clamp-1">{product.name}</h3>
           <span className="flex items-center gap-1">
             {product.min_price} <UEAIcon />
           </span>
-          {/* <strong>-</strong>
-          <span className="flex items-center gap-1">
-            {product.max_price} <UEAIcon />
-          </span> */}
-        </span>
+        </div>
+
+        <p className="text-xs line-clamp-2">{product.description}</p>
       </div>
 
-      <p className="text-xs text-muted-foreground line-clamp-2">
-        {product.description}
-      </p>
-
-      {product?.for_sale && (
-        <Button className={`mt-2`}>{t("add_to_cart")}</Button>
-      )}
-    </div>
+      <AddToCartModal
+        open={openModal}
+        setOpen={setOpenModal}
+        product={product}
+      />
+    </>
   );
 };
 

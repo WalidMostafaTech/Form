@@ -19,6 +19,7 @@
   "OrderDetails": "Order Details",
   "OrderCount": "Order Count",
   "OrderCode": "Order Code",
+  "quick_add": "Quick Add",
 
   "OrderSummaryCard": {
     "title": "Order Summary",

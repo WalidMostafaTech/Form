@@ -286,7 +286,8 @@ html[dir="rtl"] .raleway-light {
 
   body {
     @apply bg-background text-foreground;
-    font-family: "Assistant", sans-serif;
+    /* font-family: "Assistant", sans-serif; */
+    font-family: "Montserrat", sans-serif;
   }
 
   /* لما الاتجاه يبقى RTL */
