@@ -14,6 +14,7 @@ import ProductsFilter from "./section/ProductsFilter";
 import SeoManager from "@/utils/SeoManager";
 import { Button } from "@/components/ui/button";
 import { HiOutlineClipboardList } from "react-icons/hi";
+import { motion } from "framer-motion";
 
 const ProductsPage = ({ saleType, title }) => {
   const { t } = useTranslation();
@@ -56,6 +57,36 @@ const ProductsPage = ({ saleType, title }) => {
   const { settings } = useSelector((state) => state.settings);
 
   const isEmpty = !isLoading && (products?.items?.length === 0 || !products);
+
+  /* ================== ANIMATION ================== */
+
+  const containerVariants = {
+    hidden: {},
+    show: {
+      transition: {
+        staggerChildren: 0.1,
+      },
+    },
+  };
+
+  const cardVariants = {
+    hidden: {
+      opacity: 0,
+      y: 50,
+      scale: 0.95,
+      filter: "blur(2px)",
+    },
+    show: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      filter: "blur(0px)",
+      transition: {
+        duration: 0.45,
+        ease: "easeOut",
+      },
+    },
+  };
 
   return (
     <>
@@ -116,15 +147,28 @@ const ProductsPage = ({ saleType, title }) => {
           ) : isEmpty ? (
             <EmptyDataSection msg={t("productsPage.noProducts")} />
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+            <motion.div
+              className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6"
+              variants={containerVariants}
+              initial="hidden"
+              animate="show"
+            >
               {products?.items?.map((product) => (
-                <ProductCard
+                <motion.div
                   key={product.id}
-                  product={product}
-                  sale_type={saleType}
-                />
+                  variants={cardVariants}
+                  initial="hidden"
+                  whileInView="show"
+                  viewport={{ once: true, margin: "-80px" }}
+                  whileHover={{
+                    scale: 1.04,
+                    transition: { duration: 0.2 },
+                  }}
+                >
+                  <ProductCard product={product} sale_type={saleType} />
+                </motion.div>
               ))}
-            </div>
+            </motion.div>
           )}
 
           <MainPagination
