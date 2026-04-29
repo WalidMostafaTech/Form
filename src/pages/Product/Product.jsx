@@ -3,6 +3,9 @@ import { Canvas } from "@react-three/fiber";
 import { useGLTF, Stage } from "@react-three/drei";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { motion, AnimatePresence } from "framer-motion";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -21,6 +24,11 @@ const Product = () => {
   const rightListRef = useRef();
 
   const [knobX, setKnobX] = useState(0);
+
+  const [activeItem, setActiveItem] = useState(null);
+  const [hoveredItem, setHoveredItem] = useState(null);
+
+  const [activeIndex, setActiveIndex] = useState(0);
 
   useEffect(() => {
     const tl = gsap.timeline({ paused: true });
@@ -75,6 +83,7 @@ const Product = () => {
         duration: 0.6,
         stagger: 0.12,
         ease: "power2.out",
+        pointerEvents: "auto",
       },
       "-=0.3",
     );
@@ -88,6 +97,7 @@ const Product = () => {
         duration: 0.6,
         stagger: 0.12,
         ease: "power2.out",
+        pointerEvents: "auto",
       },
       "<",
     );
@@ -123,7 +133,7 @@ const Product = () => {
     };
   }, []);
 
-  const leftListItems = Array.from({ length: 5 }).map((_, i) => ({
+  const items = Array.from({ length: 10 }).map((_, i) => ({
     id: i + 1,
     title: `Berry ${i + 1}`,
     description: `Description of Berry ${i + 1}`,
@@ -133,15 +143,9 @@ const Product = () => {
     content: `Detailed content for Berry ${i + 1}`,
   }));
 
-  const rightListItems = Array.from({ length: 5 }).map((_, i) => ({
-    id: i + 1,
-    title: `Berry ${i + 1}`,
-    description: `Description of Berry ${i + 1}`,
-    icon: "https://pngimg.com/uploads/pokemon/pokemon_PNG129.png",
-    image:
-      "https://www.k12digest.com/wp-content/uploads/2024/03/1-3-550x330.jpg",
-    content: `Detailed content for Berry ${i + 1}`,
-  }));
+  const leftListItems = items.slice(0, 5);
+
+  const rightListItems = items.slice(5, 10);
 
   return (
     <main style={{ background: "#D2B48C" }}>
@@ -168,16 +172,24 @@ const Product = () => {
         <div className="w-full flex items-center justify-center gap-3 h-[50%] lg:h-[75%] max-h-[600px]">
           <ul
             ref={leftListRef}
-            className="flex flex-col gap-2 h-full justify-evenly"
+            className="hidden lg:flex flex-col gap-2 h-full justify-evenly"
           >
             {leftListItems.map((item, i) => (
               <li
                 key={item.id}
+                onMouseEnter={() => {
+                  setActiveItem(item);
+                  setHoveredItem(item.id);
+                }}
+                onMouseLeave={() => {
+                  setActiveItem(null);
+                  setHoveredItem(null);
+                }}
                 style={{ opacity: 0, transform: "translateY(-40px)" }}
-                className={`flex flex-row-reverse text-end items-center gap-3 relative
+                className={`${hoveredItem && hoveredItem !== item.id ? "opacity-45!" : ""} pointer-events-none flex flex-row-reverse text-end items-center gap-3 relative
                 ${i === 0 ? "translate-x-16 rtl:-translate-x-16" : i === 1 ? "translate-x-2 rtl:-translate-x-2" : i === 3 ? "translate-x-2 rtl:-translate-x-2" : i === 4 ? "translate-x-16 rtl:-translate-x-16" : ""}`}
               >
-                <span className="w-12 h-0.5 bg-black absolute top-1/2 translate-y-1/2 inset-s-[100%]" />
+                <span className="w-10 h-0.5 bg-black absolute top-1/2 translate-y-1/2 inset-s-[100%]" />
 
                 <div className="w-10 h-10 overflow-hidden">
                   <img
@@ -222,12 +234,79 @@ const Product = () => {
               className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0
               h-full aspect-square flex flex-col items-center justify-center rounded-full overflow-hidden"
             >
-              <div className="flex flex-col items-center justify-center text-center">
-                <h2 className="text-2xl font-bold mb-2">New Content</h2>
-                <p className="text-sm">
-                  هنا تحط تفاصيل المنتج أو صور أو أي UI تاني
-                </p>
-              </div>
+              <AnimatePresence mode="wait">
+                {activeItem ? (
+                  <motion.div
+                    key={activeItem.id}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.4, ease: "easeOut" }}
+                    className="absolute inset-0"
+                  >
+                    <img
+                      src={activeItem.image}
+                      alt={activeItem.title}
+                      className="w-full h-full object-cover"
+                    />
+
+                    <div className="absolute inset-0 bg-black/40 flex flex-col items-center justify-center text-white text-center px-4">
+                      <h2 className="text-2xl font-bold mb-2">
+                        {activeItem.title}
+                      </h2>
+                      <p className="text-sm">{activeItem.content}</p>
+                    </div>
+                  </motion.div>
+                ) : (
+                  <motion.div className="absolute inset-0 flex flex-col items-center justify-center text-center p-4">
+                    <h2 className="text-2xl font-bold mb-2">New Content</h2>
+                    <p className="text-sm">
+                      New Content New Content New Content New Content New
+                      Content New Content
+                    </p>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+
+            <div className="lg:hidden absolute -bottom-20 w-screen px-4 overflow-x-hidden">
+              <Swiper
+                slidesPerView={5}
+                centeredSlides={true}
+                spaceBetween={25}
+                grabCursor={true}
+                onSlideChange={(swiper) => {
+                  const index = swiper.realIndex;
+                  setActiveIndex(index);
+                  setActiveItem(items[index]);
+                }}
+              >
+                {items.map((item, i) => (
+                  <SwiperSlide
+                    key={item.id}
+                    className="flex justify-center"
+                    onClick={() => {
+                      setActiveIndex(i);
+                      setActiveItem(items[i]);
+                    }}
+                  >
+                    <div
+                      className={`flex flex-col items-center gap-3 transition-all duration-300
+                      ${activeIndex === i ? "scale-100 opacity-100" : "opacity-40 scale-80"}`}
+                    >
+                      <div className="w-6 h-6 overflow-hidden">
+                        <img
+                          src={item.icon}
+                          alt={item.title}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+
+                      <h3 className="text-xs font-bold">{item.title}</h3>
+                    </div>
+                  </SwiperSlide>
+                ))}
+              </Swiper>
             </div>
 
             {/* 🔥 DRAG SLIDER */}
@@ -257,16 +336,24 @@ const Product = () => {
 
           <ul
             ref={rightListRef}
-            className="flex flex-col gap-2 h-full justify-evenly"
+            className="hidden lg:flex flex-col gap-2 h-full justify-evenly"
           >
             {rightListItems.map((item, i) => (
               <li
                 key={item.id}
+                onMouseEnter={() => {
+                  setActiveItem(item);
+                  setHoveredItem(item.id);
+                }}
+                onMouseLeave={() => {
+                  setActiveItem(null);
+                  setHoveredItem(null);
+                }}
                 style={{ opacity: 0, transform: "translateY(40px)" }}
-                className={`flex items-center gap-3 relative
+                className={`${hoveredItem && hoveredItem !== item.id ? "opacity-45!" : ""} pointer-events-none flex items-center gap-3 relative
                 ${i === 0 ? "-translate-x-16 rtl:translate-x-16" : i === 1 ? "-translate-x-2 rtl:translate-x-2" : i === 3 ? "-translate-x-2 rtl:translate-x-2" : i === 4 ? "-translate-x-16 rtl:translate-x-16" : ""}`}
               >
-                <span className="w-12 h-0.5 bg-black absolute top-1/2 translate-y-1/2 inset-e-[100%]" />
+                <span className="w-10 h-0.5 bg-black absolute top-1/2 translate-y-1/2 inset-e-[100%]" />
 
                 <div className="w-10 h-10 overflow-hidden">
                   <img
