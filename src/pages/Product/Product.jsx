@@ -9,59 +9,22 @@ const Model = ({ modelRef }) => {
 
 const Product = () => {
   const modelRef = useRef();
-
-  const [isDragging, setIsDragging] = useState(false);
-  const [lastX, setLastX] = useState(0);
   const [knobX, setKnobX] = useState(0);
-
-  const maxMove = 80; // أقصى حركة يمين/شمال
-
-  // 🎯 عند الضغط
-  const handlePointerDown = (e) => {
-    setIsDragging(true);
-    setLastX(e.clientX);
-  };
-
-  // 🎯 عند الإفلات
-  const handlePointerUp = () => {
-    setIsDragging(false);
-  };
-
-  // 🎯 أثناء السحب
-  const handlePointerMove = (e) => {
-    if (!isDragging || !modelRef.current) return;
-
-    const delta = e.clientX - lastX;
-    setLastX(e.clientX);
-
-    // تحريك الـ slider
-    setKnobX((prev) => {
-      let next = prev + delta;
-
-      if (next > maxMove) next = maxMove;
-      if (next < -maxMove) next = -maxMove;
-
-      return next;
-    });
-
-    // تحريك الموديل (Rotation Y فقط)
-    modelRef.current.rotation.y += delta * 0.01;
-  };
 
   return (
     <main>
-      <section className="bg-[#D2B48C] h-screen pt-20 flex flex-col items-center justify-between">
+      <section className="bg-[#D2B48C] h-[calc(100vh-30px)] pt-24 pb-6 flex flex-col items-center justify-between">
         {/* 🔥 TITLE */}
-        <div className="text-center">
-          <h1 className="text-4xl font-black uppercase tracking-tight mb-4">
+        <div className="text-center text-black">
+          <h1 className="text-4xl font-bold uppercase tracking-tight mb-4">
             geometry
           </h1>
 
           <div className="text-xs uppercase tracking-widest flex flex-wrap">
-            {Array.from({ length: 6 }).map((_, i) => (
+            {Array.from({ length: 5 }).map((_, i) => (
               <span
                 key={i}
-                className="px-2 lg:px-4 py-1 not-last:border-e border-black"
+                className="px-2 lg:px-4 not-last:border-e-2 border-black font-medium"
               >
                 Berries
               </span>
@@ -70,12 +33,12 @@ const Product = () => {
         </div>
 
         {/* 🔥 3D SECTION */}
-        <div className="relative w-full h-[400px] flex items-center justify-center">
+        <div className="relative h-[50%] lg:h-[75%] max-h-[600px] aspect-square flex items-center justify-center">
           {/* الدائرة */}
-          <div className="absolute w-[400px] h-[100px] border border-black/30 rounded-[100%] bottom-10"></div>
+          <div className="absolute w-full h-[100px] border border-black rounded-[100%] bottom-0"></div>
 
           {/* CANVAS */}
-          <div className="w-full h-full">
+          <div className="h-[80%] aspect-square!">
             <Canvas camera={{ fov: 45 }}>
               <color attach="background" args={["#D2B48C"]} />
 
@@ -86,38 +49,45 @@ const Product = () => {
           </div>
 
           {/* 🔥 DRAG SLIDER */}
-          <div className="absolute bottom-6 w-[200px] h-[40px] flex items-center justify-center">
-            {/* الخط */}
-            <div className="absolute w-full h-[2px] bg-black/30 rounded"></div>
+          <div className="absolute -bottom-5 w-[70%] max-w-[400px] h-[40px] flex items-center justify-center">
+            <input
+              type="range"
+              min={-150}
+              max={150}
+              value={knobX}
+              onChange={(e) => {
+                const value = Number(e.target.value);
+                const delta = value - knobX;
 
-            {/* الدائرة draggable */}
-            <div
-              className="w-10 h-10 bg-black text-white rounded-full flex items-center justify-center cursor-grab active:cursor-grabbing z-10 select-none"
-              style={{ transform: `translateX(${knobX}px)` }}
-              onPointerDown={handlePointerDown}
-              onPointerUp={handlePointerUp}
-              onPointerMove={handlePointerMove}
-              onPointerLeave={handlePointerUp}
-            >
-              ↔
-            </div>
+                setKnobX(value);
+
+                if (modelRef.current) {
+                  modelRef.current.rotation.y += delta * 0.01;
+                }
+              }}
+              className="custom-range w-[200px]"
+            />
           </div>
         </div>
 
         {/* 🔥 bottom controls */}
-        <div className="w-full max-w-6xl px-10 flex flex-wrap justify-center gap-4 my-4">
-          <select className="border border-black px-8 py-3 bg-transparent">
+        <div className="w-full max-w-lg px-4 grid grid-cols-2 lg:grid-cols-4 gap-2 lg:gap-4">
+          <select className="border border-black rounded px-8 py-1 bg-transparent outline-none">
             <option>10oz</option>
             <option>12oz</option>
           </select>
 
-          <div className="flex items-center border border-black px-4 gap-4">
-            <button>-</button>
-            <span>1</span>
-            <button>+</button>
+          <div className="flex items-center border border-black rounded">
+            <button className="px-2 cursor-pointer text-lg font-medium">
+              -
+            </button>
+            <span className="flex-1 text-center">1</span>
+            <button className="px-2 cursor-pointer text-lg font-medium">
+              +
+            </button>
           </div>
 
-          <button className="bg-black text-white px-6 py-3 font-bold">
+          <button className="col-span-2 bg-black text-white px-6 py-2 font-bold rounded cursor-pointer">
             $22.50 - Add to Cart
           </button>
         </div>

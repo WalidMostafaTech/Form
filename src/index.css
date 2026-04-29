@@ -451,3 +451,47 @@ html[dir="rtl"] .raleway-light {
 .location-swiper .swiper-button-prev {
   color: white;
 }
+
+/* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
+
+.custom-range {
+  -webkit-appearance: none;
+  width: 100%;
+  background: transparent;
+}
+
+/* الدائرة */
+.custom-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 34px;
+  height: 34px;
+  background: black;
+  border-radius: 50%;
+  cursor: grab;
+
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'><path d='M7 12l4-4v3h2v2h-2v3l-4-4zm10 0l-4 4v-3h-2v-2h2V8l4 4z'/></svg>");
+
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 40px;
+}
+
+/* أثناء السحب */
+.custom-range::-webkit-slider-thumb:active {
+  cursor: grabbing;
+}
+
+/* Firefox */
+.custom-range::-moz-range-track {
+  height: 2px;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.custom-range::-moz-range-thumb {
+  width: 40px;
+  height: 40px;
+  background: black;
+  border: none;
+  border-radius: 50%;
+  cursor: grab;
+}

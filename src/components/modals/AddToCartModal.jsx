@@ -5,7 +5,7 @@ const AddToCartModal = ({ open, setOpen, product }) => {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent
-        className="fixed! top-0 right-0 left-auto rounded-0! translate-x-0 translate-y-0 
+        className="fixed! top-0 right-0 left-auto rounded-none! translate-x-0 translate-y-0 
         w-full max-w-sm! overflow-hidden bg-secondary"
       >
         <div>
