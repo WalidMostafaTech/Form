@@ -22,9 +22,9 @@ const AddToCartModal = () => {
       >
         <div>
           {/* Header */}
-          <div className="flex items-center justify-between mb-3">
-            <h3 className="font-medium text-sm uppercase">Added to cart:</h3>
-          </div>
+          <h3 className="font-medium text-sm uppercase mb-4">
+            {t("AddToCartModal.addedToCart")}
+          </h3>
 
           {/* Content */}
           <div className="flex gap-3 items-center">
@@ -49,7 +49,7 @@ const AddToCartModal = () => {
           onClick={onClose}
           className="w-full text-center bg-black text-white py-3 uppercase"
         >
-          View cart
+          {t("AddToCartModal.viewCart")}
         </Link>
       </DialogContent>
     </Dialog>

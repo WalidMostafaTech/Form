@@ -70,6 +70,11 @@
     "login": "Login"
   },
 
+  "AddToCartModal": {
+    "addedToCart": "Added to cart:",
+    "viewCart": "View cart"
+  },
+
   "DeleteCartItemModal": {
     "title": "Delete item from cart?",
     "description": "Are you sure you want to remove this product from your cart?",
@@ -282,8 +287,6 @@
   },
 
   "productDetails": {
-    "addToCart": "ADD TO CART",
-    "adding": "Adding...",
     "buyNow": "BUY NOW",
     "processing": "Processing...",
     "description": "Description",
@@ -292,7 +295,13 @@
     "notes": "Additional notes",
     "favoriteError": "Failed to toggle favorite!",
     "cartError": "Failed to add product to cart!",
-    "cartSuccess": "Product added to cart successfully!"
+    "cartSuccess": "Product added to cart successfully!",
+
+    "more": "More",
+    "abstract": "Abstract",
+    "hoverHint": "Hover over each feature to learn more.",
+    "adding": "Adding...",
+    "addToCart": "Add to Cart"
   },
 
   "productsPage": {

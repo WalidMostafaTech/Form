@@ -17,6 +17,7 @@ const Header = () => {
   const isRegisterPage = location.pathname.startsWith("/register");
   const isSitePages = location.pathname.startsWith("/pages");
   const isPaymentPage = location.pathname.startsWith("/payment");
+  const isProductPage = location.pathname.startsWith("/product");
 
   const isColoredPage =
     coloredPages.includes(location.pathname) ||
@@ -43,7 +44,7 @@ const Header = () => {
 
       <div
         className={`py-4 transition-all duration-500 ${
-          scrolled || isColoredPage
+          (scrolled && !isProductPage) || isColoredPage
             ? "bg-primary/90 backdrop-blur-sm shadow-lg"
             : "bg-transparent"
         }
