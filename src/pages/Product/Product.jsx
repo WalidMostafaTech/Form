@@ -30,6 +30,7 @@ import { FaSpinner } from "react-icons/fa";
 import { IoClose } from "react-icons/io5";
 import LoadingPage from "@/components/Loading/LoadingPage";
 import SeoManager from "@/utils/SeoManager";
+import { clearProductColor, setProductColor } from "@/store/headerSlice";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -121,6 +122,16 @@ const Product = () => {
       });
     });
   };
+
+  useEffect(() => {
+    if (product?.font_color) {
+      dispatch(setProductColor(product.font_color));
+    }
+
+    return () => {
+      dispatch(clearProductColor());
+    };
+  }, [product?.font_color]);
 
   // Refs
   const modelRef = useRef();
@@ -278,6 +289,16 @@ const Product = () => {
 
   const mainColor = product?.font_color || "#eee";
 
+  const is3DFile = (file) => {
+    if (!file) return false;
+
+    const extension = file.split(".").pop()?.toLowerCase();
+
+    return ["glb", "gltf", "fbx", "obj"].includes(extension);
+  };
+
+  const has3DModel = is3DFile(product?.file_3d);
+
   return (
     <>
       <SeoManager
@@ -316,320 +337,339 @@ const Product = () => {
             </div>
 
             {/* 🔥 3D SECTION */}
-            <div className="w-full flex items-center justify-center gap-20 h-[50%] lg:h-[75%] max-h-[600px] max-w-5xl">
-              <ul
-                ref={leftListRef}
-                className="hidden lg:flex flex-col gap-2 h-full justify-evenly flex-1"
-              >
-                {leftListItems.map((item, i) => {
-                  const offset = getOffset(i, leftListItems.length);
-                  return (
-                    <li
-                      key={item.id}
-                      onMouseEnter={() => {
-                        setActiveItem(item);
-                        setHoveredItem(item.id);
-                      }}
-                      onMouseLeave={() => {
-                        // setActiveItem(null);
-                        // setHoveredItem(null);
-                      }}
-                      style={{
-                        opacity: 0,
-                        transform: "translateY(-40px)",
-                        // الـ offset بيكون أكبر في الأطراف وأصغر في المنتصف
-                        marginInlineEnd: `-${offset}px`,
-                        color: mainColor,
-                      }}
-                      className={`
+            {has3DModel && (
+              <div className="w-full flex items-center justify-center gap-20 h-[50%] lg:h-[75%] max-h-[600px] max-w-5xl">
+                <ul
+                  ref={leftListRef}
+                  className="hidden md:flex flex-col gap-2 h-full justify-evenly flex-1"
+                >
+                  {leftListItems.map((item, i) => {
+                    const offset = getOffset(i, leftListItems.length);
+                    return (
+                      <li
+                        key={item.id}
+                        onMouseEnter={() => {
+                          setActiveItem(item);
+                          setHoveredItem(item.id);
+                        }}
+                        onMouseLeave={() => {
+                          // setActiveItem(null);
+                          // setHoveredItem(null);
+                        }}
+                        style={{
+                          opacity: 0,
+                          transform: "translateY(-40px)",
+                          // الـ offset بيكون أكبر في الأطراف وأصغر في المنتصف
+                          marginInlineEnd: `-${offset}px`,
+                          color: mainColor,
+                        }}
+                        className={`
                       ${hoveredItem && hoveredItem !== item.id ? "opacity-45!" : ""} 
                       pointer-events-none flex flex-row-reverse text-end items-center gap-3 relative pe-2
                       transition-[margin] duration-300
                       `}
-                    >
-                      <span
-                        style={{ background: mainColor }}
-                        className="w-10 h-0.5 absolute top-1/2 translate-y-1/2 inset-s-[100%]"
-                      />
-                      <div className="w-8 h-8 overflow-hidden">
-                        <img
-                          src={item.icon}
-                          alt={item.title}
-                          className="w-full h-full object-cover"
-                        />
-                      </div>
-                      <div className="flex-1">
-                        <h3 className="text-sm font-bold">{item.title}</h3>
-                        <p className="text-xs">{item.description}</p>
-                      </div>
-                    </li>
-                  );
-                })}
-              </ul>
-
-              <div className="relative h-full aspect-square flex items-center justify-center">
-                {/* 🔵 الدائرة */}
-                <div
-                  ref={circleRef}
-                  className="absolute w-full h-[100px] border-2 rounded-[50%] bottom-0"
-                  style={{ borderColor: mainColor }}
-                ></div>
-
-                {/* 🎨 Canvas */}
-                <div
-                  ref={canvasRef}
-                  className="h-[80%] aspect-square flex items-center justify-center"
-                >
-                  {product?.file_3d && (
-                    <Canvas camera={{ fov: 45 }} className="aspect-square!">
-                      <color attach="background" args={[product?.page_color]} />
-
-                      <Suspense fallback={null}>
-                        <Stage environment={null} intensity={0.5}>
-                          <Model modelRef={modelRef} file={product.file_3d} />
-                        </Stage>
-                      </Suspense>
-                    </Canvas>
-                  )}
-                </div>
-
-                {/* 🆕 محتوى جديد */}
-                <div
-                  ref={contentRef}
-                  // style={{ background: "black" }}
-                  className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0
-                h-full aspect-square flex flex-col items-center justify-center rounded-full overflow-hidden"
-                >
-                  <AnimatePresence mode="wait">
-                    {activeItem ? (
-                      <motion.div
-                        key={activeItem.id}
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        transition={{ duration: 0.4, ease: "easeOut" }}
-                        className="absolute inset-0"
                       >
-                        <img
-                          src={activeItem.image}
-                          alt={activeItem.main_title}
-                          className="w-full h-full object-cover"
+                        <span
+                          style={{ background: mainColor }}
+                          className="w-10 h-0.5 absolute top-1/2 translate-y-1/2 inset-s-[100%]"
+                        />
+                        <div className="w-8 h-8 overflow-hidden">
+                          <img
+                            src={item.icon}
+                            alt={item.title}
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
+                        <div className="flex-1">
+                          <h3 className="text-sm font-bold">{item.title}</h3>
+                          <p className="text-xs">{item.description}</p>
+                        </div>
+                      </li>
+                    );
+                  })}
+                </ul>
+
+                <div className="relative h-full aspect-square flex items-center justify-center">
+                  {/* 🔵 الدائرة */}
+                  <div
+                    ref={circleRef}
+                    className="absolute w-full h-[100px] border-2 rounded-[50%] bottom-0"
+                    style={{ borderColor: mainColor }}
+                  ></div>
+
+                  {/* 🎨 Canvas */}
+                  <div
+                    ref={canvasRef}
+                    className="h-[80%] aspect-square flex items-center justify-center"
+                  >
+                    {product?.file_3d && (
+                      <Canvas camera={{ fov: 45 }} className="aspect-square!">
+                        <color
+                          attach="background"
+                          args={[product?.page_color]}
                         />
 
-                        <div className="absolute inset-0 bg-black/50 flex flex-col items-center justify-center text-white text-center px-4">
-                          <h2 className="text-2xl mb-2">
-                            {activeItem.main_title}
-                          </h2>
+                        <ambientLight intensity={1} />
+                        <directionalLight
+                          position={[2, 2, 2]}
+                          intensity={1.5}
+                        />
 
-                          <div
-                            className="text-sm rich_content line-clamp-5"
-                            dangerouslySetInnerHTML={{
-                              __html: activeItem.main_description,
-                            }}
+                        <Suspense fallback={null}>
+                          <Stage environment={null} intensity={1}>
+                            <Model modelRef={modelRef} file={product.file_3d} />
+                          </Stage>
+                        </Suspense>
+                      </Canvas>
+                    )}
+                  </div>
+
+                  {/* 🆕 محتوى جديد */}
+                  <div
+                    ref={contentRef}
+                    // style={{ background: "black" }}
+                    className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0
+                h-full aspect-square flex flex-col items-center justify-center rounded-full overflow-hidden"
+                  >
+                    <AnimatePresence mode="wait">
+                      {activeItem ? (
+                        <motion.div
+                          key={activeItem.id}
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          exit={{ opacity: 0 }}
+                          transition={{ duration: 0.4, ease: "easeOut" }}
+                          className="absolute inset-0"
+                        >
+                          <img
+                            src={activeItem.image}
+                            alt={activeItem.main_title}
+                            className="w-full h-full object-cover"
                           />
 
-                          <Sheet>
-                            <SheetTrigger className="cursor-pointer hover:underline mt-4">
-                              {t("productDetails.more")}
-                            </SheetTrigger>
-                            <SheetContent
-                              side={lang === "ar" ? "right" : "left"}
-                              className="border-0 py-10 gap-0 w-[90%]! max-w-[600px]! pe-20 md:pe-40 rounded-e-[50%]"
-                              showCloseButton={false}
-                              style={{
-                                background:
-                                  product?.page_color || "var(--secondary)",
+                          <div className="absolute inset-0 bg-black/50 flex flex-col items-center justify-center text-white text-center p-4">
+                            <h2 className="text-2xl mb-2">
+                              {activeItem.main_title}
+                            </h2>
+
+                            <div
+                              className="text-sm rich_content line-clamp-5"
+                              dangerouslySetInnerHTML={{
+                                __html: activeItem.main_description,
                               }}
-                            >
-                              <SheetHeader>
-                                <SheetTitle
-                                  className="text-2xl"
-                                  style={{ color: mainColor }}
-                                >
-                                  {activeItem.main_title}
-                                </SheetTitle>
-
-                                <SheetClose
-                                  className="absolute top-4 inset-s-4 cursor-pointer"
-                                  style={{ color: mainColor }}
-                                >
-                                  <IoClose size={22} />
-                                </SheetClose>
-
-                                <SheetDescription />
-                              </SheetHeader>
-
-                              <div
-                                className="px-4 text-sm rich_content h-full overflow-y-auto no-scrollbar"
-                                style={{ color: mainColor }}
-                                dangerouslySetInnerHTML={{
-                                  __html: activeItem.main_description,
-                                }}
-                              />
-                            </SheetContent>
-                          </Sheet>
-                        </div>
-                      </motion.div>
-                    ) : (
-                      <motion.div
-                        className="absolute inset-0 flex flex-col items-center justify-center text-center p-4"
-                        style={{
-                          background: product?.page_color || "var(--secondary)",
-                          color: mainColor,
-                          borderColor: mainColor,
-                        }}
-                      >
-                        <h2 className="text-3xl mb-2">
-                          {t("productDetails.abstract")}
-                        </h2>
-
-                        <p className="text-sm">
-                          {t("productDetails.hoverHint")}
-                        </p>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </div>
-
-                <div
-                  ref={swiperContainerRef}
-                  className="lg:hidden absolute -bottom-20 w-screen overflow-x-hidden opacity-0 pointer-events-none"
-                >
-                  <Swiper
-                    dir={lang === "ar" ? "rtl" : "ltr"}
-                    onSwiper={(swiper) => (swiperRef.current = swiper)}
-                    slidesPerView={5}
-                    centeredSlides={true}
-                    spaceBetween={25}
-                    grabCursor={true}
-                    onSlideChange={(swiper) => {
-                      const index = swiper.realIndex;
-                      setActiveIndex(index);
-                      setActiveItem(items[index]);
-                    }}
-                    className="product-details-swiper"
-                  >
-                    {items.map((item, i) => (
-                      <SwiperSlide
-                        key={item.id}
-                        className="flex justify-center"
-                        onClick={() => {
-                          setActiveIndex(i);
-                          setActiveItem(items[i]);
-                          swiperRef.current?.slideToLoop(i); // 🔥 ده المهم
-                        }}
-                      >
-                        <div
-                          style={{ color: mainColor }}
-                          className={`flex flex-col items-center gap-3 transition-all duration-300 
-                        ${activeIndex === i ? "scale-100 opacity-100" : "opacity-40 scale-80"}`}
-                        >
-                          <div className="w-6 h-6 overflow-hidden">
-                            <img
-                              src={item.icon}
-                              alt={item.title}
-                              className="w-full h-full object-cover"
                             />
+
+                            <Sheet>
+                              <SheetTrigger className="cursor-pointer hover:underline mt-4">
+                                {t("productDetails.more")}
+                              </SheetTrigger>
+                              <SheetContent
+                                side={lang === "ar" ? "right" : "left"}
+                                className="border-0 py-10 gap-0 w-[90%]! max-w-[600px]! pe-20 md:pe-40 rounded-e-[50%]"
+                                showCloseButton={false}
+                                style={{
+                                  background:
+                                    product?.page_color || "var(--secondary)",
+                                }}
+                              >
+                                <SheetHeader>
+                                  <SheetTitle
+                                    className="text-2xl"
+                                    style={{ color: mainColor }}
+                                  >
+                                    {activeItem.main_title}
+                                  </SheetTitle>
+
+                                  <SheetClose
+                                    className="absolute top-4 inset-s-4 cursor-pointer"
+                                    style={{ color: mainColor }}
+                                  >
+                                    <IoClose size={22} />
+                                  </SheetClose>
+
+                                  <SheetDescription />
+                                </SheetHeader>
+
+                                <div
+                                  className="px-4 text-sm rich_content h-full overflow-y-auto no-scrollbar"
+                                  style={{ color: mainColor }}
+                                  dangerouslySetInnerHTML={{
+                                    __html: activeItem.main_description,
+                                  }}
+                                />
+                              </SheetContent>
+                            </Sheet>
                           </div>
+                        </motion.div>
+                      ) : (
+                        <motion.div
+                          className="absolute inset-0 flex flex-col items-center justify-center text-center p-4"
+                          style={{
+                            background:
+                              product?.page_color || "var(--secondary)",
+                            color: mainColor,
+                            borderColor: mainColor,
+                          }}
+                        >
+                          <h2 className="text-3xl mb-2">
+                            {t("productDetails.abstract")}
+                          </h2>
 
-                          <h3 className="text-xs font-bold text-center">
-                            {item.title}
-                          </h3>
-                        </div>
-                      </SwiperSlide>
-                    ))}
-                  </Swiper>
+                          <p className="text-sm">
+                            {t("productDetails.hoverHint")}
+                          </p>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+
+                  <div
+                    ref={swiperContainerRef}
+                    className="md:hidden absolute -bottom-20 w-screen overflow-x-hidden opacity-0 pointer-events-none"
+                  >
+                    <Swiper
+                      dir={lang === "ar" ? "rtl" : "ltr"}
+                      onSwiper={(swiper) => (swiperRef.current = swiper)}
+                      slidesPerView={5}
+                      centeredSlides={true}
+                      spaceBetween={25}
+                      grabCursor={true}
+                      onSlideChange={(swiper) => {
+                        const index = swiper.realIndex;
+                        setActiveIndex(index);
+                        setActiveItem(items[index]);
+                      }}
+                      className="product-details-swiper"
+                    >
+                      {items.map((item, i) => (
+                        <SwiperSlide
+                          key={item.id}
+                          className="flex justify-center"
+                          onClick={() => {
+                            setActiveIndex(i);
+                            setActiveItem(items[i]);
+                            swiperRef.current?.slideToLoop(i); // 🔥 ده المهم
+                          }}
+                        >
+                          <div
+                            style={{ color: mainColor }}
+                            className={`flex flex-col items-center gap-3 transition-all duration-300 
+                        ${activeIndex === i ? "scale-100 opacity-100" : "opacity-40 scale-80"}`}
+                          >
+                            <div className="w-6 h-6 overflow-hidden">
+                              <img
+                                src={item.icon}
+                                alt={item.title}
+                                className="w-full h-full object-cover"
+                              />
+                            </div>
+
+                            <h3 className="text-xs font-bold text-center">
+                              {item.title}
+                            </h3>
+                          </div>
+                        </SwiperSlide>
+                      ))}
+                    </Swiper>
+                  </div>
+
+                  {/* 🔥 DRAG SLIDER */}
+                  <div
+                    ref={sliderRef}
+                    className="absolute -bottom-5 w-[70%] max-w-[400px] h-[40px] flex items-center justify-center"
+                  >
+                    <input
+                      type="range"
+                      min={-150}
+                      max={150}
+                      value={knobX}
+                      onChange={(e) => {
+                        const value = Number(e.target.value);
+                        const delta = value - knobX;
+
+                        setKnobX(value);
+
+                        if (modelRef.current) {
+                          const direction = lang === "ar" ? -1 : 1; // ✅
+                          modelRef.current.rotation.y +=
+                            delta * 0.01 * direction;
+                        }
+                      }}
+                      className="custom-range w-[200px]"
+                    />
+                  </div>
                 </div>
 
-                {/* 🔥 DRAG SLIDER */}
-                <div
-                  ref={sliderRef}
-                  className="absolute -bottom-5 w-[70%] max-w-[400px] h-[40px] flex items-center justify-center"
+                <ul
+                  ref={rightListRef}
+                  className="hidden md:flex flex-col gap-2 h-full justify-evenly flex-1"
                 >
-                  <input
-                    type="range"
-                    min={-150}
-                    max={150}
-                    value={knobX}
-                    onChange={(e) => {
-                      const value = Number(e.target.value);
-                      const delta = value - knobX;
-
-                      setKnobX(value);
-
-                      if (modelRef.current) {
-                        const direction = lang === "ar" ? -1 : 1; // ✅
-                        modelRef.current.rotation.y += delta * 0.01 * direction;
-                      }
-                    }}
-                    className="custom-range w-[200px]"
-                  />
-                </div>
-              </div>
-
-              <ul
-                ref={rightListRef}
-                className="hidden lg:flex flex-col gap-2 h-full justify-evenly flex-1"
-              >
-                {rightListItems.map((item, i) => {
-                  const offset = getOffset(i, rightListItems.length);
-                  return (
-                    <li
-                      key={item.id}
-                      onMouseEnter={() => {
-                        setActiveItem(item);
-                        setHoveredItem(item.id);
-                      }}
-                      onMouseLeave={() => {
-                        // setActiveItem(null);
-                        // setHoveredItem(null);
-                      }}
-                      style={{
-                        opacity: 0,
-                        transform: "translateY(40px)",
-                        marginInlineStart: `-${offset}px`,
-                        color: mainColor,
-                      }}
-                      className={`
+                  {rightListItems.map((item, i) => {
+                    const offset = getOffset(i, rightListItems.length);
+                    return (
+                      <li
+                        key={item.id}
+                        onMouseEnter={() => {
+                          setActiveItem(item);
+                          setHoveredItem(item.id);
+                        }}
+                        onMouseLeave={() => {
+                          // setActiveItem(null);
+                          // setHoveredItem(null);
+                        }}
+                        style={{
+                          opacity: 0,
+                          transform: "translateY(40px)",
+                          marginInlineStart: `-${offset}px`,
+                          color: mainColor,
+                        }}
+                        className={`
                       ${hoveredItem && hoveredItem !== item.id ? "opacity-45!" : ""} 
                       pointer-events-none flex items-center gap-3 relative ps-2
                       transition-[margin] duration-300
                       `}
-                    >
-                      <span
-                        style={{ background: mainColor }}
-                        className="w-10 h-0.5 absolute top-1/2 translate-y-1/2 inset-e-[100%]"
-                      />
-                      <div className="w-8 h-8 overflow-hidden">
-                        <img
-                          src={item.icon}
-                          alt={item.title}
-                          className="w-full h-full object-cover"
+                      >
+                        <span
+                          style={{ background: mainColor }}
+                          className="w-10 h-0.5 absolute top-1/2 translate-y-1/2 inset-e-[100%]"
                         />
-                      </div>
-                      <div className="flex-1">
-                        <h3 className="text-sm font-bold">{item.title}</h3>
-                        <p className="text-xs">{item.description}</p>
-                      </div>
-                    </li>
-                  );
-                })}
-              </ul>
-            </div>
+                        <div className="w-8 h-8 overflow-hidden">
+                          <img
+                            src={item.icon}
+                            alt={item.title}
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
+                        <div className="flex-1">
+                          <h3 className="text-sm font-bold">{item.title}</h3>
+                          <p className="text-xs">{item.description}</p>
+                        </div>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
+            )}
 
             {/* 🔥 bottom controls */}
-            <div className="w-full max-w-lg px-4 grid grid-cols-2 lg:grid-cols-4 gap-2 lg:gap-4 mt-8">
-              <select
-                onChange={(e) => setSelectedSizeId(Number(e.target.value))}
-                className="border rounded text-center p-1 bg-transparent outline-none"
-                style={{ color: mainColor, borderColor: mainColor }}
-              >
-                {sizes.map((size) => (
-                  <option className="text-black!" key={size.id} value={size.id}>
-                    {size.weight} {size.weight_unit}
-                  </option>
-                ))}
-              </select>
+            <div className="w-full max-w-lg px-4 grid grid-cols-2 lg:grid-cols-4 gap-2 lg:gap-4 mt-8 relative z-30">
+              {product?.for_sale && (
+                <select
+                  onChange={(e) => setSelectedSizeId(Number(e.target.value))}
+                  className="border rounded text-center p-1 bg-transparent outline-none"
+                  style={{ color: mainColor, borderColor: mainColor }}
+                >
+                  {sizes.map((size) => (
+                    <option
+                      className="text-black!"
+                      key={size.id}
+                      value={size.id}
+                    >
+                      {size.weight} {size.weight_unit}
+                    </option>
+                  ))}
+                </select>
+              )}
 
               {product?.for_sale && (
                 <div

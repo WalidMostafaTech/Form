@@ -38,6 +38,10 @@ const Header = () => {
     };
   }, []);
 
+  // const { productColor } = useSelector((state) => state.header);
+
+  // const mainColor = productColor || "#eee";
+
   return (
     <header className={`fixed top-0 left-0 right-0 z-50`}>
       <TopHeader />

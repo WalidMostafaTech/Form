@@ -5,6 +5,7 @@ import emiratesReducer from "./emirates/emiratesSlice";
 import userReducer from "./user/userSlice";
 import languageReducer from "./languageSlice/languageSlice";
 import modalsReducer from "./modals/modalsSlice";
+import headerReducer from "./headerSlice";
 
 export const store = configureStore({
   reducer: {
@@ -14,5 +15,6 @@ export const store = configureStore({
     user: userReducer,
     language: languageReducer,
     modals: modalsReducer,
+    header: headerReducer,
   },
 });
