@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect, Suspense } from "react";
+import React, { useRef, useState, useEffect, Suspense, useMemo } from "react";
 import { Canvas } from "@react-three/fiber";
 import { useGLTF, Stage } from "@react-three/drei";
 import gsap from "gsap";
@@ -13,6 +13,7 @@ import { getProduct } from "@/api/productsServices";
 
 import {
   Sheet,
+  SheetClose,
   SheetContent,
   SheetDescription,
   SheetHeader,
@@ -23,11 +24,11 @@ import { toast } from "sonner";
 import { useTranslation } from "react-i18next";
 import { addToCart } from "@/api/cartServices";
 import useRequireAuth from "@/hooks/useRequireAuth";
-import { FiMinus, FiPlus } from "react-icons/fi";
 import UEAIcon from "@/components/common/UEAIcon";
 import { openModal } from "@/store/modals/modalsSlice";
-import { size } from "zod";
 import { FaSpinner } from "react-icons/fa";
+import { X } from "lucide-react";
+import { IoClose } from "react-icons/io5";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -37,6 +38,10 @@ const Model = ({ modelRef, file }) => {
 };
 
 const Product = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const { slug } = useParams();
 
   const dispatch = useDispatch();
@@ -45,6 +50,7 @@ const Product = () => {
   const { t } = useTranslation();
 
   const { user, loading } = useSelector((state) => state.user);
+  const { lang } = useSelector((state) => state.language);
 
   const [searchParams] = useSearchParams();
   const sale_type = searchParams.get("sale_type") || "retail";
@@ -133,53 +139,62 @@ const Product = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const swiperRef = useRef(null);
 
+  const items = useMemo(() => {
+    return product?.product_points || [];
+  }, [product?.product_points]);
+
+  const leftListItems = [...items, ...items, ...items];
+
+  const rightListItems = [...items, ...items, ...items];
+
+  // const leftListItems = items?.filter((_, i) => i % 2 === 0) || [];
+
+  // const rightListItems = items?.filter((_, i) => i % 2 === 1) || [];
+
   useEffect(() => {
+    if (!items.length) return;
+
     const tl = gsap.timeline({ paused: true });
 
-    // 🔵 تكبير الدائرة
     tl.to(circleRef.current, {
       height: "100%",
-      duration: 1,
+      duration: 0.5,
       ease: "power2.out",
     });
 
-    // 🎨 اخفاء الكانفاس
     tl.to(
       canvasRef.current,
       {
         opacity: 0,
-        duration: 1,
+        duration: 0.5,
         ease: "power2.out",
       },
       "<",
     );
 
-    // 🎚️ اخفاء السلايدر
     tl.to(
       sliderRef.current,
       {
         opacity: 0,
         pointerEvents: "none",
-        duration: 0.6,
+        duration: 0.5,
       },
       "<",
     );
 
-    // 🆕 اظهار المحتوى الجديد
     tl.to(
       contentRef.current,
       {
         opacity: 1,
         y: 0,
-        duration: 1,
+        duration: 0.5,
         ease: "power2.out",
       },
       "<",
     );
 
-    // 👇 LEFT LIST STAGGER
     tl.to(
-      leftListRef.current.children,
+      leftListRef.current?.children,
       {
         opacity: 1,
         y: 0,
@@ -191,9 +206,8 @@ const Product = () => {
       "-=0.3",
     );
 
-    // 👇 RIGHT LIST STAGGER
     tl.to(
-      rightListRef.current.children,
+      rightListRef.current?.children,
       {
         opacity: 1,
         y: 0,
@@ -205,7 +219,6 @@ const Product = () => {
       "<",
     );
 
-    // 📱 اظهار السوايبر (الموبايل)
     tl.to(
       swiperContainerRef.current,
       {
@@ -217,7 +230,6 @@ const Product = () => {
       "<",
     );
 
-    // 📌 ScrollTrigger بدون scrub
     ScrollTrigger.create({
       trigger: ".product-section",
       start: "top top",
@@ -226,7 +238,7 @@ const Product = () => {
       anticipatePin: 1,
 
       onEnter: () => {
-        gsap.delayedCall(0.4, () => {
+        gsap.delayedCall(0.1, () => {
           tl.play();
         });
       },
@@ -236,23 +248,31 @@ const Product = () => {
           tl.reverse();
         }
       },
+
+      onEnterBack: () => tl.play(),
+
+      onLeaveBack: () => {
+        tl.reverse();
+        setActiveItem(null); // ✅
+        setHoveredItem(null); // ✅
+      },
     });
 
-    setTimeout(() => {
-      ScrollTrigger.refresh();
-    }, 100);
+    ScrollTrigger.refresh();
 
     return () => {
       tl.kill();
-      ScrollTrigger.killAll();
+      ScrollTrigger.getAll().forEach((t) => t.kill());
     };
-  }, []);
+  }, [items]);
 
-  const items = product?.product_points || [];
-
-  const leftListItems = items?.filter((_, i) => i % 2 === 0) || [];
-
-  const rightListItems = items?.filter((_, i) => i % 2 === 1) || [];
+  // دالة بتحسب الـ offset ديناميكياً
+  const getOffset = (index, total) => {
+    const mid = (total - 1) / 2;
+    const distanceFromCenter = Math.abs(index - mid);
+    // كل ما اقتربت من المنتصف، كل ما قل الـ offset
+    return Math.round(distanceFromCenter) * 44; // 14px لكل درجة بعد عن المنتصف
+  };
 
   return (
     <main
@@ -279,42 +299,51 @@ const Product = () => {
         </div>
 
         {/* 🔥 3D SECTION */}
-        <div className="w-full flex items-center justify-center gap-3 h-[50%] lg:h-[75%] max-h-[600px]">
+        <div className="w-full flex items-center justify-center gap-20 h-[50%] lg:h-[75%] max-h-[600px] max-w-5xl">
           <ul
             ref={leftListRef}
             className="hidden lg:flex flex-col gap-2 h-full justify-evenly flex-1"
           >
-            {leftListItems.map((item, i) => (
-              <li
-                key={item.id}
-                onMouseEnter={() => {
-                  setActiveItem(item);
-                  setHoveredItem(item.id);
-                }}
-                onMouseLeave={() => {
-                  setActiveItem(null);
-                  setHoveredItem(null);
-                }}
-                style={{ opacity: 0, transform: "translateY(-40px)" }}
-                className={`${hoveredItem && hoveredItem !== item.id ? "opacity-45!" : ""} pointer-events-none flex flex-row-reverse text-end items-center gap-3 relative
-                ${i === 0 ? "translate-x-16 rtl:-translate-x-16" : i === 1 ? "translate-x-2 rtl:-translate-x-2" : i === 3 ? "translate-x-2 rtl:-translate-x-2" : i === 4 ? "translate-x-16 rtl:-translate-x-16" : ""}`}
-              >
-                <span className="w-10 h-0.5 bg-black absolute top-1/2 translate-y-1/2 inset-s-[100%]" />
-
-                <div className="w-10 h-10 overflow-hidden">
-                  <img
-                    src={item.icon}
-                    alt={item.title}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-
-                <div>
-                  <h3 className="text-sm font-bold">{item.title}</h3>
-                  <p className="text-xs">{item.description}</p>
-                </div>
-              </li>
-            ))}
+            {leftListItems.map((item, i) => {
+              const offset = getOffset(i, leftListItems.length);
+              return (
+                <li
+                  key={item.id}
+                  onMouseEnter={() => {
+                    setActiveItem(item);
+                    setHoveredItem(item.id);
+                  }}
+                  onMouseLeave={() => {
+                    // setActiveItem(null);
+                    setHoveredItem(null);
+                  }}
+                  style={{
+                    opacity: 0,
+                    transform: "translateY(-40px)",
+                    // الـ offset بيكون أكبر في الأطراف وأصغر في المنتصف
+                    marginInlineEnd: `-${offset}px`,
+                  }}
+                  className={`
+          ${hoveredItem && hoveredItem !== item.id ? "opacity-45!" : ""} 
+          pointer-events-none flex flex-row-reverse text-end items-center gap-3 relative pe-2
+          transition-[margin] duration-300 text-black
+        `}
+                >
+                  <span className="w-10 h-0.5 bg-black absolute top-1/2 translate-y-1/2 inset-s-[100%]" />
+                  <div className="w-8 h-8 overflow-hidden">
+                    <img
+                      src={item.icon}
+                      alt={item.title}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="text-sm font-bold">{item.title}</h3>
+                    <p className="text-xs">{item.description}</p>
+                  </div>
+                </li>
+              );
+            })}
           </ul>
 
           <div className="relative h-full aspect-square flex items-center justify-center">
@@ -364,35 +393,43 @@ const Product = () => {
                       className="w-full h-full object-cover"
                     />
 
-                    <div className="absolute inset-0 bg-black/40 flex flex-col items-center justify-center text-white text-center px-4">
-                      <h2 className="text-2xl font-bold mb-2">
-                        {activeItem.main_title}
-                      </h2>
+                    <div className="absolute inset-0 bg-black/50 flex flex-col items-center justify-center text-white text-center px-4">
+                      <h2 className="text-2xl mb-2">{activeItem.main_title}</h2>
+
                       <div
-                        className="text-sm"
+                        className="text-sm rich_content line-clamp-5"
                         dangerouslySetInnerHTML={{
                           __html: activeItem.main_description,
                         }}
                       />
 
                       <Sheet>
-                        <SheetTrigger className="cursor-pointer">
-                          more
+                        <SheetTrigger className="cursor-pointer hover:underline mt-4">
+                          More
                         </SheetTrigger>
                         <SheetContent
-                          className={`border-0 py-10`}
+                          side={lang === "ar" ? "left" : "right"}
+                          className="border-0 py-10"
+                          showCloseButton={false}
                           style={{
                             background:
                               product?.page_color || "var(--secondary)",
                           }}
                         >
                           <SheetHeader>
-                            <SheetTitle>{activeItem.main_title}</SheetTitle>
-                            <SheetDescription></SheetDescription>
+                            <SheetTitle className="text-2xl text-black">
+                              {activeItem.main_title}
+                            </SheetTitle>
+
+                            <SheetClose className="absolute top-4 inset-s-4 cursor-pointer text-black">
+                              <IoClose size={22} />
+                            </SheetClose>
+
+                            <SheetDescription />
                           </SheetHeader>
 
                           <div
-                            className="px-4 text-sm"
+                            className="px-4 text-black text-sm rich_content"
                             dangerouslySetInnerHTML={{
                               __html: activeItem.main_description,
                             }}
@@ -402,7 +439,7 @@ const Product = () => {
                     </div>
                   </motion.div>
                 ) : (
-                  <motion.div className="absolute inset-0 flex flex-col items-center justify-center text-center p-4">
+                  <motion.div className="absolute inset-0 flex flex-col items-center justify-center text-center p-4 text-black">
                     <h2 className="text-2xl font-bold mb-2">Abstract</h2>
 
                     <p className="text-sm">
@@ -418,6 +455,7 @@ const Product = () => {
               className="lg:hidden absolute -bottom-20 w-screen overflow-x-hidden opacity-0 pointer-events-none"
             >
               <Swiper
+                dir={lang === "ar" ? "rtl" : "ltr"}
                 onSwiper={(swiper) => (swiperRef.current = swiper)}
                 slidesPerView={5}
                 centeredSlides={true}
@@ -441,7 +479,7 @@ const Product = () => {
                     }}
                   >
                     <div
-                      className={`flex flex-col items-center gap-3 transition-all duration-300
+                      className={`flex flex-col items-center gap-3 transition-all duration-300 text-black
                       ${activeIndex === i ? "scale-100 opacity-100" : "opacity-40 scale-80"}`}
                     >
                       <div className="w-6 h-6 overflow-hidden">
@@ -476,7 +514,8 @@ const Product = () => {
                   setKnobX(value);
 
                   if (modelRef.current) {
-                    modelRef.current.rotation.y += delta * 0.01;
+                    const direction = lang === "ar" ? -1 : 1; // ✅
+                    modelRef.current.rotation.y += delta * 0.01 * direction;
                   }
                 }}
                 className="custom-range w-[200px]"
@@ -488,37 +527,45 @@ const Product = () => {
             ref={rightListRef}
             className="hidden lg:flex flex-col gap-2 h-full justify-evenly flex-1"
           >
-            {rightListItems.map((item, i) => (
-              <li
-                key={item.id}
-                onMouseEnter={() => {
-                  setActiveItem(item);
-                  setHoveredItem(item.id);
-                }}
-                onMouseLeave={() => {
-                  setActiveItem(null);
-                  setHoveredItem(null);
-                }}
-                style={{ opacity: 0, transform: "translateY(40px)" }}
-                className={`${hoveredItem && hoveredItem !== item.id ? "opacity-45!" : ""} pointer-events-none flex items-center gap-3 relative
-                ${i === 0 ? "-translate-x-16 rtl:translate-x-16" : i === 1 ? "-translate-x-2 rtl:translate-x-2" : i === 3 ? "-translate-x-2 rtl:translate-x-2" : i === 4 ? "-translate-x-16 rtl:translate-x-16" : ""}`}
-              >
-                <span className="w-10 h-0.5 bg-black absolute top-1/2 translate-y-1/2 inset-e-[100%]" />
-
-                <div className="w-10 h-10 overflow-hidden">
-                  <img
-                    src={item.icon}
-                    alt={item.title}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-
-                <div>
-                  <h3 className="text-sm font-bold">{item.title}</h3>
-                  <p className="text-xs">{item.description}</p>
-                </div>
-              </li>
-            ))}
+            {rightListItems.map((item, i) => {
+              const offset = getOffset(i, rightListItems.length);
+              return (
+                <li
+                  key={item.id}
+                  onMouseEnter={() => {
+                    setActiveItem(item);
+                    setHoveredItem(item.id);
+                  }}
+                  onMouseLeave={() => {
+                    // setActiveItem(null);
+                    setHoveredItem(null);
+                  }}
+                  style={{
+                    opacity: 0,
+                    transform: "translateY(40px)",
+                    marginInlineStart: `-${offset}px`,
+                  }}
+                  className={`
+          ${hoveredItem && hoveredItem !== item.id ? "opacity-45!" : ""} 
+          pointer-events-none flex items-center gap-3 relative ps-2
+          transition-[margin] duration-300 text-black
+        `}
+                >
+                  <span className="w-10 h-0.5 bg-black absolute top-1/2 translate-y-1/2 inset-e-[100%]" />
+                  <div className="w-8 h-8 overflow-hidden">
+                    <img
+                      src={item.icon}
+                      alt={item.title}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="text-sm font-bold">{item.title}</h3>
+                    <p className="text-xs">{item.description}</p>
+                  </div>
+                </li>
+              );
+            })}
           </ul>
         </div>
 

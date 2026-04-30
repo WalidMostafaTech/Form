@@ -497,11 +497,11 @@ html[dir="rtl"] .raleway-light {
 }
 
 .product-details-swiper {
-  overflow: visible !important;
+  /* overflow: visible !important; */
 
-  .swiper-slide {
-    height: 180px; /* ده سر القوس */
+  /* .swiper-slide {
+    height: 180px;
     display: flex;
     align-items: flex-end;
-  }
+  } */
 }
