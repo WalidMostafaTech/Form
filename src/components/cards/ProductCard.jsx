@@ -8,18 +8,25 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import UEAIcon from "@/components/common/UEAIcon";
 import AddToCartModal from "../modals/AddToCartModal";
+import { useDispatch } from "react-redux";
+import { addToCart } from "@/api/cartServices";
+import { openModal } from "@/store/modals/modalsSlice";
+import { toast } from "sonner";
+import { FaSpinner } from "react-icons/fa";
 
 const ProductCard = ({ product, sale_type = "retail", page = "" }) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const requireAuth = useRequireAuth();
   const queryClient = useQueryClient();
   const { t } = useTranslation();
 
   const [showSize, setShowSize] = useState(false);
-  const [openModal, setOpenModal] = useState(false);
 
   // حالة محلية للقلب
   const [isFavorited, setIsFavorited] = useState(false);
+  const [selectedSize, setSelectedSize] = useState(null);
 
   useEffect(() => {
     if (product?.is_favorite !== undefined) {
@@ -54,81 +61,116 @@ const ProductCard = ({ product, sale_type = "retail", page = "" }) => {
     setShowSize(true);
   };
 
-  return (
-    <>
-      <div
-        className="flex flex-col gap-2 cursor-pointer group"
-        onClick={() =>
-          navigate(`/product/${product.slug}?sale_type=${sale_type}`)
-        }
-      >
-        <div className="w-full aspect-square overflow-hidden relative mb-2">
-          <img
-            loading="lazy"
-            src={product.main_image}
-            alt={product.title}
-            className="w-full h-full object-cover"
-          />
+  const { mutate: addProductToCart, isPending: isPendingCart } = useMutation({
+    mutationFn: addToCart,
+    onSuccess: () => {
+      dispatch(
+        openModal({
+          modalName: "addToCartModal",
+          modalData: {
+            product: {
+              name: product?.name,
+              image: product?.main_image,
+              size: `${selectedSize?.weight} ${selectedSize?.weight_unit}`,
+            },
+          },
+        }),
+      );
 
-          {product?.for_sale && (
-            <button
-              onClick={handleToggleFavorite}
-              disabled={isPending}
-              className="absolute top-2 right-2 z-10 w-8 h-8 
+      queryClient.invalidateQueries({ queryKey: ["cart_count"] });
+    },
+    onError: () => {
+      toast.error(t("productDetails.cartError"));
+    },
+  });
+
+  const handleAddToCart = (selectedSize) => {
+    setSelectedSize(selectedSize);
+    requireAuth(() => {
+      addProductToCart({
+        product_item_id: selectedSize.id,
+        quantity: 1,
+        sale_type,
+      });
+    });
+  };
+
+  return (
+    <div
+      className="flex flex-col gap-2 cursor-pointer group relative"
+      onClick={() =>
+        navigate(`/product/${product.slug}?sale_type=${sale_type}`)
+      }
+    >
+      {isPendingCart && (
+        <div
+          onClick={(e) => e.stopPropagation()}
+          className="absolute inset-0 z-40 bg-black/50 flex items-center justify-center cursor-wait"
+        >
+          <FaSpinner className="animate-spin text-white text-7xl" />
+        </div>
+      )}
+
+      <div className="w-full aspect-square overflow-hidden relative mb-2">
+        <img
+          loading="lazy"
+          src={product.main_image}
+          alt={product.title}
+          className="w-full h-full object-cover"
+        />
+
+        {product?.for_sale && (
+          <button
+            onClick={handleToggleFavorite}
+            disabled={isPending}
+            className="absolute top-2 right-2 z-10 w-8 h-8 
             flex items-center justify-center bg-white text-primary text-xl 
             rounded-full cursor-pointer hover:brightness-95 transition disabled:opacity-50"
-            >
-              {isFavorited ? <GoHeartFill /> : <GoHeart />}
-            </button>
-          )}
+          >
+            {isFavorited ? <GoHeartFill /> : <GoHeart />}
+          </button>
+        )}
 
-          {product?.for_sale && (
-            <div className="absolute bottom-0 left-0 z-10 w-full p-2 opacity-0 group-hover:opacity-100 transition">
-              {showSize ? (
-                <div className="w-full flex items-center justify-center">
-                  {Array.from({ length: 4 }, (_, i) => (
-                    <span
-                      key={i}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setOpenModal(true);
-                      }}
-                      className="flex-1 text-center p-2 bg-secondary text-black not-last:border-e border-primary
+        {product?.for_sale && (
+          <div className="absolute bottom-0 left-0 z-10 w-full p-2 opacity-0 group-hover:opacity-100 transition">
+            {showSize ? (
+              <div className="w-full flex items-center justify-center">
+                {product?.items?.map((size, i) => (
+                  <span
+                    key={i}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleAddToCart(size);
+                    }}
+                    className="flex-1 text-center p-2 bg-secondary text-black not-last:border-e border-primary
                       hover:bg-primary hover:text-white transition cursor-pointer"
-                    >
-                      15 KG
-                    </span>
-                  ))}
-                </div>
-              ) : (
-                <button
-                  onClick={handleShowSize}
-                  className={`w-full bg-primary cursor-pointer text-white p-2 text-center uppercase
+                  >
+                    {size.weight} {size.weight_unit}
+                  </span>
+                ))}
+              </div>
+            ) : (
+              <button
+                onClick={handleShowSize}
+                className={`w-full bg-primary cursor-pointer text-white p-2 text-center uppercase
                 hover:bg-primary/90 transition`}
-                >
-                  + {t("quick_add")}
-                </button>
-              )}
-            </div>
-          )}
-        </div>
-
-        <div className="flex items-center justify-between gap-2">
-          <h3 className="line-clamp-1">{product.name}</h3>
-          <span className="flex items-center gap-1">
-            {product.min_price} <UEAIcon />
-          </span>
-        </div>
-
-        <p className="text-xs line-clamp-2">{product.description}</p>
+              >
+                + {t("quick_add")}
+              </button>
+            )}
+          </div>
+        )}
       </div>
 
-      <AddToCartModal
-        open={openModal}
-        setOpen={setOpenModal}
-        product={product}
-      />
-    </>
+      <div className="flex items-center justify-between gap-2">
+        <h3 className="line-clamp-1">{product.name}</h3>
+        <span className="flex items-center gap-1">
+          {product.min_price} <UEAIcon />
+        </span>
+      </div>
+
+      <p className="text-xs line-clamp-2">{product.description}</p>
+    </div>
   );
 };
 

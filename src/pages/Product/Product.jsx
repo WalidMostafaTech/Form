@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, Suspense } from "react";
 import { Canvas } from "@react-three/fiber";
 import { useGLTF, Stage } from "@react-three/drei";
 import gsap from "gsap";
@@ -6,15 +6,116 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { motion, AnimatePresence } from "framer-motion";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
+import { useNavigate, useParams, useSearchParams } from "react-router";
+import { useDispatch, useSelector } from "react-redux";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { getProduct } from "@/api/productsServices";
+
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+import { toast } from "sonner";
+import { useTranslation } from "react-i18next";
+import { addToCart } from "@/api/cartServices";
+import useRequireAuth from "@/hooks/useRequireAuth";
+import { FiMinus, FiPlus } from "react-icons/fi";
+import UEAIcon from "@/components/common/UEAIcon";
+import { openModal } from "@/store/modals/modalsSlice";
+import { size } from "zod";
+import { FaSpinner } from "react-icons/fa";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const Model = ({ modelRef }) => {
-  const { scene } = useGLTF("/models/scene.glb");
+const Model = ({ modelRef, file }) => {
+  const { scene } = useGLTF(file);
   return <primitive object={scene} ref={modelRef} scale={1.5} />;
 };
 
 const Product = () => {
+  const { slug } = useParams();
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const { t } = useTranslation();
+
+  const { user, loading } = useSelector((state) => state.user);
+
+  const [searchParams] = useSearchParams();
+  const sale_type = searchParams.get("sale_type") || "retail";
+
+  useEffect(() => {
+    if (
+      !loading &&
+      sale_type === "wholesale" &&
+      (!user || user?.type === "user")
+    ) {
+      navigate("?sale_type=retail", { replace: true });
+    }
+  }, [user, sale_type, loading, navigate]);
+
+  const [quantity, setQuantity] = useState(1);
+  const [selectedSizeId, setSelectedSizeId] = useState(null);
+
+  const { data: product, isLoading } = useQuery({
+    queryKey: ["product", slug, sale_type],
+    queryFn: () => getProduct({ slug, sale_type }),
+    enabled: !!slug,
+  });
+
+  const sizes = product?.items ?? [];
+
+  useEffect(() => {
+    if (sizes.length && !selectedSizeId) {
+      setSelectedSizeId(sizes[0].id);
+    }
+  }, [sizes]);
+
+  const selectedSize =
+    sizes.find((item) => item.id === selectedSizeId) ?? sizes[0];
+
+  const queryClient = useQueryClient();
+  const requireAuth = useRequireAuth();
+
+  const { mutate: addProductToCart, isPending: isPendingCart } = useMutation({
+    mutationFn: addToCart,
+    onSuccess: () => {
+      dispatch(
+        openModal({
+          modalName: "addToCartModal",
+          modalData: {
+            product: {
+              name: product?.name,
+              image: product?.main_image,
+              size: `${selectedSize?.weight} ${selectedSize?.weight_unit}`,
+            },
+          },
+        }),
+      );
+
+      queryClient.invalidateQueries({ queryKey: ["cart_count"] });
+    },
+    onError: () => {
+      toast.error(t("productDetails.cartError"));
+    },
+  });
+
+  const handleAddToCart = () => {
+    requireAuth(() => {
+      addProductToCart({
+        product_item_id: selectedSize.id,
+        quantity,
+        sale_type,
+      });
+    });
+  };
+
+  // Refs
   const modelRef = useRef();
   const circleRef = useRef();
   const canvasRef = useRef();
@@ -22,6 +123,7 @@ const Product = () => {
   const sliderRef = useRef();
   const leftListRef = useRef();
   const rightListRef = useRef();
+  const swiperContainerRef = useRef();
 
   const [knobX, setKnobX] = useState(0);
 
@@ -29,6 +131,7 @@ const Product = () => {
   const [hoveredItem, setHoveredItem] = useState(null);
 
   const [activeIndex, setActiveIndex] = useState(0);
+  const swiperRef = useRef(null);
 
   useEffect(() => {
     const tl = gsap.timeline({ paused: true });
@@ -102,6 +205,18 @@ const Product = () => {
       "<",
     );
 
+    // 📱 اظهار السوايبر (الموبايل)
+    tl.to(
+      swiperContainerRef.current,
+      {
+        opacity: 1,
+        pointerEvents: "auto",
+        duration: 0.6,
+        ease: "power2.out",
+      },
+      "<",
+    );
+
     // 📌 ScrollTrigger بدون scrub
     ScrollTrigger.create({
       trigger: ".product-section",
@@ -133,36 +248,31 @@ const Product = () => {
     };
   }, []);
 
-  const items = Array.from({ length: 10 }).map((_, i) => ({
-    id: i + 1,
-    title: `Berry ${i + 1}`,
-    description: `Description of Berry ${i + 1}`,
-    icon: "https://pngimg.com/uploads/pokemon/pokemon_PNG129.png",
-    image:
-      "https://www.k12digest.com/wp-content/uploads/2024/03/1-3-550x330.jpg",
-    content: `Detailed content for Berry ${i + 1}`,
-  }));
+  const items = product?.product_points || [];
 
-  const leftListItems = items.slice(0, 5);
+  const leftListItems = items?.filter((_, i) => i % 2 === 0) || [];
 
-  const rightListItems = items.slice(5, 10);
+  const rightListItems = items?.filter((_, i) => i % 2 === 1) || [];
 
   return (
-    <main style={{ background: "#D2B48C" }}>
+    <main
+      className="overflow-x-hidden"
+      style={{ background: product?.page_color || "var(--secondary)" }}
+    >
       <section className="product-section h-[calc(100vh-30px)] pt-24 pb-12 flex flex-col items-center justify-between">
         {/* 🔥 TITLE */}
         <div className="text-center text-black">
-          <h1 className="text-4xl font-bold uppercase tracking-tight mb-4">
-            geometry
+          <h1 className="text-2xl lg:text-4xl uppercase tracking-tight mb-4">
+            {product?.name}
           </h1>
 
-          <div className="text-xs uppercase tracking-widest flex flex-wrap">
-            {Array.from({ length: 5 }).map((_, i) => (
+          <div className="text-xs uppercase tracking-widest flex flex-wrap items-center justify-center">
+            {[product?.category, product?.sub_category].map((value, i) => (
               <span
                 key={i}
                 className="px-2 lg:px-4 not-last:border-e-2 border-black font-medium"
               >
-                Berries
+                {value}
               </span>
             ))}
           </div>
@@ -172,7 +282,7 @@ const Product = () => {
         <div className="w-full flex items-center justify-center gap-3 h-[50%] lg:h-[75%] max-h-[600px]">
           <ul
             ref={leftListRef}
-            className="hidden lg:flex flex-col gap-2 h-full justify-evenly"
+            className="hidden lg:flex flex-col gap-2 h-full justify-evenly flex-1"
           >
             {leftListItems.map((item, i) => (
               <li
@@ -219,13 +329,17 @@ const Product = () => {
               ref={canvasRef}
               className="h-[80%] aspect-square flex items-center justify-center"
             >
-              <Canvas camera={{ fov: 45 }}>
-                <color attach="background" args={["#D2B48C"]} />
+              {product?.file_3d && (
+                <Canvas camera={{ fov: 45 }}>
+                  <color attach="background" args={[product?.page_color]} />
 
-                <Stage environment={null} intensity={0.5}>
-                  <Model modelRef={modelRef} />
-                </Stage>
-              </Canvas>
+                  <Suspense fallback={null}>
+                    <Stage environment={null} intensity={0.5}>
+                      <Model modelRef={modelRef} file={product.file_3d} />
+                    </Stage>
+                  </Suspense>
+                </Canvas>
+              )}
             </div>
 
             {/* 🆕 محتوى جديد */}
@@ -246,31 +360,65 @@ const Product = () => {
                   >
                     <img
                       src={activeItem.image}
-                      alt={activeItem.title}
+                      alt={activeItem.main_title}
                       className="w-full h-full object-cover"
                     />
 
                     <div className="absolute inset-0 bg-black/40 flex flex-col items-center justify-center text-white text-center px-4">
                       <h2 className="text-2xl font-bold mb-2">
-                        {activeItem.title}
+                        {activeItem.main_title}
                       </h2>
-                      <p className="text-sm">{activeItem.content}</p>
+                      <div
+                        className="text-sm"
+                        dangerouslySetInnerHTML={{
+                          __html: activeItem.main_description,
+                        }}
+                      />
+
+                      <Sheet>
+                        <SheetTrigger className="cursor-pointer">
+                          more
+                        </SheetTrigger>
+                        <SheetContent
+                          className={`border-0 py-10`}
+                          style={{
+                            background:
+                              product?.page_color || "var(--secondary)",
+                          }}
+                        >
+                          <SheetHeader>
+                            <SheetTitle>{activeItem.main_title}</SheetTitle>
+                            <SheetDescription></SheetDescription>
+                          </SheetHeader>
+
+                          <div
+                            className="px-4 text-sm"
+                            dangerouslySetInnerHTML={{
+                              __html: activeItem.main_description,
+                            }}
+                          />
+                        </SheetContent>
+                      </Sheet>
                     </div>
                   </motion.div>
                 ) : (
                   <motion.div className="absolute inset-0 flex flex-col items-center justify-center text-center p-4">
-                    <h2 className="text-2xl font-bold mb-2">New Content</h2>
+                    <h2 className="text-2xl font-bold mb-2">Abstract</h2>
+
                     <p className="text-sm">
-                      New Content New Content New Content New Content New
-                      Content New Content
+                      Hover over each feature to learn more.
                     </p>
                   </motion.div>
                 )}
               </AnimatePresence>
             </div>
 
-            <div className="lg:hidden absolute -bottom-20 w-screen px-4 overflow-x-hidden">
+            <div
+              ref={swiperContainerRef}
+              className="lg:hidden absolute -bottom-20 w-screen overflow-x-hidden opacity-0 pointer-events-none"
+            >
               <Swiper
+                onSwiper={(swiper) => (swiperRef.current = swiper)}
                 slidesPerView={5}
                 centeredSlides={true}
                 spaceBetween={25}
@@ -280,6 +428,7 @@ const Product = () => {
                   setActiveIndex(index);
                   setActiveItem(items[index]);
                 }}
+                className="product-details-swiper"
               >
                 {items.map((item, i) => (
                   <SwiperSlide
@@ -288,6 +437,7 @@ const Product = () => {
                     onClick={() => {
                       setActiveIndex(i);
                       setActiveItem(items[i]);
+                      swiperRef.current?.slideToLoop(i); // 🔥 ده المهم
                     }}
                   >
                     <div
@@ -336,7 +486,7 @@ const Product = () => {
 
           <ul
             ref={rightListRef}
-            className="hidden lg:flex flex-col gap-2 h-full justify-evenly"
+            className="hidden lg:flex flex-col gap-2 h-full justify-evenly flex-1"
           >
             {rightListItems.map((item, i) => (
               <li
@@ -374,24 +524,56 @@ const Product = () => {
 
         {/* 🔥 bottom controls */}
         <div className="w-full max-w-lg px-4 grid grid-cols-2 lg:grid-cols-4 gap-2 lg:gap-4">
-          <select className="border border-black rounded px-8 py-1 bg-transparent outline-none">
-            <option>10oz</option>
-            <option>12oz</option>
+          <select
+            onChange={(e) => setSelectedSizeId(Number(e.target.value))}
+            className="border border-black rounded text-center text-black p-1 bg-transparent outline-none"
+          >
+            {sizes.map((size) => (
+              <option key={size.id} value={size.id}>
+                {size.weight} {size.weight_unit}
+              </option>
+            ))}
           </select>
 
-          <div className="flex items-center border border-black rounded">
-            <button className="px-2 cursor-pointer text-lg font-medium">
-              -
-            </button>
-            <span className="flex-1 text-center">1</span>
-            <button className="px-2 cursor-pointer text-lg font-medium">
-              +
-            </button>
-          </div>
+          {product?.for_sale && (
+            <div className="flex items-center border border-black text-black rounded">
+              <button
+                onClick={() => setQuantity((prev) => Math.max(1, prev - 1))}
+                className="px-2 cursor-pointer text-lg font-medium"
+              >
+                -
+              </button>
+              <span className="flex-1 text-center">{quantity}</span>
+              <button
+                onClick={() => setQuantity((prev) => prev + 1)}
+                className="px-2 cursor-pointer text-lg font-medium"
+              >
+                +
+              </button>
+            </div>
+          )}
 
-          <button className="col-span-2 bg-black text-white px-6 py-2 font-bold rounded cursor-pointer">
-            $22.50 - Add to Cart
-          </button>
+          {product?.for_sale && (
+            <button
+              className="col-span-2 bg-black text-white px-4 py-2 font-bold text-sm rounded cursor-pointer
+              flex items-center justify-center gap-1"
+              onClick={handleAddToCart}
+              disabled={isPendingCart}
+            >
+              {isPendingCart ? (
+                <>
+                  adding... <FaSpinner className="animate-spin" />
+                </>
+              ) : (
+                <>
+                  <span className="flex items-center gap-1">
+                    {selectedSize?.price} <UEAIcon className="w-6 h-6 invert" />
+                  </span>
+                  - Add to Cart
+                </>
+              )}
+            </button>
+          )}
         </div>
       </section>
     </main>

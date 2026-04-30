@@ -495,3 +495,13 @@ html[dir="rtl"] .raleway-light {
   border-radius: 50%;
   cursor: grab;
 }
+
+.product-details-swiper {
+  overflow: visible !important;
+
+  .swiper-slide {
+    height: 180px; /* ده سر القوس */
+    display: flex;
+    align-items: flex-end;
+  }
+}

@@ -1,36 +1,54 @@
 import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { closeModal } from "@/store/modals/modalsSlice";
+import { useTranslation } from "react-i18next";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router";
 
-const AddToCartModal = ({ open, setOpen, product }) => {
+const AddToCartModal = () => {
+  const dispatch = useDispatch();
+  const { t } = useTranslation();
+  const { modalName, modalData } = useSelector((state) => state.modals);
+  const { product } = modalData || {};
+
+  const onClose = () => {
+    dispatch(closeModal());
+  };
+
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog open={modalName === "addToCartModal"} onOpenChange={onClose}>
       <DialogContent
         className="fixed! top-0 right-0 left-auto rounded-none! translate-x-0 translate-y-0 
-        w-full max-w-sm! overflow-hidden bg-secondary"
+        w-full max-w-sm! overflow-hidden bg-white"
       >
         <div>
           {/* Header */}
           <div className="flex items-center justify-between mb-3">
-            <h3 className="font-bold text-sm uppercase">Added to cart:</h3>
+            <h3 className="font-medium text-sm uppercase">Added to cart:</h3>
           </div>
 
           {/* Content */}
           <div className="flex gap-3 items-center">
-            <img
-              src={product?.main_image}
-              alt={product?.name}
-              className="w-20 aspect-square object-cover"
-            />
+            {product?.image && (
+              <img
+                src={product?.image}
+                alt={product?.name}
+                className="w-20 aspect-square object-cover"
+              />
+            )}
 
             <div className="flex flex-col gap-1">
               <p className="font-medium">{product?.name}</p>
-              <p className="text-sm">5lbs</p>
+              <p className="text-sm">{product?.size}</p>
             </div>
           </div>
         </div>
 
         {/* Footer */}
-        <Link to="/cart" className="w-full text-center bg-black text-white py-3 uppercase">
+        <Link
+          to="/cart"
+          onClick={onClose}
+          className="w-full text-center bg-black text-white py-3 uppercase"
+        >
           View cart
         </Link>
       </DialogContent>

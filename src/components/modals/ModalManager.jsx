@@ -9,6 +9,7 @@ import ChangePasswordModal from "./ChangePasswordModal";
 import DeleteEventOrderModal from "./DeleteEventOrderModal";
 import UpdateEventModal from "./UpdateEventModal";
 import LoadingModal from "./LoadingModal";
+import AddToCartModal from "./AddToCartModal";
 
 const ModalManager = () => {
   return (
@@ -24,6 +25,7 @@ const ModalManager = () => {
       <ChangePasswordModal />
       <DeleteEventOrderModal />
       <UpdateEventModal />
+      <AddToCartModal />
     </>
   );
 };
