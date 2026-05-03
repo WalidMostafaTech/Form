@@ -161,7 +161,7 @@ const ProductsPage = ({ saleType, title }) => {
                   whileInView="show"
                   viewport={{ once: true, margin: "-80px" }}
                   whileHover={{
-                    scale: 1.04,
+                    scale: 1.02,
                     transition: { duration: 0.2 },
                   }}
                 >

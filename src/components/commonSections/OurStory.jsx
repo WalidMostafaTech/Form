@@ -29,9 +29,7 @@ const OurStory = ({ removeBtn = false }) => {
             {ourStory?.title}
           </h1> */}
 
-          <p className="text-black/80 lg:text-lg">
-            {ourStory?.description}
-          </p>
+          <p className="text-black/80 lg:text-lg">{ourStory?.description}</p>
 
           <ul className="flex gap-8">
             {ourStory?.statistics?.map((item) => (
@@ -57,24 +55,26 @@ const OurStory = ({ removeBtn = false }) => {
           )}
         </div>
 
-        <div className="hidden md:block w-full aspect-4/5 min-h-100 relative">
-          <div className="w-full h-full overflow-hidden rounded-xl shadow-lg">
-            <img
-              loading="lazy"
-              src={ourStory?.image}
-              alt="Our Story"
-              className="w-full h-full object-cover"
-            />
-          </div>
-
-          {ourStory?.established_year && (
-            <div className="absolute -bottom-4 -inset-e-2 bg-primary p-4 rounded-lg shadow-lg">
-              <p className="text-white text-lg  text-center min-w-24">
-                {ourStory?.established_year}
-              </p>
+        {ourStory?.image && (
+          <div className="hidden md:block w-full aspect-4/5 min-h-100 relative">
+            <div className="w-full h-full overflow-hidden rounded-xl shadow-lg">
+              <img
+                loading="lazy"
+                src={ourStory?.image}
+                alt="Our Story"
+                className="w-full h-full object-cover"
+              />
             </div>
-          )}
-        </div>
+
+            {ourStory?.established_year && (
+              <div className="absolute -bottom-4 -inset-e-2 bg-primary p-4 rounded-lg shadow-lg">
+                <p className="text-white text-lg  text-center min-w-24">
+                  {ourStory?.established_year}
+                </p>
+              </div>
+            )}
+          </div>
+        )}
       </div>
     </section>
   );

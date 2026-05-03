@@ -8,7 +8,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import { useNavigate, useParams, useSearchParams } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { getProduct } from "@/api/productsServices";
 
 import {
@@ -20,17 +20,15 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { toast } from "sonner";
 import { useTranslation } from "react-i18next";
-import { addToCart } from "@/api/cartServices";
-import useRequireAuth from "@/hooks/useRequireAuth";
-import UEAIcon from "@/components/common/UEAIcon";
-import { openModal } from "@/store/modals/modalsSlice";
-import { FaSpinner } from "react-icons/fa";
 import { IoClose } from "react-icons/io5";
 import LoadingPage from "@/components/Loading/LoadingPage";
 import SeoManager from "@/utils/SeoManager";
 import { clearProductColor, setProductColor } from "@/store/headerSlice";
+import ProductControls from "./sections/ProductControls";
+import DetailsSection from "./sections/DetailsSection";
+import Modal3D from "./sections/Modal3D";
+import HeadSection from "./sections/HeadSection";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -67,61 +65,11 @@ const Product = () => {
     }
   }, [user, sale_type, loading, navigate]);
 
-  const [quantity, setQuantity] = useState(1);
-  const [selectedSizeId, setSelectedSizeId] = useState(null);
-
   const { data: product, isLoading } = useQuery({
     queryKey: ["product", slug, sale_type],
     queryFn: () => getProduct({ slug, sale_type }),
     enabled: !!slug,
   });
-
-  const sizes = product?.items ?? [];
-
-  useEffect(() => {
-    if (sizes.length && !selectedSizeId) {
-      setSelectedSizeId(sizes[0].id);
-    }
-  }, [sizes]);
-
-  const selectedSize =
-    sizes.find((item) => item.id === selectedSizeId) ?? sizes[0];
-
-  const queryClient = useQueryClient();
-  const requireAuth = useRequireAuth();
-
-  const { mutate: addProductToCart, isPending: isPendingCart } = useMutation({
-    mutationFn: addToCart,
-    onSuccess: () => {
-      dispatch(
-        openModal({
-          modalName: "addToCartModal",
-          modalData: {
-            product: {
-              name: product?.name,
-              image: product?.main_image,
-              size: `${selectedSize?.weight} ${selectedSize?.weight_unit}`,
-            },
-          },
-        }),
-      );
-
-      queryClient.invalidateQueries({ queryKey: ["cart_count"] });
-    },
-    onError: () => {
-      toast.error(t("productDetails.cartError"));
-    },
-  });
-
-  const handleAddToCart = () => {
-    requireAuth(() => {
-      addProductToCart({
-        product_item_id: selectedSize.id,
-        quantity,
-        sale_type,
-      });
-    });
-  };
 
   useEffect(() => {
     if (product?.font_color) {
@@ -154,10 +102,6 @@ const Product = () => {
   const items = useMemo(() => {
     return product?.product_points || [];
   }, [product?.product_points]);
-
-  // const leftListItems = [...items, ...items, ...items];
-
-  // const rightListItems = [...items, ...items, ...items];
 
   const leftListItems = items?.filter((_, i) => i % 2 === 0) || [];
 
@@ -236,6 +180,7 @@ const Product = () => {
       {
         opacity: 1,
         pointerEvents: "auto",
+        display: "block",
         duration: 0.6,
         ease: "power2.out",
       },
@@ -298,6 +243,14 @@ const Product = () => {
   };
 
   const has3DModel = is3DFile(product?.file_3d);
+  const hasItems = items.length > 0;
+
+  const viewType = useMemo(() => {
+    if (has3DModel && hasItems) return "FULL";
+    if (has3DModel) return "MODEL_ONLY";
+    if (hasItems) return "DETAILS_ONLY";
+    return "EMPTY";
+  }, [has3DModel, hasItems]);
 
   return (
     <>
@@ -316,32 +269,16 @@ const Product = () => {
           className="overflow-x-hidden"
           style={{ background: product?.page_color || "var(--secondary)" }}
         >
-          <section className="product-section h-[calc(100vh-30px)] pt-26 pb-6 flex flex-col items-center justify-between">
-            {/* 🔥 TITLE */}
-            <div className="text-center" style={{ color: mainColor }}>
-              <h1 className="text-2xl lg:text-4xl uppercase tracking-tight mb-4">
-                {product?.name}
-              </h1>
+          {viewType === "FULL" && (
+            <section className="product-section h-[calc(100vh-30px)] pt-26 pb-6 flex flex-col items-center justify-between">
+              {/* 🔥 TITLE */}
+              <HeadSection product={product} mainColor={mainColor} />
 
-              <div className="text-xs uppercase tracking-widest flex flex-wrap items-center justify-center">
-                {[product?.category, product?.sub_category].map((value, i) => (
-                  <span
-                    key={i}
-                    style={{ borderColor: mainColor }}
-                    className="px-2 lg:px-4 not-last:border-e-2 font-medium"
-                  >
-                    {value}
-                  </span>
-                ))}
-              </div>
-            </div>
-
-            {/* 🔥 3D SECTION */}
-            {has3DModel && (
+              {/* 🔥 3D SECTION */}
               <div className="w-full flex items-center justify-center gap-20 h-[50%] lg:h-[75%] max-h-[600px] max-w-5xl">
                 <ul
                   ref={leftListRef}
-                  className="hidden md:flex flex-col gap-2 h-full justify-evenly flex-1"
+                  className="hidden lg:flex flex-col gap-2 h-full justify-evenly flex-1"
                 >
                   {leftListItems.map((item, i) => {
                     const offset = getOffset(i, leftListItems.length);
@@ -429,7 +366,7 @@ const Product = () => {
                     ref={contentRef}
                     // style={{ background: "black" }}
                     className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0
-                h-full aspect-square flex flex-col items-center justify-center rounded-full overflow-hidden"
+                    h-full aspect-square flex flex-col items-center justify-center rounded-full overflow-hidden"
                   >
                     <AnimatePresence mode="wait">
                       {activeItem ? (
@@ -523,56 +460,6 @@ const Product = () => {
                     </AnimatePresence>
                   </div>
 
-                  <div
-                    ref={swiperContainerRef}
-                    className="md:hidden absolute -bottom-20 w-screen overflow-x-hidden opacity-0 pointer-events-none"
-                  >
-                    <Swiper
-                      dir={lang === "ar" ? "rtl" : "ltr"}
-                      onSwiper={(swiper) => (swiperRef.current = swiper)}
-                      slidesPerView={5}
-                      centeredSlides={true}
-                      spaceBetween={25}
-                      grabCursor={true}
-                      onSlideChange={(swiper) => {
-                        const index = swiper.realIndex;
-                        setActiveIndex(index);
-                        setActiveItem(items[index]);
-                      }}
-                      className="product-details-swiper"
-                    >
-                      {items.map((item, i) => (
-                        <SwiperSlide
-                          key={item.id}
-                          className="flex justify-center"
-                          onClick={() => {
-                            setActiveIndex(i);
-                            setActiveItem(items[i]);
-                            swiperRef.current?.slideToLoop(i); // 🔥 ده المهم
-                          }}
-                        >
-                          <div
-                            style={{ color: mainColor }}
-                            className={`flex flex-col items-center gap-3 transition-all duration-300 
-                        ${activeIndex === i ? "scale-100 opacity-100" : "opacity-40 scale-80"}`}
-                          >
-                            <div className="w-6 h-6 overflow-hidden">
-                              <img
-                                src={item.icon}
-                                alt={item.title}
-                                className="w-full h-full object-cover"
-                              />
-                            </div>
-
-                            <h3 className="text-xs font-bold text-center">
-                              {item.title}
-                            </h3>
-                          </div>
-                        </SwiperSlide>
-                      ))}
-                    </Swiper>
-                  </div>
-
                   {/* 🔥 DRAG SLIDER */}
                   <div
                     ref={sliderRef}
@@ -602,7 +489,7 @@ const Product = () => {
 
                 <ul
                   ref={rightListRef}
-                  className="hidden md:flex flex-col gap-2 h-full justify-evenly flex-1"
+                  className="hidden lg:flex flex-col gap-2 h-full justify-evenly flex-1"
                 >
                   {rightListItems.map((item, i) => {
                     const offset = getOffset(i, rightListItems.length);
@@ -649,74 +536,112 @@ const Product = () => {
                   })}
                 </ul>
               </div>
-            )}
 
-            {/* 🔥 bottom controls */}
-            <div className="w-full max-w-lg px-4 grid grid-cols-2 lg:grid-cols-4 gap-2 lg:gap-4 mt-8 relative z-30">
-              {product?.for_sale && (
-                <select
-                  onChange={(e) => setSelectedSizeId(Number(e.target.value))}
-                  className="border rounded text-center p-1 bg-transparent outline-none"
-                  style={{ color: mainColor, borderColor: mainColor }}
+              {/* 🎨 Swiper */}
+              <div
+                ref={swiperContainerRef}
+                className="hidden lg:hidden! w-screen overflow-x-hidden opacity-0 pointer-events-none"
+              >
+                <Swiper
+                  dir={lang === "ar" ? "rtl" : "ltr"}
+                  onSwiper={(swiper) => (swiperRef.current = swiper)}
+                  slidesPerView={5}
+                  centeredSlides={true}
+                  spaceBetween={25}
+                  grabCursor={true}
+                  onSlideChange={(swiper) => {
+                    const index = swiper.realIndex;
+                    setActiveIndex(index);
+                    setActiveItem(items[index]);
+                  }}
+                  className="product-details-swiper"
                 >
-                  {sizes.map((size) => (
-                    <option
-                      className="text-black!"
-                      key={size.id}
-                      value={size.id}
+                  {items.map((item, i) => (
+                    <SwiperSlide
+                      key={item.id}
+                      className="flex justify-center"
+                      onClick={() => {
+                        setActiveIndex(i);
+                        setActiveItem(items[i]);
+                        swiperRef.current?.slideToLoop(i); // 🔥 ده المهم
+                      }}
                     >
-                      {size.weight} {size.weight_unit}
-                    </option>
+                      <div
+                        style={{ color: mainColor }}
+                        className={`flex flex-col items-center gap-2 transition-all duration-300 
+                        ${activeIndex === i ? "scale-100 opacity-100" : "opacity-40 scale-80"}`}
+                      >
+                        <div className="w-6 h-6 overflow-hidden">
+                          <img
+                            src={item.icon}
+                            alt={item.title}
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
+
+                        <h3 className="text-xs font-bold text-center">
+                          {item.title}
+                        </h3>
+                      </div>
+                    </SwiperSlide>
                   ))}
-                </select>
-              )}
+                </Swiper>
+              </div>
 
-              {product?.for_sale && (
-                <div
-                  className="flex items-center border rounded"
-                  style={{ color: mainColor, borderColor: mainColor }}
-                >
-                  <button
-                    onClick={() => setQuantity((prev) => Math.max(1, prev - 1))}
-                    className="px-2 cursor-pointer text-lg font-medium"
-                  >
-                    -
-                  </button>
-                  <span className="flex-1 text-center">{quantity}</span>
-                  <button
-                    onClick={() => setQuantity((prev) => prev + 1)}
-                    className="px-2 cursor-pointer text-lg font-medium"
-                  >
-                    +
-                  </button>
-                </div>
-              )}
+              {/* 🔥 bottom controls */}
+              <ProductControls
+                product={product}
+                mainColor={mainColor}
+                sale_type={sale_type}
+              />
+            </section>
+          )}
 
-              {product?.for_sale && (
-                <button
-                  className="col-span-2 bg-black text-white px-4 py-2 font-bold text-sm rounded cursor-pointer
-                  flex items-center justify-center gap-1"
-                  onClick={handleAddToCart}
-                  disabled={isPendingCart}
-                >
-                  {isPendingCart ? (
-                    <>
-                      {t("productDetails.adding")}{" "}
-                      <FaSpinner className="animate-spin" />
-                    </>
-                  ) : (
-                    <>
-                      {t("productDetails.addToCart")} -
-                      <span className="flex items-center gap-1">
-                        {selectedSize?.price}{" "}
-                        <UEAIcon className="w-6 h-6 invert" />
-                      </span>
-                    </>
-                  )}
-                </button>
-              )}
-            </div>
-          </section>
+          {viewType === "MODEL_ONLY" && (
+            <Modal3D
+              product={product}
+              mainColor={mainColor}
+              modelRef={modelRef}
+              knobX={knobX}
+              setKnobX={setKnobX}
+              lang={lang}
+              sale_type={sale_type}
+            />
+          )}
+
+          {viewType === "DETAILS_ONLY" && (
+            <DetailsSection
+              product={product}
+              mainColor={mainColor}
+              lang={lang}
+              sale_type={sale_type}
+              items={items}
+              leftListItems={leftListItems}
+              rightListItems={rightListItems}
+              getOffset={getOffset}
+              setActiveItem={setActiveItem}
+              setHoveredItem={setHoveredItem}
+              hoveredItem={hoveredItem}
+              activeItem={activeItem}
+              swiperRef={swiperRef}
+              setActiveIndex={setActiveIndex}
+              activeIndex={activeIndex}
+            />
+          )}
+
+          {viewType === "EMPTY" && (
+            <section className="h-[calc(100vh-30px)] pt-26 pb-6 flex flex-col items-center justify-center">
+              {/* 🔥 TITLE */}
+              <HeadSection product={product} mainColor={mainColor} />
+
+              {/* 🔥 bottom controls */}
+              <ProductControls
+                product={product}
+                mainColor={mainColor}
+                sale_type={sale_type}
+              />
+            </section>
+          )}
         </main>
       )}
     </>

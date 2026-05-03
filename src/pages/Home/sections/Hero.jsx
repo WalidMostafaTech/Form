@@ -8,7 +8,7 @@ const Hero = ({ data, loading }) => {
   if (!data) return null;
 
   return (
-    <section className="w-full h-[calc(100vh-28px)] relative">
+    <section className="w-full h-[calc(100dvh-28px)] relative">
       <video
         className="absolute top-0 left-0 w-full h-full object-cover"
         src={data?.introduction_video}
