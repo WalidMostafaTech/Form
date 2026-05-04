@@ -24,7 +24,7 @@ const Modal3D = ({
       <HeadSection product={product} mainColor={mainColor} />
 
       {/* 🔥 3D SECTION */}
-      <div className="w-full flex items-center justify-center gap-20 h-[50%] lg:h-[75%] max-h-[600px] max-w-5xl">
+      <div className="w-full flex items-center justify-center gap-20 h-[50%] lg:h-[75%] max-h-[600px] max-w-5xl my-6">
         <div className="relative h-full aspect-square flex items-center justify-center">
           {/* 🔵 الدائرة */}
           <div

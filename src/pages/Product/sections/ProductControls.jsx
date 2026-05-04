@@ -90,7 +90,7 @@ const ProductControls = ({ product, mainColor, sale_type }) => {
   if (!product?.for_sale) return;
 
   return (
-    <div className="container flex flex-col md:flex-row justify-between gap-2 lg:gap-4 mt-8 relative z-30">
+    <div className="container flex flex-col md:flex-row justify-between gap-2 lg:gap-4 relative z-30">
       <button
         onClick={handleScrollClick}
         className="min-w-38 bg-black text-white px-4 py-2 font-bold text-sm rounded cursor-pointer

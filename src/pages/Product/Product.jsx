@@ -289,7 +289,7 @@ const Product = () => {
               <HeadSection product={product} mainColor={mainColor} />
 
               {/* 🔥 3D SECTION */}
-              <div className="w-full flex items-center justify-center gap-20 h-[50%] lg:h-[75%] max-h-[600px] max-w-5xl">
+              <div className="w-full flex items-center justify-center gap-20 h-[50%] lg:h-[75%] max-h-[600px] max-w-5xl my-6">
                 <ul
                   ref={leftListRef}
                   className="hidden lg:flex flex-col gap-2 h-full justify-evenly flex-1"
@@ -644,7 +644,7 @@ const Product = () => {
           )}
 
           {viewType === "EMPTY" && (
-            <section className="h-[calc(100vh-30px)] pt-26 pb-6 flex flex-col items-center justify-center">
+            <section className="h-[calc(100vh-30px)] pt-26 pb-6 flex flex-col items-center justify-center gap-8">
               {/* 🔥 TITLE */}
               <HeadSection product={product} mainColor={mainColor} />
 
