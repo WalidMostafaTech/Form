@@ -6,12 +6,28 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { FaSpinner } from "react-icons/fa";
+import { MdKeyboardDoubleArrowDown } from "react-icons/md";
 import { useDispatch } from "react-redux";
 import { toast } from "sonner";
+import { ScrollToPlugin } from "gsap/ScrollToPlugin";
+import gsap from "gsap";
+gsap.registerPlugin(ScrollToPlugin);
 
 const ProductControls = ({ product, mainColor, sale_type }) => {
   const [quantity, setQuantity] = useState(1);
   const [selectedSizeId, setSelectedSizeId] = useState(null);
+
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY >= 60);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const dispatch = useDispatch();
   const { t } = useTranslation();
@@ -63,25 +79,44 @@ const ProductControls = ({ product, mainColor, sale_type }) => {
     });
   };
 
-  return (
-    <div className="w-full max-w-lg px-4 grid grid-cols-2 lg:grid-cols-4 gap-2 lg:gap-4 mt-8 relative z-30">
-      {product?.for_sale && (
-        <select
-          onChange={(e) => setSelectedSizeId(Number(e.target.value))}
-          className="border rounded text-center p-1 bg-transparent outline-none"
-          style={{ color: mainColor, borderColor: mainColor }}
-        >
-          {sizes.map((size) => (
-            <option className="text-black!" key={size.id} value={size.id}>
-              {size.weight} {size.weight_unit}
-            </option>
-          ))}
-        </select>
-      )}
+  const handleScrollClick = () => {
+    if (isScrolled) {
+      gsap.to(window, { scrollTo: 0, duration: 1.2 });
+    } else {
+      gsap.to(window, { scrollTo: window.scrollY + 60, duration: 1 });
+    }
+  };
 
-      {product?.for_sale && (
+  if (!product?.for_sale) return;
+
+  return (
+    <div className="container flex flex-col md:flex-row justify-between gap-2 lg:gap-4 mt-8 relative z-30">
+      <button
+        onClick={handleScrollClick}
+        className="min-w-38 bg-black text-white px-4 py-2 font-bold text-sm rounded cursor-pointer
+              flex items-center justify-center gap-1"
+      >
+        {isScrolled ? t("scrollUp") : t("scrollDown")}
+        <MdKeyboardDoubleArrowDown
+          className={`size-6 animate-bounce ${isScrolled ? "rotate-180 -translate-y-1" : "translate-y-1"}`}
+        />
+      </button>
+
+      <select
+        onChange={(e) => setSelectedSizeId(Number(e.target.value))}
+        className="border rounded text-center p-1 bg-transparent outline-none"
+        style={{ color: mainColor, borderColor: mainColor }}
+      >
+        {sizes.map((size) => (
+          <option className="text-black!" key={size.id} value={size.id}>
+            {size.weight} {size.weight_unit}
+          </option>
+        ))}
+      </select>
+
+      <div className="flex gap-2">
         <div
-          className="flex items-center border rounded"
+          className="flex items-center border rounded min-w-20"
           style={{ color: mainColor, borderColor: mainColor }}
         >
           <button
@@ -98,12 +133,10 @@ const ProductControls = ({ product, mainColor, sale_type }) => {
             +
           </button>
         </div>
-      )}
 
-      {product?.for_sale && (
         <button
-          className="col-span-2 bg-black text-white px-4 py-2 font-bold text-sm rounded cursor-pointer
-                  flex items-center justify-center gap-1"
+          className="flex-1 md:flex-initial bg-black text-white px-4 py-2 font-bold text-sm rounded cursor-pointer
+                    flex items-center justify-center gap-1"
           onClick={handleAddToCart}
           disabled={isPendingCart}
         >
@@ -121,7 +154,7 @@ const ProductControls = ({ product, mainColor, sale_type }) => {
             </>
           )}
         </button>
-      )}
+      </div>
     </div>
   );
 };

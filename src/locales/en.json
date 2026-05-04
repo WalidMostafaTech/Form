@@ -20,6 +20,8 @@
   "OrderCount": "Order Count",
   "OrderCode": "Order Code",
   "quick_add": "Quick Add",
+  "scrollUp": "Scroll Up",
+  "scrollDown": "Scroll Down",
 
   "OrderSummaryCard": {
     "title": "Order Summary",

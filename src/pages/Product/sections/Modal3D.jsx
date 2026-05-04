@@ -28,12 +28,12 @@ const Modal3D = ({
         <div className="relative h-full aspect-square flex items-center justify-center">
           {/* 🔵 الدائرة */}
           <div
-            className="absolute w-full h-[100px] border-2 rounded-[50%] bottom-0"
+            className="absolute w-[100%] lg:w-[120%] h-[88px] border-2 rounded-[50%] bottom-0 left-1/2 -translate-x-1/2"
             style={{ borderColor: mainColor }}
           ></div>
 
           {/* 🎨 Canvas */}
-          <div className="h-[80%] aspect-square flex items-center justify-center">
+          <div className="h-[85%] aspect-square flex items-center justify-center">
             {product?.file_3d && (
               <Canvas camera={{ fov: 45 }} className="aspect-square!">
                 <color attach="background" args={[product?.page_color]} />

@@ -20,6 +20,8 @@
   "OrderCount": "عدد الطلبات",
   "OrderCode": "كود الطلب",
   "quick_add": "إضافة سريعة",
+  "scrollUp": "التمرير لأعلى",
+  "scrollDown": "التمرير لأسفل",
 
   "OrderSummaryCard": {
     "title": "ملخص الطلب",

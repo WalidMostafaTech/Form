@@ -112,9 +112,15 @@ const Product = () => {
 
     const tl = gsap.timeline({ paused: true });
 
+    if (window.innerWidth >= 1024) {
+      // lg فقط
+      gsap.set(circleRef.current, { width: "120%" });
+    }
+
     tl.to(circleRef.current, {
       height: "100%",
-      duration: 0.5,
+      width: window.innerWidth >= 1024 ? "100%" : "100%",
+      duration: 0.6,
       ease: "power2.out",
     });
 
@@ -211,6 +217,14 @@ const Product = () => {
 
       onLeaveBack: () => {
         tl.reverse();
+
+        if (window.innerWidth >= 1024) {
+          gsap.to(circleRef.current, {
+            width: "120%",
+            duration: 0.8,
+          });
+        }
+
         setActiveItem(null); // ✅
         setHoveredItem(null); // ✅
       },
@@ -330,14 +344,14 @@ const Product = () => {
                   {/* 🔵 الدائرة */}
                   <div
                     ref={circleRef}
-                    className="absolute w-full h-[100px] border-2 rounded-[50%] bottom-0"
+                    className="absolute w-[100%] lg:w-[120%] h-[88px] border-2 rounded-[50%] bottom-0 left-1/2 -translate-x-1/2"
                     style={{ borderColor: mainColor }}
                   ></div>
 
                   {/* 🎨 Canvas */}
                   <div
                     ref={canvasRef}
-                    className="h-[80%] aspect-square flex items-center justify-center"
+                    className="h-[85%] aspect-square flex items-center justify-center"
                   >
                     {product?.file_3d && (
                       <Canvas camera={{ fov: 45 }} className="aspect-square!">
